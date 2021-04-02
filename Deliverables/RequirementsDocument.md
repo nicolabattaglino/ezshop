@@ -35,7 +35,7 @@ EZShop is a software application to:
 * manage customers
 * support accounting
 
-test 
+
 
 # Stakeholders
 
@@ -48,6 +48,7 @@ test
 
 ## Context Diagram
 \<Define here Context diagram using UML use case diagram>
+```plantuml
 @startuml
 
 
@@ -76,6 +77,7 @@ IandCS -> EZShop
 
 
 @enduml
+```
 
 \<actors are a subset of stakeholders>
 
