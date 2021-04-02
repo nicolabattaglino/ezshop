@@ -48,6 +48,34 @@ test
 
 ## Context Diagram
 \<Define here Context diagram using UML use case diagram>
+@startuml
+
+
+title Use Case Diagram 
+
+
+
+
+actor Owner
+actor Customer
+actor Product
+actor Subscriber
+actor Employee
+actor :Credit Card System: as CreditCardSystem
+actor :Inventory and Catalogue System: as IandCS
+rectangle "EZShop System" as EZShopSystem{
+(EZShop)
+}
+Subscriber -|> Customer
+Customer --> EZShop
+Product --> EZShop
+EZShop <-- Owner
+Employee -> EZShop
+EZShop <-- CreditCardSystem 
+IandCS -> EZShop
+
+
+@enduml
 
 \<actors are a subset of stakeholders>
 
