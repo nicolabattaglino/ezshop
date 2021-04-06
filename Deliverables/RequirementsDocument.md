@@ -58,7 +58,7 @@ title Use Case Diagram
 
 
 actor Owner
-actor Customer
+
 actor Product
 actor Subscriber
 actor Employee
@@ -67,11 +67,10 @@ actor :Inventory and Catalogue System: as IandCS
 rectangle "EZShop System" as EZShopSystem{
 (EZShop)
 }
-Subscriber -|> Customer
-Customer --> EZShop
+Subscriber --> EZShop
+Owner -|> Subscriber
+Employee -|>Subscriber
 Product --> EZShop
-EZShop <-- Owner
-Employee -> EZShop
 EZShop <-- CreditCardSystem 
 IandCS -> EZShop
 
