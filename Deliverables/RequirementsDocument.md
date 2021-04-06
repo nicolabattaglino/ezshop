@@ -173,6 +173,53 @@ IandCS -> EZShop
 # Glossary
 
 \<use UML class diagram to define important terms, or concepts in the domain of the system, and their relationships> 
+```plantuml
+@startuml
+
+title Classes - Class Diagram
+
+
+class "Subscriber" as subscriber{
+Name
+Surname
+SSN
+Address
+}
+class "Owner" as owner{
+}
+class "Employee" as employee{
+Salary
+}
+class "Local Terminal" as LT{
+}
+class "Product" as product{
+}
+class "EZ Shop" as EZShop{
+}
+class "Right" as right{
+}
+class "Fidelity Card" as fidelityCard{
+ID
+Fidelity points
+Expiration date (?)
+}
+class "Inventory Management System" as IMS{
+}
+class "Inventory Database" as Idb{
+?
+}
+subscriber<|-- owner
+subscriber<|-- employee
+fidelityCard -- subscriber
+EZShop--fidelityCard 
+subscriber -- right
+EZShop - LT
+IMS - EZShop  
+IMS -- Idb
+EZShop -- product
+
+@enduml
+```
 
 \<concepts are used consistently all over the document, ex in use cases, requirements etc>
 
