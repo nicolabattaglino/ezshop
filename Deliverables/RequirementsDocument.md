@@ -278,7 +278,7 @@ sale"*" -- subscriber
 
 # System Design
 \<describe here system design>
-
+```plantuml
 @startuml
 
 title Classes - Class Diagram
@@ -301,7 +301,7 @@ localTerminal -- software
 
 
 @enduml
-
+```
 \<must be consistent with Context diagram>
 
 # Deployment Diagram 
