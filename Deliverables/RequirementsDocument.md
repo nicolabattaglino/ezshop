@@ -184,6 +184,10 @@ Name
 Surname
 SSN
 Address
+Date of birth
+Phone number 
+Email
+Password
 }
 class "Owner" as owner{
 }
@@ -193,30 +197,73 @@ Salary
 class "Local Terminal" as LT{
 }
 class "Product" as product{
+Discount
 }
 class "EZ Shop" as EZShop{
 }
 class "Right" as right{
+Right level
 }
 class "Fidelity Card" as fidelityCard{
 ID
 Fidelity points
-Expiration date (?)
+Creation date 
+Lost (boolean)
 }
-class "Inventory Management System" as IMS{
+class "Inventory Management System?" as IMS{
 }
 class "Inventory Database" as Idb{
 ?
 }
+class "Product type" as PT{
+Name
+Barcode
+Price 
+Amount
+}
+class "Coupon" as coupon{
+ID
+Discount amount
+Expiration date 
+Used
+}
+
+class "Transaction" as transaction{
+Amount
+ID
+Date
+}
+class "Expense" as expense {
+}
+
+class "Sale" as sale{
+}
+class "Credit card" as creditCard{
+Number 
+Expiration date
+Balace
+}
+
+note right of coupon : 10 points correspond to a coupon 
+note right of fidelityCard :10€ correspond to a fidelity point
+
 subscriber<|-- owner
 subscriber<|-- employee
-fidelityCard -- subscriber
-EZShop--fidelityCard 
+fidelityCard"1...*" -- subscriber
+EZShop--"*"fidelityCard 
 subscriber -- right
 EZShop - LT
 IMS - EZShop  
 IMS -- Idb
-EZShop -- product
+EZShop -- "*"PT
+PT -- "*"product
+subscriber --"*" creditCard
+EZShop -- "*"transaction
+transaction <|-- expense
+transaction <|-- sale
+fidelityCard -- "*"coupon 
+sale - "0...1"coupon
+sale"*" -- subscriber
 
 @enduml
 ```
