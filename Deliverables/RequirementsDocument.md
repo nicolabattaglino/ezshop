@@ -52,9 +52,7 @@ EZShop is a software application to:
 @startuml
 
 
-title Use Case Diagram 
-
-
+title Context Diagram
 
 
 actor Owner
@@ -176,7 +174,7 @@ IandCS -> EZShop
 ```plantuml
 @startuml
 
-title Classes - Class Diagram
+title Glossary
 
 
 class "Subscriber" as subscriber{
@@ -281,7 +279,7 @@ sale"*" -- subscriber
 ```plantuml
 @startuml
 
-title Classes - Class Diagram
+title System Design
 class "EZ Shop" as EZShop{
 F1 
 F2
