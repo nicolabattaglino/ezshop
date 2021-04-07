@@ -196,9 +196,7 @@ Salary
 }
 class "Local Terminal" as LT{
 }
-class "Product" as product{
-Discount
-}
+
 class "EZ Shop" as EZShop{
 }
 class "Right" as right{
@@ -208,7 +206,7 @@ class "Fidelity Card" as fidelityCard{
 ID
 Fidelity points
 Creation date 
-Lost (boolean)
+Lost 
 }
 class "Inventory Management System?" as IMS{
 }
@@ -243,6 +241,16 @@ Number
 Expiration date
 Balace
 }
+class "Amount" as amount{
+Quantity
+}
+class "Product" as product{
+Discount
+}
+
+
+
+
 
 note right of coupon : 10 points correspond to a coupon 
 note right of fidelityCard :10€ correspond to a fidelity point
@@ -259,11 +267,13 @@ EZShop -- "*"PT
 PT -- "*"product
 subscriber --"*" creditCard
 EZShop -- "*"transaction
-transaction <|-- expense
+
 transaction <|-- sale
+transaction <|-- expense
 fidelityCard -- "*"coupon 
 sale - "0...1"coupon
 sale"*" -- subscriber
+(product,transaction). amount
 
 @enduml
 ```
