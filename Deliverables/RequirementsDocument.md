@@ -279,6 +279,29 @@ sale"*" -- subscriber
 # System Design
 \<describe here system design>
 
+@startuml
+
+title Classes - Class Diagram
+class "EZ Shop" as EZShop{
+F1 
+F2
+F3
+F4
+}
+
+class "Local terminal" as localTerminal{
+}
+
+class "Software" as software 
+class "Card reader" as printer
+EZShop o-- localTerminal
+EZShop o-- printer
+localTerminal -- software
+
+
+
+@enduml
+
 \<must be consistent with Context diagram>
 
 # Deployment Diagram 
