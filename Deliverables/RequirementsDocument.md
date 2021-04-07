@@ -62,7 +62,7 @@ actor Owner
 actor Product
 actor Subscriber
 actor Employee
-actor :Credit Card System: as CreditCardSystem
+actor :Card printer: as cardPrinter
 actor :Inventory and Catalogue System: as IandCS
 rectangle "EZShop System" as EZShopSystem{
 (EZShop)
@@ -71,7 +71,7 @@ Subscriber --> EZShop
 Owner -|> Subscriber
 Employee -|>Subscriber
 Product --> EZShop
-EZShop <-- CreditCardSystem 
+EZShop <-- cardPrinter
 IandCS -> EZShop
 
 
@@ -236,11 +236,7 @@ class "Expense" as expense {
 
 class "Sale" as sale{
 }
-class "Credit card" as creditCard{
-Number 
-Expiration date
-Balace
-}
+
 class "Amount" as amount{
 Quantity
 }
@@ -265,7 +261,7 @@ IMS - EZShop
 IMS -- Idb
 EZShop -- "*"PT
 PT -- "*"product
-subscriber --"*" creditCard
+
 EZShop -- "*"transaction
 
 transaction <|-- sale
