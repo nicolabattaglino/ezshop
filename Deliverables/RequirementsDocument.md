@@ -268,6 +268,8 @@ PT -- "*"product
 localServer -- generalDB
 generalDB-- product
 generalDB -- transaction
+generalDB -- subscriber
+generalDB -- fidelityCard
 EZShop -- "*"transaction
 customer <|- subscriber
 transaction <|-- sale
