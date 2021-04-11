@@ -294,13 +294,16 @@ F4 support accounting
 
 class "Local terminal" as localTerminal{
 }
+class "Local server" as localServer{
+}
+
 
 class "Software" as software 
-class "Card reader" as printer
+class " FIdelity card reader" as fcReader
 EZShop o-- localTerminal
-EZShop o-- printer
+EZShop o-- fcReader
 localTerminal -- software
-
+localServer -- software
 
 
 @enduml
