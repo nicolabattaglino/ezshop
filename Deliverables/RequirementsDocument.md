@@ -238,6 +238,7 @@ class "Expense" as expense {
 
 class "Sale" as sale{
 ID
+added points
 }
 
 class "Amount" as amount{
@@ -271,7 +272,7 @@ transaction <|-- sale
 transaction <|-- expense
 fidelityCard -- "*"coupon 
 sale - "0...1"coupon
-sale"*" -- subscriber
+sale"*" -- customer
 (product,transaction). amount
 
 @enduml
