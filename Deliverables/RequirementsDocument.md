@@ -56,21 +56,22 @@ title Context Diagram
 
 
 actor Owner
-
+actor :Barcode reader: as barcodeReader
 actor Product
 actor Subscriber
 actor Employee
 actor :Card printer: as cardPrinter
-actor :Inventory and Catalogue System: as IandCS
+actor :Supplier: as supplier
 rectangle "EZShop System" as EZShopSystem{
 (EZShop)
 }
 Subscriber --> EZShop
 Owner -|> Subscriber
 Employee -|>Subscriber
-Product --> EZShop
-EZShop <-- cardPrinter
-IandCS -> EZShop
+Product -- EZShop
+EZShop -- cardPrinter
+supplier - EZShop
+barcodeReader -- EZShop
 
 
 @enduml
