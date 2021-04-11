@@ -65,7 +65,7 @@ actor : Fidelity card printer: as fcPrinter
 rectangle "EZShop System" as EZShopSystem{
 (EZShop)
 }
-Subscriber <|- employee
+Subscriber <|- Employee
 Subscriber <|-owner
 Customer -- EZShop
 Product -- EZShop
@@ -74,6 +74,7 @@ Employee - EZShop
 EZShop -- POSSystem
 EZShop - supplier
 EZShop-- fcPrinter
+Subscriber -- EZShop
 
 
 
