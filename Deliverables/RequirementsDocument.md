@@ -185,6 +185,8 @@ Phone number
 Email
 Password
 }
+class "General database" as generalDB{
+}
 class "Owner" as owner{
 }
 class "Customer" as customer{
@@ -210,10 +212,9 @@ Fidelity points
 Creation date 
 Lost 
 }
-class "Inventory Management System?" as IMS{
+class "Local server" as localServer{
 }
-class "Inventory Database" as Idb{
-?
+
 }
 class "Product type" as PT{
 Name
@@ -260,11 +261,13 @@ fidelityCard"1...*" -- subscriber
 EZShop--"*"fidelityCard 
 subscriber -- right
 EZShop - LT
-IMS - EZShop  
-IMS -- Idb
+localServer - EZShop  
+
 EZShop -- "*"PT
 PT -- "*"product
-
+localServer -- generalDB
+generalDB-- product
+generalDB -- transaction
 EZShop -- "*"transaction
 customer <|- subscriber
 transaction <|-- sale
