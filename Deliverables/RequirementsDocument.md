@@ -185,8 +185,7 @@ Phone number
 Email
 Password
 }
-class "General database" as generalDB{
-}
+
 class "Owner" as owner{
 }
 class "Customer" as customer{
@@ -214,7 +213,8 @@ Lost
 }
 class "Local server" as localServer{
 }
-
+class "General database" as generalDB{
+}
 }
 class "Product type" as PT{
 Name
