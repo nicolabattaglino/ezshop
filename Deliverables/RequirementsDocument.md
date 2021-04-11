@@ -215,7 +215,7 @@ class "Local server" as localServer{
 }
 class "General database" as generalDB{
 }
-}
+
 class "Product type" as PT{
 Name
 Barcode
