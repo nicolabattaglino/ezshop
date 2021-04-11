@@ -237,7 +237,6 @@ class "Expense" as expense {
 }
 
 class "Sale" as sale{
-ID
 added points
 }
 
