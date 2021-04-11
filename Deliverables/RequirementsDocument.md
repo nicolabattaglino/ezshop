@@ -70,7 +70,6 @@ Subscriber <|-owner
 Customer -- EZShop
 Product -- EZShop
 EZShop -- Owner
-Employee - EZShop
 EZShop -- POSSystem
 EZShop - supplier
 EZShop-- fcPrinter
