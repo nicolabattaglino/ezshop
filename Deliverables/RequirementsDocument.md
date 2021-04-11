@@ -66,10 +66,8 @@ rectangle "EZShop System" as EZShopSystem{
 (EZShop)
 }
 Subscriber <|- Employee
-Subscriber <|-owner
-Customer -- EZShop
+Subscriber <|- Owner
 Product -- EZShop
-EZShop -- Owner
 EZShop -- POSSystem
 EZShop - supplier
 EZShop-- fcPrinter
