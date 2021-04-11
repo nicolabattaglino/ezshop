@@ -304,6 +304,7 @@ EZShop o-- localTerminal
 EZShop o-- fcReader
 localTerminal -- software
 localServer -- software
+EZShop o-- localServer
 
 
 @enduml
