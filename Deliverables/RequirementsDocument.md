@@ -65,7 +65,7 @@ actor :Supplier: as supplier
 rectangle "EZShop System" as EZShopSystem{
 (EZShop)
 }
-Subscriber --> EZShop
+Subscriber -- EZShop
 Owner -|> Subscriber
 Employee -|>Subscriber
 Product -- EZShop
