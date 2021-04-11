@@ -179,16 +179,19 @@ title Glossary
 
 
 class "Subscriber" as subscriber{
-Name
-Surname
-SSN
+ID
 Address
-Date of birth
 Phone number 
 Email
 Password
 }
 class "Owner" as owner{
+}
+class "Customer" as customer{
+Name
+Surname
+SSN
+Date of birth
 }
 class "Employee" as employee{
 Salary
@@ -234,6 +237,7 @@ class "Expense" as expense {
 }
 
 class "Sale" as sale{
+ID
 }
 
 class "Amount" as amount{
@@ -262,7 +266,7 @@ EZShop -- "*"PT
 PT -- "*"product
 
 EZShop -- "*"transaction
-
+customer <|- subscriber
 transaction <|-- sale
 transaction <|-- expense
 fidelityCard -- "*"coupon 
