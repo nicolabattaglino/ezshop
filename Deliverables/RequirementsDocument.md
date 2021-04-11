@@ -281,10 +281,10 @@ sale"*" -- subscriber
 
 title System Design
 class "EZ Shop" as EZShop{
-F1 
-F2
-F3
-F4
+F1 manage sales 
+F2 manage inventory
+F3 manage accounts
+F4 support accounting
 }
 
 class "Local terminal" as localTerminal{
@@ -302,7 +302,28 @@ localTerminal -- software
 ```
 \<must be consistent with Context diagram>
 
-# Deployment Diagram 
+# Deployment Diagram
 
+```plantuml
+@startuml
+
+title Classes - Deployment Diagram
+node "Local server" as localServer{
+artifact "EZShop application" as EZShop{
+artifact "General database" as generalDB
+
+artifact "Accounting" as accounting
+}
+}
+node "Local terminal" as localTerminal{
+artifact "GUI" as gui
+}
+
+localServer -- "*"localTerminal :internet
+
+
+@enduml
+
+```
 \<describe here deployment diagram >
 
