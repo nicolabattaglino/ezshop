@@ -237,7 +237,7 @@ class "Expense" as expense {
 }
 
 class "Sale" as sale{
-added points
+Points added
 }
 
 class "Amount" as amount{
