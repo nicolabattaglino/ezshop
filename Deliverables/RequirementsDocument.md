@@ -56,22 +56,24 @@ title Context Diagram
 
 
 actor Owner
-actor Customer
 actor Product
 actor Subscriber
 actor Employee
 actor :POS System: as POSSystem
 actor :Supplier: as supplier
+actor : Fidelity card printer: as fcPrinter
 rectangle "EZShop System" as EZShopSystem{
 (EZShop)
 }
-Subscriber -|> Customer
+Subscriber <|- employee
+Subscriber <|-owner
 Customer -- EZShop
 Product -- EZShop
 EZShop -- Owner
 Employee - EZShop
 EZShop -- POSSystem
 EZShop - supplier
+EZShop-- fcPrinter
 
 
 
