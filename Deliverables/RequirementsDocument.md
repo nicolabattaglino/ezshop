@@ -56,6 +56,7 @@ title Context Diagram
 
 
 actor Owner
+actor :Barcode scanner: as bcScanner
 actor Product
 actor Subscriber
 actor Employee
@@ -72,6 +73,7 @@ EZShop -- POSSystem
 EZShop - supplier
 EZShop-- fcPrinter
 Subscriber -- EZShop
+EZShop -- bcScanner
 
 
 
