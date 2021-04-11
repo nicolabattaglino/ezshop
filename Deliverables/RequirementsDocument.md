@@ -61,7 +61,7 @@ actor Product
 actor Subscriber
 actor Employee
 actor :POS System: as POSSystem
-actort :Supplier: as supplier
+actor :Supplier: as supplier
 rectangle "EZShop System" as EZShopSystem{
 (EZShop)
 }
