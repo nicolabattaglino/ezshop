@@ -96,16 +96,16 @@ Fidelity card: A card that each subscriber gets when they register.
 Card reader: Hardware that reads fidelity cards.
 APIs: Software to connect external systems to EZ Shop logically.
 
-| Actor | Logical Interface | Physical Interface  |
+| Actor | Physical Interface | Logical Interface  |
 | ------------- |:-------------:| -----:|
 | Owner       | Screen keyboard mouse on PC | GUI |
 | Employee       | Screen keyboard mouse on PC | GUI |
 | Subscriber       | Screen keyboard mouse on PC | GUI |
-| Barcode scanner       | Internet connection, Screen keyboard mouse on PC | Fidelity card, GUI |
+| Barcode scanner       | Usb cable | Drivers |
 | Supplier       | Screen keyboard mouse on PC | GUI |
 | POS system       | Internet connection | Creditcard API |
 | Product       | Laser beam | Barcode |
-| Fidelity card printer       | Usb cable | API |
+| Fidelity card printer       | Usb cable | Drivers |
 
 # Stories and personas
 
@@ -185,10 +185,10 @@ APIs: Software to connect external systems to EZ Shop logically.
 
 | ID        | Type (efficiency, reliability, ..)           | Description  | Refers to |
 | ------------- |:-------------:| :-----:| -----:|
-|  NFR1     | Usability  | EZ Shop is easy to undestand and use in less than 5 minutes | Employee and Owner|
-|  NFR2     | Efficiency | Operations should take less than 10 seconds | Subscriber, Employee and Owner|
-|  NFR3     | Portability | EZ Shop should be available on several OS (Windows, MacOS and Linux)| - |
-| NFR4 | Privacy | Subscribers' information are secure| - | 
+|  NFR1     | Usability  | EZ Shop is easy to undestand and use in less than 5 minutes | All|
+|  NFR2     | Efficiency | Operations should take less than 10 seconds | All|
+|  NFR3     | Portability | EZ Shop should be available on several OS (Windows, MacOS and Linux)| All|
+| NFR4 | Privacy | Database data are encrypted| Fr3, Fr4| 
 
 
 # Use case diagram and use cases
@@ -295,11 +295,11 @@ employee-->(addPoints)
  
  
 ### Use case 2, UC2 Waring on low stock, Buy product
-| Actors Involved        | Owner, Inventory a
+| Actors Involved        | Owner |
+| ------------- |:-------------:| 
 |  Precondition     | One or more products are low stock | 
 |  Post condition     | A decision about whether to buy the product or not is made | (Ambiguous)
 |  Nominal Scenario     | The Inventory and Catalogue system warns on the low stock product(s)nd Catalogue system |
-| ------------- |:-------------:| 
 The owner decide to buy the product(s) |
 |  Variants     | The owner decide to not buy the product(s)|
 |	|If the product is bought -> increase the amount in the inventory |
@@ -372,9 +372,7 @@ The owner decide to buy the product(s) |
 | ------------- |:-------------:| 
 |  Precondition     | New registration requested |  
 |  Post condition     | New fidelity card is created |
-|  Nominal Scenario     | Someone requests the registration,
-the employee or the owner insert the new entry in the system,
-new fidelity card is created associated to the subscriber |
+|  Nominal Scenario     | Someone requests the registration, the employee or the owner insert the new entry in the system, new fidelity card is created associated to the subscriber |
 |  Variants     | if subscriber entry is already present in the system -> create only the new fidelity card |
  
 #### Scenario 7.1
@@ -641,7 +639,7 @@ node "Local terminal" as localTerminal{
 artifact "GUI" as gui
 }
 
-localServer -- "*"localTerminal :internet
+localServer --"*" localTerminal :internet
 
 
 @enduml
