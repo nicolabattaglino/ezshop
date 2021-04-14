@@ -201,7 +201,6 @@ APIs: Software to connect external systems to EZ Shop logically.
 title Use Case Diagram
 rectangle "EZ Shop" as EZShop{
 "Warning on low stock product and buy product" as (warning)
-"Check inventory" as (checkInventory)
 "Handle transaction" as (handleTransaction)
 "Mark product as "not sold anymore"" as (notSold)
 "Add fidelity points" as (addPoints)
@@ -239,7 +238,6 @@ owner--|> subscriber
 employee --|>subscriber
 subscriber -->(manageAccount)
 employee-->(handleTransaction)
-employee-->(checkInventory)
 employee-->(addPoints)
 (handleTransaction) --> (warning)
 @enduml
