@@ -274,11 +274,7 @@ employee-->(addPoints)
 | ------------- |:-------------:| 
 |  Precondition     | There are one or more product(s) in the shop|  
 |  Post condition     | New transaction added, decrease amount of the product(s)) |
-|  Nominal Scenario     | Read the bar code(s)
-start sale transaction
-read the bar code of each product
-end sale transaction
-hand product(s) to the customer |
+|  Nominal Scenario     | Read the bar code(s). Start sale transaction. Read the bar code of each product.End sale transaction. Hand product(s) to the customer |
 |  Variants     | if there is a discount on a product -> apply discount |
 |      | if a subscriber requests a discount and also have a coupon -> apply discount |
 |      | if the customer is a subscriber -> add fidelity points |
