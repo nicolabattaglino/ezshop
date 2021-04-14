@@ -1,6 +1,6 @@
 # Requirements Document 
 
-Authors:test
+Authors:
 
 Date:
 
@@ -42,12 +42,19 @@ EZShop is a software application to:
 
 | Stakeholder name  | Description | 
 | ----------------- |:-----------:|
-|   Stakeholder x..     |             | 
+|   Owner     | The owner of the shop            | 
+| Subscriber | A customer of that shop that registered using EZ Shop |
+| Employee | An employee pf the shop |
+| Product | A product sold by the shop |
+| Barcode scaner | - |
+| POS system | - |
+| Supplier | The supplier from whom the owner buys the products | 
+
 
 # Context Diagram and interfaces
 
 ## Context Diagram
-\<Define here Context diagram using UML use case diagram>
+
 ```plantuml
 @startuml
 
@@ -80,23 +87,33 @@ EZShop -- bcScanner
 @enduml
 ```
 
-\<actors are a subset of stakeholders>
+
 
 ## Interfaces
-\<describe here each interface in the context diagram>
 
-\<GUIs will be described graphically in a separate document>
+Screen, keyboard and mouse on PC: A PC inside the shop that all subscriber can use.
+Fidelity card: A card that each subscriber gets when they register.
+Card reader: Hardware that reads fidelity cards.
+APIs: Software to connect external systems to EZ Shop logically.
 
 | Actor | Logical Interface | Physical Interface  |
 | ------------- |:-------------:| -----:|
-|   Actor x..     |  |  |
+| Owner       | Screen keyboard mouse on PC | GUI |
+| Employee       | Screen keyboard mouse on PC | GUI |
+| Subscriber       | Screen keyboard mouse on PC | GUI |
+| Barcode scanner       | Internet connection, Screen keyboard mouse on PC | Fidelity card, GUI |
+| Supplier       | Screen keyboard mouse on PC | GUI |
+| POS system       | Internet connection | Creditcard API |
+| Product       | Laser beam | Barcode |
+| Fidelity card printer       | Usb cable | API |
 
 # Stories and personas
-\<A Persona is a realistic impersonation of an actor. Define here a few personas and describe in plain text how a persona interacts with the system>
 
-\<Persona is-an-instance-of actor>
+	-Paolo is 24, he's a student at Polytechnic of Turin. He cannot spend a lot of money because he has a limited budget. For this reason he looks to the biggest discounts in the shop. 	He likes the fact that he can use fidelity to have more discounts.
+	-Mattia is 32, he works in a little shop in Turin as a cashier. He loves his job and he wants to be as productive as possible. Because of that, he likes to work with a simple system that guarantees simple operations. He hates when there are too many customers in the queue in front of his cash register. Hence he wants to process as many customers as possible.
+	-Hossein is 34, he works as an owner in a small shop. He must handle his job and make business decisions. The important part of his task is managing employees in an easy way (He must have an easy Managing App to manage working hours, gain money, reduce human acting …)
+	-Stefania is 42, she’s a family mother and she often needs to buy a lot of food  a few times a week. To  quicken this process she would like to waste as little time as possible in line or with the cashier. Due to her fidelity to the shop she would also like to have some kind of reward, such as discounts, based on how much she spends.
 
-\<stories will be formalized later as scenarios in use cases>
 
 
 # Functional and non functional requirements
@@ -109,9 +126,58 @@ EZShop -- bcScanner
 
 | ID        | Description  |
 | ------------- |:-------------:| 
-|  FR1     |  |
-|  FR2     |   |
-| FRx..  | | 
+|  FR1     | Manage sales |
+|  FR1.1     | Handle sale transaction  |
+| FR1.2  | Start sale transaction | 
+| FR1.3  | End sale transaction| 
+| FR1.4  | Apply discount| 
+| FR2  | Manage Inventory| 
+| FR2.1  | Add new product|
+| FR2.2  | Warnin on low stock product| 
+| FR2.3  | Buy product| 
+| FR2.4  | Check inventory| 
+| FR2.5  | Mark product as "not sold anymore"| 
+| FR2.6  | Increase stock amount| 
+| FR2.7  | Decrease stock amount| 
+| FR3  | Manage accounts| 
+| FR3.1  | Check fidelity points| 
+| FR3.2  | Registration| 
+| FR3.3  | Edit account information| 
+| FR3.4  | Add fidelity points| 
+| FR3.5  | Create a coupon with fidelity points| 
+| FR3.6  | Request fidelity card| 
+| FR3.7  | Login| 
+| FR3.8  | Logout| 
+| FR3.9  | Manage rights| 
+| FR4  | Support accounting| 
+| FR4.1  | Keep track of sale transactions| 
+| FR4.2  | Keep track of expenses| 
+| FR4.3  | Pay salaries| 
+| FR4.4  | List sale transactions| 
+| FR4.5  | List expenses| 
+
+## Access right, actor vs function
+| Function| Owner| Employee| Subscriber|
+| ------------- |:-------------:| :-----:| -----:|
+| FR1| Yes| Yes| No|
+| FR2.1| Yes| No| No|
+| FR2.2| Yes| Yes| No|
+| FR2.3| Yes| No| No|
+| FR2.4| Yes| Yes| No|
+| FR2.5| Yes| No| No|
+| FR2.6| Yes| Yes| No|
+| FR2.7| Yes| Yes| No|
+| FR3.1| Yes| Yes| Yes|
+| FR3.2| Yes| Yes| Yes|
+| FR3.3| Yes| Yes| Yes|
+| FR3.4| Yes| Yes| No|
+| FR3.5| No| No| Yes|
+| FR3.6| Yes| Yes| Yes|
+| FR3.7| Yes| Yes| Yes|
+| FR3.8| Yes| Yes| Yes|
+| FR3.9| Yes| No| No|
+| FR4| Yes| No| No|
+
 
 ## Non Functional Requirements
 
@@ -119,56 +185,301 @@ EZShop -- bcScanner
 
 | ID        | Type (efficiency, reliability, ..)           | Description  | Refers to |
 | ------------- |:-------------:| :-----:| -----:|
-|  NFR1     |   |  | |
-|  NFR2     | |  | |
-|  NFR3     | | | |
-| NFRx .. | | | | 
+|  NFR1     | Usability  | EZ Shop is easy to undestand and use in less than 5 minutes | Employee and Owner|
+|  NFR2     | Efficiency | Operations should take less than 10 seconds | Subscriber, Employee and Owner|
+|  NFR3     | Portability | EZ Shop should be available on several OS (Windows, MacOS and Linux)| - |
+| NFR4 | Privacy | Subscribers' information are secure| - | 
 
 
 # Use case diagram and use cases
 
 
 ## Use case diagram
-\<define here UML Use case diagram UCD summarizing all use cases, and their relationships>
+```plantuml
+@startuml
+
+title Use Case Diagram
+rectangle "EZ Shop" as EZShop{
+"Warning on low stock product and buy product" as (warning)
+"Check inventory" as (checkInventory)
+"Handle transaction" as (handleTransaction)
+"Mark product as "not sold anymore"" as (notSold)
+"Add fidelity points" as (addPoints)
+"Manage account" as (manageAccount)
+"Accountig" as (accounting)
+"Add product" as (addProduct)
+"Manage rights" as (manageRights)
+}
+
+"Owenr" as owner
+"Employee" as employee
+"Subscriber" as subscriber
+"Supplier" as supplier
+"Product" as product
+"Barcode scanner" as bcScanner
+
+(handleTransaction) -->(addPoints)
+(handleTransaction)->product
+(handleTransaction) --> bcScanner
+owner<---(warning)
+employee<---(warning)
+supplier<---(warning)
+(warning)->product
+(notSold)->product
+(addProduct) ->product
+supplier<--(addProduct) 
+owner-->(handleTransaction)
+owner-->(addProduct)
+owner-->(notSold)
+owner-->(addPoints)
+owner-->(manageRights)
+owner-->(accounting)
+owner-->(warning)
+owner--|> subscriber
+employee --|>subscriber
+subscriber -->(manageAccount)
+employee-->(handleTransaction)
+employee-->(checkInventory)
+employee-->(addPoints)
+(handleTransaction) --> (warning)
+@enduml
+```
+
+```plantuml
+@startuml
+
+"Manage account" as (manageAccount)
+"Check points" as (checkPoints)
+"Registration" as (registration)
+"Request fidelity card" as (request)
+"Edit information" as (edit)
+"Create cooupon" as (coupon)
+"Accounting" as (acoounting)
+"List sale transactions" as (listSale)
+"List expenses" as (listExpenses)
+"Pay salaries" as (paySalaries)
+(manageAccount)-->(checkPoints):include
+(manageAccount)-->(registration):include
+(manageAccount)-->(request):include
+(manageAccount)-->(edit):include
+(manageAccount)-->(coupon):include
+(acoounting)-->(listSale):include
+(acoounting)-->(listExpenses):include
+(acoounting)-->(paySalaries):include
+@enduml
+
+```
 
 
-\<next describe here each use case in the UCD>
-### Use case 1, UC1
-| Actors Involved        |  |
+### Use case 1, UC1 Manage sale transaction
+| Actors Involved        | Employee or Owner |
 | ------------- |:-------------:| 
-|  Precondition     | \<Boolean expression, must evaluate to true before the UC can start> |  
-|  Post condition     | \<Boolean expression, must evaluate to true after UC is finished> |
-|  Nominal Scenario     | \<Textual description of actions executed by the UC> |
-|  Variants     | \<other executions, ex in case of errors> |
-
-##### Scenario 1.1 
-
-\<describe here scenarios instances of UC1>
-
-\<a scenario is a sequence of steps that corresponds to a particular execution of one use case>
-
-\<a scenario is a more formal description of a story>
-
-\<only relevant scenarios should be described>
-
-| Scenario 1.1 | |
+|  Precondition     | There are one or more product(s) in the shop|  
+|  Post condition     | New transaction added, decrease amount of the product(s)) |
+|  Nominal Scenario     | Read the bar code(s)
+start sale transaction
+read the bar code of each product
+end sale transaction
+hand product(s) to the customer |
+|  Variants     | if there is a discount on a product -> apply discount |
+|      | if a subscriber requests a discount and also have a coupon -> apply discount |
+|      | if the customer is a subscriber -> add fidelity points |
+ 
+##### Scenario 1.1
+| Scenario | Coupon usage |
 | ------------- |:-------------:| 
-|  Precondition     | \<Boolean expression, must evaluate to true before the scenario can start> |
-|  Post condition     | \<Boolean expression, must evaluate to true after scenario is finished> |
+|  Precondition     |There are one or more product(s) in the shop and the customer is a subscriber with at least a coupon that is not expired |
+|  Post condition     | A subscriber bought the product(s)|
 | Step#        | Description  |
-|  1     |  |  
-|  2     |  |
-|  ...     |  |
+|  1     | The subscriber approaches the cashier with the products they intent to buy and at least a coupon |  
+|  2     | The cashier reads the barcode(s) |
+|  3     | Start sale transaction |
+|  4     | The cashier asks the subscriber if they want to use a coupon |
+|  5     | The subscriber accepts to use a coupon |
+|  6     | The coupon is consumed and a discount is applied |
+|  7     | End sale transaction |
+ 
+ 
+### Use case 2, UC2 Waring on low stock, Buy product
+| Actors Involved        | Owner, Inventory a
+|  Precondition     | One or more products are low stock | 
+|  Post condition     | A decision about whether to buy the product or not is made | (Ambiguous)
+|  Nominal Scenario     | The Inventory and Catalogue system warns on the low stock product(s)nd Catalogue system |
+| ------------- |:-------------:| 
+The owner decide to buy the product(s) |
+|  Variants     | The owner decide to not buy the product(s)|
+|	|If the product is bought -> increase the amount in the inventory |
+ 
+##### Scenario 2.1
+| Scenario  | Owner decides not to buy the product|
+| ------------- |:-------------:| 
+|  Precondition     | One or more products are low stock |
+|  Post condition     | - |
+| Step#        | Description  |
+|  1     | The system informs the owner that one on more products are low on stock  |  
+|  2     | A window with the option to make an order to that product’s supplier appears |
+|  3     | The owner decides not to buy the product |
 
-##### Scenario 1.2
 
-##### Scenario 1.x
+##### Scenarion 2.2
+| Scenario  | Owner decides to buy the product|
+| ------------- |:-------------:| 
+|  Precondition     | One or more products are low stock |
+|  Post condition     | The product amount is increased|
+| Step#        | Description  |
+|  1     | The system informs the owner that one on more products are low on stock  |  
+|  2     | A window with the option to make an order to that product’s supplier appears |
+|  3     | The owner decides to buy the product |
+|  4     | An order is issued |
+|  5     | The product(s) is/are delivered |
+ 
+ 
+### Use case 3, UC3 Add product
+ 
 
-### Use case 2, UC2
-..
+| Actors Involved        | Product, Owner |
+| ------------- |:-------------:| 
+|  Precondition     | The product is not in the inventory or marked as “not sold anymore” |  
+|  Post condition     | Product is in the Inventory and marked as sold |
+|  Nominal Scenario     | Owner Checked inventory to add product(s) |
+|  Variants     | - |
+ 
+ 
+### Use case 4, UC4 Check inventory
+ 
 
-### Use case x, UCx
-..
+| Actors Involved        | Owner, Employee |
+| ------------- |:-------------:| 
+|  Precondition     | - |  
+|  Post condition     | - |
+|  Nominal Scenario     | Check inventory  |
+|  Variants     | if the quantity of a product is below a 10 units the system triggers a “low quantity” notification |
+
+### Use case 5, UC5 Mark product as "not sold anymore"
+
+| Actors Involved        | Owner, Inventory and catalogue system |
+| ------------- |:-------------:| 
+|  Precondition     | There is a product not marked as “not sold anymore” |  
+|  Post condition     | The product is marked as not sold anymore|
+|  Nominal Scenario     | The owner signals that they don’t intend to sell a product anymore. The inventory and catalogue system stops signaling the product as “low on stock”. The product is then marked as not sold anymore|
+|  Variants     | - |
+ 
+### Use case 6, UC6 Edit information 
+
+| Actors Involved        | Subscriber  |
+| ------------- |:-------------:| 
+|  Precondition     | The user is logged in|  
+|  Post condition     | the subscriber is logged out and their information has changed since they logged in |
+|  Nominal Scenario     | The subscriber logs in and changes one or fields regarding their information. The subscriber logs out.|
+|  Variants     | - |
+
+### Use case 7, UC7 Registration, Request fidelity card
+| Actors Involved        | Owner, Employee, Subscriber |
+| ------------- |:-------------:| 
+|  Precondition     | New registration requested |  
+|  Post condition     | New fidelity card is created |
+|  Nominal Scenario     | Someone requests the registration,
+the employee or the owner insert the new entry in the system,
+new fidelity card is created associated to the subscriber |
+|  Variants     | if subscriber entry is already present in the system -> create only the new fidelity card |
+ 
+#### Scenario 7.1
+|Scenario | New card requested|
+| ------------- |:-------------:| 
+|  Precondition     | The subscriber to-be clicks on “register” button at the terminal|
+|  Post condition     | New fidelity card is created|
+| Step#        | Description  |
+|  1     | The subscriber to-be clicks on “register” button at the terminal |  
+|  2     | New Registration request is issued |
+| 3      | The subscriber inserts personal information (e-mail, password, name, surname, SSN, date of birth, address, phone number (optional))|
+| 4 	   | The subscriber confirms their information |
+| 5	   | The system links the subscriber with a new already printed card  (they will receive it from the cashier when they ask for it)|
+ 
+#### Scenario 7.2
+| Scenario | Lost card requested|
+| ------------- |:-------------:| 
+|  Precondition     | A subscriber clicks on “Lost card”|
+|  Post condition     | New fidelity card is created |
+| Step#        | Description  |
+|  1     | the system asks for email and password |  
+|  2     | The system marks the previous card as lost |
+|  3     | The system links the subscriber with a new already printed card |
+|  4     | The system transfer fidelity points (if any) from the lost fidelity card to the new one |
+|  5     | The system transfer coupons (if any) from the lost fidelity card to the new one |
+ 
+ 
+ 
+ 
+### Use case 8, UC8 Create a coupon
+| Actors Involved        | Subscriber  |
+| ------------- |:-------------:| 
+|  Precondition     | The subscriber is logged in, the subscriber has at least 10 fidelity points|  
+|  Post condition     | A new coupon is added to the Subscriber account, his amount of point is decreased by 10, The user is log out|
+|  Nominal Scenario     | new coupon is generated and added to the Subscriber account, 10 points are subtracted from the subscriber’s total, the subscriber perform a logout |
+|  Variants     | - |
+ 
+### Use case 9, UC9 Check points
+| Actors Involved        | Subscriber |
+| ------------- |:-------------:| 
+|  Precondition     | The subscriber is logged in |  
+|  Post condition     | The subscriber logs out|
+|  Nominal Scenario     | The Subscriber views their points |
+|  Variants     | - |
+ 
+### Use case 10, UC10 Add Fidelity point
+| Actors Involved        | Subscriber, Cashier |
+| ------------- |:-------------:| 
+|  Precondition     | The subscriber has Fidelity card |  
+|  Post condition     |  Add fidelity point |
+|  Nominal Scenario     |  Adding new points  |
+|  Variants     | - |
+ 
+#### Scenario 10.1
+| Adding new points | Employee|
+| ------------- |:-------------:| 
+|  Precondition     | The subscriber has Fidelity card and is a part of a transaction |
+|  Post condition     | Add fidelity point |
+| Step#        | Description  |
+|  1     | The subscriber buys one or more products |  
+|  2     | The cashier reads the fidelity card via card reader  |
+|  3     | The system calculates the points based on the total of the transaction (Every 10 euro buying have 1 Fidelity point)|
+|  4     | The points are added  to the subscriber total in the database |
+ 
+ 
+ 
+### Use case 11, UC11 Manage rights
+| Actors Involved        | Owner |
+| ------------- |:-------------:| 
+|  Precondition     | The owner is logged in|  
+|  Post condition     | The owner logs out and one or more subscribers’ rights have changed|
+|  Nominal Scenario     | The owner logs in, accesses the rights of one or more users and changes them. The owner then logs off|
+|  Variants     | This operation is performed both when there is a new employee or when an employee is dismissed|
+ 
+### Use case 12, UC12 List sale transaction
+| Actors Involved        | Owner |
+| ------------- |:-------------:| 
+|  Precondition     | There are one or more transactions recorded |  
+|  Post condition     | - |
+|  Nominal Scenario     | The owner requests the list of transactions. The list is printed |
+|  Variants     | - |
+ 
+### Use case 13, UC13 List expenses
+| Actors Involved        | Owner |
+| ------------- |:-------------:| 
+|  Precondition     |There are one or more expenses recorded|  
+|  Post condition     | - |
+|  Nominal Scenario     |The owner requests a list of expenses. The list is printed|
+|  Variants     | - |
+ 
+### Use case 14, UC14 Pay salaries 
+| Actors Involved        | Owner, Employee |
+| ------------- |:-------------:| 
+|  Precondition     | Employee(s) can receive their salaries  |  
+|  Post condition     | Paying Salaries |
+|  Nominal Scenario     | If Employee(s) does not receive their salary, system announce the adjourned salaries, or Employee(s) can send their request to the Owner for pay the salaries |
+|  Variants     | Customer orientation have encouragement |
+
+
 
 
 
