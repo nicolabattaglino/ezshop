@@ -133,7 +133,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 | FR1.4  | Apply discount| 
 | FR2  | Manage Inventory| 
 | FR2.1  | Add new product|
-| FR2.2  | Warnin on low stock product| 
+| FR2.2  | Warning on low stock product| 
 | FR2.3  | Buy product| 
 | FR2.4  | Check inventory| 
 | FR2.5  | Mark product as "not sold anymore"| 
