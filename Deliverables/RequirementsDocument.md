@@ -171,7 +171,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 | FR3.2| Yes| Yes| Yes|
 | FR3.3| Yes| Yes| Yes|
 | FR3.4| Yes| Yes| No|
-| FR3.5| No| No| Yes|
+| FR3.5| Yes| Yes| Yes|
 | FR3.6| Yes| Yes| Yes|
 | FR3.7| Yes| Yes| Yes|
 | FR3.8| Yes| Yes| Yes|
@@ -315,7 +315,7 @@ The owner decide to buy the product(s) |
 |  3     | The owner decides not to buy the product |
 
 
-##### Scenarion 2.2
+##### Scenario 2.2
 | Scenario  | Owner decides to buy the product|
 | ------------- |:-------------:| 
 |  Precondition     | One or more products are low stock |
@@ -371,12 +371,12 @@ The owner decide to buy the product(s) |
 | Actors Involved        | Owner, Employee, Subscriber |
 | ------------- |:-------------:| 
 |  Precondition     | New registration requested |  
-|  Post condition     | New fidelity card is created |
-|  Nominal Scenario     | Someone requests the registration, the employee or the owner insert the new entry in the system, new fidelity card is created associated to the subscriber |
+|  Post condition     | New account is created |
+|  Nominal Scenario     | Someone requests the registration, new fidelity card is created associated to the subscriber |
 |  Variants     | if subscriber entry is already present in the system -> create only the new fidelity card |
  
 #### Scenario 7.1
-|Scenario | New card requested|
+|Scenario | Registration and card requested|
 | ------------- |:-------------:| 
 |  Precondition     | The subscriber to-be clicks on “register” button at the terminal|
 |  Post condition     | New fidelity card is created|
@@ -390,10 +390,10 @@ The owner decide to buy the product(s) |
 #### Scenario 7.2
 | Scenario | Lost card requested|
 | ------------- |:-------------:| 
-|  Precondition     | A subscriber clicks on “Lost card”|
+|  Precondition     | Subscriber is logged in|
 |  Post condition     | New fidelity card is created |
 | Step#        | Description  |
-|  1     | the system asks for email and password |  
+|  1     | The subscriber clicks on “Lost card”|  
 |  2     | The system marks the previous card as lost |
 |  3     | The system links the subscriber with a new already printed card |
 |  4     | The system transfer fidelity points (if any) from the lost fidelity card to the new one |
