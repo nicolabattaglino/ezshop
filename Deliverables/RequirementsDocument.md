@@ -210,7 +210,7 @@ rectangle "EZ Shop" as EZShop{
 "Manage rights" as (manageRights)
 }
 
-"Owenr" as owner
+"Owner" as owner
 "Employee" as employee
 "Subscriber" as subscriber
 "Supplier" as supplier
