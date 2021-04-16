@@ -383,7 +383,7 @@ The owner decide to buy the product(s) |
 |  Post condition     | New fidelity card is created|
 | Step#        | Description  |
 |  1     | New Registration request is issued |
-| 2      | The subscriber inserts personal information (e-mail, password, name, surname, SSN, date of birth, address, phone number (optional))|
+| 2      | The subscriber inserts personal information (e-mail, password, name, surname, SSN, date of birth, address(optional), phone number (optional))|
 | 3 	   | The subscriber confirms their information |
 | 4	   | The system links the subscriber with a new already printed card  (they will receive it from the cashier when they ask for it)|
  
