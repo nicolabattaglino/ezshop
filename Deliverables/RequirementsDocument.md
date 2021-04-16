@@ -299,7 +299,7 @@ employee-->(addPoints)
 ### Use case 2, UC2 Waring on low stock, Buy product
 | Actors Involved        | Owner |
 | ------------- |:-------------:| 
-|  Precondition     | One or more products are low stock | 
+|  Precondition     | One or more products are low stock and maked as sold | 
 |  Post condition     | A decision about whether to buy the product or not is made | (Ambiguous)
 |  Nominal Scenario     | The Inventory and Catalogue system warns on the low stock product(s)nd Catalogue system |
 The owner decide to buy the product(s) |
