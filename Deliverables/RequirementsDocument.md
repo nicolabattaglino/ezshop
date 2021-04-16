@@ -428,7 +428,7 @@ The owner decide to buy the product(s) |
 |  Variants     | - |
  
 #### Scenario 10.1
-| Adding new points | Employee|
+| Scenario | Adding new points|
 | ------------- |:-------------:| 
 |  Precondition     | The subscriber has Fidelity card and is a part of a transaction |
 |  Post condition     | Add fidelity point |
