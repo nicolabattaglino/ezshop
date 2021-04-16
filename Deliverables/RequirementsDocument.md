@@ -177,6 +177,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 | FR3.7| Yes| Yes| Yes|
 | FR3.8| Yes| Yes| Yes|
 | FR3.9| Yes| No| No|
+| FR3.10| Yes| Yes| Yes|
 | FR4| Yes| No| No|
 
 
