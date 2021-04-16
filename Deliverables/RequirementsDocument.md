@@ -300,7 +300,7 @@ employee-->(addPoints)
 | Actors Involved        | Owner |
 | ------------- |:-------------:| 
 |  Precondition     | One or more products are low stock and maked as sold | 
-|  Post condition     | A decision about whether to buy the product or not is made | (Ambiguous)
+|  Post condition     | A decision about whether to buy the product or not is made (Ambiguous)| 
 |  Nominal Scenario     | The Inventory and Catalogue system warns on the low stock product(s)nd Catalogue system |
 The owner decide to buy the product(s) |
 |  Variants     | The owner decide to not buy the product(s)|
@@ -309,7 +309,7 @@ The owner decide to buy the product(s) |
 ##### Scenario 2.1
 | Scenario  | Owner decides not to buy the product|
 | ------------- |:-------------:| 
-|  Precondition     | One or more products are low stock |
+|  Precondition     | One or more products are low stock (less than 10 units)|
 |  Post condition     | - |
 | Step#        | Description  |
 |  1     | The system informs the owner that one on more products are low on stock  |  
@@ -328,6 +328,7 @@ The owner decide to buy the product(s) |
 |  3     | The owner decides to buy the product |
 |  4     | An order is issued |
 |  5     | The product(s) is/are delivered |
+|  6     | The amount of the product(s) is increased |
  
  
 ### Use case 3, UC3 Add product
@@ -337,8 +338,8 @@ The owner decide to buy the product(s) |
 | ------------- |:-------------:| 
 |  Precondition     | The product is not in the inventory or marked as “not sold anymore” |  
 |  Post condition     | Product is in the Inventory and marked as sold |
-|  Nominal Scenario     | Owner Checked inventory to add product(s) |
-|  Variants     | - |
+|  Nominal Scenario     | Owner inserts information about the product(s), the product  is added to the system |
+|  Variants     | if the product  is marked as “not sold anymore”, then will be marked as sold |
  
  
 ### Use case 4, UC4 Check inventory
