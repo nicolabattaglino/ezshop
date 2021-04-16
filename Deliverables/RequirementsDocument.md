@@ -382,11 +382,10 @@ The owner decide to buy the product(s) |
 |  Precondition     | The subscriber to-be clicks on “register” button at the terminal|
 |  Post condition     | New fidelity card is created|
 | Step#        | Description  |
-|  1     | The subscriber to-be clicks on “register” button at the terminal |  
-|  2     | New Registration request is issued |
-| 3      | The subscriber inserts personal information (e-mail, password, name, surname, SSN, date of birth, address, phone number (optional))|
-| 4 	   | The subscriber confirms their information |
-| 5	   | The system links the subscriber with a new already printed card  (they will receive it from the cashier when they ask for it)|
+|  1     | New Registration request is issued |
+| 2      | The subscriber inserts personal information (e-mail, password, name, surname, SSN, date of birth, address, phone number (optional))|
+| 3 	   | The subscriber confirms their information |
+| 4	   | The system links the subscriber with a new already printed card  (they will receive it from the cashier when they ask for it)|
  
 #### Scenario 7.2
 | Scenario | Lost card requested|
