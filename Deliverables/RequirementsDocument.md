@@ -149,6 +149,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 | FR3.7  | Login| 
 | FR3.8  | Logout| 
 | FR3.9  | Manage rights| 
+| FR3.10  | Forgot Password| 
 | FR4  | Support accounting| 
 | FR4.1  | Keep track of sale transactions| 
 | FR4.2  | Keep track of expenses| 
@@ -471,6 +472,13 @@ The owner decide to buy the product(s) |
 |  Nominal Scenario     | If Employee(s) does not receive their salary, system announce the adjourned salaries, or Employee(s) can send their request to the Owner for pay the salaries |
 |  Variants     | Customer orientation have encouragement |
 
+### Use case 15, UC15 Forgot Password 
+| Actors Involved        | Subscriber |
+| ------------- |:-------------:| 
+|  Precondition     | Forgot Password requested  |  
+|  Post condition     | Password updated |
+|  Nominal Scenario     | Subscriber insert the email, SSN and the new password. |
+|  Variants     | - |
 
 
 
