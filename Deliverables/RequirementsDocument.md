@@ -554,7 +554,7 @@ employee-->(addPoints)
 
 # Glossary
 
-\<use UML class diagram to define important terms, or concepts in the domain of the system, and their relationships> 
+
 ```plantuml
 @startuml
 
@@ -669,10 +669,10 @@ sale"*" -- customer
 @enduml
 ```
 
-\<concepts are used consistently all over the document, ex in use cases, requirements etc>
+
 
 # System Design
-\<describe here system design>
+
 ```plantuml
 @startuml
 
@@ -701,7 +701,7 @@ EZShop o-- localServer
 
 @enduml
 ```
-\<must be consistent with Context diagram>
+
 
 # Deployment Diagram
 
@@ -726,5 +726,5 @@ localServer --"*" localTerminal :internet
 @enduml
 
 ```
-\<describe here deployment diagram >
+
 
