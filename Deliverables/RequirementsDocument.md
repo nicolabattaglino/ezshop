@@ -404,9 +404,7 @@ employee-->(handleTransaction)
 <<<<<<< HEAD
  
  ### Use case 6, UC6 Edit product information
-=======
  ### Use case 6, UC6 Edit product information
->>>>>>> 811f34dbccebcedfbaae12c149c9a2cf2376814f
 
 | Actors Involved        | Owner |
 | ------------- |:-------------:| 
