@@ -138,6 +138,7 @@ APIs: Software to connect external systems to EZ Shop logically.\r
 | FR2.5  | Mark product as "not sold anymore"| 
 | FR2.6  | Increase stock amount| 
 | FR2.7  | Decrease stock amount| 
+| FR2.8  | Edit product information| 
 | FR3  | Manage accounts| 
 | FR3.1  | Check fidelity points| 
 | FR3.2  | Registration| 
@@ -167,6 +168,7 @@ APIs: Software to connect external systems to EZ Shop logically.\r
 | FR2.5| Yes| No| No|
 | FR2.6| Yes| Yes| No|
 | FR2.7| Yes| Yes| No|
+| FR2.8| Yes| No| No|
 | FR3.1| Yes| Yes| Yes|
 | FR3.2| Yes| Yes| Yes|
 | FR3.3| Yes| Yes| Yes|
