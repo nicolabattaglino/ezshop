@@ -481,6 +481,7 @@ employee-->(addPoints)
 |  Precondition     | The subscriber is logged in |  
 |  Post condition     | The subscriber logs out|
 |  Nominal Scenario     | The Subscriber views their points |
+|  Variants     | - |
 
 #### Scenario 9.1
 | Scenario | Check Points|
@@ -489,7 +490,7 @@ employee-->(addPoints)
 |  Post condition     | - |
 | Step#        | Description |
 |  1     | The subscriber checks points in the homepage | 
-|  Variants     | - |
+
  
 ### Use case 10, UC10 Add Fidelity point
 | Actors Involved        | Subscriber, Cashier |
