@@ -591,8 +591,57 @@ employee-->(addPoints)
 |  Precondition     | Forgot Password requested  |  
 |  Post condition     | Password updated |
 |  Nominal Scenario     | Subscriber insert the email, SSN and the new password. |
-|  Variants     | - |
+|  Variants     | if subscriber is not in the system -> error: Subscriber not found |
 
+#### Scenario 15.1
+| Scenario | Forgot Password|
+| ------------- |:-------------:| 
+|  Precondition     | Forgot Password Requested|
+|  Post condition     | Password updated|
+| Step#        | Description  |
+|  1     | The subscriber clicks on Forgot Password |  
+|  2     | The subscriber insert the email, SSN and new password  |
+|  3     | The subscriber clicks on save |
+
+#### Scenario 15.2
+| Scenario | Forgot Password but subscriber not found |
+| ------------- |:-------------:| 
+|  Precondition     | Forgot Password Requested|
+|  Post condition     | Password not updated|
+| Step#        | Description  |
+|  1     | The subscriber clicks on Forgot Password |  
+|  2     | The subscriber insert the email, SSN and new password  |
+|  3     | The subscriber clicks on save |
+|  4     | The system shows an error: Subscriber not found |
+
+
+### Use case 16, UC16 Login
+| Actors Involved        | Subscriber |
+| ------------- |:-------------:| 
+|  Precondition     | There is a subscriber that wants to log in  |  
+|  Post condition     | Subscriber is logged in |
+|  Nominal Scenario     | The subscriber log in |
+|  Variants     | if subscriber is not in the system -> error: Subscriber not found |
+
+#### Scenario 16.1
+| Scenario | Login |
+| ------------- |:-------------:| 
+|  Precondition     |  There is a subscriber that wants to log in |
+|  Post condition     | Subscriber is logged in |
+| Step#        | Description  |
+|  1     | The subscriber insert email and password |  
+|  2     | The subscriber click on log in |
+
+
+#### Scenario 16.2
+| Scenario | Login but subscriber not found |
+| ------------- |:-------------:| 
+|  Precondition     | There is a subscriber that wants to log in|
+|  Post condition     | Subscriber not logged in|
+| Step#        | Description  |
+|  1     | The subscriber insert email and password |  
+|  2     | The subscriber click on log in |
+|  3     | The system shows an error: Subscriber not found |
 
 
 
