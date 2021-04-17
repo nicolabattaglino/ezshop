@@ -535,6 +535,8 @@ Name
 Barcode
 Price 
 Amount
+Selling
+Buying Cost
 }
 class "Coupon" as coupon{
 ID
@@ -560,6 +562,7 @@ Quantity
 }
 class "Product" as product{
 Discount
+Expiration date
 }
 
 
