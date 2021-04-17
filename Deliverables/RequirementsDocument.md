@@ -501,7 +501,7 @@ employee-->(addPoints)
 | Actors Involved        | Subscriber, Cashier |
 | ------------- |:-------------:| 
 |  Precondition     | The subscriber has Fidelity card |  
-|  Post condition     |  Add fidelity point |
+|  Post condition     | Fidelity point added |
 |  Nominal Scenario     |  Adding new points  |
 |  Variants     | - |
  
@@ -509,7 +509,7 @@ employee-->(addPoints)
 | Scenario | Adding new points|
 | ------------- |:-------------:| 
 |  Precondition     | The subscriber has Fidelity card and is a part of a transaction |
-|  Post condition     | Add fidelity point |
+|  Post condition     | Fidelity point added |
 | Step#        | Description  |
 |  1     | The subscriber buys one or more products |  
 |  2     | The cashier reads the fidelity card via card reader  |
