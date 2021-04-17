@@ -302,34 +302,32 @@ employee-->(addPoints)
 | ------------- |:-------------:| 
 |  Precondition     | One or more products are low stock and maked as sold | 
 |  Post condition     | A decision about whether to buy the product or not is made (Ambiguous)| 
-|  Nominal Scenario     | The Inventory and Catalogue system warns on the low stock product(s)nd Catalogue system The owner decide to buy the product(s) |
+|  Nominal Scenario     | Owner decides to buy the product |
 |  Variants     | The owner decide to not buy the product(s)|
-|	|If the product is bought -> increase the amount in the inventory |
  
 ##### Scenario 2.1
-| Scenario  | Owner decides not to buy the product|
+| Scenario  | Owner decides to buy the product(s)|
+| ------------- |:-------------:| 
+|  Precondition     | One or more products are low stock |
+|  Post condition     | The product amount is increased |
+| Step#        | Description  |
+|  1     | The system shows that one on more products are low on stock (less than 10 units)  |  
+|  2     | The owner select the product(s) and the quantity that he/she want to buy |
+|  3     | The owner decides to buy the product(s) |
+|  4 	 | The product(s) is/are added to the list of expenses |
+|  5     | An order is issued |
+|  6     | The product(s) is/are delivered |
+|  7     | The amount of the product(s) is increased |
+ 
+
+##### Scenario 2.2
+| Scenario  | Owner decides not to buy the product(s)|
 | ------------- |:-------------:| 
 |  Precondition     | One or more products are low stock (less than 10 units)|
 |  Post condition     | - |
 | Step#        | Description  |
-|  1     | The system informs the owner that one on more products are low on stock  |  
-|  2     | A window with the option to make an order to that product’s supplier appears |
-|  3     | The owner decides not to buy the product |
-
-
-##### Scenario 2.2
-| Scenario  | Owner decides to buy the product|
-| ------------- |:-------------:| 
-|  Precondition     | One or more products are low stock |
-|  Post condition     | The product amount is increased|
-| Step#        | Description  |
-|  1     | The system informs the owner that one on more products are low on stock  |  
-|  2     | A window with the option to make an order to that product’s supplier appears |
-|  3     | The owner decides to buy the product |
-|  4     | An order is issued |
-|  5     | The product(s) is/are delivered |
-|  6     | The amount of the product(s) is increased |
- 
+|  1     | The system shows that one on more products are low on stock (less than 10 units) |  
+|  3     | The owner decides not to buy the product(s) |
  
 ### Use case 3, UC3 Add product
  
@@ -337,29 +335,78 @@ employee-->(addPoints)
 | Actors Involved        | Product, Owner |
 | ------------- |:-------------:| 
 |  Precondition     | The product is not in the inventory or marked as “not sold anymore” |  
-|  Post condition     | Product is in the Inventory and marked as sold |
-|  Nominal Scenario     | Owner inserts information about the product(s), the product  is added to the system |
+|  Post condition     | Product is added in the inventory and marked as sold |
+|  Nominal Scenario     | New product is added to the system  |
 |  Variants     | if the product  is marked as “not sold anymore”, then will be marked as sold |
  
- 
+ ##### Scenario 3.1
+| Scenario  | New product is added to the inventory |
+| ------------- |:-------------:| 
+|  Precondition     | The product is not in the inventory |
+|  Post condition     | Product is added in the inventory and marked as sold|
+| Step#        | Description  |
+|  1     | Owner inserts information about the product(s) that he wants to add to the inventory |  
+|  2     | The product is added to the inventory |
+|  3     | The system show the product as low in stock |
+
+
 ### Use case 4, UC4 Check inventory
- 
 
 | Actors Involved        | Owner, Employee |
 | ------------- |:-------------:| 
 |  Precondition     | - |  
 |  Post condition     | - |
-|  Nominal Scenario     | Check inventory  |
-|  Variants     | if the quantity of a product is below a 10 units the system triggers a “low quantity” notification |
+|  Nominal Scenario     | Prouct(s) is found |
+|  Variants     | Prouct(s) not found |
+
+##### Scenario 4.1
+| Scenario  | Prouct(s) is found |
+| ------------- |:-------------:| 
+|  Precondition     | The product(s) is in the inventory |
+|  Post condition     | - |
+| Step#        | Description  |
+|  1     | Owner inserts the information about the product(s) that he wants to search |  
+|  2     | The product(s) is/are shown |
+
+##### Scenario 4.1
+| Scenario  | Prouct(s) is not found |
+| ------------- |:-------------:| 
+|  Precondition     | The product(s) is in the inventory |
+|  Post condition     | - |
+| Step#        | Description  |
+|  1     | Owner inserts the information about the product(s) that he wants to search |  
+|  2     | The product(s) is/are shown |
+
+##### Scenario 4.1
+| Scenario  | Prouct(s) is not found |
+| ------------- |:-------------:| 
+|  Precondition     | The product(s) is in the inventory |
+|  Post condition     | - |
+| Step#        | Description  |
+|  1     | Owner inserts the information about the product(s) that he wants to search |  
+|  2     | The system shows an empty list |
 
 ### Use case 5, UC5 Mark product as "not sold anymore"
 
 | Actors Involved        | Owner, Inventory and catalogue system |
 | ------------- |:-------------:| 
-|  Precondition     | There is a product not marked as “not sold anymore” |  
-|  Post condition     | The product is marked as not sold anymore|
-|  Nominal Scenario     | The owner signals that they don’t intend to sell a product anymore. The inventory and catalogue system stops signaling the product as “low on stock”. The product is then marked as not sold anymore|
+|  Precondition     | There is/are a/some product(s) not marked as “not sold anymore” |  
+|  Post condition     | The product(s) is/are marked as not sold anymore|
+|  Nominal Scenario     | Product(s) are not sold anymore |
 |  Variants     | - |
+ 
+##### Scenario 5.1
+| Scenario  | Product(s) are not sold anymore |
+| ------------- |:-------------:| 
+|  Precondition     | The product(s) is/are in the inventory |
+|  Post condition     | Product(s) is/are marked as not sold anymore|
+| Step#        | Description  |
+|  1     | Owner inserts the barcode about the product(s) that he wants to not sell anymore |  
+|  2     | The add the product(s) into a list |
+|  3     | The onwner checks if everything is correct |
+|  4     | The onwner commit the changes |
+|  5     | The product(s) is/are then marked as not sold anymore |
+
  
 ### Use case 6, UC6 Edit information 
 
@@ -642,6 +689,25 @@ employee-->(addPoints)
 |  1     | The subscriber insert email and password |  
 |  2     | The subscriber clicks on log in |
 |  3     | The system shows an error: Subscriber not found |
+
+### Use case 17, UC6 Edit product information
+
+| Actors Involved        | Owner |
+| ------------- |:-------------:| 
+|  Precondition     | There is a not marked as “not sold anymore” |  
+|  Post condition     | - |
+|  Nominal Scenario     | Edit product information |
+|  Variants     | - |
+
+##### Scenario 17.1
+| Scenario  | Product(s) are not sold anymore |
+| ------------- |:-------------:| 
+|  Precondition     | There is a product not marked as “not sold anymore” |
+|  Post condition     | Product's information are changed |
+| Step#        | Description  |
+|  1     | Owner inserts the barcode about the product that he wants to edit |  
+|  3     | The onwner edits the product's informations |
+|  4     | The onwner commit the changes |
 
 
 
