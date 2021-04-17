@@ -92,10 +92,10 @@ EZShop -- bcScanner
 
 ## Interfaces
 
-Screen, keyboard and mouse on PC: A PC inside the shop that all subscriber can use.
-Fidelity card: A card that each subscriber gets when they register.
-Card reader: Hardware that reads fidelity cards.
-APIs: Software to connect external systems to EZ Shop logically.
+Screen, keyboard and mouse on PC: A PC inside the shop that all subscriber can use.\r
+Fidelity card: A card that each subscriber gets when they register.\r
+Card reader: Hardware that reads fidelity cards.\r
+APIs: Software to connect external systems to EZ Shop logically.\r
 
 | Actor | Physical Interface | Logical Interface  |
 | ------------- |:-------------:| -----:|
@@ -121,9 +121,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 
 ## Functional Requirements
 
-\<In the form DO SOMETHING, or VERB NOUN, describe high level capabilities of the system>
 
-\<they match to high level use cases>
 
 | ID        | Description  |
 | ------------- |:-------------:| 
