@@ -62,7 +62,7 @@ EZShop is a software application to:
 
 title Context Diagram
 
-actor Bank
+
 actor Owner
 actor :Barcode scanner: as bcScanner
 actor Product
@@ -70,10 +70,10 @@ actor Subscriber
 actor Employee
 actor :POS System: as POSSystem
 actor :Supplier: as supplier
+actor : Fidelity card printer: as fcPrinter
 rectangle "EZShop System" as EZShopSystem{
 (EZShop)
 }
-EZShop -- Bank
 Subscriber <|- Employee
 Subscriber <|- Owner
 Product -- EZShop
@@ -109,7 +109,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 | Supplier       | Internet connection | Email |
 | POS system       | Internet connection | Creditcard API |
 | Product       | Laser beam | Barcode |
-
+| Fidelity card printer       | Usb cable | Drivers |
 
 # Stories and personas
 
@@ -206,14 +206,14 @@ APIs: Software to connect external systems to EZ Shop logically.
 
 title Use Case Diagram
 rectangle "EZ Shop" as EZShop{
-"Warning on low stock product" as (warning)
+"Warning on low stock product and buy product" as (warning)
 "Handle transaction" as (handleTransaction)
-
-"Check inventory" as (checkInventory)
+"Mark product as "not sold anymore"" as (notSold)
+"Add fidelity points" as (addPoints)
 "Manage account" as (manageAccount)
-"Owner tasks" as (ownerTasks)
-
-
+"Accountig" as (accounting)
+"Add product" as (addProduct)
+"Manage rights" as (manageRights)
 }
 
 "Owner" as owner
@@ -222,18 +222,24 @@ rectangle "EZ Shop" as EZShop{
 "Supplier" as supplier
 "Product" as product
 "Barcode scanner" as bcScanner
-owner-->(checkInventory)
-employee -->(checkInventory)
-owner --> (ownerTasks)
+
+(handleTransaction) -->(addPoints)
 (handleTransaction)->product
 (handleTransaction) --> bcScanner
 owner<---(warning)
 employee<---(warning)
 supplier<---(warning)
 (warning)->product
-(ownerTasks)->product
+(notSold)->product
+(addProduct) ->product
+supplier<--(addProduct) 
 owner-->(handleTransaction)
-
+owner-->(addProduct)
+owner-->(notSold)
+owner-->(addPoints)
+owner-->(manageRights)
+owner-->(accounting)
+owner-->(warning)
 owner--|> subscriber
 employee --|>subscriber
 subscriber -->(manageAccount)
@@ -244,47 +250,25 @@ employee-->(handleTransaction)
 
 ```plantuml
 @startuml
-"Mark product as "not sold anymore"" as (notSold)
-"Accounting" as (accounting)
-"Manage rights" as (manageRights)
-"Owner tasks" as (ownerTasks)
-"Edit product information" as (editProduct)
-"Add product" as (addProduct)
-"Accounting" as (acoounting)
-"List sale transactions" as (listSale)
-"List expenses" as (listExpenses)
-"Pay salaries" as (paySalaries)
-"Add fidelity points" as (addPoints)
-"Handle transaction" as (handleTransaction)
-(ownerTasks) --> (addProduct):include
-(acoounting)-->(listSale):include
-(acoounting)-->(listExpenses):include
-(acoounting)-->(paySalaries):include
-(ownerTasks)-->(notSold):include
-(ownerTasks)-->(accounting):include
-(ownerTasks)-->(manageRights):include
-(ownerTasks)-->(editProduct):include
-(handleTransaction) --> (addPoints): trigger
-@enduml
 
-```
-```plantuml
-@startuml
 "Manage account" as (manageAccount)
 "Check points" as (checkPoints)
 "Registration" as (registration)
 "Request fidelity card" as (request)
 "Edit information" as (edit)
 "Create cooupon" as (coupon)
-"Forgot password" as (forgotPassword)
-"Login" as (login)
+"Accounting" as (acoounting)
+"List sale transactions" as (listSale)
+"List expenses" as (listExpenses)
+"Pay salaries" as (paySalaries)
 (manageAccount)-->(checkPoints):include
 (manageAccount)-->(registration):include
 (manageAccount)-->(request):include
 (manageAccount)-->(edit):include
 (manageAccount)-->(coupon):include
-(manageAccount)-->(forgotPassword):include
-(manageAccount)-->(login):include
+(acoounting)-->(listSale):include
+(acoounting)-->(listExpenses):include
+(acoounting)-->(paySalaries):include
 @enduml
 
 ```
@@ -417,8 +401,12 @@ employee-->(handleTransaction)
 |  4     | The owner commit the changes |
 |  5     | The product(s) is/are then marked as not sold anymore |
 
+<<<<<<< HEAD
  
-### Use case 6, UC6 Edit product information
+ ### Use case 6, UC6 Edit product information
+=======
+ ### Use case 6, UC6 Edit product information
+>>>>>>> 811f34dbccebcedfbaae12c149c9a2cf2376814f
 
 | Actors Involved        | Owner |
 | ------------- |:-------------:| 
@@ -717,7 +705,10 @@ employee-->(handleTransaction)
 |  3     | The subscriber clicks on save |
 |  4     | The system shows an error: Subscriber not found |
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 811f34dbccebcedfbaae12c149c9a2cf2376814f
 # Glossary
 
 
