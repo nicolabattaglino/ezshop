@@ -70,7 +70,7 @@ actor Subscriber
 actor Employee
 actor :POS System: as POSSystem
 actor :Supplier: as supplier
-actor : Fidelity card printer: as fcPrinter
+
 rectangle "EZShop System" as EZShopSystem{
 (EZShop)
 }
@@ -79,7 +79,7 @@ Subscriber <|- Owner
 Product -- EZShop
 EZShop -- POSSystem
 EZShop - supplier
-EZShop-- fcPrinter
+
 Subscriber -- EZShop
 EZShop -- bcScanner
 
@@ -109,7 +109,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 | Supplier       | Internet connection | Email |
 | POS system       | Internet connection | Creditcard API |
 | Product       | Laser beam | Barcode |
-| Fidelity card printer       | Usb cable | Drivers |
+
 
 # Stories and personas
 
