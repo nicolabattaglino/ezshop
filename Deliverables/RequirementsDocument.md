@@ -601,8 +601,8 @@ a
 | Actors Involved        | Owner |
 | ------------- |:-------------:| 
 |  Precondition     | The owner is logged in|  
-|  Post condition     | The owner logs out and one or more subscribers’ rights have changed|
-|  Nominal Scenario     | The owner logs in, accesses the rights of one or more users and changes them. The owner then logs off|
+|  Post condition     | New changes are committed  |
+|  Nominal Scenario     | The owner logs in, accesses the rights of one or more users and changes them. The owner click on save.|
 |  Variants     | This operation is performed both when there is a new employee or when an employee is dismissed|
 
 #### Scenario 13.1
