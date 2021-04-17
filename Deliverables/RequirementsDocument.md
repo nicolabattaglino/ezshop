@@ -371,19 +371,11 @@ employee-->(addPoints)
 |  1     | Owner inserts the information about the product(s) that he wants to search |  
 |  2     | The product(s) is/are shown |
 
-##### Scenario 4.1
-| Scenario  | Prouct(s) is not found |
-| ------------- |:-------------:| 
-|  Precondition     | The product(s) is in the inventory |
-|  Post condition     | - |
-| Step#        | Description  |
-|  1     | Owner inserts the information about the product(s) that he wants to search |  
-|  2     | The product(s) is/are shown |
 
-##### Scenario 4.1
+##### Scenario 4.2
 | Scenario  | Prouct(s) is not found |
 | ------------- |:-------------:| 
-|  Precondition     | The product(s) is in the inventory |
+|  Precondition     | The product(s) is not in the inventory |
 |  Post condition     | - |
 | Step#        | Description  |
 |  1     | Owner inserts the information about the product(s) that he wants to search |  
@@ -405,9 +397,9 @@ employee-->(addPoints)
 |  Post condition     | Product(s) is/are marked as not sold anymore|
 | Step#        | Description  |
 |  1     | Owner inserts the barcode about the product(s) that he wants to not sell anymore |  
-|  2     | The add the product(s) into a list |
-|  3     | The onwner checks if everything is correct |
-|  4     | The onwner commit the changes |
+|  2     | The system add the product(s) into a list |
+|  3     | The owner checks if everything is correct |
+|  4     | The owner commit the changes |
 |  5     | The product(s) is/are then marked as not sold anymore |
 
  
