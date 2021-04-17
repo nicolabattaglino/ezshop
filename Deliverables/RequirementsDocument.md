@@ -48,7 +48,8 @@ EZShop is a software application to:
 | Product | A product sold by the shop |
 | Barcode scaner | - |
 | POS system | - |
-| Supplier | The supplier from whom the owner buys the products | 
+| Supplier | The supplier from whom the owner buys the products |
+| Bank | The bank on which the owner owns an account | 
 
 
 # Context Diagram and interfaces
@@ -401,8 +402,6 @@ employee-->(addPoints)
 |  5     | The system transfer coupons (if any) from the lost fidelity card to the new one |
  
  
- 
- 
 ### Use case 8, UC8 Create a coupon
 | Actors Involved        | Subscriber  |
 | ------------- |:-------------:| 
@@ -455,6 +454,19 @@ employee-->(addPoints)
 |  Post condition     | - |
 |  Nominal Scenario     | The owner requests the list of transactions. The list is printed |
 |  Variants     | - |
+
+#### Scenario 12.1
+| Scenario | Print List of sale transaction|
+| ------------- |:-------------:| 
+|  Precondition     | There are one or more transactions recorded |
+|  Post condition     | The list of sale transaction is printed |
+| Step#        | Description  |
+|  1     | The owner logs in |  
+|  2     | The owner clicks on the accounting button on their home page  |
+|  3     | The owner clicks on the "Sale transactions" button|
+|  4     | The system dispalys a list of all sale transactions |
+|  5 	 | The owner clicks on the print button |
+|  6	 | The list is printed |
  
 ### Use case 13, UC13 List expenses
 | Actors Involved        | Owner |
@@ -462,7 +474,33 @@ employee-->(addPoints)
 |  Precondition     |There are one or more expenses recorded|  
 |  Post condition     | - |
 |  Nominal Scenario     |The owner requests a list of expenses. The list is printed|
-|  Variants     | - |
+|  Variants     | Information about payment and delivery is stored in this list |
+
+#### Scenario 13.1
+| Scenario | Print List of expenses|
+| ------------- |:-------------:| 
+|  Precondition     | There are one or more expenses recorded |
+|  Post condition     | The list of sale transaction is printed |
+| Step#        | Description  |
+|  1     | The owner logs in |  
+|  2     | The owner clicks on the accounting button on their home page  |
+|  3     | The owner clicks on the "Expenses" button|
+|  4     | The system dispalys a list of all expenses |
+|  5 	 | The owner clicks on the print button |
+
+#### Scenario 13.2
+| Scenario | Update information about expenses|
+| ------------- |:-------------:| 
+|  Precondition     | There are one or more expenses recorded |
+|  Post condition     | The inforamtion about an expense is changed |
+| Step#        | Description  |
+|  1     | The owner logs in |  
+|  2     | The owner clicks on the accounting button on their home page  |
+|  3     | The owner clicks on the "Expenses" button|
+|  4     | The system dispalys a list of all expenses |
+|  5 	 | The owner clicks on one of the checkboxes regurding a specific expense (Invoice, payment or delivery) |
+|  6	 | The state of the checkbox is changed and saved by the system |
+
  
 ### Use case 14, UC14 Pay salaries 
 | Actors Involved        | Owner, Employee |
@@ -471,6 +509,37 @@ employee-->(addPoints)
 |  Post condition     | Paying Salaries |
 |  Nominal Scenario     | If Employee(s) does not receive their salary, system announce the adjourned salaries, or Employee(s) can send their request to the Owner for pay the salaries |
 |  Variants     | Customer orientation have encouragement |
+
+#### Scenario 14.1
+| Scenario | Print list of salaries|
+| ------------- |:-------------:| 
+|  Precondition     | There are one or more employees working in the shop |
+|  Post condition     | The list is printed |
+| Step#        | Description  |
+|  1     | The owner logs in |  
+|  2     | The owner clicks on the accounting button on their home page  |
+|  3     | The owner clicks on the "Pay salaries" button|
+|  4     | The system dispalys a list of all employees and their respective salary |
+|  5 	 | The owner clicks on the print button |
+
+#### Scenario 14.2
+| Scenario | Pay a salary|
+| ------------- |:-------------:| 
+|  Precondition     | There are one or more employees working in the shop |
+|  Post condition     | A salary is payed |
+| Step#        | Description  |
+|  1     | The owner logs in |  
+|  2     | The owner clicks on the accounting button on their home page  |
+|  3     | The owner clicks on the "Pay salaries" button|
+|  4     | The system dispalys a list of all employees and their respective salary |
+|  5 	 | The owner clicks on one of the record in the table |
+|  6	 | The system highlights the record |
+|  7	 | The "Pay" button is enabled by the system |
+|  8	 | The onwer clicks on the button |
+|  8	 | The system opens a web page on the bank web site |
+|  9 	 | The system initiates a transfer to the employee bank account with the correct amount |
+| 10	 | The owner completes the transfer |
+
 
 ### Use case 15, UC15 Forgot Password 
 | Actors Involved        | Subscriber |
@@ -510,6 +579,7 @@ Date of birth
 }
 class "Employee" as employee{
 Salary
+Bank information
 }
 class "Local Terminal" as LT{
 }
