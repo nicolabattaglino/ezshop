@@ -459,7 +459,7 @@ a
 |  Variants     | - |
 
 ##### Scenario 6.1
-| Scenario  | Product(s) are not sold anymore |
+| Scenario  | Edit product information |
 | ------------- |:-------------:| 
 |  Precondition     | There is a product not marked as “not sold anymore” |
 |  Post condition     | Product's information are changed |
