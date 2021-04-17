@@ -106,7 +106,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 | Employee       | Screen keyboard mouse on PC | GUI |
 | Subscriber       | Screen keyboard mouse on PC | GUI |
 | Barcode scanner       | Usb cable | Drivers |
-| Supplier       | Screen keyboard mouse on PC | GUI |
+| Supplier       | Internet connection | Email |
 | POS system       | Internet connection | Creditcard API |
 | Product       | Laser beam | Barcode |
 | Fidelity card printer       | Usb cable | Drivers |
@@ -481,7 +481,7 @@ employee-->(addPoints)
 |  Precondition     | The subscriber is logged in |  
 |  Post condition     | The subscriber logs out|
 |  Nominal Scenario     | The Subscriber views their points |
-|  Variants     | - |
+
 
 #### Scenario 9.1
 | Scenario | Check Points|
