@@ -421,7 +421,6 @@ employee-->(handleTransaction)
 a
  
  ### Use case 6, UC6 Edit product information
- ### Use case 6, UC6 Edit product information
 
 | Actors Involved        | Owner |
 | ------------- |:-------------:| 
@@ -719,11 +718,6 @@ a
 |  2     | The subscriber inserts the email, SSN and new password  |
 |  3     | The subscriber clicks on save |
 |  4     | The system shows an error: Subscriber not found |
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 811f34dbccebcedfbaae12c149c9a2cf2376814f
 # Glossary
 
 
