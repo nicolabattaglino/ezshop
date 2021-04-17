@@ -365,10 +365,22 @@ employee-->(addPoints)
 
 | Actors Involved        | Subscriber  |
 | ------------- |:-------------:| 
-|  Precondition     | The user is logged in|  
-|  Post condition     | the subscriber is logged out and their information has changed since they logged in |
+|  Precondition     | The subscriber is logged in|  
+|  Post condition     | New Informations are committed |
 |  Nominal Scenario     | The subscriber logs in and changes one or fields regarding their information. The subscriber logs out.|
 |  Variants     | - |
+
+#### Scenario 6.1
+|Scenario | Edit informations |
+| ------------- |:-------------:| 
+|  Precondition     | The subscriber is logged in |
+|  Post condition     | New Informations are committed |
+| Step#        | Description  |
+|  1     | The subscriber log in |
+|  2     | The subscriber clicks on edit informations in the home page |
+| 3      | The subscriber changes personal information (e-mail, password, date of birth, address(optional), phone number (optional))|
+| 4 	   | The subscriber confirms their information clicking on save |
+
 
 ### Use case 7, UC7 Registration, Request fidelity card
 | Actors Involved        | Owner, Employee, Subscriber |
@@ -409,6 +421,17 @@ employee-->(addPoints)
 |  Post condition     | A new coupon is added to the Subscriber account, his amount of point is decreased by 10, The user is log out|
 |  Nominal Scenario     | new coupon is generated and added to the Subscriber account, 10 points are subtracted from the subscriber’s total, the subscriber perform a logout |
 |  Variants     | - |
+
+#### Scenario 8.1
+| Scenario | Create coupon|
+| ------------- |:-------------:| 
+|  Precondition     | Subscriber is logged in|
+|  Post condition     | New coupon is created? - |
+| Step#        | Description  |
+|  1     | The subscriber clicks on “Coupon” in the home page|  
+|  2     | The subscriber choose the amount of the coupon |
+|  3     | The subscriber clicks on “Create coupon”  |
+|  4     | The system add the coupon on the fidelity card |
  
 ### Use case 9, UC9 Check points
 | Actors Involved        | Subscriber |
@@ -416,6 +439,15 @@ employee-->(addPoints)
 |  Precondition     | The subscriber is logged in |  
 |  Post condition     | The subscriber logs out|
 |  Nominal Scenario     | The Subscriber views their points |
+
+#### Scenario 9.1
+| Scenario | Check Points|
+| ------------- |:-------------:| 
+|  Precondition     | Subscriber is logged in |
+|  Post condition     | - |
+| Step#        | Description |
+|  1     | The subscriber check points in the homepage | 
+
 |  Variants     | - |
  
 ### Use case 10, UC10 Add Fidelity point
@@ -446,6 +478,18 @@ employee-->(addPoints)
 |  Post condition     | The owner logs out and one or more subscribers’ rights have changed|
 |  Nominal Scenario     | The owner logs in, accesses the rights of one or more users and changes them. The owner then logs off|
 |  Variants     | This operation is performed both when there is a new employee or when an employee is dismissed|
+
+#### Scenario 11.1
+| Scenario | Manage Rights|
+| ------------- |:-------------:| 
+|  Precondition     | The owner is logged in |
+|  Post condition     | New changes are committed |
+| Step#        | Description  |
+|  1     | The owner clicks on “Manage Rights” |  
+|  2     | The owner clicks on the box to change rights |
+|  3     | The owner select the new right for the specific subscriber (O: Owner, E: Employee, S: Subscriber)|
+|  4     | The owner clicks on “Save”  |
+
  
 ### Use case 12, UC12 List sale transaction
 | Actors Involved        | Owner |
