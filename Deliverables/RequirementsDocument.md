@@ -460,7 +460,7 @@ employee-->(addPoints)
 | Actors Involved        | Subscriber  |
 | ------------- |:-------------:| 
 |  Precondition     | The subscriber is logged in, the subscriber has at least 10 fidelity points|  
-|  Post condition     | A new coupon is added to the Subscriber account, his amount of point is decreased by 10, The user is log out|
+|  Post condition     | A new coupon is added to the Subscriber account and his amount of point is decreased by 10|
 |  Nominal Scenario     | new coupon is generated and added to the Subscriber account, 10 points are subtracted from the subscriber’s total, the subscriber perform a logout |
 |  Variants     | - |
 
@@ -468,7 +468,7 @@ employee-->(addPoints)
 | Scenario | Create coupon|
 | ------------- |:-------------:| 
 |  Precondition     | Subscriber is logged in|
-|  Post condition     | New coupon is created? - |
+|  Post condition     | New coupon is created |
 | Step#        | Description  |
 |  1     | The subscriber clicks on “Coupon” in the home page|  
 |  2     | The subscriber chooses the amount of the coupon |
@@ -489,7 +489,6 @@ employee-->(addPoints)
 |  Post condition     | - |
 | Step#        | Description |
 |  1     | The subscriber checks points in the homepage | 
-
 |  Variants     | - |
  
 ### Use case 10, UC10 Add Fidelity point
