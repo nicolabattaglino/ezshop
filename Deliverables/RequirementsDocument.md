@@ -299,7 +299,7 @@ employee-->(handleTransaction)
 |      | if the customer is a subscriber -> add fidelity points |
  
 ##### Scenario 1.1
-| Scenario | Without Coupon |
+| Scenario | Customer without coupon |
 | ------------- |:-------------:| 
 |  Precondition     | One or more products are chosen by customers but they dont have fidelity card or coupon |
 |  Post condition     | A customer bought the product(s) |
@@ -307,12 +307,24 @@ employee-->(handleTransaction)
 |  1     | The customer approaches the cashier with the products they intent to buy |  
 |  2     | The cashier read the barcode(s) through manualy or scanner |
 |  3     | Start sale transaction |
-|  4     | The cashier asks the subscriber if they want to use coupon or be as a subscriber?! |
-|  5     | End sale transaction |
-|  6     | Decrease quantity of products in the inventory |
+|  4     | End sale transaction |
+|  5     | Decrease quantity of products in the inventory |
   
 ##### Scenario 1.2
-| Scenario | Add Points |
+| Scenario | Subscriber without coupon |
+| ------------- |:-------------:| 
+|  Precondition     | There are one or more product(s) in the shop and the customer is a subscriber without a coupon (or dont have/dont want/expired) |
+|  Post condition     | A subscriber bought the product(s) and his points added |
+| Step#        | Description  |
+|  1     | The subscriber approaches the cashier with the products they intent to buy |  
+|  2     | The cashier read the barcode(s) through manualy or scanner |
+|  3     | Start sale transaction |
+|  4     | Depend on the total ampunt of transaction, points will be added (Every 10 euro is equal to 1 point) |
+|  5     | End sale transaction |
+|  6     | Decrease quantity of products in the inventory |
+
+##### Scenario 1.3
+| Scenario |  Add Points |
 | ------------- |:-------------:| 
 |  Precondition     | There are one or more product(s) in the shop and the customer is a subscriber with at least a coupon that is not expired |
 |  Post condition     | A subscriber bought the product(s) and his points added |
