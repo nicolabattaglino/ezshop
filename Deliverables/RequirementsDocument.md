@@ -288,34 +288,42 @@ employee-->(handleTransaction)
 @enduml
 
 ```
-
-
-
-
 ### Use case 1, UC1 Manage sale transaction
-| Actors Involved        | Employee or Owner |
+| Actors Involved        | Employee, Owner |
 | ------------- |:-------------:| 
 |  Precondition     | There are one or more product(s) in the shop|  
 |  Post condition     | New transaction added, decrease amount of the product(s)) |
-|  Nominal Scenario     | Read the bar code(s). Start sale transaction. Read the bar code of each product.End sale transaction. Hand product(s) to the customer |
+|  Nominal Scenario     | Read the barcode(s) through manualy, scanner or auto-machine. Start sale transaction with scanning each barcode of product(s). End sale transaction and handle product(s) to the customer |
 |  Variants     | if there is a discount on a product -> apply discount |
 |      | if a subscriber requests a discount and also have a coupon -> apply discount |
 |      | if the customer is a subscriber -> add fidelity points |
  
 ##### Scenario 1.1
-| Scenario | Coupon usage |
+| Scenario | Without Coupon |
 | ------------- |:-------------:| 
-|  Precondition     |There are one or more product(s) in the shop and the customer is a subscriber with at least a coupon that is not expired |
-|  Post condition     | A subscriber bought the product(s)|
+|  Precondition     | One or more products are chosen by customers but they dont have fidelity card or coupon |
+|  Post condition     | A customer bought the product(s) |
+| Step#        | Description  |
+|  1     | The customer approaches the cashier with the products they intent to buy |  
+|  2     | The cashier read the barcode(s) through manualy or scanner |
+|  3     | Start sale transaction |
+|  4     | The cashier asks the subscriber if they want to use coupon or be as a subscriber?! |
+|  5     | End sale transaction |
+|  6     | Decrease quantity of products in the inventory |
+  
+##### Scenario 1.2
+| Scenario | Add Points |
+| ------------- |:-------------:| 
+|  Precondition     | There are one or more product(s) in the shop and the customer is a subscriber with at least a coupon that is not expired |
+|  Post condition     | A subscriber bought the product(s) and his points added |
 | Step#        | Description  |
 |  1     | The subscriber approaches the cashier with the products they intent to buy and at least a coupon |  
-|  2     | The cashier reads the barcode(s) |
+|  2     | The cashier read the barcode(s) through manualy or scanner |
 |  3     | Start sale transaction |
-|  4     | The cashier asks the subscriber if they want to use a coupon |
-|  5     | The subscriber accepts to use a coupon |
-|  6     | The coupon is consumed and a discount is applied |
-|  7     | End sale transaction |
- 
+|  4     | The cashier asks the subscriber if they want to use coupon |
+|  5     | Depend on the total ampunt of transaction, points will be added (Every 10 euro is equal to 1 point) |
+|  6     | End sale transaction |
+|  7     | Decrease quantity of products in the inventory |
  
 ### Use case 2, UC2 Waring on low stock, Buy product
 | Actors Involved        | Owner |
