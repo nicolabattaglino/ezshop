@@ -429,9 +429,9 @@ employee-->(addPoints)
 |  Post condition     | New coupon is created? - |
 | Step#        | Description  |
 |  1     | The subscriber clicks on “Coupon” in the home page|  
-|  2     | The subscriber choose the amount of the coupon |
+|  2     | The subscriber chooses the amount of the coupon |
 |  3     | The subscriber clicks on “Create coupon”  |
-|  4     | The system add the coupon on the fidelity card |
+|  4     | The system adds the coupon on the fidelity card |
  
 ### Use case 9, UC9 Check points
 | Actors Involved        | Subscriber |
@@ -446,7 +446,7 @@ employee-->(addPoints)
 |  Precondition     | Subscriber is logged in |
 |  Post condition     | - |
 | Step#        | Description |
-|  1     | The subscriber check points in the homepage | 
+|  1     | The subscriber checks points in the homepage | 
 
 |  Variants     | - |
  
