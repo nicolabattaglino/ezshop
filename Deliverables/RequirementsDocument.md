@@ -376,8 +376,8 @@ employee-->(handleTransaction)
 | ------------- |:-------------:| 
 |  Precondition     | The product is not in the inventory or marked as “not sold anymore” |  
 |  Post condition     | Product is added in the inventory and marked as sold |
-|  Nominal Scenario     | New product is added to the system  |
-|  Variants     | if the product  is marked as “not sold anymore”, then will be marked as sold |
+|  Nominal Scenario     | New product is added to the inventory  |
+|  Variants     | If the product(s) is marked as “not sold anymore”-> Product is readded to the inventory |
  
  ##### Scenario 3.1
 | Scenario  | New product is added to the inventory |
@@ -385,10 +385,19 @@ employee-->(handleTransaction)
 |  Precondition     | The product is not in the inventory |
 |  Post condition     | Product is added in the inventory and marked as sold|
 | Step#        | Description  |
-|  1     | Owner inserts information about the product(s) that he wants to add to the inventory |  
-|  2     | The product is added to the inventory |
-|  3     | The system show the product as low in stock |
+|  1     | Owner searches by name the product(s) that he wants to add to the inventory |  
+|  2     | The product(s) is added to the inventory |
+|  3     | The system shows the product as low in stock |
 
+ ##### Scenario 3.2
+| Scenario  | Product is readded to the inventory |
+| ------------- |:-------------:| 
+|  Precondition     | The product is in the inventory and marked as “not sold anymore” |
+|  Post condition     | Product is added in the inventory and marked as sold|
+| Step#        | Description  |
+|  1     | Owner searches the product(s) that he wants to add to the inventory |  
+|  2     | The product(s) is/are added to the inventory |
+|  3     | The system shows the product(s) as low in stock |
 
 ### Use case 4, UC4 Check inventory
 
