@@ -610,7 +610,7 @@ employee-->(addPoints)
 |  Post condition     | Password not updated|
 | Step#        | Description  |
 |  1     | The subscriber clicks on Forgot Password |  
-|  2     | The subscriber insert the email, SSN and new password  |
+|  2     | The subscriber inserts the email, SSN and new password  |
 |  3     | The subscriber clicks on save |
 |  4     | The system shows an error: Subscriber not found |
 
@@ -620,7 +620,7 @@ employee-->(addPoints)
 | ------------- |:-------------:| 
 |  Precondition     | There is a subscriber that wants to log in  |  
 |  Post condition     | Subscriber is logged in |
-|  Nominal Scenario     | The subscriber log in |
+|  Nominal Scenario     | The subscriber logs in |
 |  Variants     | if subscriber is not in the system -> error: Subscriber not found |
 
 #### Scenario 16.1
@@ -629,7 +629,7 @@ employee-->(addPoints)
 |  Precondition     |  There is a subscriber that wants to log in |
 |  Post condition     | Subscriber is logged in |
 | Step#        | Description  |
-|  1     | The subscriber insert email and password |  
+|  1     | The subscriber inserts email and password |  
 |  2     | The subscriber click on log in |
 
 
@@ -640,7 +640,7 @@ employee-->(addPoints)
 |  Post condition     | Subscriber not logged in|
 | Step#        | Description  |
 |  1     | The subscriber insert email and password |  
-|  2     | The subscriber click on log in |
+|  2     | The subscriber clicks on log in |
 |  3     | The system shows an error: Subscriber not found |
 
 
