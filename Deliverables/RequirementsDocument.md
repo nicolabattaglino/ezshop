@@ -206,14 +206,14 @@ APIs: Software to connect external systems to EZ Shop logically.
 
 title Use Case Diagram
 rectangle "EZ Shop" as EZShop{
-"Warning on low stock product and buy product" as (warning)
+"Warning on low stock product" as (warning)
 "Handle transaction" as (handleTransaction)
-"Mark product as "not sold anymore"" as (notSold)
-"Add fidelity points" as (addPoints)
+
+"Check inventory" as (checkInventory)
 "Manage account" as (manageAccount)
-"Accountig" as (accounting)
-"Add product" as (addProduct)
-"Manage rights" as (manageRights)
+"Owner tasks" as (ownerTasks)
+
+
 }
 
 "Owner" as owner
@@ -222,24 +222,18 @@ rectangle "EZ Shop" as EZShop{
 "Supplier" as supplier
 "Product" as product
 "Barcode scanner" as bcScanner
-
-(handleTransaction) -->(addPoints)
+owner-->(checkInventory)
+employee -->(checkInventory)
+owner --> (ownerTasks)
 (handleTransaction)->product
 (handleTransaction) --> bcScanner
 owner<---(warning)
 employee<---(warning)
 supplier<---(warning)
 (warning)->product
-(notSold)->product
-(addProduct) ->product
-supplier<--(addProduct) 
+(ownerTasks)->product
 owner-->(handleTransaction)
-owner-->(addProduct)
-owner-->(notSold)
-owner-->(addPoints)
-owner-->(manageRights)
-owner-->(accounting)
-owner-->(warning)
+
 owner--|> subscriber
 employee --|>subscriber
 subscriber -->(manageAccount)
@@ -250,28 +244,52 @@ employee-->(handleTransaction)
 
 ```plantuml
 @startuml
+"Mark product as "not sold anymore"" as (notSold)
+"Accounting" as (accounting)
+"Manage rights" as (manageRights)
+"Owner tasks" as (ownerTasks)
+"Edit product information" as (editProduct)
+"Add product" as (addProduct)
+"Accounting" as (acoounting)
+"List sale transactions" as (listSale)
+"List expenses" as (listExpenses)
+"Pay salaries" as (paySalaries)
+"Add fidelity points" as (addPoints)
+"Handle transaction" as (handleTransaction)
+(ownerTasks) --> (addProduct):include
+(acoounting)-->(listSale):include
+(acoounting)-->(listExpenses):include
+(acoounting)-->(paySalaries):include
+(ownerTasks)-->(notSold):include
+(ownerTasks)-->(accounting):include
+(ownerTasks)-->(manageRights):include
+(ownerTasks)-->(editProduct):include
+(handleTransaction) --> (addPoints): trigger
+@enduml
 
+```
+```plantuml
+@startuml
 "Manage account" as (manageAccount)
 "Check points" as (checkPoints)
 "Registration" as (registration)
 "Request fidelity card" as (request)
 "Edit information" as (edit)
 "Create cooupon" as (coupon)
-"Accounting" as (acoounting)
-"List sale transactions" as (listSale)
-"List expenses" as (listExpenses)
-"Pay salaries" as (paySalaries)
+"Forgot password" as (forgotPassword)
+"Login" as (login)
 (manageAccount)-->(checkPoints):include
 (manageAccount)-->(registration):include
 (manageAccount)-->(request):include
 (manageAccount)-->(edit):include
 (manageAccount)-->(coupon):include
-(acoounting)-->(listSale):include
-(acoounting)-->(listExpenses):include
-(acoounting)-->(paySalaries):include
+(manageAccount)-->(forgotPassword):include
+(manageAccount)-->(login):include
 @enduml
 
 ```
+
+
 
 
 ### Use case 1, UC1 Manage sale transaction
@@ -400,8 +418,7 @@ employee-->(handleTransaction)
 |  3     | The owner checks if everything is correct |
 |  4     | The owner commit the changes |
 |  5     | The product(s) is/are then marked as not sold anymore |
-
-<<<<<<< HEAD
+a
  
  ### Use case 6, UC6 Edit product information
  ### Use case 6, UC6 Edit product information
