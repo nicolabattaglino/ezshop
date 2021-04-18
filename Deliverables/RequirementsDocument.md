@@ -572,7 +572,7 @@ a
 |  Post condition     | Fidelity point added |
 | Step#        | Description  |
 |  1     | The subscriber buys one or more products |  
-|  2     | The cashier reads the fidelity card via card reader  |
+|  2     | The cashier reads the fidelity card via barcode reader  |
 |  3     | The system calculates the points based on the total of the transaction (Every 10 euro buying have 1 Fidelity point)|
 |  4     | The points are added  to the subscriber total in the database |
  
