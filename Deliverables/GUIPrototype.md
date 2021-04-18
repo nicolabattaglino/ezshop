@@ -62,7 +62,7 @@ This page is described Reprint steps that Owner or Employee can search products 
 ## 2 Waring on low stock, Buy product
 
 ![Warning on low stock buy](../GUI files/Low_stock_products_owner.png)
-First version.
+Owner version.  
 
 The first version of the view is used to show the products that are low in stock to the **owner**. Then the **owner** can decide wether buy or not these products. In the table there are shown: the name,  the quantity in stock, the supplier and the buying cost of each product that is low in stock.
 1. The **system** shows in the table all products that are low in stock.
@@ -80,7 +80,7 @@ The **owner** can go to the *edit product information* view by clicking on the r
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button.  
 
 ![Warning on low stock](../GUI files/low_stock_products_employee.png)
-*Employee version.*
+*Employee version.*  
 
 The second version of the view is used to show the products that are low in stock to the **employee**. In the table there are shown the name, the quantity in stock and the supplier of each product that is low in stock.
 1. The **system** shows in the table all products that are low in stock.
@@ -105,7 +105,7 @@ With this view the **owner** can add to the buyable products new products that a
 
 The **owner** can go back to her/his *home* by clicking on the home button.  
 The **owner** can log out by clicking on the LogOut button.  
-The **owner** can go to the *low stock roducts* view by clicking on the relative button.  
+The **owner** can go to the *low stock products* view by clicking on the relative button.  
 The **owner** can go to the *check inventory* view by clicking on the relative button.  
 The **owner** can go to the *edit product information* view by clicking on the relative button.  
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button.  
@@ -113,7 +113,8 @@ The **owner** can go to the *mark product as not sold anymore* view by clicking 
 ## 4 Check inventory
 
 ![Check inventory owner](../GUI files/check_inventory_owner.png)
-*Owner version.*
+*Owner version.*  
+
 With this view the **owner** can view and search the products in the inventory. The products are shown by a table. For each product the table shows: the name , the quantity, the supplier, the expiration, the price, the barcode, the discount and if is sold.
 1. The **system** shows in the table all products.
 2. The **owner** can search the products: by barcode, by name, by supplier and by price range with the searchbox at the bottom. The search is performed when he/she presses the search button.
@@ -121,13 +122,14 @@ With this view the **owner** can view and search the products in the inventory. 
 
 The **owner** can go back to her/his *home* by clicking on the home button.  
 The **owner** can log out by clicking on the LogOut button.  
-The **owner** can go to the *low stock roducts* view by clicking on the relative button.  
+The **owner** can go to the *low stock products* view by clicking on the relative button.  
 The **owner** can go to the *add new products* view by clicking on the relative button.  
 The **owner** can go to the *edit product information* view by clicking on the relative button.  
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. 
 
 ![Check inventory employee](../GUI files/check_inventory_employee.png)
-*Employee version.*
+*Employee version.*  
+
 With this view the **employee** can view and search the products in the inventory. The products are shown by a table. For each product the table shows: the name , the quantity, the supplier, the expiration, the price, the barcode, the discount and if is sold.
 1. The **system** shows in the table all products.
 2. The **employee** can search the products: by barcode, by name, by supplier and by price range with the searchbox at the bottom. The search is performed when he/she presses the search button.
@@ -135,7 +137,7 @@ With this view the **employee** can view and search the products in the inventor
 
 The **employee** can go back to her/his *home* by clicking on the home button.  
 The **employee** can log out by clicking on the LogOut button.  
-The **employee** can go to the *low stock roducts* view by clicking on the relative button.  
+The **employee** can go to the *low stock products* view by clicking on the relative button.  
 
 ## 5 Edit product information
 
