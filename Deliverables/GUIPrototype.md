@@ -185,7 +185,7 @@ This page contais the list of employees and respective salaries. The pay buttow 
 
 This page is used to reset the password in the case the subscriber forgot it.  
 
-1. The **subscriber** can insert the email, SSN and password.  
+1. The **subscriber** can insert the email, SSN and password and then click on *Save* to save the changes.   
 2. The **customer** can click on *Back* button to go back to the Welcome Page. 
 
 
