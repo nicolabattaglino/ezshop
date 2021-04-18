@@ -61,8 +61,8 @@ This page is described Reprint steps that Owner or Employee can search products 
 
 ## 2 Waring on low stock, Buy product
 
-![Warning on low stock buy](../GUI files/low_stock_products_owner.png)
-*Owner version.*
+![Warning on low stock buy](../GUI files/Low_stock_products_owner.png)
+First version.
 
 The first version of the view is used to show the products that are low in stock to the **owner**. Then the **owner** can decide wether buy or not these products. In the table there are shown: the name,  the quantity in stock, the supplier and the buying cost of each product that is low in stock.
 1. The **system** shows in the table all products that are low in stock.
@@ -136,6 +136,8 @@ With this view the **employee** can view and search the products in the inventor
 The **employee** can go back to her/his *home* by clicking on the home button.  
 The **employee** can log out by clicking on the LogOut button.  
 The **employee** can go to the *low stock roducts* view by clicking on the relative button.  
+
+## 5 Edit product information
 
 ## 7 Edit informations account
 
