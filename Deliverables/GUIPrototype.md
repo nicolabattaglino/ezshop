@@ -61,7 +61,6 @@ This page is described Reprint steps that Owner or Employee can search products 
 
 ## 2 Waring on low stock, Buy product
 
-
 ![Warning on low stock buy](../GUI files/low_stock_products_owner.png)
 *Owner version.*
 
