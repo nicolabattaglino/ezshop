@@ -6,7 +6,7 @@ Date:
 
 Version:
 
-## 0 Manage sale transaction
+## 0 Welcome and Homepages 
 
 ![Selling](../GUI files/welcome.png)
 
