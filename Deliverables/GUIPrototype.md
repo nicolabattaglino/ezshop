@@ -18,10 +18,10 @@ If a customer wants to register they can click on "Register". Page at point '8' 
 ![Normal Subscriber HomePage](../GUI files/account_page.png)
 
 This page is the homepage of a normal subscriber. 
-In the center of the page are shown some informations: on the top there are the fidelity points, the ID number of the fidelity card and if any coupons are present. 
-Below there are the personal informations. By clicking on edit information, the page at point '7' appears.
-Clicking on the left, the subscriber can Request Coupon or create a new card if they lost it.
-On top right there is the button to log out.
+1. The **system** shows some informations in the center: ID card number, fidelity points amount, coupons, if any, and all the personal informations.  
+2. The **Subsciber** can modify its own infotmations by clicking on the edit information button. Page at point '7' appears.  
+3. The **Subsciber** can request a new card if they lost it, by clicking on the lost card button. The second page at point '8' appears.  
+4. The **Subsciber** can click on the log out button on top-right to log out.
 
 
 ##
@@ -54,7 +54,7 @@ This page is described Reprint steps that Owner or Employee can search products 
 
 ## 2 Waring on low stock, Buy product
 
-![Warning on low stock buy](../GUI files/Low_stock_products.png)
+![Warning on low stock buy](../GUI files/Low_stock_products_owner.png)
 First version.
 
 The first version of the view is used to show the products that are low in stock to the owner. Then the **owner** can decide wether buy or not these products.
@@ -64,15 +64,15 @@ The first version of the view is used to show the products that are low in stock
 4. The **owner** can choose the quantity for each product by clicking on the realtive number stepper.
 5. The **owner** can buy the products by clicking to the order button.
 
-![Warning on low stock](../GUI files/Low_stock_products.png)
-second version.
-
 The **owner** can go back to her/his *home* by clicking on the home button.  
 The **owner** can log out by clicking on the LogOut button.  
 The **owner** can go to the *check inventory* view by clicking on the relative button.  
 The **owner** can go to the *add new products* view by clicking on the relative button.  
 The **owner** can go to the *edit product information* view by clicking on the relative button.  
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button.  
+
+![Warning on low stock](../GUI files/Low_stock_products_employee.png)
+second version.
 ## 7 Edit informations account
 
 ![Edit informations account](../GUI files/edit_info.png)
