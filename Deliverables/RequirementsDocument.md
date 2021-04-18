@@ -44,7 +44,7 @@ EZShop is a software application to:
 | ----------------- |:-----------:|
 |   Owner     | The owner of the shop            | 
 | Subscriber | A customer of that shop that registered using EZ Shop |
-| Employee | An employee pf the shop |
+| Employee | An employee of the shop |
 | Product | A product sold by the shop |
 | Barcode scaner | - |
 | POS system | - |
@@ -60,8 +60,6 @@ EZShop is a software application to:
 @startuml
 
 
-title Context Diagram
-
 
 actor Owner
 actor :Barcode scanner: as bcScanner
@@ -70,6 +68,7 @@ actor Subscriber
 actor Employee
 actor :POS System: as POSSystem
 actor :Supplier: as supplier
+actor Bank
 
 rectangle "EZShop System" as EZShopSystem{
 (EZShop)
@@ -79,7 +78,7 @@ Subscriber <|- Owner
 Product -- EZShop
 EZShop -- POSSystem
 EZShop - supplier
-
+EZShop -- Bank
 Subscriber -- EZShop
 EZShop -- bcScanner
 
@@ -109,6 +108,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 | Supplier       | Internet connection | Email |
 | POS system       | Internet connection | Creditcard API |
 | Product       | Laser beam | Barcode |
+| Bank | Internet connection | Bank website |
 
 
 # Stories and personas
@@ -187,7 +187,6 @@ APIs: Software to connect external systems to EZ Shop logically.
 
 ## Non Functional Requirements
 
-\<Describe constraints on functional requirements>
 
 | ID        | Type (efficiency, reliability, ..)           | Description  | Refers to |
 | ------------- |:-------------:| :-----:| -----:|
@@ -204,7 +203,6 @@ APIs: Software to connect external systems to EZ Shop logically.
 ```plantuml
 @startuml
 
-title Use Case Diagram
 rectangle "EZ Shop" as EZShop{
 "Warning on low stock product" as (warning)
 "Handle transaction" as (handleTransaction)
@@ -877,7 +875,6 @@ sale"*" -- customer
 ```plantuml
 @startuml
 
-title System Design
 class "EZ Shop" as EZShop{
 F1 manage sales 
 F2 manage inventory
@@ -892,9 +889,7 @@ class "Local server" as localServer{
 
 
 class "Software" as software 
-class " FIdelity card reader" as fcReader
 EZShop o-- localTerminal
-EZShop o-- fcReader
 localTerminal -- software
 localServer -- software
 EZShop o-- localServer
@@ -909,7 +904,6 @@ EZShop o-- localServer
 ```plantuml
 @startuml
 
-title Classes - Deployment Diagram
 node "Local server" as localServer{
 artifact "EZShop application" as EZShop{
 artifact "General database" as generalDB

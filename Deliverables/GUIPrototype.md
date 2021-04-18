@@ -27,7 +27,7 @@ This page is used to selling products.
 
 This page is used to Reprint the receipt.
 
-## 2, UC2 Waring on low stock, Buy product
+## 2 UC2 Waring on low stock, Buy product
 
 ![Warning on low stock](../GUI files/Low_stock_products.png)
 
