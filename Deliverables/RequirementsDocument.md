@@ -70,6 +70,7 @@ actor Subscriber
 actor Employee
 actor :POS System: as POSSystem
 actor :Supplier: as supplier
+actor Bank
 
 rectangle "EZShop System" as EZShopSystem{
 (EZShop)
@@ -79,7 +80,7 @@ Subscriber <|- Owner
 Product -- EZShop
 EZShop -- POSSystem
 EZShop - supplier
-
+EZShop -- Bank
 Subscriber -- EZShop
 EZShop -- bcScanner
 
