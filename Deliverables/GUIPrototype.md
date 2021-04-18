@@ -11,15 +11,15 @@ Version:
 ![Welcome](../GUI files/welcome.png)
 
 This page is the welcome page in which a subsciber can log in and a new subsciber can register. 
-
+##
 ![Normal Subscriber HomePage](../GUI files/account_page.png)
 
 This page is the homepage of a normal subscriber. Here they can check pints, request coupon, create a new card, edit informations.
-
+##
 ![Employee HomePage](../GUI files/Employee_Page.png)
 
 This page is the homepage of an employee. In addition to the subscribers' rights, they can magage Sales and Inventory
-
+##
 ![Owner HomePage](../GUI files/Owner_Page.png)
 
 This page is the homepage of the Owner. In addition to the subscribers' rights, they can magage Sales, Inventory and Rights of all the subscribers.
@@ -29,7 +29,7 @@ This page is the homepage of the Owner. In addition to the subscribers' rights, 
 ![Selling](../GUI files/Selling.png)
 
 This page is used to selling products.
-
+##
 ![Reprint](../GUI files/Reprint.png)
 
 This page is used to Reprint the receipt.
@@ -52,7 +52,7 @@ This is the page in which the subscriber can modify its own informations.
 ![Create account](../GUI files/create_account.png)
 
 This page is used to create a new account. All the fields with * are required. 
-
+##
 ![Request new card](../GUI files/request_new_card.png)
 
 This page is used to request a new fidelity card in case the subscriber lost it.
@@ -62,7 +62,7 @@ This page is used to request a new fidelity card in case the subscriber lost it.
 ![Create coupon](../GUI files/create_coupon_page.png)
 
 This page is used to create a coupon. Here the subscriber can choose the amount of the coupon and click on "create coupon".
-
+##
 ![Coupon Created](../GUI files/coupon_created.png)
 
 This page shows the pop up that appears after the creation of the coupon.
@@ -95,7 +95,7 @@ In this page the owner can change the subscribers' rights.
 ![Accounting home page](../GUI files/Accounting_home_page.png)
 
 This is the main accounting page from which the owner can access to all the accounting features.
-
+##
 ![Sale transactions](../GUI files/List_of_sale_transactions.png)
 
 This page contains the list of sale transactions. The report button will lead to the report page.
@@ -115,7 +115,7 @@ This page contais the list of employees and respective salaries. The pay buttow 
 ![Forgot passowrd](../GUI files/forgot_password.png)
 
 This page is used to reset the password in the case the subscriber forgot it.
-
+##
 ![Forgot password error](../GUI files/forgot_password_error.png)
 
 This is the error shown when the subscriber isn't in the system.
