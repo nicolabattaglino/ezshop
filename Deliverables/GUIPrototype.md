@@ -6,6 +6,17 @@ Date:
 
 Version:
 
+
+## 1 Manage sale transaction
+
+![Selling](../GUI files/Selling.png)
+
+This page is used to selling products.
+
+![Reprint](../GUI files/Reprint.png)
+
+This page is used to Reprint the receipt.
+
 ## 8 Registration, Request fidelity card
 
 ![Accounting home page](../GUI files/create_account.png)
