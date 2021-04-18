@@ -44,7 +44,7 @@ EZShop is a software application to:
 | ----------------- |:-----------:|
 |   Owner     | The owner of the shop            | 
 | Subscriber | A customer of that shop that registered using EZ Shop |
-| Employee | An employee pf the shop |
+| Employee | An employee of the shop |
 | Product | A product sold by the shop |
 | Barcode scaner | - |
 | POS system | - |
@@ -189,7 +189,6 @@ APIs: Software to connect external systems to EZ Shop logically.
 
 ## Non Functional Requirements
 
-\<Describe constraints on functional requirements>
 
 | ID        | Type (efficiency, reliability, ..)           | Description  | Refers to |
 | ------------- |:-------------:| :-----:| -----:|
