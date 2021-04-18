@@ -46,7 +46,7 @@ EZShop is a software application to:
 | Subscriber | A customer of that shop that registered using EZ Shop |
 | Employee | An employee of the shop |
 | Product | A product sold by the shop |
-| Barcode scaner | - |
+| Barcode scanner | - |
 | POS system | - |
 | Supplier | The supplier from whom the owner buys the products |
 | Bank | The bank on which the owner owns an account | 
@@ -113,9 +113,9 @@ APIs: Software to connect external systems to EZ Shop logically.
 
 # Stories and personas
 
-	-Paolo is 24, he's a student at Polytechnic of Turin. He cannot spend a lot of money because he has a limited budget. For this reason he looks to the biggest discounts in the shop. 	He likes the fact that he can use fidelity to have more discounts.
-	-Mattia is 32, he works in a little shop in Turin as a cashier. He loves his job and he wants to be as productive as possible. Because of that, he likes to work with a simple system that guarantees simple operations. He hates when there are too many customers in the queue in front of his cash register. Hence he wants to process as many customers as possible.
-	-Hossein is 34, he works as an owner in a small shop. He must handle his job and make business decisions. The important part of his task is managing employees in an easy way (He must have an easy Managing App to manage working hours, gain money, reduce human acting …)
+	-Paolo is 24, he's a student at Polytechnic of Turin. He cannot spend a lot of money because he has a limited budget. For this reason he looks to the biggest discounts in the shop. He likes the fact that he can use the fidelity points to create coupons and have more discounts.
+	-Mattia is 27, he works in a little shop in Turin as a cashier. He loves his job and he wants to be as productive as possible. Because of that, he likes to work with a simple system that guarantees simple operations. He hates when there are too many customers in the queue in front of his cash register. Hence he wants to process as many customers as possible.
+	-Hossein is 40, he works as an owner in a small shop. He must handle his job and make business decisions. The important part of his task is managing employees in an easy way (He must have an easy Managing App to manage working hours, gain money, reduce human acting …)
 	-Stefania is 42, she’s a family mother and she often needs to buy a lot of food  a few times a week. To  quicken this process she would like to waste as little time as possible in line or with the cashier. Due to her fidelity to the shop she would also like to have some kind of reward, such as discounts, based on how much she spends.
 
 
@@ -145,7 +145,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 | FR3  | Manage accounts| 
 | FR3.1  | Check fidelity points| 
 | FR3.2  | Registration| 
-| FR3.3  | Edit account information| 
+| FR3.3  | Edit personal information| 
 | FR3.4  | Add fidelity points| 
 | FR3.5  | Create a coupon with fidelity points| 
 | FR3.6  | Request fidelity card| 
@@ -272,7 +272,7 @@ employee-->(handleTransaction)
 "Check points" as (checkPoints)
 "Registration" as (registration)
 "Request fidelity card" as (request)
-"Edit information" as (edit)
+"Edit Personal information" as (edit)
 "Create cooupon" as (coupon)
 "Forgot password" as (forgotPassword)
 "Login" as (login)
@@ -290,8 +290,8 @@ employee-->(handleTransaction)
 | Actors Involved        | Employee, Owner |
 | ------------- |:-------------:| 
 |  Precondition     | There are one or more product(s) in the shop|  
-|  Post condition     | New transaction added, decrease amount of the product(s)) |
-|  Nominal Scenario     | Read the barcode(s) through manualy, scanner or auto-machine. Start sale transaction with scanning each barcode of product(s). End sale transaction and handle product(s) to the customer |
+|  Post condition     | New transaction added, amount of the product(s) is decreased |
+|  Nominal Scenario     | Read the barcode(s) through manually, scanner or auto-machine. Start sale transaction with scanning each barcode of product(s). End sale transaction and handle product(s) to the customer |
 |  Variants     | if there is a discount on a product -> apply discount |
 |      | if a subscriber requests a discount and also have a coupon -> apply discount |
 |      | if the customer is a subscriber -> add fidelity points |
@@ -458,34 +458,34 @@ employee-->(handleTransaction)
 |  3     | The onwner edits the product's informations |
 |  4     | The onwner commit the changes |
 
-### Use case 7, UC7 Edit information 
+### Use case 7, UC7 Edit Personal information 
 
 | Actors Involved        | Subscriber  |
 | ------------- |:-------------:| 
 |  Precondition     | The subscriber is logged in|  
 |  Post condition     | New Informations are committed |
-|  Nominal Scenario     | The subscriber logs in and changes one or fields regarding their information. The subscriber logs out.|
+|  Nominal Scenario     | The subscriber logs in and changes one or more fields regarding their informations.|
 |  Variants     | - |
 
 #### Scenario 7.1
-|Scenario | Edit informations |
+|Scenario | Edit Personal informations |
 | ------------- |:-------------:| 
 |  Precondition     | The subscriber is logged in |
 |  Post condition     | New Informations are committed |
 | Step#        | Description  |
 |  1     | The subscriber log in |
-|  2     | The subscriber clicks on edit informations in the home page |
+|  2     | The subscriber clicks on "edit informations" in the homepage |
 | 3      | The subscriber changes personal information (e-mail, password, date of birth, address(optional), phone number (optional))|
 | 4 	   | The subscriber confirms their information clicking on save |
 
 
 ### Use case 8, UC8 Registration, Request fidelity card
-| Actors Involved        | Owner, Employee, Subscriber |
+| Actors Involved        | Subscriber |
 | ------------- |:-------------:| 
 |  Precondition     | New registration requested |  
 |  Post condition     | New account is created |
 |  Nominal Scenario     | Someone requests the registration, new fidelity card is created associated to the subscriber |
-|  Variants     | if subscriber entry is already present in the system -> create only the new fidelity card |
+|  Variants     | if subscriber entry is already present in the system -> request only the new fidelity card |
  
 #### Scenario 8.1
 |Scenario | Registration and card requested|
@@ -499,7 +499,7 @@ employee-->(handleTransaction)
 | 4	   | The system links the subscriber with a new already printed card  (they will receive it from the cashier when they ask for it)|
  
 #### Scenario 8.2
-| Scenario | Lost card requested|
+| Scenario | New card requested|
 | ------------- |:-------------:| 
 |  Precondition     | Subscriber is logged in|
 |  Post condition     | New fidelity card is created |
@@ -512,10 +512,10 @@ employee-->(handleTransaction)
  
  
 ### Use case 9, UC9 Create a coupon
-| Actors Involved        | Subscriber  |
+| Actors Involved        | Subscriber |
 | ------------- |:-------------:| 
 |  Precondition     | The subscriber is logged in, the subscriber has at least 10 fidelity points|  
-|  Post condition     | A new coupon is added to the Subscriber account and his amount of point is decreased by 10|
+|  Post condition     | A new coupon is added to the Subscriber card and his amount of point is decreased by 10|
 |  Nominal Scenario     | new coupon is generated and added to the Subscriber account, 10 points are subtracted from the subscriber’s total, the subscriber perform a logout |
 |  Variants     | - |
 
@@ -525,7 +525,7 @@ employee-->(handleTransaction)
 |  Precondition     | Subscriber is logged in|
 |  Post condition     | New coupon is created |
 | Step#        | Description  |
-|  1     | The subscriber clicks on “Coupon” in the home page|  
+|  1     | The subscriber clicks on “Create Coupon” in the home page|  
 |  2     | The subscriber chooses the amount of the coupon |
 |  3     | The subscriber clicks on “Create coupon”  |
 |  4     | The system adds the coupon on the fidelity card |
@@ -534,7 +534,7 @@ employee-->(handleTransaction)
 | Actors Involved        | Subscriber |
 | ------------- |:-------------:| 
 |  Precondition     | The subscriber is logged in |  
-|  Post condition     | The subscriber logs out|
+|  Post condition     | - |
 |  Nominal Scenario     | The Subscriber views their points |
 
 
@@ -562,9 +562,9 @@ employee-->(handleTransaction)
 |  Post condition     | Fidelity point added |
 | Step#        | Description  |
 |  1     | The subscriber buys one or more products |  
-|  2     | The cashier reads the fidelity card via barcode reader  |
+|  2     | The cashier reads the fidelity card via barcode scanner  |
 |  3     | The system calculates the points based on the total of the transaction (Every 10 euro buying have 1 Fidelity point)|
-|  4     | The points are added  to the subscriber total in the database |
+|  4     | The points are added to the subscriber total in the database |
  
 
 ### Use case 12, UC12 Login
@@ -600,8 +600,8 @@ employee-->(handleTransaction)
 | Actors Involved        | Owner |
 | ------------- |:-------------:| 
 |  Precondition     | The owner is logged in|  
-|  Post condition     | New changes are committed  |
-|  Nominal Scenario     | The owner logs in, accesses the rights of one or more users and changes them. The owner click on save.|
+|  Post condition     | New changes are committed |
+|  Nominal Scenario     | The owner changes rights of a subscriber |
 |  Variants     | This operation is performed both when there is a new employee or when an employee is dismissed|
 
 #### Scenario 13.1
