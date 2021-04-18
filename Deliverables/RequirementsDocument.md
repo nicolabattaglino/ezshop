@@ -319,9 +319,10 @@ employee-->(handleTransaction)
 |  1     | The subscriber approaches the cashier with the products they intent to buy |  
 |  2     | The cashier read the barcode(s) through manualy or scanner |
 |  3     | Start sale transaction |
-|  4     | Depend on the total ampunt of transaction, points will be added (Every 10 euro is equal to 1 point) |
-|  5     | End sale transaction |
-|  6     | Decrease quantity of products in the inventory |
+|  4     | The cashier reads the barcode of fidelity cart |
+|  5     | Depend on the total ampunt of transaction, points will be added (Every 10 euro is equal to 1 point) |
+|  6     | End sale transaction |
+|  7     | Decrease quantity of products in the inventory |
 
 ##### Scenario 1.3
 | Scenario |  Add Points |
@@ -332,11 +333,12 @@ employee-->(handleTransaction)
 |  1     | The subscriber approaches the cashier with the products they intent to buy and at least a coupon |  
 |  2     | The cashier read the barcode(s) through manualy or scanner |
 |  3     | Start sale transaction |
-|  4     | The cashier asks the subscriber if they want to use coupon |
-|  5     | Depend on the total ampunt of transaction, points will be added (Every 10 euro is equal to 1 point) |
-|  6     | End sale transaction |
-|  7     | Decrease quantity of products in the inventory |
- 
+|  4     | The cashier reads the barcode of fidelity cart |
+|  5     | The cashier asks the subscriber if they want to use coupon |
+|  6     | Depend on the total ampunt of transaction, points will be added (Every 10 euro is equal to 1 point) |
+|  7     | End sale transaction |
+|  8     | Decrease quantity of products in the inventory |
+
 ### Use case 2, UC2 Waring on low stock, Buy product
 | Actors Involved        | Owner |
 | ------------- |:-------------:| 
