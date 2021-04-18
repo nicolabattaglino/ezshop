@@ -38,7 +38,7 @@ This page is the homepage of the Owner. In addition to the subscribers' rights, 
 
 ## 1 Manage sale transaction
 
-![Selling](../GUI files/Selling.png)
+![Sellllling](../GUI files/Selling.png)
 
 This page is used to selling products.
 ##
