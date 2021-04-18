@@ -64,13 +64,13 @@ This page is described Reprint steps that Owner or Employee can search products 
 ![Warning on low stock buy](../GUI files/Low_stock_products_owner.png)
 Owner version.  
 
-The first version of the view is used to show the products that are low in stock to the **owner**. Then the **owner** can decide wether buy or not these products. In the table there are shown: the name,  the quantity in stock, the supplier and the buying cost of each product that is low in stock.
+The first version of the view is used to show the products that are low in stock to the **owner**. Then the **owner** can decide whether buy or not these products. In the table there are shown: the name, the quantity in stock, the supplier and the buying cost of each product that is low in stock.
 1. The **system** shows in the table all products that are low in stock.
 2. The **owner** can search the products either by barcode or by name, with the searchbox at the bottom. The search is performed when he/she presses the search button.
 3. The **system** shows in the table the products that matches with the search criteria, if any.
-4. The **owner**, by checking the checkbox relative to the product that he wants to buy, can select the products to which is interested to.
+4. The **owner**, by checking the checkbox relative to the product that he wants to buy, he/she can select the products to which is interested to.
 5. The **owner** can choose the quantity for each product, that is checked, by clicking on the realtive number stepper.
-6. The **owner** can buy the products by clicking to the order button.
+6. The **owner** can buy the products by clicking on the order button.
 
 The **owner** can go back to her/his *home* by clicking on the home button.  
 The **owner** can log out by clicking on the LogOut button.  
@@ -139,7 +139,41 @@ The **employee** can go back to her/his *home* by clicking on the home button.
 The **employee** can log out by clicking on the LogOut button.  
 The **employee** can go to the *low stock products* view by clicking on the relative button.  
 
-## 5 Edit product information
+## 5 Mark product as "not sold anymore"
+
+![mark as not sold](../GUI files/mark_product_as_not_sold_anymore.png)
+
+With this view the **owner** can signal products in the inventory as not sold anymore. In the table there are shown: the name, the supplier and the barcode.
+1. The **system** shows in the table all products that are low in stock.
+2. The **owner** can search the products either by barcode or by name, with the searchbox at the bottom. The search is performed when he/she presses the search button.
+3. The **system** shows in the table the products that matches with the search criteria, if any.
+4. The **owner**, by checking the checkbox relative to the product that he wants to remove, he/she can select the products to which is interested to mark as not sold anymore.
+6. The **owner** can save the changes by clicking on the commit button.
+
+The **owner** can go back to her/his *home* by clicking on the home button.  
+The **owner** can log out by clicking on the LogOut button.  
+The **owner** can go to the *low stock products* view by clicking on the relative button.  
+The **owner** can go to the *check inventory* view by clicking on the relative button.  
+The **owner** can go to the *add new products* view by clicking on the relative button.  
+The **owner** can go to the *edit information* view by clicking on the relative button.
+
+## 6 Edit product information
+
+![edit product information](../GUI files/edit_product_information.png)
+
+With this view the **owner** can edit products in the inventory. It is possible to edit one product at a time. 
+1. The **owner** can search, using the barcode, the product that he/she wants to edit. The search is performed when he/she presses the search button.
+2. The **owner** can change the information of the product using the relevant text fields.
+3. The expiration date can also be modified using the date picker. To use it, the **owner** has to click on the calendar icon.
+4. If the **owner** wants, he/she can reset the fields by pressing the reset field button.
+5. The **owner** can save the changes by pressing the commit button. 
+
+The **owner** can go back to her/his *home* by clicking on the home button.  
+The **owner** can log out by clicking on the LogOut button.  
+The **owner** can go to the *low stock products* view by clicking on the relative button.  
+The **owner** can go to the *check inventory* view by clicking on the relative button.  
+The **owner** can go to the *add new products* view by clicking on the relative button.  
+The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. 
 
 ## 7 Edit informations account
 
