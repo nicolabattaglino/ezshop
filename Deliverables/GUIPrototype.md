@@ -94,7 +94,7 @@ This is the page in which the subscriber can modify its own informations. Name, 
 ![Create account](../GUI files/create_account.png)
 
 This page is used to create a new account.  
-1. The **customer** can insert all the informations and click on Save to register in the system. All the fields with * are required.  
+1. The **customer** can insert all the informations and click on *Create New Account* to register in the system. All the fields with * are required.  
 2. The **customer** can click on *Back* button to go back to the Welcome Page. 
 
 ##
