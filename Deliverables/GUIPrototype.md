@@ -40,17 +40,17 @@ This page is the homepage of the Owner. In addition to the subscribers' rights, 
 
 ![Selling](../GUI files/Selling.png)
 
-This page is described selling steps that Owner or Employee can use this form, products can insert through the barcode scanner. subscriber/customer buy products with/without coupon/discount. there are 3 buttons:
-1. Home button that linked to the homepage
-2. Accounting button that allows owner/employee to have report sales
-3. Reprint button that can print the previous receipt by searching 
+This page is described selling steps that **Owner** or **Employee** can use this form, products can insert through the barcode scanner. subscriber/customer buy products with/without coupon/discount. there are 3 buttons:
+1. **Home** button that linked to the homepage
+2. **Accounting** button that allows owner/employee to have report sales
+3. **Reprint** button that can print the previous receipt by searching 
 ##
 ![Reprint](../GUI files/Reprint.png)
 
-This page is described Reprint steps that Owner or Employee can search products by Product Name, Transaction ID,Transaction Date, Fidelity card. also there are 3 buttons:
-1. Home button that linked to the homepage
-2. Accounting button that allows owner/employee to have report sales
-3. Selling button that direct us to the Selling page
+This page is described Reprint steps that Owner or Employee can search products by Product Name, Transaction ID,Transaction Date, Fidelity card Barcode. also there are 3 buttons:
+1. **Home** button that linked to the homepage
+2. **Accounting** button that allows **Owner/Employee** to have report sales
+3. **Selling** button that direct us to the **Selling** page
 
 ## 2 Waring on low stock, Buy product
 
