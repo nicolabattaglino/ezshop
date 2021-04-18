@@ -44,7 +44,7 @@ This page is used to show the products that are low in stock. The Owner can also
 
 ![Edit informations account](../GUI files/edit_info.png)
 
-This is the page in which the subscriber can modify its own informations.
+This is the page in which the subscriber can modify its own informations. Name, Surname, SSN and date of birth cannot be modified.
 
 
 ## 8 Registration, Request fidelity card
