@@ -48,7 +48,7 @@ This page is used to Reprint the receipt.
 
 ## 2 Waring on low stock, Buy product
 
-![Warning on low stock buy](../GUI files/Low_stock_products_owner)
+![Warning on low stock buy](../GUI files/Low_stock_products_owner.png)
 First version.
 
 The first version of the view is used to show the products that are low in stock to the owner. Then the **owner** can decide wether buy or not these products.
