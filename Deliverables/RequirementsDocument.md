@@ -110,6 +110,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 | Supplier       | Internet connection | Email |
 | POS system       | Internet connection | Creditcard API |
 | Product       | Laser beam | Barcode |
+| Bank | Internet connection | Bank website |
 
 
 # Stories and personas
