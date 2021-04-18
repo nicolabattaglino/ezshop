@@ -46,12 +46,27 @@ This page is used to selling products.
 
 This page is used to Reprint the receipt.
 
-## 2 UC2 Waring on low stock, Buy product
+## 2 Waring on low stock, Buy product
+
+![Warning on low stock buy](../GUI files/Low_stock_products.png)
+First version.
+
+The first version of the view is used to show the products that are low in stock to the owner. Then the **owner** can decide wether buy or not these products.
+1. The **owner** can search the products either by barcode or by name, with the searchbox at the bottom.
+2. The **system** shows in the table the products that matches with the search criteria, if any.
+3. The **owner**, by checking the checkbox relative to the product that he wants to buy, can select the products to which is interested to.
+4. The **owner** can choose the quantity for each product by clicking on the realtive number stepper.
+5. The **owner** can buy the products by clicking to the order button.
 
 ![Warning on low stock](../GUI files/Low_stock_products.png)
+second version.
 
-This page is used to show the products that are low in stock. The Owner can also search them by their barcode or name.
-
+The **owner** can go back to her/his *home* by clicking on the home button.  
+The **owner** can log out by clicking on the LogOut button.  
+The **owner** can go to the *check inventory* view by clicking on the relative button.  
+The **owner** can go to the *add new products* view by clicking on the relative button.  
+The **owner** can go to the *edit product information* view by clicking on the relative button.  
+The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button.  
 ## 7 Edit informations account
 
 ![Edit informations account](../GUI files/edit_info.png)
