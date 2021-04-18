@@ -204,7 +204,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 @startuml
 
 rectangle "EZ Shop" as EZShop{
-"Warning on low stock product" as (warning)
+"Warning on low stock, buy product" as (warning)
 "Handle transaction" as (handleTransaction)
 
 "Check inventory" as (checkInventory)
@@ -262,7 +262,7 @@ employee-->(handleTransaction)
 (ownerTasks)-->(accounting):include
 (ownerTasks)-->(manageRights):include
 (ownerTasks)-->(editProduct):include
-(handleTransaction) --> (addPoints): trigger
+(handleTransaction) --> (addPoints)
 @enduml
 
 ```
@@ -755,9 +755,6 @@ employee-->(handleTransaction)
 
 ```plantuml
 @startuml
-
-title Glossary
-
 
 class "Subscriber" as subscriber{
 ID
