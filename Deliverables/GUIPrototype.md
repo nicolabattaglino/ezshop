@@ -6,7 +6,6 @@ Date:
 
 Version:
 
-bla bla 
 
 ## 1 Manage sale transaction
 
@@ -17,6 +16,11 @@ This page is used to selling products.
 ![Reprint](../GUI files/Reprint.png)
 
 This page is used to Reprint the receipt.
+
+## 2, UC2 Waring on low stock, Buy product
+
+![Warning on low stock](../GUI files/Low_stock_products.png)
+
 
 ## 8 Registration, Request fidelity card
 
