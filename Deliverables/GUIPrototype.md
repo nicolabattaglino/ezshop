@@ -44,7 +44,7 @@ This is the main accounting page from which the owner can access to all the acco
 
 ![Sale transactions](../GUI files/List_of_sale_transactions.png)
 
-This page contains the list of sale transactions.
+This page contains the list of sale transactions. The report button will lead to the report page.
 
 ## 15 Expenses
 !Expenses](../GUI files/List_of_expenses.png)
