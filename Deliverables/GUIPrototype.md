@@ -8,14 +8,21 @@ Version:
 
 ## 0 Welcome and Homepages 
 
-![Selling](../GUI files/welcome.png)
+![Welcome](../GUI files/welcome.png)
 
-This page is the welcome page in which 
+This page is the welcome page in which a subsciber can log in and a new subsciber can register. 
 
-![Reprint](../GUI files/Reprint.png)
+![Normal Subscriber HomePage](../GUI files/account_page.png)
 
-This page is used to Reprint the receipt.
+This page is the homepage of a normal subscriber. Here they can check pints, request coupon, create a new card, edit informations.
 
+![Employee HomePage](../GUI files/Employee_Page.png)
+
+This page is the homepage of an employee. In addition to the subscribers' rights, they can magage Sales and Inventory
+
+![Owner HomePage](../GUI files/Owner_Page.png)
+
+This page is the homepage of the Owner. In addition to the subscribers' rights, they can magage Sales, Inventory and Rights of all the subscribers.
 
 ## 1 Manage sale transaction
 
@@ -32,6 +39,13 @@ This page is used to Reprint the receipt.
 ![Warning on low stock](../GUI files/Low_stock_products.png)
 This page is used to show the products that are low in stock. The Owner can also search them by their barcode or name
 
+## 7 Edit informations account
+
+![Edit informations account](../GUI files/edit_info.png)
+
+This is the page in which the subscriber can modify its own informations.
+
+
 ## 8 Registration, Request fidelity card
 
 ![Create account](../GUI files/create_account.png)
@@ -41,6 +55,23 @@ This page is used to create a new account. All the fields with * are required.
 ![Request new card](../GUI files/request_new_card.png)
 
 This page is used to request a new fidelity card in case the subscriber lost it.
+
+## 9 Create Coupon
+
+![Create coupon](../GUI files/create_coupon_page.png)
+
+This page is used to create a coupon. Here the subscriber can choose the amount of the coupon and click on "create coupon".
+
+![Coupon Created](../GUI files/coupon_created.png)
+
+This page shows the pop up that appears after the creation of the coupon.
+
+## 10 Check Points
+
+![Check Points](../GUI files/account_page.png)
+
+This is the homepage where the subsciber can check its own points.
+
 
 ## 12 Log in 
 
