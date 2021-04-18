@@ -60,8 +60,6 @@ EZShop is a software application to:
 @startuml
 
 
-title Context Diagram
-
 
 actor Owner
 actor :Barcode scanner: as bcScanner
@@ -205,7 +203,6 @@ APIs: Software to connect external systems to EZ Shop logically.
 ```plantuml
 @startuml
 
-title Use Case Diagram
 rectangle "EZ Shop" as EZShop{
 "Warning on low stock product" as (warning)
 "Handle transaction" as (handleTransaction)
@@ -878,7 +875,6 @@ sale"*" -- customer
 ```plantuml
 @startuml
 
-title System Design
 class "EZ Shop" as EZShop{
 F1 manage sales 
 F2 manage inventory
@@ -893,9 +889,7 @@ class "Local server" as localServer{
 
 
 class "Software" as software 
-class " FIdelity card reader" as fcReader
 EZShop o-- localTerminal
-EZShop o-- fcReader
 localTerminal -- software
 localServer -- software
 EZShop o-- localServer
@@ -910,7 +904,6 @@ EZShop o-- localServer
 ```plantuml
 @startuml
 
-title Classes - Deployment Diagram
 node "Local server" as localServer{
 artifact "EZShop application" as EZShop{
 artifact "General database" as generalDB
