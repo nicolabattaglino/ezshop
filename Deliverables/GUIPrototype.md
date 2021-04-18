@@ -6,7 +6,16 @@ Date:
 
 Version:
 
-bla bla 
+## 0 Manage sale transaction
+
+![Selling](../GUI files/welcome.png)
+
+This page is the welcome page in which 
+
+![Reprint](../GUI files/Reprint.png)
+
+This page is used to Reprint the receipt.
+
 
 ## 1 Manage sale transaction
 
