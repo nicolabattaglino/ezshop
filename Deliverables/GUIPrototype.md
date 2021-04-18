@@ -12,7 +12,7 @@ Version:
 
 This is the main accounting page from which the owner can access to all the accounting features.
 
-![Accounting home page](../GUI files/List_of_sale_transaction.png)
+![Accounting home page](../GUI files/List_of_sale_transactions.png)
 
 This page contains the list of sale transactions.
 
