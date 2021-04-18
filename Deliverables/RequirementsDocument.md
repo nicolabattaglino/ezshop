@@ -343,15 +343,15 @@ employee-->(handleTransaction)
 | Actors Involved        | Owner |
 | ------------- |:-------------:| 
 |  Precondition     | One or more products are low stock and maked as sold | 
-|  Post condition     | A decision about whether to buy the product or not is made (Ambiguous)| 
-|  Nominal Scenario     | Owner decides to buy the product |
-|  Variants     | The owner decide to not buy the product(s)|
+|  Post condition     | The product(s) amount is/are increased | 
+|  Nominal Scenario     | Owner decides to buy the product(s) |
+|  Variants     | -|
  
 ##### Scenario 2.1
 | Scenario  | Owner decides to buy the product(s)|
 | ------------- |:-------------:| 
 |  Precondition     | One or more products are low stock |
-|  Post condition     | The product amount is increased |
+|  Post condition     | The product(s) amount is/are increased |
 | Step#        | Description  |
 |  1     | The system shows that one on more products are low on stock (less than 10 units)  |  
 |  2     | The owner select the product(s) and the quantity that he/she want to buy |
@@ -360,16 +360,6 @@ employee-->(handleTransaction)
 |  5     | An order is issued |
 |  6     | The product(s) is/are delivered |
 |  7     | The amount of the product(s) is increased |
- 
-
-##### Scenario 2.2
-| Scenario  | Owner decides not to buy the product(s)|
-| ------------- |:-------------:| 
-|  Precondition     | One or more products are low stock (less than 10 units)|
-|  Post condition     | - |
-| Step#        | Description  |
-|  1     | The system shows that one on more products are low on stock (less than 10 units) |  
-|  3     | The owner decides not to buy the product(s) |
  
 ### Use case 3, UC3 Add product
  
