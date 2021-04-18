@@ -56,6 +56,10 @@ This page is used to create a new account. All the fields with * are required.
 ![Request new card](../GUI files/request_new_card.png)
 
 This page is used to request a new fidelity card in case the subscriber lost it.
+##
+![Card Created](../GUI files/new_card_created.png)
+
+This is the page that confirms  with a pop up the creation of the new card.
 
 ## 9 Create Coupon
 
