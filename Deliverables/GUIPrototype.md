@@ -79,10 +79,17 @@ This is the homepage where the subsciber can check its own points.
 ![Login](../GUI files/login.png)
 
 This is the login page.
-
+##
 ![Login error](../GUI files/login__error.png)
 
 This is the error shown when the credentials are wrong.
+
+
+## 13 Manage Rights
+
+![Manage Rights](../GUI files/Manage_Rights.png)
+
+In this page the owner can change the subscribers' rights.
 
 ## 14 Accounting and sale transactions
 ![Accounting home page](../GUI files/Accounting_home_page.png)
