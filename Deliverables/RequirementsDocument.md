@@ -799,6 +799,7 @@ Right level
 }
 class "Fidelity Card" as fidelityCard{
 ID
+Barcode
 Fidelity points
 Creation date 
 Lost 
