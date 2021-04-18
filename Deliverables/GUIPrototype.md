@@ -6,6 +6,7 @@ Date:
 
 Version:
 
+bla bla 
 
 ## 1 Manage sale transaction
 
