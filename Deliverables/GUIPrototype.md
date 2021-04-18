@@ -12,6 +12,7 @@ Version:
 
 This page is the welcome page in which a subsciber can log in and a new subsciber can register. 
 ##
+
 ![Normal Subscriber HomePage](../GUI files/account_page.png)
 
 This page is the homepage of a normal subscriber. Here they can check points, request coupon, create a new card, edit informations.
