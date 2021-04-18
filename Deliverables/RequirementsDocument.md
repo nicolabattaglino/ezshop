@@ -203,7 +203,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 ```plantuml
 @startuml
 
-rectangle "EZ Shop" as EZShop{
+
 "Warning on low stock, buy product" as (warning)
 "Handle transaction" as (handleTransaction)
 
@@ -211,8 +211,6 @@ rectangle "EZ Shop" as EZShop{
 "Manage account" as (manageAccount)
 "Owner tasks" as (ownerTasks)
 
-
-}
 
 "Owner" as owner
 "Employee" as employee
@@ -286,6 +284,7 @@ employee-->(handleTransaction)
 @enduml
 
 ```
+## Use cases
 ### Use case 1, UC1 Manage sale transaction
 | Actors Involved        | Employee, Owner |
 | ------------- |:-------------:| 
@@ -361,7 +360,6 @@ employee-->(handleTransaction)
  
 ### Use case 3, UC3 Add product
  
-
 | Actors Involved        | Product, Owner |
 | ------------- |:-------------:| 
 |  Precondition     | The product is not in the inventory or marked as “not sold anymore” |  

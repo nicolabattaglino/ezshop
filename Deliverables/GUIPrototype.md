@@ -48,15 +48,16 @@ This page is used to Reprint the receipt.
 
 ## 2 Waring on low stock, Buy product
 
-![Warning on low stock buy](../GUI files/Low_stock_products_owner)
-First version.
+![Warning on low stock buy](../GUI files/low_stock_products_owner.png)
+*Owner version.*
 
-The first version of the view is used to show the products that are low in stock to the owner. Then the **owner** can decide wether buy or not these products.
-1. The **owner** can search the products either by barcode or by name, with the searchbox at the bottom.
-2. The **system** shows in the table the products that matches with the search criteria, if any.
-3. The **owner**, by checking the checkbox relative to the product that he wants to buy, can select the products to which is interested to.
-4. The **owner** can choose the quantity for each product by clicking on the realtive number stepper.
-5. The **owner** can buy the products by clicking to the order button.
+The first version of the view is used to show the products that are low in stock to the **owner**. Then the **owner** can decide wether buy or not these products. In the table there are shown: the name,  the quantity in stock, the supplier and the buying cost of each product that is low in stock.
+1. The **system** shows in the table all products that are low in stock.
+2. The **owner** can search the products either by barcode or by name, with the searchbox at the bottom. The search is performed when he/she presses the search button.
+3. The **system** shows in the table the products that matches with the search criteria, if any.
+4. The **owner**, by checking the checkbox relative to the product that he wants to buy, can select the products to which is interested to.
+5. The **owner** can choose the quantity for each product, that is checked, by clicking on the realtive number stepper.
+6. The **owner** can buy the products by clicking to the order button.
 
 The **owner** can go back to her/his *home* by clicking on the home button.  
 The **owner** can log out by clicking on the LogOut button.  
@@ -65,8 +66,64 @@ The **owner** can go to the *add new products* view by clicking on the relative 
 The **owner** can go to the *edit product information* view by clicking on the relative button.  
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button.  
 
-![Warning on low stock](../GUI files/Low_stock_products_employee.png)
-second version.
+![Warning on low stock](../GUI files/low_stock_products_employee.png)
+*Employee version.*
+
+The second version of the view is used to show the products that are low in stock to the **employee**. In the table there are shown the name, the quantity in stock and the supplier of each product that is low in stock.
+1. The **system** shows in the table all products that are low in stock.
+2. The **employee** can search the products either by barcode or by name, using the searchbox at the bottom. The search is performed when he/she presses the search button.
+3. The **system** shows in the table the products that matches with the search criteria, if any.
+
+The **employee** can go back to her/his *home* by clicking on the home button.  
+The **employee** can log out by clicking on the LogOut button.  
+The **employee** can go to the *check inventory* view by clicking on the relative button.  
+
+## 3 Add product
+
+![Warning on low stock buy](../GUI files/add_new_products.png)
+
+With this view the **owner** can add to the buyable products new products that arent in the inventory or products that are not sold anymore. The products that are not sold anymore are shown by a table. For each product not sold anymore, name and supplier are shown.
+1. The **system** shows in the table all products that are not sold anymore.
+2. The **owner** insert, in the appropriate fields, the information about the product that he/she wants to start to sell.
+3. If the **owner** wants, he/she can search among the products that are not sold anymore using the search box at the bottom. The search is performed when he/she presses the search button.
+4. The **system** shows in the table all the products that matches with the search criteria, if any.
+5. If the **owner** wants, he/she can check, by the checkboxes in the table, the products that he/she want to add to the buyable products.
+6. When the **owner** has done, he/she can add the product(s) by pressing the add button.
+
+The **owner** can go back to her/his *home* by clicking on the home button.  
+The **owner** can log out by clicking on the LogOut button.  
+The **owner** can go to the *low stock roducts* view by clicking on the relative button.  
+The **owner** can go to the *check inventory* view by clicking on the relative button.  
+The **owner** can go to the *edit product information* view by clicking on the relative button.  
+The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button.  
+
+## 4 Check inventory
+
+![Check inventory owner](../GUI files/check_inventory_owner.png)
+*Owner version.*
+With this view the **owner** can view and search the products in the inventory. The products are shown by a table. For each product the table shows: the name , the quantity, the supplier, the expiration, the price, the barcode, the discount and if is sold.
+1. The **system** shows in the table all products.
+2. The **owner** can search the products: by barcode, by name, by supplier and by price range with the searchbox at the bottom. The search is performed when he/she presses the search button.
+3. The **system** shows in the table all the products that matches with the search criteria, if any.
+
+The **owner** can go back to her/his *home* by clicking on the home button.  
+The **owner** can log out by clicking on the LogOut button.  
+The **owner** can go to the *low stock roducts* view by clicking on the relative button.  
+The **owner** can go to the *add new products* view by clicking on the relative button.  
+The **owner** can go to the *edit product information* view by clicking on the relative button.  
+The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. 
+
+![Check inventory employee](../GUI files/check_inventory_employee.png)
+*Employee version.*
+With this view the **employee** can view and search the products in the inventory. The products are shown by a table. For each product the table shows: the name , the quantity, the supplier, the expiration, the price, the barcode, the discount and if is sold.
+1. The **system** shows in the table all products.
+2. The **employee** can search the products: by barcode, by name, by supplier and by price range with the searchbox at the bottom. The search is performed when he/she presses the search button.
+3. The **system** shows in the table all the products that matches with the search criteria, if any.
+
+The **employee** can go back to her/his *home* by clicking on the home button.  
+The **employee** can log out by clicking on the LogOut button.  
+The **employee** can go to the *low stock roducts* view by clicking on the relative button.  
+
 ## 7 Edit informations account
 
 ![Edit informations account](../GUI files/edit_info.png)
