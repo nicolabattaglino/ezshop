@@ -1,10 +1,10 @@
 # Graphical User Interface Prototype  
 
-Authors:
+Authors: Stefano, Mattia, Nicola, Hossein
 
-Date:
+Date: 18 April 2021
 
-Version:
+Version: 1.0
 
 ## 0 Welcome and Homepages 
 
@@ -38,9 +38,9 @@ This page is the homepage of the Owner. In addition to the subscribers' rights, 
 
 ## 1 Manage sale transaction
 
-![Sellllling](../GUI files/Selling.png)
+![Selling](../GUI files/Selling.png)
 
-This page is used to selling products.
+This page is described selling steps that Owner or Employee can use this form, products can insert through the barcode scanner.
 ##
 ![Reprint](../GUI files/Reprint.png)
 
