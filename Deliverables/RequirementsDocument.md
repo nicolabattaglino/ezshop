@@ -387,7 +387,7 @@ employee-->(handleTransaction)
 |  Precondition     | The product is not in the inventory |
 |  Post condition     | Product is added in the inventory and marked as sold|
 | Step#        | Description  |
-|  1     | Owner searches by name the product(s) that he wants to add to the inventory |  
+|  1     | Owner insert the information about the product that he wants to add to the inventory |  
 |  2     | The product(s) is added to the inventory |
 |  3     | The system shows the product as low in stock |
 
@@ -431,7 +431,7 @@ employee-->(handleTransaction)
 
 ### Use case 5, UC5 Mark product as "not sold anymore"
 
-| Actors Involved        | Owner, Inventory and catalogue system |
+| Actors Involved        | Owner |
 | ------------- |:-------------:| 
 |  Precondition     | There is/are a/some product(s) not marked as “not sold anymore” |  
 |  Post condition     | The product(s) is/are marked as not sold anymore|
@@ -444,12 +444,12 @@ employee-->(handleTransaction)
 |  Precondition     | The product(s) is/are in the inventory |
 |  Post condition     | Product(s) is/are marked as not sold anymore|
 | Step#        | Description  |
-|  1     | Owner inserts the barcode about the product(s) that he wants to not sell anymore |  
+|  1     | Owner searches the product(s) that he wants to not sell anymore |  
 |  2     | The system add the product(s) into a list |
 |  3     | The owner checks if everything is correct |
 |  4     | The owner commit the changes |
 |  5     | The product(s) is/are then marked as not sold anymore |
-a
+
  
  ### Use case 6, UC6 Edit product information
 
