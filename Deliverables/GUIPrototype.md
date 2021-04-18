@@ -14,7 +14,7 @@ This page is the welcome page in which a subsciber can log in and a new subscibe
 ##
 ![Normal Subscriber HomePage](../GUI files/account_page.png)
 
-This page is the homepage of a normal subscriber. Here they can check pints, request coupon, create a new card, edit informations.
+This page is the homepage of a normal subscriber. Here they can check points, request coupon, create a new card, edit informations.
 ##
 ![Employee HomePage](../GUI files/Employee_Page.png)
 
@@ -22,7 +22,7 @@ This page is the homepage of an employee. In addition to the subscribers' rights
 ##
 ![Owner HomePage](../GUI files/Owner_Page.png)
 
-This page is the homepage of the Owner. In addition to the subscribers' rights, they can magage Sales, Inventory and Rights of all the subscribers.
+This page is the homepage of the Owner. In addition to the subscribers' rights, they can magage Sales, Inventory, Accounting and Rights of all the subscribers.
 
 ## 1 Manage sale transaction
 
