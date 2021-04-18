@@ -18,10 +18,10 @@ If a customer wants to register they can click on "Register". Page at point '8' 
 ![Normal Subscriber HomePage](../GUI files/account_page.png)
 
 This page is the homepage of a normal subscriber. 
-In the center of the page are shown some informations: on the top there are the fidelity points, the ID number of the fidelity card and if any coupons are present. 
-Below there are the personal informations. By clicking on edit information, the page at point '7' appears.
-Clicking on the left, the subscriber can Request Coupon or create a new card if they lost it.
-On top right there is the button to log out.
+1. The **system** shows some informations in the center: ID card number, fidelity points amount, coupons, if any, and all the personal informations.  
+2. The **Subsciber** can modify its own infotmations by clicking on the edit information button. Page at point '7' appears.  
+3. The **Subsciber** can request a new card if they lost it, by clicking on the lost card button. The second page at point '8' appears.  
+4. The **Subsciber** can click on the log out button on top-right to log out.
 
 
 ##
