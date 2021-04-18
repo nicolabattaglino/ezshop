@@ -311,7 +311,7 @@ employee-->(handleTransaction)
 ##### Scenario 1.2
 | Scenario | Subscriber without coupon |
 | ------------- |:-------------:| 
-|  Precondition     | There are one or more product(s) in the shop and the customer is a subscriber without a coupon (or dont have/dont want/expired) |
+|  Precondition     | There are one or more product(s) in the shop and the customer is a subscriber without a coupon (or dont have/don'git remotet want/expired) |
 |  Post condition     | A subscriber bought the product(s) and his points added |
 | Step#        | Description  |
 |  1     | The subscriber approaches the cashier with the products they intent to buy |  
