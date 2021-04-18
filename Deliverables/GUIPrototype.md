@@ -48,7 +48,7 @@ This page is used to Reprint the receipt.
 
 ## 2 Waring on low stock, Buy product
 
-![Warning on low stock buy](../GUI files/Low_stock_products.png)
+![Warning on low stock buy](../GUI files/Low_stock_products_owner.png)
 First version.
 
 The first version of the view is used to show the products that are low in stock to the owner. Then the **owner** can decide wether buy or not these products.
@@ -58,15 +58,15 @@ The first version of the view is used to show the products that are low in stock
 4. The **owner** can choose the quantity for each product by clicking on the realtive number stepper.
 5. The **owner** can buy the products by clicking to the order button.
 
-![Warning on low stock](../GUI files/Low_stock_products.png)
-second version.
-
 The **owner** can go back to her/his *home* by clicking on the home button.  
 The **owner** can log out by clicking on the LogOut button.  
 The **owner** can go to the *check inventory* view by clicking on the relative button.  
 The **owner** can go to the *add new products* view by clicking on the relative button.  
 The **owner** can go to the *edit product information* view by clicking on the relative button.  
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button.  
+
+![Warning on low stock](../GUI files/Low_stock_products_employee.png)
+second version.
 ## 7 Edit informations account
 
 ![Edit informations account](../GUI files/edit_info.png)
