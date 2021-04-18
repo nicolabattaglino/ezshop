@@ -66,7 +66,7 @@ On the top left there is the button to go back to the Homepage, on the top right
 ![Create account](../GUI files/create_account.png)
 
 This page is used to create a new account. 
-The customer can insert all the infromation and click on Save. All the fields with * are required. 
+The customer can insert all the informations and click on Save. All the fields with * are required. 
 ##
 ![Request new card](../GUI files/request_new_card.png)
 
