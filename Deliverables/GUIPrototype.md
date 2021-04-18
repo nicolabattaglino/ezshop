@@ -20,7 +20,7 @@ This page is used to Reprint the receipt.
 ## 2, UC2 Waring on low stock, Buy product
 
 ![Warning on low stock](../GUI files/Low_stock_products.png)
-
+This page is used to show the products that are low in stock. The Owner can also search them by their barcode or name
 
 ## 8 Registration, Request fidelity card
 
