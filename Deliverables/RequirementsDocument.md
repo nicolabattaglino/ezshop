@@ -60,9 +60,9 @@ EZShop is a software application to:
 @startuml
 
 
-
+actor Printer 
 actor Owner
-actor :Barcode scanner: as bcScanner
+actor :Cash register: as bcScanner
 actor Product
 actor Subscriber
 actor Employee
@@ -81,6 +81,7 @@ EZShop - supplier
 EZShop -- Bank
 Subscriber -- EZShop
 EZShop -- bcScanner
+EZShop - Printer
 
 
 
@@ -378,7 +379,7 @@ employee-->(handleTransaction)
 |  3     | The system shows the product as low in stock |
 
  ##### Scenario 3.2
-| Scenario  | Product is readded to the inventory |
+| Scenario  | Product is added to the inventory |
 | ------------- |:-------------:| 
 |  Precondition     | The product is in the inventory and marked as “not sold anymore” |
 |  Post condition     | Product is added in the inventory and marked as sold|
@@ -675,8 +676,8 @@ employee-->(handleTransaction)
 | ------------- |:-------------:| 
 |  Precondition     | Employee(s) can receive their salaries  |  
 |  Post condition     | Paying Salaries |
-|  Nominal Scenario     | If Employee(s) does not receive their salary, system announce the adjourned salaries, or Employee(s) can send their request to the Owner for pay the salaries |
-|  Variants     | Customer orientation have encouragement |
+|  Nominal Scenario     | The owner can access a list of all employees, the hours they worked and their respective salaries. The owner can also pay salaries from this window |
+|  Variants     | - |
 
 #### Scenario 16.1
 | Scenario | Print list of salaries|
@@ -708,8 +709,27 @@ employee-->(handleTransaction)
 |  9 	 | The system initiates a transfer to the employee bank account with the correct amount |
 | 10	 | The owner completes the transfer |
 
+### Use case 17, UC17 Display daily balance
+| Actors Involved	 	| Owner |
+| ------------- |:-------------:| 
+|  Precondition     | Owner O requests a daily balance  |  
+|  Post condition     | The balance is displayed |
+| Nominal Scenario | Owner O requests a daily balance and the balance is printed on screen |
+|  Variants     | - |
 
-### Use case 17, UC17 Forgot Password 
+#### Scenario 17.1
+| Scenario | Print daily balance|
+| ------------- |:-------------:| 
+|  Precondition     | Owner O requests a daily balance |
+|  Post condition     | The daily balance is printed |
+| Step#        | Description  |
+|  1     | The owner logs in |  
+|  2     | The owner clicks on the accounting button on their home page  |
+|  3     | The owner clicks on the "Daily balance" button|
+|  4     | The system dispalys the daily balance so far |
+|  5 	 | The owner clicks on the print button |
+
+### Use case 18, UC18 Forgot Password 
 | Actors Involved        | Subscriber |
 | ------------- |:-------------:| 
 |  Precondition     | Forgot Password requested  |  
@@ -717,7 +737,7 @@ employee-->(handleTransaction)
 |  Nominal Scenario     | Subscriber insert the email, SSN and the new password. |
 |  Variants     | if subscriber is not in the system -> error: Subscriber not found |
 
-#### Scenario 17.1
+#### Scenario 18.1
 | Scenario | Forgot Password|
 | ------------- |:-------------:| 
 |  Precondition     | Forgot Password Requested|
@@ -727,7 +747,7 @@ employee-->(handleTransaction)
 |  2     | The subscriber insert the email, SSN and new password  |
 |  3     | The subscriber clicks on save |
 
-#### Scenario 17.2
+#### Scenario 18.2
 | Scenario | Forgot Password but subscriber not found |
 | ------------- |:-------------:| 
 |  Precondition     | Forgot Password Requested|
