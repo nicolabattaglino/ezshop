@@ -24,6 +24,7 @@ This page is the homepage of a normal subscriber.
 2. The **Subscriber** can modify its own infotmations by clicking on the *edit informations* button. (Page 7.1).  
 3. The **Subscriber** can request a new card if they lost it, by clicking on the *lost card* button. (Page 8.2).  
 4. The **Subscriber** can click on the *logout* button on top-right to log out. (Page 0.1) 
+5. The **Subscriber** can create a coupon  by clicking on the *Create Coupon* button. (Page 9.1).  
 
 
 ##
