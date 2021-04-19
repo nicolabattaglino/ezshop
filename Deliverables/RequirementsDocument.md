@@ -904,7 +904,7 @@ class "Local terminal" as localTerminal{
 class "Local server" as localServer{
 }
 
-class "Barcode reader" as barcodeReade
+class "Barcode reader" as barcodeReader
 class "Software" as software 
 EZShop o-- localTerminal
 localTerminal -- software
