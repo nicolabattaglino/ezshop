@@ -9,7 +9,7 @@ Version: 1.0
 ## 0 Welcome and Homepages 
 
 ![Welcome](../GUI files/welcome.png)
-1
+1  
 
 This page is the welcome page.  
 
@@ -19,7 +19,7 @@ This page is the welcome page.
 ##
 
 ![Normal Subscriber HomePage](../GUI files/account_page.png)
-2
+2  
 
 This page is the homepage of a normal subscriber. 
 1. The **system** shows some informations in the center: ID card number, fidelity points amount, coupons, if any, and all the personal informations.  
@@ -30,14 +30,14 @@ This page is the homepage of a normal subscriber.
 
 ##
 ![Employee HomePage](../GUI files/Employee_Page.png)
-3
+3  
 This page is the homepage of an employee. It is similar to the Subscriber Homepage, but the Employee has different rights compared to the normal Subscriber and for this reason there are some additional buttons:    
 1. The **Employee** can click on *Inventory* button to open the inventory page at point '2' and manage the inventory.  
 2. The **Employee** can click on *Sales* button to open the Sales page at point '1' and manage the sales.  
 
 ##
 ![Owner HomePage](../GUI files/Owner_Page.png)
-4
+4  
 This page is the homepage of the Owner. It is similar to the Subscriber Homepage, but the Owner has different rights compared to the normal Subscriber and for this reason there are some additional buttons:    
 
 1. The **Owner** can click on *Manage Rights* button to open the Manage rights page at point '13' and manage the subscribers' rights.    
@@ -48,14 +48,14 @@ This page is the homepage of the Owner. It is similar to the Subscriber Homepage
 ## 1 Manage sale transaction
 
 ![Selling](../GUI files/Selling.png)
-5
+5  
 This page is described selling steps that **Owner** or **Employee** can use this form, products can insert through the barcode scanner. subscriber/customer buy products with/without coupon/discount. there are 3 buttons:
 1. **Home** button that linked to the homepage
 2. **Accounting** button that allows owner/employee to have report sales
 3. **Reprint** button that can print the previous receipt by searching 
 ##
 ![Reprint](../GUI files/Reprint.png)
-6
+6  
 This page is described Reprint steps that Owner or Employee can search products by Product Name, Transaction ID,Transaction Date, Fidelity card Barcode. also there are 3 buttons:
 1. **Home** button that linked to the homepage
 2. **Accounting** button that allows **Owner/Employee** to have report sales
@@ -64,7 +64,7 @@ This page is described Reprint steps that Owner or Employee can search products 
 ## 2 Waring on low stock, Buy product
 
 ![Warning on low stock buy](../GUI files/Low_stock_products_owner.png)
-7
+7  
 
 Owner version.  
 
