@@ -79,7 +79,6 @@ EZShop -- POSSystem
 EZShop - supplier
 EZShop -- Bank
 Subscriber -- EZShop
-EZShop -- bcScanner
 EZShop - Printer
 
 
@@ -902,14 +901,15 @@ class "Local terminal" as localTerminal{
 }
 class "Local server" as localServer{
 }
-
-class "Barcode reader" as barcodeReader
+class "Cash register" as cashRegister
+class "Barcode scanner" as barcodeScanner
 class "Software" as software 
 EZShop o-- localTerminal
 localTerminal -- software
 localServer -- software
 EZShop o-- localServer
-EZShop o-- barcodeReader
+localTerminal <|-- cashRegister
+cashRegiet -- barcodeScanner
 
 
 @enduml
