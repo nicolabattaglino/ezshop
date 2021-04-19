@@ -634,18 +634,7 @@ employee-->(handleTransaction)
 |  5 	 | The owner clicks on the print button |
 
 
-#### Scenario 14.2
-| Scenario | Show sales report|
-| ------------- |:-------------:| 
-|  Precondition     | There are one or more transactions recorded |
-|  Post condition     | The sales report is shown printed |
-| Step#        | Description  |
-|  1     | The owner logs in |  
-|  2     | The owner clicks on the accounting button on their home page  |
-|  3     | The owner clicks on the "Sale transactions" button|
-|  4     | The system dispalys a list of all sale transactions |
-|  5 	 | The owner clicks on the report button button |
-|  6	 | The system dispalys a ditailed report with graphs about sale transactions |
+
  
 ### Use case 15, UC15 List expenses
 | Actors Involved        | Owner |
