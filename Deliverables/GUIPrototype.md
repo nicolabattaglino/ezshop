@@ -9,53 +9,51 @@ Version: 1.0
 ## 0 Welcome and Homepages 
 
 ![Welcome](../GUI files/welcome.png)
-0.1
-
+0.1  
 This page is the welcome page.  
 
-1. The **subscriber** can log in clicking on *Login*. Page at point '12' appears.
-2. A **customer** can register by clicking on *Register*. Page at point '8' appears.
+1. The **subscriber** can click on *Login* to login (Page 12.1).
+2. A **customer** can click by on *Register* to register (Page 8.1).
 
 ##
 
 ![Normal Subscriber HomePage](../GUI files/account_page.png)
-0.2
-
+0.2  
 This page is the homepage of a normal subscriber. 
 1. The **system** shows some informations in the center: ID card number, fidelity points amount, coupons, if any, and all the personal informations.  
-2. The **Subscriber** can modify its own infotmations by clicking on the *edit informations* button. Page at point '7' appears.  
-3. The **Subscriber** can request a new card if they lost it, by clicking on the *lost card* button. The second page at point '8' appears.  
+2. The **Subscriber** can modify its own infotmations by clicking on the *edit informations* button. (Page 7.1).  
+3. The **Subscriber** can request a new card if they lost it, by clicking on the *lost card* button. (Page 8.2).  
 4. The **Subscriber** can click on the *logout* button on top-right to log out.
 
 
 ##
 ![Employee HomePage](../GUI files/Employee_Page.png)
-0.3
+0.3  
 This page is the homepage of an employee. It is similar to the Subscriber Homepage, but the Employee has different rights compared to the normal Subscriber and for this reason there are some additional buttons:    
-1. The **Employee** can click on *Inventory* button to open the inventory page at point '2' and manage the inventory.  
-2. The **Employee** can click on *Sales* button to open the Sales page at point '1' and manage the sales.  
+1. The **Employee** can click on *Inventory* button to open the inventory and manage it. (Page 4.1)  
+2. The **Employee** can click on *Sales* button to open the Sales and manage a sale. (Page 1.1)
 
 ##
 ![Owner HomePage](../GUI files/Owner_Page.png)
-0.4
+0.4  
 This page is the homepage of the Owner. It is similar to the Subscriber Homepage, but the Owner has different rights compared to the normal Subscriber and for this reason there are some additional buttons:    
 
-1. The **Owner** can click on *Manage Rights* button to open the Manage rights page at point '13' and manage the subscribers' rights.    
-2. The **Owner** can click on *Accounting* button to open the Accounting page at point '14' and manage the accounting.  
-3. The **Owner** can click on *Inventory* button to open the inventory page at point '2' and manage the inventory.  
-4. The **Owner** can click on *Sales* button to open the Sales page at point '1' and manage the sales.  
+1. The **Owner** can click on *Manage Rights* button to open the Manage rights and manage the subscribers' rights. (Page 13.1)   
+2. The **Owner** can click on *Accounting* button to open the Accounting and manage the accounting.  (Page 14.1)
+3. The **Owner** can click on *Inventory* button to open the inventory and manage the inventory. (Page 4.1) 
+4. The **Owner** can click on *Sales* button to open the Sales and manage the sales. (Page 1.1)
 
 ## 1 Manage sale transaction
 
 ![Selling](../GUI files/Selling.png)
-1.1
+1.1  
 This page is described selling steps that **Owner** or **Employee** can use this form, products can insert through the barcode scanner. subscriber/customer buy products with/without coupon/discount. there are 3 buttons:
 1. **Home** button that linked to the homepage
 2. **Accounting** button that allows owner/employee to have report sales
 3. **Reprint** button that can print the previous receipt by searching 
 ##
 ![Reprint](../GUI files/Reprint.png)
-1.2
+1.2  
 This page is described Reprint steps that Owner or Employee can search products by Product Name, Transaction ID,Transaction Date, Fidelity card Barcode. also there are 3 buttons:
 1. **Home** button that linked to the homepage
 2. **Accounting** button that allows **Owner/Employee** to have report sales
@@ -64,7 +62,7 @@ This page is described Reprint steps that Owner or Employee can search products 
 ## 2 Waring on low stock, Buy product
 
 ![Warning on low stock buy](../GUI files/Low_stock_products_owner.png)
-2.1
+2.1  
 
 Owner version.  
 
@@ -84,7 +82,7 @@ The **owner** can go to the *edit product information* view by clicking on the r
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button.  
 
 ![Warning on low stock](../GUI files/low_stock_products_employee.png)
-2.2
+2.2  
 
 *Employee version.*  
 
@@ -100,7 +98,7 @@ The **employee** can go to the *check inventory* view by clicking on the relativ
 ## 3 Add product
 
 ![Warning on low stock buy](../GUI files/add_new_products.png)
-3.1
+3.1  
 
 With this view the **owner** can add to the buyable products new products that arent in the inventory or products that are not sold anymore. The products that are not sold anymore are shown by a table. For each product not sold anymore, name and supplier are shown.
 1. The **system** shows in the table all products that are not sold anymore.
@@ -120,7 +118,7 @@ The **owner** can go to the *mark product as not sold anymore* view by clicking 
 ## 4 Check inventory
 
 ![Check inventory owner](../GUI files/check_inventory_owner.png)
-4.1
+4.1   
 
 *Owner version.*  
 
@@ -195,8 +193,8 @@ The **owner** can go to the *mark product as not sold anymore* view by clicking 
 
 This is the page in which the subscriber can modify its own informations. Name, Surname, SSN and date of birth cannot be modified.  
 1. The **subscriber** can modify its own informations and the click on *save* to save.  
-2. The **subscriber** can click on the *logout* button on top-right to log out.  
-3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage.  
+2. The **subscriber** can click on the *logout* button on top-right to log out. (Page 0.1) 
+3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage. (Page 0.2) 
 
 ## 8 Registration, Request fidelity card
 
@@ -205,7 +203,7 @@ This is the page in which the subscriber can modify its own informations. Name, 
 
 This page is used to create a new account.  
 1. The **customer** can insert all the informations and click on *Create New Account* to register in the system. All the fields with * are required.  
-2. The **customer** can click on *Back* button to go back to the Welcome Page. 
+2. The **customer** can click on *Back* button to go back to the Welcome Page. (Page 0.1) 
 
 ##
 ![Request new card](../GUI files/request_new_card.png)
@@ -213,8 +211,8 @@ This page is used to create a new account.
 
 Here the subsciber can request a new fidelity card in case they lost it. 
 1. The **subscriber** can click on *Request new card* button to request the new card. The old card is automatically marked as lost and all the points and coupons are transferred to the new card.
-2. The **subscriber** can click on the *logout* button on top-right to log out.  
-3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage.
+2. The **subscriber** can click on the *logout* button on top-right to log out.  (Page 0.1) 
+3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage.(Page 0.2) 
 
 ##
 ![Card Created](../GUI files/new_card_created.png)
@@ -229,8 +227,8 @@ This is the page that confirms with a pop up the creation of the new card.
 
 This page is used to create a coupon that appears after clicking on *Create Coupon* in the Homepage.   
 1. The **subscriber** can choose the amount of the coupon and click on *create coupon*.
-2. The **subscriber** can click on the *logout* button on top-right to log out.  
-3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage.
+2. The **subscriber** can click on the *logout* button on top-right to log out. (Page 0.1) 
+3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage. (Page 0.2) 
 
 ##
 ![Coupon Created](../GUI files/coupon_created.png)
@@ -244,8 +242,8 @@ This page shows the pop up that appears after the creation of the coupon.
 10.1
 
 This is the homepage where the subsciber can check its own points in the top rectangle.  
-1. The **subscriber** can click on the *logout* button on top-right to log out.  
-2. The **subscriber** can click on *Home* button on the top-left to go back to the  Homeage.
+1. The **subscriber** can click on the *logout* button on top-right to log out. (Page 0.1) 
+2. The **subscriber** can click on *Home* button on the top-left to go back to the  Homeage.(Page 0.2) 
 
 
 
@@ -256,8 +254,8 @@ This is the homepage where the subsciber can check its own points in the top rec
 
 This is the login page.  
 1. The **subscriber** can insert email and password and then click on *Login*.
-2. The **subscriber** can click on *Forgot password* to change the password.  
-3. The **subscriber** can click on *Home* button on the top-left to go back to the Welcome Page.
+2. The **subscriber** can click on *Forgot password* to change the password. (Page 18.1)
+3. The **subscriber** can click on *Home* button on the top-left to go back to the Welcome Page.(Page 0.1) 
 
 ##
 ![Login error](../GUI files/login__error.png)
@@ -275,8 +273,8 @@ In this page the owner can change the subscribers' rights.
 
 1. The **owner** can click on the left box near the name and choose the subscriber's right: 'O' for the Owner, 'E' for the Employee, 'S' for the normal subsciber.   
 2. The **owner** can click on  the *Save* button on the bottom-right saves all the changes.  
-3. The **owner** can click on the *logout* button on top-right to log out.   
-4. The **owner** can click on *Home* button on the top-left to go back to the Homepage.  
+3. The **owner** can click on the *logout* button on top-right to log out. (Page 0.1) 
+4. The **owner** can click on *Home* button on the top-left to go back to the Homepage. (Page 0.4)  
 
 ## 14 Accounting and sale transactions
 ![Accounting home page](../GUI files/Accounting_home_page.png)
@@ -352,7 +350,7 @@ This page contains the daily balance.
 This page is used to reset the password in the case the subscriber forgot it.  
 
 1. The **subscriber** can insert the email, SSN and password and then click on *Save* to save the changes.   
-2. The **customer** can click on *Back* button to go back to the Welcome Page. 
+2. The **customer** can click on *Back* button to go back to the Welcome Page. (Page 0.1) 
 
 
 ##
