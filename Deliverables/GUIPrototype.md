@@ -9,7 +9,7 @@ Version: 1.0
 ## 0 Welcome and Homepages 
 
 ![Welcome](../GUI files/welcome.png)
-1
+0.1
 
 This page is the welcome page.  
 
@@ -19,7 +19,7 @@ This page is the welcome page.
 ##
 
 ![Normal Subscriber HomePage](../GUI files/account_page.png)
-2
+0.2
 
 This page is the homepage of a normal subscriber. 
 1. The **system** shows some informations in the center: ID card number, fidelity points amount, coupons, if any, and all the personal informations.  
@@ -30,14 +30,14 @@ This page is the homepage of a normal subscriber.
 
 ##
 ![Employee HomePage](../GUI files/Employee_Page.png)
-3
+0.3
 This page is the homepage of an employee. It is similar to the Subscriber Homepage, but the Employee has different rights compared to the normal Subscriber and for this reason there are some additional buttons:    
 1. The **Employee** can click on *Inventory* button to open the inventory page at point '2' and manage the inventory.  
 2. The **Employee** can click on *Sales* button to open the Sales page at point '1' and manage the sales.  
 
 ##
 ![Owner HomePage](../GUI files/Owner_Page.png)
-4
+0.4
 This page is the homepage of the Owner. It is similar to the Subscriber Homepage, but the Owner has different rights compared to the normal Subscriber and for this reason there are some additional buttons:    
 
 1. The **Owner** can click on *Manage Rights* button to open the Manage rights page at point '13' and manage the subscribers' rights.    
@@ -48,14 +48,14 @@ This page is the homepage of the Owner. It is similar to the Subscriber Homepage
 ## 1 Manage sale transaction
 
 ![Selling](../GUI files/Selling.png)
-5
+1.1
 This page is described selling steps that **Owner** or **Employee** can use this form, products can insert through the barcode scanner. subscriber/customer buy products with/without coupon/discount. there are 3 buttons:
 1. **Home** button that linked to the homepage
 2. **Accounting** button that allows owner/employee to have report sales
 3. **Reprint** button that can print the previous receipt by searching 
 ##
 ![Reprint](../GUI files/Reprint.png)
-6
+1.2
 This page is described Reprint steps that Owner or Employee can search products by Product Name, Transaction ID,Transaction Date, Fidelity card Barcode. also there are 3 buttons:
 1. **Home** button that linked to the homepage
 2. **Accounting** button that allows **Owner/Employee** to have report sales
@@ -64,7 +64,7 @@ This page is described Reprint steps that Owner or Employee can search products 
 ## 2 Waring on low stock, Buy product
 
 ![Warning on low stock buy](../GUI files/Low_stock_products_owner.png)
-7
+2.1
 
 Owner version.  
 
@@ -84,7 +84,7 @@ The **owner** can go to the *edit product information* view by clicking on the r
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button.  
 
 ![Warning on low stock](../GUI files/low_stock_products_employee.png)
-8
+2.2
 
 *Employee version.*  
 
@@ -100,7 +100,7 @@ The **employee** can go to the *check inventory* view by clicking on the relativ
 ## 3 Add product
 
 ![Warning on low stock buy](../GUI files/add_new_products.png)
-9
+3.1
 
 With this view the **owner** can add to the buyable products new products that arent in the inventory or products that are not sold anymore. The products that are not sold anymore are shown by a table. For each product not sold anymore, name and supplier are shown.
 1. The **system** shows in the table all products that are not sold anymore.
@@ -120,7 +120,7 @@ The **owner** can go to the *mark product as not sold anymore* view by clicking 
 ## 4 Check inventory
 
 ![Check inventory owner](../GUI files/check_inventory_owner.png)
-10
+4.1
 
 *Owner version.*  
 
@@ -137,7 +137,7 @@ The **owner** can go to the *edit product information* view by clicking on the r
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. 
 
 ![Check inventory employee](../GUI files/check_inventory_employee.png)
-11
+4.2
 
 *Employee version.*  
 
@@ -153,7 +153,7 @@ The **employee** can go to the *low stock products* view by clicking on the rela
 ## 5 Mark product as "not sold anymore"
 
 ![mark as not sold](../GUI files/mark_product_as_not_sold_anymore.png)
-12
+5.1
 
 With this view the **owner** can signal products in the inventory as not sold anymore. In the table there are shown: the name, the supplier and the barcode.
 1. The **system** shows in the table all products that are low in stock.
@@ -172,7 +172,7 @@ The **owner** can go to the *edit information* view by clicking on the relative 
 ## 6 Edit product information
 
 ![edit product information](../GUI files/edit_product_information.png)
-14
+6.1
 
 With this view the **owner** can edit products in the inventory. It is possible to edit one product at a time. 
 1. The **owner** can search, using the barcode, the product that he/she wants to edit. The search is performed when he/she presses the search button.
@@ -191,7 +191,7 @@ The **owner** can go to the *mark product as not sold anymore* view by clicking 
 ## 7 Edit informations account
 
 ![Edit informations account](../GUI files/edit_info.png)
-15
+7.1
 
 This is the page in which the subscriber can modify its own informations. Name, Surname, SSN and date of birth cannot be modified.  
 1. The **subscriber** can modify its own informations and the click on *save* to save.  
@@ -201,6 +201,7 @@ This is the page in which the subscriber can modify its own informations. Name, 
 ## 8 Registration, Request fidelity card
 
 ![Create account](../GUI files/create_account.png)
+8.1
 
 This page is used to create a new account.  
 1. The **customer** can insert all the informations and click on *Create New Account* to register in the system. All the fields with * are required.  
@@ -208,7 +209,7 @@ This page is used to create a new account.
 
 ##
 ![Request new card](../GUI files/request_new_card.png)
-16
+8.2
 
 Here the subsciber can request a new fidelity card in case they lost it. 
 1. The **subscriber** can click on *Request new card* button to request the new card. The old card is automatically marked as lost and all the points and coupons are transferred to the new card.
@@ -217,14 +218,14 @@ Here the subsciber can request a new fidelity card in case they lost it.
 
 ##
 ![Card Created](../GUI files/new_card_created.png)
-17
+8.3
 
 This is the page that confirms with a pop up the creation of the new card.
 
 ## 9 Create Coupon
 
 ![Create coupon](../GUI files/create_coupon_page.png)
-18
+9.1
 
 This page is used to create a coupon that appears after clicking on *Create Coupon* in the Homepage.   
 1. The **subscriber** can choose the amount of the coupon and click on *create coupon*.
@@ -233,14 +234,14 @@ This page is used to create a coupon that appears after clicking on *Create Coup
 
 ##
 ![Coupon Created](../GUI files/coupon_created.png)
-19
+9.2
 
 This page shows the pop up that appears after the creation of the coupon.
 
 ## 10 Check Points
 
 ![Check Points](../GUI files/account_page.png)
-20
+10.1
 
 This is the homepage where the subsciber can check its own points in the top rectangle.  
 1. The **subscriber** can click on the *logout* button on top-right to log out.  
@@ -251,7 +252,7 @@ This is the homepage where the subsciber can check its own points in the top rec
 ## 12 Log in 
 
 ![Login](../GUI files/login.png)
-21
+12.1
 
 This is the login page.  
 1. The **subscriber** can insert email and password and then click on *Login*.
@@ -260,7 +261,7 @@ This is the login page.
 
 ##
 ![Login error](../GUI files/login__error.png)
-22
+12.2
 
 This is the error shown when the credentials are wrong.
 
@@ -268,7 +269,7 @@ This is the error shown when the credentials are wrong.
 ## 13 Manage Rights
 
 ![Manage Rights](../GUI files/Manage_Rights.png)
-23
+13.1
 
 In this page the owner can change the subscribers' rights.  
 
@@ -279,67 +280,74 @@ In this page the owner can change the subscribers' rights.
 
 ## 14 Accounting and sale transactions
 ![Accounting home page](../GUI files/Accounting_home_page.png)
-24
+14.1
 
 This is the main accounting page from which the owner can access to all the accounting features.
 
-1. The **owner** can click on the *Sale transactios* button to view a detailed list of all sale trasanctions.
-2. The **owner** can click on the *Expenses* button to view a list of all the expenses.
-3. The **owner** can click on the *Pay salaries* button to access a list of all employees and their respective salaries.
-4. The **owner** can click on the *Home* button to go back to their home page.
-5. The **owner** can click on the *logOut* button to logout.
+1. The **owner** can click on the *Sale transactios* button to view a detailed list of all sale trasanctions.(Page 14.2)
+2. The **owner** can click on the *Expenses* button to view a list of all the expenses.(Page 15.1)
+3. The **owner** can click on the *Pay salaries* button to access a list of all employees and their respective salaries. (Page 16.2)
+4. The **owner** can click on the *Daily balance* button to access the daily balance. (Page 17.2)
+5. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
+6. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
 ##
 ![Sale transactions](../GUI files/List_of_sale_transactions.png)
-25
+14.2
 
 This page contains the list of sale transactions. 
 
 1. The **owner** can click on the *Print* button to print the list of transactions.
 2. The **owner** can select a few transactions and lick on the *Print* button to print the selected transactions.
 3. The **owner** can search for a specific transaction using the search bar. They can look for a transaction containing a certain item, during a specific day, with a certain amount or card ID. 
-4. The **owner** can click on the *Home* button to go back to their home page.
-5. The **owner** can click on the *logOut* button to logout.
+4. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
+5. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
 
 ## 15 Expenses
 ![Expenses](../GUI files/List_of_expenses.png)
-26
+15.1
 
 This page contains the list of expenses
 
 1. The **owner** can click on the *Print* button to print the list of expenses.
 2. The **owner** can select a few expenses and lick on the *Print* button to print the selected transactions.
 3. The **owner** can search for a specific expense using the search bar. They can look for an expense containing a certain item, during a specific day, with a certain amount or supplier. 
-4. The **owner** can click on the *Home* button to go back to their home page.
-5. The **owner** can click on the *logOut* button to logout.
+4. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
+5. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
 ![Change informatio](../GUI files/Placeholder.png)
-27
+15.2
 
 1. By clicking on the checkboxes the owner can change the state of each expense. State are boolean and include: invoice sent, payment completed and products delivered.
 
 
 ## 16 Salaries
 ![Salaries](../GUI files/Pay_Salaries.png)
-28
+16.1
 
 This page contais the list of employees and respective salaries. 
 
 1. The **owner** can click on the *Print* button to print the list of employees and past and resent salaries.
 2. The **owner** can select a salarie and click on the *Pay* button to pay the salary. The button will open a browser window on the bank web site and will fill the fields necessary to pay said salary.
 3. The **owner** can search for a specific employee or salary using the search bar. They can look for a specific employee, a certain number of hours worked, by the amount or by date.
-4. The **owner** can click on the *Home* button to go back to their home page.
-5. The **owner** can click on the *logOut* button to logout.
+4. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
+5. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
 ## 17 Daily balance
 ![Daily balance](../GUI files/Placeholder.png)
-29
+17.1
+
+This page contains the daily balance. 
+
+1. The **owner** can click on the *Print* button to print the daily balance so far.
+2. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
+3. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
 ## 18 Forgot password
 
 ![Forgot passowrd](../GUI files/forgot_password.png)
-30
+18.1
 
 This page is used to reset the password in the case the subscriber forgot it.  
 
@@ -349,7 +357,7 @@ This page is used to reset the password in the case the subscriber forgot it.
 
 ##
 ![Forgot password error](../GUI files/forgot_password_error.png)
-31
+18.2
 
 This is the error shown when the subscriber isn't in the system.
 
