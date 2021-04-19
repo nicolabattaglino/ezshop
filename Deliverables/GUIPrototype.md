@@ -259,20 +259,48 @@ In this page the owner can change the subscribers' rights.
 ![Accounting home page](../GUI files/Accounting_home_page.png)
 
 This is the main accounting page from which the owner can access to all the accounting features.
+
+1. The **owner** can click on the *Sale transactios* button to view a detailed list of all sale trasanctions.
+2. The **owner** can click on the *Expenses* button to view a list of all the expenses.
+3. The **owner** can click on the *Pay salaries* button to access a list of all employees and their respective salaries.
+4. The **owner** can click on the *Home* button to go back to their home page.
+5. The **owner** can click on the *logOut* button to logout.
+
 ##
 ![Sale transactions](../GUI files/List_of_sale_transactions.png)
 
-This page contains the list of sale transactions. The report button will lead to the report page.
+This page contains the list of sale transactions. 
+
+1. The **owner** can click on the *Print* button to print the list of transactions.
+2. The **owner** can select a few transactions and lick on the *Print* button to print the selected transactions.
+3. The **owner** can search for a specific transaction using the search bar. They can look for a transaction containing a certain item, during a specific day, with a certain amount or card ID. 
+4. The **owner** can click on the *Home* button to go back to their home page.
+5. The **owner** can click on the *logOut* button to logout.
+
 
 ## 15 Expenses
 ![Expenses](../GUI files/List_of_expenses.png)
 
 This page contains the list of expenses
 
+1. The **owner** can click on the *Print* button to print the list of expenses.
+2. The **owner** can select a few expenses and lick on the *Print* button to print the selected transactions.
+3. The **owner** can search for a specific expense using the search bar. They can look for an expense containing a certain item, during a specific day, with a certain amount or supplier. 
+4. The **owner** can click on the *Home* button to go back to their home page.
+5. The **owner** can click on the *logOut* button to logout.
+
+
 ## 16 Salaries
 ![Salaries](../GUI files/Pay_Salaries.png)
 
-This page contais the list of employees and respective salaries. The pay buttow will open the bank web site and allow the owner to easily pay the salaries.
+This page contais the list of employees and respective salaries. 
+
+1. The **owner** can click on the *Print* button to print the list of employees and past and resent salaries.
+2. The **owner** can select a salarie and click on the *Pay* button to pay the salary. The button will open a browser window on the bank web site and will fill the fields necessary to pay said salary.
+3. The **owner** can search for a specific employee or salary using the search bar. They can look for a specific employee, a certain number of hours worked, by the amount or by date.
+4. The **owner** can click on the *Home* button to go back to their home page.
+5. The **owner** can click on the *logOut* button to logout.
+
 
 ## 17 Forgot password
 
@@ -289,5 +317,5 @@ This page is used to reset the password in the case the subscriber forgot it.
 
 This is the error shown when the subscriber isn't in the system.
 
-\<Report here the GUI that you propose. You are free to organize it as you prefer. A suggested presentation matches the Use cases and scenarios defined in the Requirement document. The GUI can be shown as a sequence of graphical files (jpg, png)  >
+
 
