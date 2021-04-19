@@ -23,7 +23,7 @@ This page is the homepage of a normal subscriber.
 1. The **system** shows some informations in the center: ID card number, fidelity points amount, coupons, if any, and all the personal informations.  
 2. The **Subscriber** can modify its own infotmations by clicking on the *edit informations* button. (Page 7.1).  
 3. The **Subscriber** can request a new card if they lost it, by clicking on the *lost card* button. (Page 8.2).  
-4. The **Subscriber** can click on the *logout* button on top-right to log out.
+4. The **Subscriber** can click on the *logout* button on top-right to log out. (Page 0.1) 
 
 
 ##
