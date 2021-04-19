@@ -168,14 +168,14 @@ The **owner** can go to the *check inventory* view by clicking on the relative b
 The **owner** can go to the *add new products* view by clicking on the relative button.  
 The **owner** can go to the *edit information* view by clicking on the relative button.
 
-## 6 Edit product information
+## 6 Edit product informations
 
 ![edit product information](../GUI files/edit_product_information.png)
 6.1
 
 With this view the **owner** can edit products in the inventory. It is possible to edit one product at a time. 
 1. The **owner** can search, using the barcode, the product that he/she wants to edit. The search is performed when he/she presses the search button.
-2. The **owner** can change the information of the product using the relevant text fields.
+2. The **owner** can change an information of the product using the relevant text fields.
 3. The expiration date can also be modified using the date picker. To use it, the **owner** has to click on the calendar icon.
 4. If the **owner** wants, he/she can reset the fields by pressing the reset field button.
 5. The **owner** can save the changes by pressing the commit button. 

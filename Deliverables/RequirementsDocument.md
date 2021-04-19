@@ -138,11 +138,11 @@ APIs: Software to connect external systems to EZ Shop logically.
 | FR2.5  | Mark product as "not sold anymore"| 
 | FR2.6  | Increase stock amount| 
 | FR2.7  | Decrease stock amount| 
-| FR2.8  | Edit product information| 
+| FR2.8  | Edit product informations| 
 | FR3  | Manage accounts| 
 | FR3.1  | Check fidelity points| 
 | FR3.2  | Registration| 
-| FR3.3  | Edit personal information| 
+| FR3.3  | Edit personal informations| 
 | FR3.4  | Add fidelity points| 
 | FR3.5  | Create a coupon with fidelity points| 
 | FR3.6  | Request fidelity card| 
@@ -241,7 +241,7 @@ employee-->(handleTransaction)
 "Accounting" as (accounting)
 "Manage rights" as (manageRights)
 "Owner tasks" as (ownerTasks)
-"Edit product information" as (editProduct)
+"Edit product informations" as (editProduct)
 "Add product" as (addProduct)
 "Accounting" as (acoounting)
 "List sale transactions" as (listSale)
@@ -267,7 +267,7 @@ employee-->(handleTransaction)
 "Check points" as (checkPoints)
 "Registration" as (registration)
 "Request fidelity card" as (request)
-"Edit Personal information" as (edit)
+"Edit Personal informations" as (edit)
 "Create cooupon" as (coupon)
 "Forgot password" as (forgotPassword)
 "Login" as (login)
@@ -285,7 +285,7 @@ employee-->(handleTransaction)
 ### Use case 1, UC1 Manage sale transaction
 | Actors Involved        | Employee, Owner |
 | ------------- |:-------------:| 
-|  Precondition     | There are one or more product(s) in the shop|  
+|  Precondition     | Employee E or Owner O are logged in and There are one or more product(s) in the shop|  
 |  Post condition     | New transaction added, amount of the product(s) is decreased |
 |  Nominal Scenario     | Read the barcode(s) through manually, scanner or auto-machine. Start sale transaction with scanning each barcode of product(s). End sale transaction and handle product(s) to the customer |
 |  Variants     | if there is a discount on a product -> apply discount |
@@ -334,98 +334,108 @@ employee-->(handleTransaction)
 |  8     | Decrease quantity of products in the inventory |
 
 ### Use case 2, UC2 Waring on low stock, Buy product
-| Actors Involved        | Owner |
+| Actors Involved        | Owner, Employee, Product |
 | ------------- |:-------------:| 
-|  Precondition     | One or more products are low stock and maked as sold | 
-|  Post condition     | The product(s) amount is/are increased | 
+|  Precondition     | Owner O is logged in or Employee E is logged in, Product P1, ... , Pn have an amount below 10 units and P1, ... , Pn are maked as sold | 
+|  Post condition     | P1.amount += newAmount1, ... , Pn.amount += newAmountn | 
 |  Nominal Scenario     | Owner decides to buy the product(s) |
-|  Variants     | -|
+|  Variants     | - |
  
 ##### Scenario 2.1
 | Scenario  | Owner decides to buy the product(s)|
 | ------------- |:-------------:| 
-|  Precondition     | One or more products are low stock |
-|  Post condition     | The product(s) amount is/are increased |
+|  Precondition     | Owner O is logged in, Product P1, ... , Pn have an amount below 10 units and P1, ... , Pn are maked as sold |
+|  Post condition     | P1.amount += newAmount1, ... , Pn.amount += newAmountn |
 | Step#        | Description  |
-|  1     | The system shows that one on more products are low on stock (less than 10 units)  |  
+|  1     | The system shows that one on more products are low on stock (less than 10 units)  |
 |  2     | The owner select the product(s) and the quantity that he/she want to buy |
 |  3     | The owner decides to buy the product(s) |
+|  4	 | The owner select the amount of the product(s) |
 |  4 	 | The product(s) is/are added to the list of expenses |
 |  5     | An order is issued |
 |  6     | The product(s) is/are delivered |
 |  7     | The amount of the product(s) is increased |
+
+##### Scenario 2.1
+| Scenario  | Employee wants to view the product(s)|
+| ------------- |:-------------:| 
+|  Precondition     | Employee E is logged in, Product P1, ... , Pn have an amount below 10 units and P1, ... , Pn are maked as sold |
+|  Post condition     | - |
+| Step#        | Description  |
+|  1     | The system shows that one on more products are low on stock (less than 10 units)  |
+
  
 ### Use case 3, UC3 Add product
  
 | Actors Involved        | Product, Owner |
 | ------------- |:-------------:| 
-|  Precondition     | The product is not in the inventory or marked as “not sold anymore” |  
-|  Post condition     | Product is added in the inventory and marked as sold |
+|  Precondition     | Owner O is logged in, Product P is not in the inventory or P is marked as “not sold anymore” |  
+|  Post condition     | Product P is added in the inventory and P is marked as sold |
 |  Nominal Scenario     | New product is added to the inventory  |
 |  Variants     | If the product(s) is marked as “not sold anymore”-> Product is readded to the inventory |
  
  ##### Scenario 3.1
 | Scenario  | New product is added to the inventory |
 | ------------- |:-------------:| 
-|  Precondition     | The product is not in the inventory |
-|  Post condition     | Product is added in the inventory and marked as sold|
+|  Precondition     | Owner O is logged in, Product P is not in the inventory |
+|  Post condition     | Product P is added in the inventory and P is marked as sold|
 | Step#        | Description  |
-|  1     | Owner insert the information about the product that he wants to add to the inventory |  
+|  1     | Owner insert the informations about the product that he wants to add to the inventory |  
 |  2     | The product(s) is added to the inventory |
 |  3     | The system shows the product as low in stock |
 
  ##### Scenario 3.2
 | Scenario  | Product is added to the inventory |
 | ------------- |:-------------:| 
-|  Precondition     | The product is in the inventory and marked as “not sold anymore” |
-|  Post condition     | Product is added in the inventory and marked as sold|
+|  Precondition     | Owner O is logged in, Product P1, ..., Pn are marked as “not sold anymore” |
+|  Post condition     | Product P is added in the inventory and P is marked as sold|
 | Step#        | Description  |
-|  1     | Owner searches the product(s) that he wants to add to the inventory |  
-|  2     | The product(s) is/are added to the inventory |
+|  1     | Owner searches the product(s) that he wants to unmark as "not sold anymore" |  
+|  2     | The product(s) is/are unmarked as "not sold anymore"|
 |  3     | The system shows the product(s) as low in stock |
 
 ### Use case 4, UC4 Check inventory
 
-| Actors Involved        | Owner, Employee |
+| Actors Involved        | Owner, Employee, Product |
 | ------------- |:-------------:| 
-|  Precondition     | - |  
+|  Precondition     | Owner O is logged in or Employee E is logged in |  
 |  Post condition     | - |
 |  Nominal Scenario     | Prouct(s) is found |
 |  Variants     | Prouct(s) not found |
 
 ##### Scenario 4.1
-| Scenario  | Prouct(s) is found |
+| Scenario  | Prouct(s) are found |
 | ------------- |:-------------:| 
-|  Precondition     | The product(s) is in the inventory |
+|  Precondition     | Owner O is logged in or Employee E is logged in and Product P1, ... , Pn are in the inventory |
 |  Post condition     | - |
 | Step#        | Description  |
-|  1     | Owner inserts the information about the product(s) that he wants to search |  
+|  1     | Owner inserts the informations about the product(s) that he wants to search |  
 |  2     | The product(s) is/are shown |
 
 
 ##### Scenario 4.2
-| Scenario  | Prouct(s) is not found |
+| Scenario  | Prouct(s) are not found |
 | ------------- |:-------------:| 
-|  Precondition     | The product(s) is not in the inventory |
+|  Precondition     | Owner O is logged in or Employee E is logged in and Product P1, ... , Pn are not in the inventory |
 |  Post condition     | - |
 | Step#        | Description  |
-|  1     | Owner inserts the information about the product(s) that he wants to search |  
+|  1     | Owner inserts the informations about the product(s) that he wants to search |  
 |  2     | The system shows an empty list |
 
 ### Use case 5, UC5 Mark product as "not sold anymore"
 
-| Actors Involved        | Owner |
+| Actors Involved        | Owner, Product |
 | ------------- |:-------------:| 
-|  Precondition     | There is/are a/some product(s) not marked as “not sold anymore” |  
-|  Post condition     | The product(s) is/are marked as not sold anymore|
+|  Precondition     | Owner O is logged in and Product P1, ... , Pn are not marked as “not sold anymore” |  
+|  Post condition     | P1, ... , Pn are marked as not sold anymore|
 |  Nominal Scenario     | Product(s) are not sold anymore |
 |  Variants     | - |
  
 ##### Scenario 5.1
 | Scenario  | Product(s) are not sold anymore |
 | ------------- |:-------------:| 
-|  Precondition     | The product(s) is/are in the inventory |
-|  Post condition     | Product(s) is/are marked as not sold anymore|
+|  Precondition     | Owner O is logged in and Product P1, ... , Pn are not marked as “not sold anymore” |
+|  Post condition     | P1, ... , Pn are marked as not sold anymore|
 | Step#        | Description  |
 |  1     | Owner searches the product(s) that he wants to not sell anymore |  
 |  2     | The system add the product(s) into a list |
@@ -434,70 +444,70 @@ employee-->(handleTransaction)
 |  5     | The product(s) is/are then marked as not sold anymore |
 
  
- ### Use case 6, UC6 Edit product information
+ ### Use case 6, UC6 Edit product informations
 
-| Actors Involved        | Owner |
+| Actors Involved        | Owner, product |
 | ------------- |:-------------:| 
-|  Precondition     | There is a not marked as “not sold anymore” |  
+|  Precondition     | Product P is not marked as “not sold anymore” |  
 |  Post condition     | - |
-|  Nominal Scenario     | Edit product information |
+|  Nominal Scenario     | Edit product informations |
 |  Variants     | - |
 
 ##### Scenario 6.1
-| Scenario  | Edit product information |
+| Scenario  | Edit product informations |
 | ------------- |:-------------:| 
-|  Precondition     | There is a product not marked as “not sold anymore” |
-|  Post condition     | Product's information are changed |
+|  Precondition     | Product P is not marked as “not sold anymore” |
+|  Post condition     | Product P informations are changed |
 | Step#        | Description  |
 |  1     | Owner inserts the barcode about the product that he wants to edit |  
 |  3     | The onwner edits the product's informations |
 |  4     | The onwner commit the changes |
 
-### Use case 7, UC7 Edit Personal information 
+### Use case 7, UC7 Edit Personal informations 
 
 | Actors Involved        | Subscriber  |
 | ------------- |:-------------:| 
-|  Precondition     | The subscriber is logged in|  
-|  Post condition     | New Informations are committed |
+|  Precondition     | Subscriber S is logged in |  
+|  Post condition     | Subscriber S information are changed |
 |  Nominal Scenario     | The subscriber logs in and changes one or more fields regarding their informations.|
 |  Variants     | - |
 
 #### Scenario 7.1
 |Scenario | Edit Personal informations |
 | ------------- |:-------------:| 
-|  Precondition     | The subscriber is logged in |
-|  Post condition     | New Informations are committed |
+|  Precondition     | Subscriber S is logged in|  
+|  Post condition     | Subscriber S informations are changed |
 | Step#        | Description  |
 |  1     | The subscriber log in |
 |  2     | The subscriber clicks on "edit informations" in the homepage |
-| 3      | The subscriber changes personal information (e-mail, password, date of birth, address(optional), phone number (optional))|
-| 4 	   | The subscriber confirms their information clicking on save |
+| 3      | The subscriber changes personal informations [(e-mail, password, date of birth, address(optional), phone number (optional)) (may be removed, too low level informations]|
+| 4 	   | The subscriber confirms their informations clicking on save |
 
 
 ### Use case 8, UC8 Registration, Request fidelity card
 | Actors Involved        | Subscriber |
 | ------------- |:-------------:| 
-|  Precondition     | New registration requested |  
-|  Post condition     | New account is created |
+|  Precondition     | - |  
+|  Post condition     | Subscriber S is created , FidelityCard F is created and S.FidelityCard = F |
 |  Nominal Scenario     | Someone requests the registration, new fidelity card is created associated to the subscriber |
 |  Variants     | if subscriber entry is already present in the system -> request only the new fidelity card |
  
 #### Scenario 8.1
 |Scenario | Registration and card requested|
 | ------------- |:-------------:| 
-|  Precondition     | The subscriber to-be clicks on “register” button at the terminal|
-|  Post condition     | New fidelity card is created|
+|  Precondition     | - |
+|  Post condition     | Subscriber S is created, FidelityCard F is created and S.FidelityCard = F |
 | Step#        | Description  |
 |  1     | New Registration request is issued |
-| 2      | The subscriber inserts personal information (e-mail, password, name, surname, SSN, date of birth, address(optional), phone number (optional))|
-| 3 	   | The subscriber confirms their information |
+| 2      | The subscriber inserts personal informations [(e-mail, password, name, surname, SSN, date of birth, address(optional), phone number (optional)) same her ]|
+| 3 	   | The subscriber confirms their informations |
 | 4	   | The system links the subscriber with a new already printed card  (they will receive it from the cashier when they ask for it)|
  
 #### Scenario 8.2
 | Scenario | New card requested|
 | ------------- |:-------------:| 
-|  Precondition     | Subscriber is logged in|
-|  Post condition     | New fidelity card is created |
+|  Precondition     | Subscriber S is logged in|
+|  Post condition     | FidelityCard F is created and S.FidelityCard = F |
 | Step#        | Description  |
 |  1     | The subscriber clicks on “Lost card”|  
 |  2     | The system marks the previous card as lost |
@@ -509,16 +519,16 @@ employee-->(handleTransaction)
 ### Use case 9, UC9 Create a coupon
 | Actors Involved        | Subscriber |
 | ------------- |:-------------:| 
-|  Precondition     | The subscriber is logged in, the subscriber has at least 10 fidelity points|  
-|  Post condition     | A new coupon is added to the Subscriber card and his amount of point is decreased by 10|
+|  Precondition     | Subscriber S is logged in and S.FidelityCard.points >= 10|  
+|  Post condition     | A Coupon is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= 10 |
 |  Nominal Scenario     | new coupon is generated and added to the Subscriber account, 10 points are subtracted from the subscriber’s total, the subscriber perform a logout |
 |  Variants     | - |
 
 #### Scenario 9.1
 | Scenario | Create coupon|
 | ------------- |:-------------:| 
-|  Precondition     | Subscriber is logged in|
-|  Post condition     | New coupon is created |
+|  Precondition     | Subscriber S is logged in and S.FidelityCard.points >= 10|
+|  Post condition     | A Coupon is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= 10 |
 | Step#        | Description  |
 |  1     | The subscriber clicks on “Create Coupon” in the home page|  
 |  2     | The subscriber chooses the amount of the coupon |
@@ -528,7 +538,7 @@ employee-->(handleTransaction)
 ### Use case 10, UC10 Check points
 | Actors Involved        | Subscriber |
 | ------------- |:-------------:| 
-|  Precondition     | The subscriber is logged in |  
+|  Precondition     | Subscriber S is logged in |  
 |  Post condition     | - |
 |  Nominal Scenario     | The Subscriber views their points |
 
@@ -536,45 +546,45 @@ employee-->(handleTransaction)
 #### Scenario 10.1
 | Scenario | Check Points|
 | ------------- |:-------------:| 
-|  Precondition     | Subscriber is logged in |
+|  Precondition     | Subscriber S is logged in |
 |  Post condition     | - |
 | Step#        | Description |
-|  1     | The subscriber checks points in the homepage | 
+|  1     | The subscriber checks his/her points | 
 
  
 ### Use case 11, UC11 Add Fidelity point
-| Actors Involved        | Subscriber, Cashier |
+| Actors Involved        | Subscriber, Employee, Owner |
 | ------------- |:-------------:| 
-|  Precondition     | The subscriber has Fidelity card |  
-|  Post condition     | Fidelity point added |
+|  Precondition     | Employee E is logged in or Owner O is logged in|  
+|  Post condition     | Subscriber S.FidelityCard.points += newPoints |
 |  Nominal Scenario     |  Adding new points  |
 |  Variants     | - |
  
 #### Scenario 11.1
 | Scenario | Adding new points|
 | ------------- |:-------------:| 
-|  Precondition     | The subscriber has Fidelity card and is a part of a transaction |
-|  Post condition     | Fidelity point added |
+|  Precondition     | Employee E is logged in or Owner O is logged in|
+|  Post condition     | Subscriber S.FidelityCard.points += newPoints |
 | Step#        | Description  |
 |  1     | The subscriber buys one or more products |  
-|  2     | The cashier reads the fidelity card via barcode scanner  |
+|  2     | The employee/owner reads the fidelity card via barcode scanner  |
 |  3     | The system calculates the points based on the total of the transaction (Every 10 euro buying have 1 Fidelity point)|
-|  4     | The points are added to the subscriber total in the database |
+|  4     | The points are added to the subscriber total |
  
 
 ### Use case 12, UC12 Login
 | Actors Involved        | Subscriber |
 | ------------- |:-------------:| 
-|  Precondition     | There is a subscriber that wants to log in  |  
-|  Post condition     | Subscriber is logged in |
+|  Precondition     | Subscriber S is not logged in |  
+|  Post condition     | Subscriber S is logged in |
 |  Nominal Scenario     | The subscriber logs in |
 |  Variants     | if subscriber is not in the system -> error: Subscriber not found |
 
 #### Scenario 12.1
 | Scenario | Login |
 | ------------- |:-------------:| 
-|  Precondition     |  There is a subscriber that wants to log in |
-|  Post condition     | Subscriber is logged in |
+|  Precondition     |  Subscriber S is not logged in |
+|  Post condition     | Subscriber S is logged in |
 | Step#        | Description  |
 |  1     | The subscriber inserts email and password |  
 |  2     | The subscriber click on log in |
@@ -583,8 +593,8 @@ employee-->(handleTransaction)
 #### Scenario 12.2
 | Scenario | Login but subscriber not found |
 | ------------- |:-------------:| 
-|  Precondition     | There is a subscriber that wants to log in|
-|  Post condition     | Subscriber not logged in|
+|  Precondition     | Subscriber S is not logged in |
+|  Post condition     | Subscriber S is not logged in |
 | Step#        | Description  |
 |  1     | The subscriber insert email and password |  
 |  2     | The subscriber clicks on log in |
@@ -594,16 +604,16 @@ employee-->(handleTransaction)
 ### Use case 13, UC13 Manage rights
 | Actors Involved        | Owner |
 | ------------- |:-------------:| 
-|  Precondition     | The owner is logged in|  
-|  Post condition     | New changes are committed |
+|  Precondition     | Owner O is logged in|  
+|  Post condition     | Subscriber S informations are changed |
 |  Nominal Scenario     | The owner changes rights of a subscriber |
 |  Variants     | This operation is performed both when there is a new employee or when an employee is dismissed|
 
 #### Scenario 13.1
 | Scenario | Manage Rights|
 | ------------- |:-------------:| 
-|  Precondition     | The owner is logged in |
-|  Post condition     | New changes are committed |
+|  Precondition     | Owner O is logged in |
+|  Post condition     | Subscriber S informations are changed |
 | Step#        | Description  |
 |  1     | The owner clicks on “Manage Rights” |  
 |  2     | The owner clicks on the box to change rights |
@@ -613,7 +623,7 @@ employee-->(handleTransaction)
 ### Use case 14, UC14 List sale transaction
 | Actors Involved        | Owner |
 | ------------- |:-------------:| 
-|  Precondition     | There are one or more transactions recorded |  
+|  Precondition     | Owner O is logged in and Transaction T1, ..., Tn are recorded |  
 |  Post condition     | - |
 |  Nominal Scenario     | The owner requests the list of transactions. The list is printed |
 |  Variants     | - |
@@ -621,8 +631,8 @@ employee-->(handleTransaction)
 #### Scenario 14.1
 | Scenario | Print List of sale transaction|
 | ------------- |:-------------:| 
-|  Precondition     | There are one or more transactions recorded |
-|  Post condition     | The list of sale transaction is printed |
+|  Precondition     | Owner O is logged in and Transaction T1, ... , Tn are recorded |
+|  Post condition     | - |
 | Step#        | Description  |
 |  1     | The owner logs in |  
 |  2     | The owner clicks on the accounting button on their home page  |
@@ -636,16 +646,16 @@ employee-->(handleTransaction)
 ### Use case 15, UC15 List expenses
 | Actors Involved        | Owner |
 | ------------- |:-------------:| 
-|  Precondition     |There are one or more expenses recorded|  
+|  Precondition     | Owner O is logged in and Expenses E1, ... , En are recorded |  
 |  Post condition     | - |
 |  Nominal Scenario     |The owner requests a list of expenses. The list is printed|
-|  Variants     | Information about payment and delivery is stored in this list |
+|  Variants     | Informations about payment and delivery is stored in this list |
 
 #### Scenario 15.1
 | Scenario | Print List of expenses|
 | ------------- |:-------------:| 
-|  Precondition     | There are one or more expenses recorded |
-|  Post condition     | The list of sale transaction is printed |
+|  Precondition     | Owner O is logged in and Expenses E1, ... , En are recorded |
+|  Post condition     | - |
 | Step#        | Description  |
 |  1     | The owner logs in |  
 |  2     | The owner clicks on the accounting button on their home page  |
@@ -654,10 +664,10 @@ employee-->(handleTransaction)
 |  5 	 | The owner clicks on the print button |
 
 #### Scenario 15.2
-| Scenario | Update information about expenses|
+| Scenario | Update informations about expenses|
 | ------------- |:-------------:| 
-|  Precondition     | There are one or more expenses recorded |
-|  Post condition     | The inforamtion about an expense is changed |
+|  Precondition     | Owner O is logged in and Expenses E1, ... , En are recorded |
+|  Post condition     | Owner O is logged in and Expenses E1, ... , En informations are changed (The inforamtion about an expense is changed) [can i remove what is in the round brackets? ] |
 | Step#        | Description  |
 |  1     | The owner logs in |  
 |  2     | The owner clicks on the accounting button on their home page  |
@@ -670,16 +680,16 @@ employee-->(handleTransaction)
 ### Use case 16, UC16 Pay salaries 
 | Actors Involved        | Owner, Employee |
 | ------------- |:-------------:| 
-|  Precondition     | Employee(s) can receive their salaries  |  
-|  Post condition     | Paying Salaries |
+|  Precondition     | Owner O is logged in |  
+|  Post condition     | - |
 |  Nominal Scenario     | The owner can access a list of all employees, the hours they worked and their respective salaries. The owner can also pay salaries from this window |
 |  Variants     | - |
 
 #### Scenario 16.1
 | Scenario | Print list of salaries|
 | ------------- |:-------------:| 
-|  Precondition     | There are one or more employees working in the shop |
-|  Post condition     | The list is printed |
+|  Precondition     | Owner O is logged in and Employee E1, ... , En are registered |
+|  Post condition     | - |
 | Step#        | Description  |
 |  1     | The owner logs in |  
 |  2     | The owner clicks on the accounting button on their home page  |
@@ -690,8 +700,8 @@ employee-->(handleTransaction)
 #### Scenario 16.2
 | Scenario | Pay a salary|
 | ------------- |:-------------:| 
-|  Precondition     | There are one or more employees working in the shop |
-|  Post condition     | A salary is payed |
+|  Precondition     | Owner O is logged in and Employee E1, ... , En are registered |
+|  Post condition     | - |
 | Step#        | Description  |
 |  1     | The owner logs in |  
 |  2     | The owner clicks on the accounting button on their home page  |
@@ -708,16 +718,16 @@ employee-->(handleTransaction)
 ### Use case 17, UC17 Display daily balance
 | Actors Involved	 	| Owner |
 | ------------- |:-------------:| 
-|  Precondition     | Owner O requests a daily balance  |  
-|  Post condition     | The balance is displayed |
+|  Precondition     | Owner O is logged in and Transaction T1, ... , Tn are recorded |  
+|  Post condition     | - |
 | Nominal Scenario | Owner O requests a daily balance and the balance is printed on screen |
 |  Variants     | - |
 
 #### Scenario 17.1
 | Scenario | Print daily balance|
 | ------------- |:-------------:| 
-|  Precondition     | Owner O requests a daily balance |
-|  Post condition     | The daily balance is printed |
+|  Precondition     | Owner O is logged in and Transaction T1, ... , Tn are recorded |
+|  Post condition     | - |
 | Step#        | Description  |
 |  1     | The owner logs in |  
 |  2     | The owner clicks on the accounting button on their home page  |
@@ -728,16 +738,16 @@ employee-->(handleTransaction)
 ### Use case 18, UC18 Forgot Password 
 | Actors Involved        | Subscriber |
 | ------------- |:-------------:| 
-|  Precondition     | Forgot Password requested  |  
-|  Post condition     | - |
+|  Precondition     | Subscriber S is registered |  
+|  Post condition     | S.Password = newPassword |
 |  Nominal Scenario     | Subscriber insert the email, SSN and the new password. |
 |  Variants     | if subscriber is not in the system -> error: Subscriber not found |
 
 #### Scenario 18.1
 | Scenario | Forgot Password|
 | ------------- |:-------------:| 
-|  Precondition     | Forgot Password Requested|
-|  Post condition     | Password updated|
+|  Precondition     | Subscriber S is registered |
+|  Post condition     | S.Password = newPassword |
 | Step#        | Description  |
 |  1     | The subscriber clicks on Forgot Password |  
 |  2     | The subscriber insert the email, SSN and new password  |
@@ -746,8 +756,8 @@ employee-->(handleTransaction)
 #### Scenario 18.2
 | Scenario | Forgot Password but subscriber not found |
 | ------------- |:-------------:| 
-|  Precondition     | Forgot Password Requested|
-|  Post condition     | Password not updated|
+|  Precondition     | Subscriber S is not registered|
+|  Post condition     | - |
 | Step#        | Description  |
 |  1     | The subscriber clicks on Forgot Password |  
 |  2     | The subscriber inserts the email, SSN and new password  |
@@ -761,6 +771,7 @@ employee-->(handleTransaction)
 
 class "Subscriber" as subscriber{
 ID
+Logged
 Address
 Phone number 
 Email
