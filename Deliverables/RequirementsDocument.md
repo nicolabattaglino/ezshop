@@ -62,7 +62,6 @@ EZShop is a software application to:
 
 actor Printer 
 actor Owner
-actor :Cash register: as bcScanner
 actor Product
 actor Subscriber
 actor Employee
@@ -96,8 +95,6 @@ Screen, keyboard and mouse on PC: A PC inside the shop that all subscriber can u
 
 Fidelity card: A card that each subscriber gets when they register.
 
-Card reader: Hardware that reads fidelity cards.
-
 APIs: Software to connect external systems to EZ Shop logically.
 
 | Actor | Physical Interface | Logical Interface  |
@@ -105,11 +102,11 @@ APIs: Software to connect external systems to EZ Shop logically.
 | Owner       | Screen keyboard mouse on PC | GUI |
 | Employee       | Screen keyboard mouse on PC | GUI |
 | Subscriber       | Screen keyboard mouse on PC | GUI |
-| Barcode scanner       | Usb cable | Drivers |
 | Supplier       | Internet connection | Email |
 | POS system       | Internet connection | Creditcard API |
 | Product       | Laser beam | Barcode |
 | Bank | Internet connection | Bank website |
+| Printer | Usb cable | Drivers |
 
 
 # Stories and personas
@@ -784,6 +781,8 @@ Salary
 Bank information
 }
 class "Local Terminal" as LT{
+ID
+Model
 }
 
 class "EZ Shop" as EZShop{
@@ -842,7 +841,7 @@ class "Cash register" as cashRegister{
 
 }
 class "Barcode Reader" as barcodeReader{
-
+Model
 }
 class "Supplier" as supplier{
 
@@ -878,7 +877,7 @@ fidelityCard -- "*"coupon
 sale - "0...1"coupon
 sale"*" -- customer
 (product,transaction). amount
-LT --|> cashRegister
+LT <|-- cashRegister
 cashRegister -- "0...1" barcodeReader
 PT"*" -- supplier 
 
