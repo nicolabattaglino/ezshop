@@ -841,7 +841,7 @@ Expiration date
 class "Cash register" as cashRegister{
 
 }
-class "Barcode Reader" as barcodeReader{
+class "Barcode Scanner" as barcodeReader{
 
 }
 class "Supplier" as supplier{
