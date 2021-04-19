@@ -62,7 +62,6 @@ EZShop is a software application to:
 
 actor Printer 
 actor Owner
-actor :Cash register: as cashRegister
 actor Product
 actor Subscriber
 actor Employee
@@ -80,7 +79,6 @@ EZShop -- POSSystem
 EZShop - supplier
 EZShop -- Bank
 Subscriber -- EZShop
-EZShop -- cashRegister
 EZShop - Printer
 
 
