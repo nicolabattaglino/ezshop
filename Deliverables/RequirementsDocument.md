@@ -818,6 +818,16 @@ Discount
 Expiration date
 }
 
+class "Cash register" as cashRegister{
+
+}
+class "Barcode Reader" as barcodeReader{
+
+}
+class "Supplier" as supplier{
+
+}
+
 
 
 
@@ -848,6 +858,9 @@ fidelityCard -- "*"coupon
 sale - "0...1"coupon
 sale"*" -- customer
 (product,transaction). amount
+localTerminal --|> cashRegister
+cashRegister -- "0...1" barcodeReader
+productType"*" -- supplier 
 
 @enduml
 ```
@@ -871,12 +884,13 @@ class "Local terminal" as localTerminal{
 class "Local server" as localServer{
 }
 
-
+class "Barcode reader" as barcodeReade
 class "Software" as software 
 EZShop o-- localTerminal
 localTerminal -- software
 localServer -- software
 EZShop o-- localServer
+EZShop o-- barcodeReader
 
 
 @enduml
