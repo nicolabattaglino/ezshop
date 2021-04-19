@@ -903,14 +903,15 @@ class "Local terminal" as localTerminal{
 }
 class "Local server" as localServer{
 }
-
+class "Cash register" as cashRegister
 class "Barcode reader" as barcodeReader
 class "Software" as software 
 EZShop o-- localTerminal
 localTerminal -- software
 localServer -- software
 EZShop o-- localServer
-EZShop o-- barcodeReader
+localTerminal o-- cashRegier
+cashRegiet o-- barcodeScanner
 
 
 @enduml
