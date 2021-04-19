@@ -909,7 +909,7 @@ localTerminal -- software
 localServer -- software
 EZShop o-- localServer
 localTerminal <|-- cashRegister
-cashRegiet -- barcodeScanner
+cashRegister -- barcodeScanner
 
 
 @enduml
