@@ -908,8 +908,8 @@ EZShop o-- localTerminal
 localTerminal -- software
 localServer -- software
 EZShop o-- localServer
-localTerminal o-- cashRegier
-cashRegiet o-- barcodeScanner
+localTerminal <|-- cashRegister
+cashRegiet -- barcodeScanner
 
 
 @enduml
