@@ -858,9 +858,9 @@ fidelityCard -- "*"coupon
 sale - "0...1"coupon
 sale"*" -- customer
 (product,transaction). amount
-localTerminal --|> cashRegister
+LT --|> cashRegister
 cashRegister -- "0...1" barcodeReader
-productType"*" -- supplier 
+PT"*" -- supplier 
 
 @enduml
 ```
