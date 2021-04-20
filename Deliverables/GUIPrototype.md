@@ -57,7 +57,7 @@ This page is described selling steps that **Owner** or **Employee** can use this
 
 3. The owner/employee can click on the **Reprint** button to print the previous receipt by searching. (Page 1.2)
 
-4. The owner/employee can click on the **Logout** button will used to logging out.
+4. The owner/employee can click on the **Logout** button will used to logging out. (Page 0.1)
 
 The **List of Products** with information about the receipt (Paid, Refounds, Number of products, Coupon used for (...) Item(s), Total Discount, IVA, Total Amount, Fidelity Points, Points Added) also user can controls item(s) in the List by **Delete / Increase / Decrease** buttons.
 
@@ -87,7 +87,7 @@ This page is described print again the previous receipt that **Owner** or **Empl
 
 3. The owner/employee can click on the **Sales** button to back to the selling produts (Page 1.1)
 
-4. The owner/employee can click on the **Logout** button will used to logging out.
+4. The owner/employee can click on the **Logout** button will used to logging out. (Page 0.1)
 
 The **List of Products** with information about the receipt (Paid, Refounds, Number of products, Coupon used for (...) Item(s), Total Discount, IVA, Total Amount, Fidelity Points, Points Added) that they never can edited.
 
@@ -119,7 +119,7 @@ The first version of the view is used to show the products that are low in stock
 6. The **owner** can buy the products by clicking on the order button.
 
 The **owner** can go back to her/his *home* by clicking on the home button.  
-The **owner** can log out by clicking on the LogOut button.  
+The **owner** can log out by clicking on the LogOut button. (Page 0.1)
 The **owner** can go to the *check inventory* view by clicking on the relative button.  
 The **owner** can go to the *add new products* view by clicking on the relative button.  
 The **owner** can go to the *edit product information* view by clicking on the relative button.  
@@ -136,7 +136,7 @@ The second version of the view is used to show the products that are low in stoc
 3. The **system** shows in the table the products that matches with the search criteria, if any.
 
 The **employee** can go back to her/his *home* by clicking on the home button.  
-The **employee** can log out by clicking on the LogOut button.  
+The **employee** can log out by clicking on the LogOut button.  (Page 0.1)
 The **employee** can go to the *check inventory* view by clicking on the relative button.  
 
 ## 3 Add product
@@ -153,7 +153,7 @@ With this view the **owner** can add to the buyable products new products that a
 6. When the **owner** has done, he/she can add the product(s) by pressing the add button.
 
 The **owner** can go back to her/his *home* by clicking on the home button.  
-The **owner** can log out by clicking on the LogOut button.  
+The **owner** can log out by clicking on the LogOut button.  (Page 0.1)
 The **owner** can go to the *low stock products* view by clicking on the relative button.  
 The **owner** can go to the *check inventory* view by clicking on the relative button.  
 The **owner** can go to the *edit product information* view by clicking on the relative button.  
@@ -172,7 +172,7 @@ With this view the **owner** can view and search the products in the inventory. 
 3. The **system** shows in the table all the products that matches with the search criteria, if any.
 
 The **owner** can go back to her/his *home* by clicking on the home button.  
-The **owner** can log out by clicking on the LogOut button.  
+The **owner** can log out by clicking on the LogOut button.  (Page 0.1)
 The **owner** can go to the *low stock products* view by clicking on the relative button.  
 The **owner** can go to the *add new products* view by clicking on the relative button.  
 The **owner** can go to the *edit product information* view by clicking on the relative button.  
@@ -189,7 +189,7 @@ With this view the **employee** can view and search the products in the inventor
 3. The **system** shows in the table all the products that matches with the search criteria, if any.
 
 The **employee** can go back to her/his *home* by clicking on the home button.  
-The **employee** can log out by clicking on the LogOut button.  
+The **employee** can log out by clicking on the LogOut button.  (Page 0.1)
 The **employee** can go to the *low stock products* view by clicking on the relative button.  
 
 ## 5 Mark product as "not sold anymore"
@@ -205,7 +205,7 @@ With this view the **owner** can signal products in the inventory as not sold an
 6. The **owner** can save the changes by clicking on the commit button.
 
 The **owner** can go back to her/his *home* by clicking on the home button.  
-The **owner** can log out by clicking on the LogOut button.  
+The **owner** can log out by clicking on the LogOut button.  (Page 0.1)
 The **owner** can go to the *low stock products* view by clicking on the relative button.  
 The **owner** can go to the *check inventory* view by clicking on the relative button.  
 The **owner** can go to the *add new products* view by clicking on the relative button.  
@@ -224,7 +224,7 @@ With this view the **owner** can edit products in the inventory. It is possible 
 5. The **owner** can save the changes by pressing the commit button. 
 
 The **owner** can go back to her/his *home* by clicking on the home button.  
-The **owner** can log out by clicking on the LogOut button.  
+The **owner** can log out by clicking on the LogOut button.  (Page 0.1)
 The **owner** can go to the *low stock products* view by clicking on the relative button.  
 The **owner** can go to the *check inventory* view by clicking on the relative button.  
 The **owner** can go to the *add new products* view by clicking on the relative button.  
