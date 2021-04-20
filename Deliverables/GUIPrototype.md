@@ -53,7 +53,7 @@ This page is described selling steps that **Owner** or **Employee** can use this
 
 1. The owner/employee can click on the **Home** button that linked to the homepage. (Page 0.3 (Page or 0.4)
 
-2. The owner/employee can click on the **Accounting** button that allows their to have report Transactions, Expenses, Pay salaries and Daily balance. (Page 14.1 or (Page 14.2)
+2. When the owner/employee clicks on the **Accounting** button, they can get reports about Transactions, Expenses, Pay salaries and Daily balance. (Page 14.1)
 
 3. The owner/employee can click on the **Reprint** button to print the previous receipt by searching. (Page 1.2)
 
@@ -83,7 +83,7 @@ This page is described print again the previous receipt that **Owner** or **Empl
 
 1. The owner/employee can click on the **Home** button that linked to the homepage. (Page 0.3 (Page or 0.4)
 
-2. The owner/employee can click on the **Accounting** button that allows their to have report Transactions, Expenses, Pay salaries and Daily balance. (Page 14.1 or (Page 14.2)
+2. When the owner/employee clicks on the **Accounting** button, they can get reports about Transactions, Expenses, Pay salaries and Daily balance. (Page 14.1)
 
 3. The owner/employee can click on the **Sales** button to back to the selling produts (Page 1.1)
 
