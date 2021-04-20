@@ -46,7 +46,7 @@ EZShop is a software application to:
 | Subscriber | A customer of that shop that registered using EZ Shop |
 | Employee | An employee of the shop |
 | Product | A product sold by the shop |
-| Barcode scanner | - |
+| Fidelity card | A card that contains fidelity points.  |
 | POS system | - |
 | Supplier | The supplier from whom the owner buys the products |
 | Bank | The bank on which the owner owns an account | 
@@ -72,15 +72,15 @@ actor Bank
 rectangle "EZShop System" as EZShopSystem{
 (EZShop)
 }
-Subscriber <|- Employee
+Employee -|> Subscriber
 Subscriber <|- Owner
-Product -- EZShop
+
 EZShop -- POSSystem
-EZShop - supplier
+EZShop -- supplier
 EZShop -- Bank
 Subscriber -- EZShop
-EZShop - Printer
-
+EZShop -- Printer
+EZShop -- Product
 
 
 @enduml
@@ -191,7 +191,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 |  NFR2     | Efficiency | Operations should take less than 10 seconds | All|
 |  NFR3     | Portability | EZ Shop should be available on several OS (Windows, MacOS and Linux)| All|
 | NFR4 | Privacy | Database data are encrypted| Fr3, Fr4| 
-
+|NFR5 |Localisation | Decimal numbers use . (dot) as decimal separator|
 
 # Use case diagram and use cases
 
@@ -220,8 +220,8 @@ employee -->(checkInventory)
 owner --> (ownerTasks)
 (handleTransaction)->product
 (handleTransaction) --> bcScanner
-owner<---(warning)
-employee<---(warning)
+owner--->(warning)
+employee--->(warning)
 supplier<---(warning)
 (warning)->product
 (ownerTasks)->product
@@ -943,7 +943,7 @@ node "Local terminal" as localTerminal{
 artifact "GUI" as gui
 }
 
-localServer --"*" localTerminal :internet
+localServer -- "*" localTerminal :internet
 
 
 @enduml
