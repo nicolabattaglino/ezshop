@@ -320,7 +320,7 @@ This page contains the list of expenses
 ![Change information](../GUI files/List_of_expenses.png)
 15.2
 
-1.  the **owner** can click on the checkboxes to change the state of each expense. State are boolean and include: invoice sent, payment completed and products delivered.
+1.  The **owner** can click on the checkboxes to change the state of each expense. State are boolean and include: invoice sent, payment completed and products delivered.
 
 
 ## 16 Salaries
