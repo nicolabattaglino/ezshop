@@ -337,7 +337,7 @@ This page contais the list of employees and respective salaries.
 6. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
 ## 17 Daily balance
-![Daily balance](../GUI files/Daily_balance)
+![Daily balance](../GUI files/Daily_balance.png)
 17.1
 
 This page contains the daily balance. 
