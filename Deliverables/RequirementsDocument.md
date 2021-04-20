@@ -138,11 +138,11 @@ APIs: Software to connect external systems to EZ Shop logically.
 | FR2.5  | Mark product as "not sold anymore"| 
 | FR2.6  | Increase stock amount| 
 | FR2.7  | Decrease stock amount| 
-| FR2.8  | Edit product informations| 
+| FR2.8  | Edit product information| 
 | FR3  | Manage accounts| 
 | FR3.1  | Check fidelity points| 
 | FR3.2  | Registration| 
-| FR3.3  | Edit personal informations| 
+| FR3.3  | Edit personal information| 
 | FR3.4  | Add fidelity points| 
 | FR3.5  | Create a coupon with fidelity points| 
 | FR3.6  | Request fidelity card| 
@@ -241,7 +241,7 @@ employee-->(handleTransaction)
 "Accounting" as (accounting)
 "Manage rights" as (manageRights)
 "Owner tasks" as (ownerTasks)
-"Edit product informations" as (editProduct)
+"Edit product information" as (editProduct)
 "Add product" as (addProduct)
 "Accounting" as (acoounting)
 "List sale transactions" as (listSale)
@@ -267,7 +267,7 @@ employee-->(handleTransaction)
 "Check points" as (checkPoints)
 "Registration" as (registration)
 "Request fidelity card" as (request)
-"Edit Personal informations" as (edit)
+"Edit Personal information" as (edit)
 "Create cooupon" as (coupon)
 "Forgot password" as (forgotPassword)
 "Login" as (login)
@@ -380,7 +380,7 @@ employee-->(handleTransaction)
 |  Precondition     | Owner O is logged in, Product P is not in the inventory |
 |  Post condition     | Product P is added in the inventory and P is marked as sold|
 | Step#        | Description  |
-|  1     | Owner insert the informations about the product that he wants to add to the inventory |  
+|  1     | Owner insert the information about the product that he wants to add to the inventory |  
 |  2     | The product(s) is added to the inventory |
 |  3     | The system shows the product as low in stock |
 
@@ -409,7 +409,7 @@ employee-->(handleTransaction)
 |  Precondition     | Owner O is logged in or Employee E is logged in and Product P1, ... , Pn are in the inventory |
 |  Post condition     | - |
 | Step#        | Description  |
-|  1     | Owner inserts the informations about the product(s) that he wants to search |  
+|  1     | Owner inserts the information about the product(s) that he wants to search |  
 |  2     | The product(s) is/are shown |
 
 
@@ -419,7 +419,7 @@ employee-->(handleTransaction)
 |  Precondition     | Owner O is logged in or Employee E is logged in and Product P1, ... , Pn are not in the inventory |
 |  Post condition     | - |
 | Step#        | Description  |
-|  1     | Owner inserts the informations about the product(s) that he wants to search |  
+|  1     | Owner inserts the information about the product(s) that he wants to search |  
 |  2     | The system shows an empty list |
 
 ### Use case 5, UC5 Mark product as "not sold anymore"
@@ -444,44 +444,44 @@ employee-->(handleTransaction)
 |  5     | The product(s) is/are then marked as not sold anymore |
 
  
- ### Use case 6, UC6 Edit product informations
+ ### Use case 6, UC6 Edit product information
 
 | Actors Involved        | Owner, product |
 | ------------- |:-------------:| 
 |  Precondition     | Product P is not marked as “not sold anymore” |  
 |  Post condition     | - |
-|  Nominal Scenario     | Edit product informations |
+|  Nominal Scenario     | Edit product information |
 |  Variants     | - |
 
 ##### Scenario 6.1
-| Scenario  | Edit product informations |
+| Scenario  | Edit product information |
 | ------------- |:-------------:| 
 |  Precondition     | Product P is not marked as “not sold anymore” |
-|  Post condition     | Product P informations are changed |
+|  Post condition     | Product P information are changed |
 | Step#        | Description  |
 |  1     | Owner inserts the barcode about the product that he wants to edit |  
-|  3     | The onwner edits the product's informations |
+|  3     | The onwner edits the product's information |
 |  4     | The onwner commit the changes |
 
-### Use case 7, UC7 Edit Personal informations 
+### Use case 7, UC7 Edit Personal information 
 
 | Actors Involved        | Subscriber  |
 | ------------- |:-------------:| 
 |  Precondition     | Subscriber S is logged in |  
 |  Post condition     | Subscriber S information are changed |
-|  Nominal Scenario     | The subscriber logs in and changes one or more fields regarding their informations.|
+|  Nominal Scenario     | The subscriber logs in and changes one or more fields regarding their information.|
 |  Variants     | - |
 
 #### Scenario 7.1
-|Scenario | Edit Personal informations |
+|Scenario | Edit Personal information |
 | ------------- |:-------------:| 
 |  Precondition     | Subscriber S is logged in|  
-|  Post condition     | Subscriber S informations are changed |
+|  Post condition     | Subscriber S information are changed |
 | Step#        | Description  |
 |  1     | The subscriber log in |
-|  2     | The subscriber clicks on "edit informations" in the homepage |
-| 3      | The subscriber changes personal informations [(e-mail, password, date of birth, address(optional), phone number (optional)) (may be removed, too low level informations]|
-| 4 	   | The subscriber confirms their informations clicking on save |
+|  2     | The subscriber clicks on "edit information" in the homepage |
+| 3      | The subscriber changes personal information [(e-mail, password, date of birth, address(optional), phone number (optional)) (may be removed, too low level information]|
+| 4 	   | The subscriber confirms their information clicking on save |
 
 
 ### Use case 8, UC8 Registration, Request fidelity card
@@ -499,8 +499,8 @@ employee-->(handleTransaction)
 |  Post condition     | Subscriber S is created, FidelityCard F is created and S.FidelityCard = F |
 | Step#        | Description  |
 |  1     | New Registration request is issued |
-| 2      | The subscriber inserts personal informations [(e-mail, password, name, surname, SSN, date of birth, address(optional), phone number (optional)) same her ]|
-| 3 	   | The subscriber confirms their informations |
+| 2      | The subscriber inserts personal information [(e-mail, password, name, surname, SSN, date of birth, address(optional), phone number (optional)) same her ]|
+| 3 	   | The subscriber confirms their information |
 | 4	   | The system links the subscriber with a new already printed card  (they will receive it from the cashier when they ask for it)|
  
 #### Scenario 8.2
@@ -605,7 +605,7 @@ employee-->(handleTransaction)
 | Actors Involved        | Owner |
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in|  
-|  Post condition     | Subscriber S informations are changed |
+|  Post condition     | Subscriber S information are changed |
 |  Nominal Scenario     | The owner changes rights of a subscriber |
 |  Variants     | This operation is performed both when there is a new employee or when an employee is dismissed|
 
@@ -613,7 +613,7 @@ employee-->(handleTransaction)
 | Scenario | Manage Rights|
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in |
-|  Post condition     | Subscriber S informations are changed |
+|  Post condition     | Subscriber S information are changed |
 | Step#        | Description  |
 |  1     | The owner clicks on “Manage Rights” |  
 |  2     | The owner clicks on the box to change rights |
@@ -649,7 +649,7 @@ employee-->(handleTransaction)
 |  Precondition     | Owner O is logged in and Expenses E1, ... , En are recorded |  
 |  Post condition     | - |
 |  Nominal Scenario     |The owner requests a list of expenses. The list is printed|
-|  Variants     | Informations about payment and delivery is stored in this list |
+|  Variants     | information about payment and delivery is stored in this list |
 
 #### Scenario 15.1
 | Scenario | Print List of expenses|
@@ -664,10 +664,10 @@ employee-->(handleTransaction)
 |  5 	 | The owner clicks on the print button |
 
 #### Scenario 15.2
-| Scenario | Update informations about expenses|
+| Scenario | Update information about expenses|
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in and Expenses E1, ... , En are recorded |
-|  Post condition     | Owner O is logged in and Expenses E1, ... , En informations are changed (The inforamtion about an expense is changed) [can i remove what is in the round brackets? ] |
+|  Post condition     | Owner O is logged in and Expenses E1, ... , En information are changed (The inforamtion about an expense is changed) [can i remove what is in the round brackets? ] |
 | Step#        | Description  |
 |  1     | The owner logs in |  
 |  2     | The owner clicks on the accounting button on their home page  |

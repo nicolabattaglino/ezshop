@@ -20,8 +20,8 @@ This page is the welcome page.
 ![Normal Subscriber HomePage](../GUI files/account_page.png)
 0.2  
 This page is the homepage of a normal subscriber. 
-1. The **system** shows some informations in the center: ID card number, fidelity points amount, coupons, if any, and all the personal informations.  
-2. The **Subscriber** can modify its own infotmations by clicking on the *edit informations* button. (Page 7.1).  
+1. The **system** shows some information in the center: ID card number, fidelity points amount, coupons, if any, and all the personal information.  
+2. The **Subscriber** can modify its own infotmations by clicking on the *edit information* button. (Page 7.1).  
 3. The **Subscriber** can request a new card if they lost it, by clicking on the *lost card* button. (Page 8.2).  
 4. The **Subscriber** can click on the *logout* button on top-right to log out. (Page 0.1) 
 5. The **Subscriber** can create a coupon  by clicking on the *Create Coupon* button. (Page 9.1).  
@@ -168,7 +168,7 @@ The **owner** can go to the *check inventory* view by clicking on the relative b
 The **owner** can go to the *add new products* view by clicking on the relative button.  
 The **owner** can go to the *edit information* view by clicking on the relative button.
 
-## 6 Edit product informations
+## 6 Edit product information
 
 ![edit product information](../GUI files/edit_product_information.png)
 6.1
@@ -187,13 +187,13 @@ The **owner** can go to the *check inventory* view by clicking on the relative b
 The **owner** can go to the *add new products* view by clicking on the relative button.  
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. 
 
-## 7 Edit informations account
+## 7 Edit information account
 
-![Edit informations account](../GUI files/edit_info.png)
+![Edit information account](../GUI files/edit_info.png)
 7.1
 
-This is the page in which the subscriber can modify its own informations. Name, Surname, SSN and date of birth cannot be modified.  
-1. The **subscriber** can modify its own informations and the click on *save* to save.  
+This is the page in which the subscriber can modify its own information. Name, Surname, SSN and date of birth cannot be modified.  
+1. The **subscriber** can modify its own information and the click on *save* to save.  
 2. The **subscriber** can click on the *logout* button on top-right to log out. (Page 0.1) 
 3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage. (Page 0.2) 
 
@@ -203,7 +203,7 @@ This is the page in which the subscriber can modify its own informations. Name, 
 8.1
 
 This page is used to create a new account.  
-1. The **customer** can insert all the informations and click on *Create New Account* to register in the system. All the fields with * are required.  
+1. The **customer** can insert all the information and click on *Create New Account* to register in the system. All the fields with * are required.  
 2. The **customer** can click on *Back* button to go back to the Welcome Page. (Page 0.1) 
 
 ##
