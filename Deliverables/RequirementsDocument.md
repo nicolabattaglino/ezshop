@@ -667,7 +667,7 @@ employee-->(handleTransaction)
 | Scenario | Update information about expenses|
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in and Expenses E1, ... , En are recorded |
-|  Post condition     | Owner O is logged in and Expenses E1, ... , En information are changed (The inforamtion about an expense is changed) [can i remove what is in the round brackets? ] |
+|  Post condition     | Owner O is logged in and Expenses E1, ... , En information are changed  |
 | Step#        | Description  |
 |  1     | The owner logs in |  
 |  2     | The owner clicks on the accounting button on their home page  |
