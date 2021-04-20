@@ -47,7 +47,7 @@ EZShop is a software application to:
 | Employee | An employee of the shop |
 | Product | A product sold by the shop |
 | Fidelity card | A card that contains fidelity points.  |
-| POS system | - |
+| POS system | POS system is the place where the customer makes a payment for products in the store |
 | Supplier | The supplier from whom the owner buys the products |
 | Bank | The bank on which the owner owns an account | 
 
@@ -303,7 +303,7 @@ employee-->(handleTransaction)
 |  Post condition     | Transation T is registered and P1.amount -= T.P1.amount, ... , Pn.amount -= T.Pn.amount |
 | Step#        | Description  |
 |  1     | The customer approaches the cashier with the products they intent to buy |  
-|  2     | The cashier read the barcode(s) through manualy or scanner |
+|  2     | The cashier read the barcode(s) through manually or scanner |
 |  3     | Start sale transaction |
 |  4     | End sale transaction |
 |  5     | Decrease quantity of products in the inventory |
@@ -315,10 +315,10 @@ employee-->(handleTransaction)
 |  Post condition     | Transation T is registered, P1.amount -= T.P1.amount, ... , Pn.amount -= T.Pn.amount and Subscriber S.FidelityCard.points += newPoints|
 | Step#        | Description  |
 |  1     | The subscriber approaches the cashier with the products they intent to buy |  
-|  2     | The cashier read the barcode(s) through manualy or scanner |
+|  2     | The cashier read the barcode(s) through manually or scanner |
 |  3     | Start sale transaction |
 |  4     | The cashier reads the barcode of fidelity cart |
-|  5     | Depend on the total amount of transaction, points will be added (Every 10 euro is equal to 1 point) |
+|  5     | Depending on the total amount of transaction, points will be added (Every 10 euro is equal to 1 point) |
 |  6     | End sale transaction |
 |  7     | Decrease quantity of products in the inventory |
 
@@ -329,11 +329,11 @@ employee-->(handleTransaction)
 |  Post condition     | Transation T is registered, P1.amount -= T.P1.amount, ... , Pn.amount -= T.Pn.amount and Subscriber S.FidelityCard.points += newPoints |
 | Step#        | Description  |
 |  1     | The subscriber approaches the cashier with the products they intent to buy and at least a coupon |  
-|  2     | The cashier read the barcode(s) through manualy or scanner |
+|  2     | The cashier read the barcode(s) through manually or scanner |
 |  3     | Start sale transaction |
-|  4     | The cashier reads the barcode of fidelity cart |
+|  4     | The cashier reads the barcode of fidelity card |
 |  5     | The cashier asks the subscriber if they want to use coupon |
-|  6     | Depend on the total amount of transaction, points will be added (Every 10 euro is equal to 1 point) |
+|  6     | Depending on the total amount of transaction, points will be added (Every 10 euro is equal to 1 point) |
 |  7     | End sale transaction |
 |  8     | Decrease quantity of products in the inventory |
 
@@ -484,7 +484,7 @@ employee-->(handleTransaction)
 | Step#        | Description  |
 |  1     | The subscriber log in |
 |  2     | The subscriber clicks on "edit information" in the homepage |
-| 3      | The subscriber changes personal information [(e-mail, password, date of birth, address(optional), phone number (optional)) (may be removed, too low level information]|
+| 3      | The subscriber changes personal information (e-mail, password, date of birth, address(optional), phone number (optional))|
 | 4 	   | The subscriber confirms their information clicking on save |
 
 
@@ -503,7 +503,7 @@ employee-->(handleTransaction)
 |  Post condition     | Subscriber S is created, FidelityCard F is created and S.FidelityCard = F |
 | Step#        | Description  |
 |  1     | New Registration request is issued |
-| 2      | The subscriber inserts personal information [(e-mail, password, name, surname, SSN, date of birth, address(optional), phone number (optional)) same her ]|
+| 2      | The subscriber inserts personal information (e-mail, password, name, surname, SSN, date of birth, address(optional), phone number (optional))|
 | 3 	   | The subscriber confirms their information |
 | 4	   | The system links the subscriber with a new already printed card  (they will receive it from the cashier when they ask for it)|
  
@@ -572,7 +572,7 @@ employee-->(handleTransaction)
 | Step#        | Description  |
 |  1     | The subscriber buys one or more products |  
 |  2     | The employee/owner reads the fidelity card via barcode scanner  |
-|  3     | The system calculates the points based on the total of the transaction (Every 10 euro buying have 1 Fidelity point)|
+|  3     | The system calculates the points based on the total of the transaction (Every 10 euro buying, 1 Fidelity point is earned)|
 |  4     | The points are added to the subscriber total |
  
 
