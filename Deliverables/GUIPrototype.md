@@ -298,7 +298,7 @@ This page contains the list of sale transactions.
 
 1. The **owner** can click on the *Print* button to print the list of transactions.
 2. The **owner** can select a few transactions and lick on the *Print* button to print the selected transactions.
-3. The **owner** can search for a specific transaction using the search bar. They can look for a transaction containing a certain item, during a specific day, with a certain amount or card ID. 
+3. The **owner** can search for a specific transaction using the search bar. They can look for a transaction containing a certain item, during a specific day, with a certain total price or card ID. 
 4. The **owner** can sort the table by using the first row.
 5. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
 6. The **owner** can click on the *logOut* button to logout. (Page 0.1)
@@ -312,7 +312,7 @@ This page contains the list of expenses
 
 1. The **owner** can click on the *Print* button to print the list of expenses.
 2. The **owner** can select a few expenses and lick on the *Print* button to print the selected transactions.
-3. The **owner** can search for a specific expense using the search bar. They can look for an expense containing a certain item, during a specific day, with a certain amount or supplier. 
+3. The **owner** can search for a specific expense using the search bar. They can look for an expense containing a certain item, during a specific day, with a certain total price or supplier. 
 4. The **owner** can sort the table by using the first row.
 5. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
 6. The **owner** can click on the *logOut* button to logout. (Page 0.1)
