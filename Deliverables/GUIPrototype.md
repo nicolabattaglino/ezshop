@@ -97,7 +97,7 @@ In the **Coupon field set** all this information **ID, Discount amount, Expirati
 
 In the **Payment Methods field set** Payment statement will be shown that here we can see information like **Paid, Refounds** which is counted automatically = (PaidAmount-TotalAmount)
 
-Also there is a Chech Printer button that can open the printer queue in the Windows.
+Also there is a Check Printer button that can open the printer queue in the Windows.
 
 At the end and after Searching by Date or Transaction ID, if the Owner or Employee had clicked on Print the Receipt button, the receipt will be print again.
 
