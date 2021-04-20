@@ -54,13 +54,13 @@ This page is described selling steps that **Owner** or **Employee** can use this
 2. If **Pay in Cash** is selected, these two textboxes are activated, Refunds textbox will be automatically calculated with the total amount of the receipt.
 3. Check Printer allows Owner/Employee to show the printer queue and the connection between the application and the printer  (is included in the Windows).
 
-**Home** button that linked to the homepage
-**Accounting** button that allows Owner/Employee to have report sales
-**Reprint** button that can print the previous receipt by searching 
+**Home** button linked to the homepage, **Accounting** button allows Owner/Employee to have report sales, **Reprint** button can print the previous receipt by searching, 
 ##
 ![Reprint](../GUI files/Reprint.png)
 1.2  
 This page is described Reprint steps that **Employee** can only print again previous receipt, Products can not modifying nothing. 
+
+**Home** button linked to the homepage, **Accounting** button allows Owner/Employee to have report sales, **Reprint** button can print the previous receipt by searching, 
 
 ## 2 Waring on low stock, Buy product
 
