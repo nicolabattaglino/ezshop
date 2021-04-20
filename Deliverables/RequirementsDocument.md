@@ -283,20 +283,20 @@ employee-->(handleTransaction)
 ```
 ## Use cases
 ### Use case 1, UC1 Manage sale transaction
-| Actors Involved        | Employee, Owner |
+| Actors Involved        | Employee, Owner, Subscriber, Product |
 | ------------- |:-------------:| 
-|  Precondition     | Employee E or Owner O are logged in and There are one or more product(s) in the shop|  
-|  Post condition     | New transaction added, amount of the product(s) is decreased |
+|  Precondition     | Employee E or Owner O are logged in and Product P1, ... , Pn are in the inventory|  
+|  Post condition     | Transation T is registered and P1.amount -= T.P1.amount, ... , Pn.amount -= T.Pn.amount |
 |  Nominal Scenario     | Read the barcode(s) through manually, scanner or auto-machine. Start sale transaction with scanning each barcode of product(s). End sale transaction and handle product(s) to the customer |
 |  Variants     | if there is a discount on a product -> apply discount |
 |      | if a subscriber requests a discount and also have a coupon -> apply discount |
 |      | if the customer is a subscriber -> add fidelity points |
  
 ##### Scenario 1.1
-| Scenario | Customer without coupon |
+| Scenario | Subscriber not registered |
 | ------------- |:-------------:| 
-|  Precondition     | One or more products are chosen by customers but they dont have fidelity card or coupon |
-|  Post condition     | A customer bought the product(s) |
+|  Precondition     | Employee E or Owner O are logged in, Product P1, ... , Pn are in the inventory and Subscriber S is not registered |
+|  Post condition     | Transation T is registered and P1.amount -= T.P1.amount, ... , Pn.amount -= T.Pn.amount |
 | Step#        | Description  |
 |  1     | The customer approaches the cashier with the products they intent to buy |  
 |  2     | The cashier read the barcode(s) through manualy or scanner |
@@ -307,29 +307,29 @@ employee-->(handleTransaction)
 ##### Scenario 1.2
 | Scenario | Subscriber without coupon |
 | ------------- |:-------------:| 
-|  Precondition     | There are one or more product(s) in the shop and the customer is a subscriber without a coupon (or dont have/don'git remotet want/expired) |
-|  Post condition     | A subscriber bought the product(s) and his points added |
+|  Precondition     | Employee E or Owner O are logged in, Product P1, ... , Pn are in the inventory and Subscriber S is registered |
+|  Post condition     | Transation T is registered, P1.amount -= T.P1.amount, ... , Pn.amount -= T.Pn.amount and Subscriber S.FidelityCard.points += newPoints|
 | Step#        | Description  |
 |  1     | The subscriber approaches the cashier with the products they intent to buy |  
 |  2     | The cashier read the barcode(s) through manualy or scanner |
 |  3     | Start sale transaction |
 |  4     | The cashier reads the barcode of fidelity cart |
-|  5     | Depend on the total ampunt of transaction, points will be added (Every 10 euro is equal to 1 point) |
+|  5     | Depend on the total amount of transaction, points will be added (Every 10 euro is equal to 1 point) |
 |  6     | End sale transaction |
 |  7     | Decrease quantity of products in the inventory |
 
 ##### Scenario 1.3
 | Scenario |  Add Points |
 | ------------- |:-------------:| 
-|  Precondition     | There are one or more product(s) in the shop and the customer is a subscriber with at least a coupon that is not expired |
-|  Post condition     | A subscriber bought the product(s) and his points added |
+|  Precondition     | Employee E or Owner O are logged in, Product P1, ... , Pn are in the inventory and Subscriber S is registered |
+|  Post condition     | Transation T is registered, P1.amount -= T.P1.amount, ... , Pn.amount -= T.Pn.amount and Subscriber S.FidelityCard.points += newPoints |
 | Step#        | Description  |
 |  1     | The subscriber approaches the cashier with the products they intent to buy and at least a coupon |  
 |  2     | The cashier read the barcode(s) through manualy or scanner |
 |  3     | Start sale transaction |
 |  4     | The cashier reads the barcode of fidelity cart |
 |  5     | The cashier asks the subscriber if they want to use coupon |
-|  6     | Depend on the total ampunt of transaction, points will be added (Every 10 euro is equal to 1 point) |
+|  6     | Depend on the total amount of transaction, points will be added (Every 10 euro is equal to 1 point) |
 |  7     | End sale transaction |
 |  8     | Decrease quantity of products in the inventory |
 
