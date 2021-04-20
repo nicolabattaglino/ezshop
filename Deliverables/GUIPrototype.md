@@ -48,32 +48,60 @@ This page is the homepage of the Owner. It is similar to the Subscriber Homepage
 
 ![Selling](../GUI files/Selling.png)
 1.1  
-This page is described selling steps that **Owner** or **Employee** can use this form, Subscriber/Customer can buy products with/without coupon/discount.
 
+This page is described selling steps that **Owner** or **Employee** can use this form, Subscriber/Customer can buy products with or without coupon/discount. there are some additional buttons:
 
+1. The owner/employee can click on the **Home** button that linked to the homepage. (Page 0.3 (Page or 0.4)
 
-**Home** button linked to the homepage, **Accounting** button allows Owner/Employee to have report sales and **Reprint** button can print the previous receipt by searching. **Logout** will used to logging out.
+2. The owner/employee can click on the **Accounting** button that allows their to have report Transactions, Expenses, Pay salaries and Daily balance. (Page 14.1 or (Page 14.2)
 
-**List of Products** with information about the receipt (Paid, Refounds, Number of products, Coupon used for (...) Item(s), Total Discount, IVA, Total Amount, Fidelity Points, Points Added) also user can controls item(s) in the List by **Delete / ncrease / Decrease** buttons.
+3. The owner/employee can click on the **Reprint** button to print the previous receipt by searching. (Page 1.2)
 
-**Search field set** used to **Adding product(s)** with their name/barcode searching and quantitiy of them by clicking on the **Entry** button.
+4. The owner/employee can click on the **Logout** button will used to logging out.
 
-in the **Fidelity field set**, if **Card checkbox** was selected, ID/Barcode will read by cashier and **Cardholder name** and **Fidelity points** will be shown automatically.
+The **List of Products** with information about the receipt (Paid, Refounds, Number of products, Coupon used for (...) Item(s), Total Discount, IVA, Total Amount, Fidelity Points, Points Added) also user can controls item(s) in the List by **Delete / Increase / Decrease** buttons.
 
-**Coupon field set** if **Coupon checkbox** was selected, ID of the coupon must be put, **Discount amount** and **Expiration date** and **Used** points until before by Subscriber will appear.
+The **Search field set** used to **Adding product(s)** with their name/barcode searching and quantitiy of them by clicking on the **Entry** button.
 
-in the **Payment Methods field set** if **Pay in Cash** was selected, The amount of **Paid** must be insert and **Refounds** must be automaticaly count =(PaidAmount-TotalAmount)
+In the **Fidelity field set**, if **Card checkbox** was selected, ID/Barcode will read by cashier and **Cardholder name** and **Fidelity points** will be shown automatically.
+
+The **Coupon field set** if **Coupon checkbox** was selected, ID of the coupon must be put, **Discount amount** and **Expiration date** and **Used** points until before by Subscriber will appear.
+
+In the **Payment Methods field set** if **Pay in Cash** was selected, The amount of **Paid** must be insert and **Refounds** must be automaticaly count =(PaidAmount-TotalAmount)
 
 Then **Points added = (TotalAmount/10) will automatically generating when thr Total Amount were equal and greater than 10
+
+Also there is a Chech Printer button that can open the printer queue in the Windows.
 
 At the end and after inserting / scanning Barcode(s), if the Subscriber / Customer(s) paid theirs and if employee clicked on the submite button, the receipt will be printable by **Print the Receipt button**
 
 ##
 ![Reprint](../GUI files/Reprint.png)
 1.2  
-This page is described Reprint steps that **Employee** can only print again previous receipt, Products can not modifying nothing. 
 
-**Home** button linked to the homepage, **Accounting** button allows Owner/Employee to have report sales, **Reprint** button can print the previous receipt by searching, 
+This page is described print again the previous receipt that **Owner** or **Employee** can use this form, No information can be edited. there are some additional buttons:
+
+1. The owner/employee can click on the **Home** button that linked to the homepage. (Page 0.3 (Page or 0.4)
+
+2. The owner/employee can click on the **Accounting** button that allows their to have report Transactions, Expenses, Pay salaries and Daily balance. (Page 14.1 or (Page 14.2)
+
+3. The owner/employee can click on the **Sales** button to back to the selling produts (Page 1.1)
+
+4. The owner/employee can click on the **Logout** button will used to logging out.
+
+The **List of Products** with information about the receipt (Paid, Refounds, Number of products, Coupon used for (...) Item(s), Total Discount, IVA, Total Amount, Fidelity Points, Points Added) that they never can edited.
+
+The **Search field set** used to searching product(s)** with their Date or Transaction ID by clicking on the **Search** button.
+
+In the **Fidelity field set**, all this information **ID/Barcode, Cardholder name, Fidelity points** will appear automatically when Transaction has been being searched that they never can edited.
+
+In the **Coupon field set** all this information **ID, Discount amount, Expiration date, Used** points until before by Subscriber will appear, they never can edited.
+
+In the **Payment Methods field set** Payment statement will be shown that here we can see information like **Paid, Refounds** which is counted automatically = (PaidAmount-TotalAmount)
+
+Also there is a Chech Printer button that can open the printer queue in the Windows.
+
+At the end and after Searching by Date or Transaction ID, if the Owner or Employee had clicked on Print the Receipt button, the receipt will be print again.
 
 ## 2 Waring on low stock, Buy product
 
