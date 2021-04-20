@@ -480,7 +480,7 @@ employee-->(handleTransaction)
 | Step#        | Description  |
 |  1     | The subscriber log in |
 |  2     | The subscriber clicks on "edit information" in the homepage |
-| 3      | The subscriber changes personal information [(e-mail, password, date of birth, address(optional), phone number (optional)) (may be removed, too low level information]|
+| 3      | The subscriber changes personal information (e-mail, password, date of birth, address(optional), phone number (optional))|
 | 4 	   | The subscriber confirms their information clicking on save |
 
 
@@ -499,7 +499,7 @@ employee-->(handleTransaction)
 |  Post condition     | Subscriber S is created, FidelityCard F is created and S.FidelityCard = F |
 | Step#        | Description  |
 |  1     | New Registration request is issued |
-| 2      | The subscriber inserts personal information [(e-mail, password, name, surname, SSN, date of birth, address(optional), phone number (optional)) same her ]|
+| 2      | The subscriber inserts personal information (e-mail, password, name, surname, SSN, date of birth, address(optional), phone number (optional))|
 | 3 	   | The subscriber confirms their information |
 | 4	   | The system links the subscriber with a new already printed card  (they will receive it from the cashier when they ask for it)|
  
@@ -568,7 +568,7 @@ employee-->(handleTransaction)
 | Step#        | Description  |
 |  1     | The subscriber buys one or more products |  
 |  2     | The employee/owner reads the fidelity card via barcode scanner  |
-|  3     | The system calculates the points based on the total of the transaction (Every 10 euro buying have 1 Fidelity point)|
+|  3     | The system calculates the points based on the total of the transaction (Every 10 euro buying, 1 Fidelity point is earned)|
 |  4     | The points are added to the subscriber total |
  
 
