@@ -109,9 +109,9 @@ At the end and after Searching by Date or Transaction ID, if the Owner or Employ
 Owner version.  
 
 The first version of the view is used to show the products that are low in stock to the **owner**. Then the **owner** can decide whether buy or not these products. In the table there are shown: the name, the quantity in stock, the supplier and the buying cost of each product that is low in stock.
-1. The **system** shows in the table all products that are low in stock.
-2. The **owner** can search the products either by barcode or by name, with the searchbox at the bottom. The search is performed when he/she presses the search button.
-3. The **system** shows in the table the products that matches with the search criteria, if any.
+1. The **system** shows into the table all products that are low in stock.
+2. The **owner** can search  products among low stock products and the ordered ones at the same time. The search can be done either by barcode or by name, with the searchbox at the bottom. The search is performed when he/she presses the search button.
+3. The **system** shows into the tables the products that matches with the search criteria, if any.
 4. The **owner**, by checking the checkbox relative to the product that he wants to buy, can select the products to which is interested to.
 5. The **owner** can choose the quantity for each product, that is checked, by clicking on the realtive number stepper.
 6. The **owner** can buy the products by clicking on the order button.

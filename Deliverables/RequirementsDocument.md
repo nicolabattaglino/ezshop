@@ -61,6 +61,7 @@ EZShop is a software application to:
 
 
 actor Printer 
+actor :Fidelity Card: as FidelityCard
 actor Owner
 actor Product
 actor Subscriber
@@ -81,7 +82,7 @@ EZShop -- Bank
 Subscriber -- EZShop
 EZShop -- Printer
 EZShop -- Product
-
+FidelityCard -- EZShop
 
 @enduml
 ```
@@ -90,7 +91,7 @@ EZShop -- Product
 
 ## Interfaces
 
-Screen, keyboard and mouse on PC: A PC inside the shop that all subscriber can use.
+Screen, keyboard and mouse on PC: a PC inside the shop that all subscriber can use.
 
 Fidelity card: A card that each subscriber gets when they register.
 
@@ -102,10 +103,11 @@ APIs: Software to connect external systems to EZ Shop logically.
 | Employee       | Screen keyboard mouse on PC | GUI |
 | Subscriber       | Screen keyboard mouse on PC | GUI |
 | Supplier       | Internet connection | Email |
-| POS system       | Internet connection | Creditcard API |
+| POS system       | Internet connection | REST API v67 as described in https://docs.adyen.com/api-explorer/#/Payment/v64/overview |
 | Product       | Laser beam | Barcode |
 | Bank | Internet connection | Bank website |
 | Printer | Usb cable | Drivers |
+| Fidelity Card | Laser beam | Barcode |
 
 
 # Stories and personas
@@ -191,7 +193,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 |  NFR2     | Efficiency | Operations should take less than 10 seconds | All|
 |  NFR3     | Portability | EZ Shop should be available on several OS (Windows, MacOS and Linux)| All|
 | NFR4 | Privacy | Database data are encrypted| Fr3, Fr4| 
-|NFR5 |Localisation | Decimal numbers use . (dot) as decimal separator|
+| NFR5 | Localisation | Decimal numbers use . (dot) as decimal separator|
 
 # Use case diagram and use cases
 
@@ -200,14 +202,14 @@ APIs: Software to connect external systems to EZ Shop logically.
 ```plantuml
 @startuml
 
-
+rectangle "EZShop" as EZShop{
 "Warning on low stock, buy product" as (warning)
 "Handle transaction" as (handleTransaction)
 
 "Check inventory" as (checkInventory)
 "Manage account" as (manageAccount)
 "Owner tasks" as (ownerTasks)
-
+}
 
 "Owner" as owner
 "Employee" as employee
@@ -215,6 +217,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 "Supplier" as supplier
 "Product" as product
 "Barcode scanner" as bcScanner
+"Fideliy Card" as fidelityCard
 owner-->(checkInventory)
 employee -->(checkInventory)
 owner --> (ownerTasks)
@@ -232,6 +235,8 @@ employee --|>subscriber
 subscriber -->(manageAccount)
 employee-->(handleTransaction)
 (handleTransaction) --> (warning)
+
+
 @enduml
 ```
 
@@ -249,18 +254,18 @@ employee-->(handleTransaction)
 "Pay salaries" as (paySalaries)
 "Add fidelity points" as (addPoints)
 "Handle transaction" as (handleTransaction)
-(ownerTasks) --> (addProduct):include
-(acoounting)-->(listSale):include
-(acoounting)-->(listExpenses):include
-(acoounting)-->(paySalaries):include
-(ownerTasks)-->(notSold):include
-(ownerTasks)-->(accounting):include
-(ownerTasks)-->(manageRights):include
-(ownerTasks)-->(editProduct):include
+(ownerTasks) ..> (addProduct):include
+(acoounting)..>(listSale):include
+(acoounting)..>(listExpenses):include
+(acoounting)..>(paySalaries):include
+(ownerTasks)..>(notSold):include
+(ownerTasks)..>(accounting):include
+(ownerTasks)..>(manageRights):include
+(ownerTasks)..>(editProduct):include
 (handleTransaction) --> (addPoints)
 @enduml
-
 ```
+
 ```plantuml
 @startuml
 "Manage account" as (manageAccount)
@@ -271,26 +276,25 @@ employee-->(handleTransaction)
 "Create cooupon" as (coupon)
 "Forgot password" as (forgotPassword)
 "Login" as (login)
-(manageAccount)-->(checkPoints):include
-(manageAccount)-->(registration):include
-(manageAccount)-->(request):include
-(manageAccount)-->(edit):include
-(manageAccount)-->(coupon):include
-(manageAccount)-->(forgotPassword):include
-(manageAccount)-->(login):include
+(manageAccount)..>(checkPoints):include
+(manageAccount)..>(registration):include
+(manageAccount)..>(request):include
+(manageAccount)..>(edit):include
+(manageAccount)..>(coupon):include
+(manageAccount)..>(forgotPassword):include
+(manageAccount)..>(login):include
 @enduml
-
 ```
+
 ## Use cases
 ### Use case 1, UC1 Manage sale transaction
-| Actors Involved        | Employee, Owner, Subscriber, Product |
+| Actors Involved        | Employee, Owner, Subscriber, Product, Fidelity Card |
 | ------------- |:-------------:| 
 |  Precondition     | Employee E or Owner O are logged in and Product P1, ... , Pn are in the inventory|  
 |  Post condition     | Transation T is registered and P1.amount -= T.P1.amount, ... , Pn.amount -= T.Pn.amount |
 |  Nominal Scenario     | Read the barcode(s) through manually, scanner or auto-machine. Start sale transaction with scanning each barcode of product(s). End sale transaction and handle product(s) to the customer |
-|  Variants     | if there is a discount on a product -> apply discount |
-|      | if a subscriber requests a discount and also have a coupon -> apply discount |
-|      | if the customer is a subscriber -> add fidelity points |
+|  Variants | if a subscriber requests a discount and also have a coupon -> apply discount  
+|           | if the customer is a subscriber -> add fidelity points |
  
 ##### Scenario 1.1
 | Scenario | Subscriber not registered |
@@ -352,7 +356,7 @@ employee-->(handleTransaction)
 |  3     | The owner decides to buy the product(s) |
 |  4	 | The owner select the amount of the product(s) |
 |  4 	 | The product(s) is/are added to the list of expenses |
-|  5     | An order is issued |
+|  5     | An order is issued via e-mail |
 |  6     | The product(s) is/are delivered |
 |  7     | The amount of the product(s) is increased |
 
@@ -485,7 +489,7 @@ employee-->(handleTransaction)
 
 
 ### Use case 8, UC8 Registration, Request fidelity card
-| Actors Involved        | Subscriber |
+| Actors Involved        | Subscriber, Fidelity Card |
 | ------------- |:-------------:| 
 |  Precondition     | - |  
 |  Post condition     | Subscriber S is created , FidelityCard F is created and S.FidelityCard = F |
@@ -517,7 +521,7 @@ employee-->(handleTransaction)
  
  
 ### Use case 9, UC9 Create a coupon
-| Actors Involved        | Subscriber |
+| Actors Involved        | Subscriber, Fidelity Card |
 | ------------- |:-------------:| 
 |  Precondition     | Subscriber S is logged in and S.FidelityCard.points >= 10|  
 |  Post condition     | A Coupon is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= 10 |
@@ -553,7 +557,7 @@ employee-->(handleTransaction)
 
  
 ### Use case 11, UC11 Add Fidelity point
-| Actors Involved        | Subscriber, Employee, Owner |
+| Actors Involved        | Subscriber, Employee, Owner, Fidelity Card |
 | ------------- |:-------------:| 
 |  Precondition     | Employee E is logged in or Owner O is logged in|  
 |  Post condition     | Subscriber S.FidelityCard.points += newPoints |
@@ -809,8 +813,7 @@ Lost
 }
 class "Local server" as localServer{
 }
-class "General database" as generalDB{
-}
+
 
 class "Product type" as PT{
 Name
@@ -854,7 +857,8 @@ class "Barcode Scanner" as barcodeReader{
 
 }
 class "Supplier" as supplier{
-
+Name
+Email
 }
 
 
@@ -874,11 +878,7 @@ localServer - EZShop
 
 EZShop -- "*"PT
 PT -- "*"product
-localServer -- generalDB
-generalDB-- product
-generalDB -- transaction
-generalDB -- subscriber
-generalDB -- fidelityCard
+
 EZShop -- "*"transaction
 customer <|- subscriber
 transaction <|-- sale
@@ -929,22 +929,21 @@ cashRegister -- barcodeScanner
 
 # Deployment Diagram
 
+Client server model. The terminals runs the GUI which allows the comunicatin with the server. 
+The EZShop application runs on a server.
 ```plantuml
 @startuml
 
 node "Local server" as localServer{
 artifact "EZShop application" as EZShop{
-artifact "General database" as generalDB
-
-artifact "Accounting" as accounting
 }
+node "Oracle DBMS" as generalDB
 }
 node "Local terminal" as localTerminal{
 artifact "GUI" as gui
 }
 
-localServer -- "*" localTerminal :internet
-
+localServer -- "*" localTerminal :HTTP/internet
 
 @enduml
 
