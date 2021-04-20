@@ -48,17 +48,19 @@ This page is the homepage of the Owner. It is similar to the Subscriber Homepage
 
 ![Selling](../GUI files/Selling.png)
 1.1  
-This page is described selling steps that **Owner** or **Employee** can use this form, products can insert through the barcode scanner. subscriber/customer buy products with/without coupon/discount. there are 3 buttons:
-1. **Home** button that linked to the homepage
-2. **Accounting** button that allows owner/employee to have report sales
-3. **Reprint** button that can print the previous receipt by searching 
+This page is described selling steps that **Owner** or **Employee** can use this form, Products can be found by them name or barcode. After inserting Barcode(s), if the customer paid, the receipt will print. Subscriber/Customer buy products with/without coupon/discount.
+
+1. **Fidelity card** barcode will be written via **fcReader** and their information will appear automatically
+2. If **Pay in Cash** is selected, these two textboxes are activated, Refunds textbox will be automatically calculated with the total amount of the receipt.
+3. Check Printer allows Owner/Employee to show the printer queue and the connection between the application and the printer  (is included in the Windows).
+
+**Home** button that linked to the homepage
+**Accounting** button that allows Owner/Employee to have report sales
+**Reprint** button that can print the previous receipt by searching 
 ##
 ![Reprint](../GUI files/Reprint.png)
 1.2  
-This page is described Reprint steps that Owner or Employee can search products by Product Name, Transaction ID,Transaction Date, Fidelity card Barcode. also there are 3 buttons:
-1. **Home** button that linked to the homepage
-2. **Accounting** button that allows **Owner/Employee** to have report sales
-3. **Selling** button that direct us to the **Selling** page
+This page is described Reprint steps that **Employee** can only print again previous receipt, Products can not modifying nothing. 
 
 ## 2 Waring on low stock, Buy product
 
@@ -298,29 +300,27 @@ This page contains the list of sale transactions.
 
 1. The **owner** can click on the *Print* button to print the list of transactions.
 2. The **owner** can select a few transactions and lick on the *Print* button to print the selected transactions.
-3. The **owner** can search for a specific transaction using the search bar. They can look for a transaction containing a certain item, during a specific day, with a certain total price or card ID. 
-4. The **owner** can sort the table by using the first row.
-5. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
-6. The **owner** can click on the *logOut* button to logout. (Page 0.1)
+3. The **owner** can search for a specific transaction using the search bar. They can look for a transaction containing a certain item, during a specific day, with a certain amount or card ID. 
+4. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
+5. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
 
 ## 15 Expenses
-![Expenses](../GUI files/List_of_expenses_no_pop_up.png)
+![Expenses](../GUI files/List_of_expenses.png)
 15.1
 
 This page contains the list of expenses
 
 1. The **owner** can click on the *Print* button to print the list of expenses.
 2. The **owner** can select a few expenses and lick on the *Print* button to print the selected transactions.
-3. The **owner** can search for a specific expense using the search bar. They can look for an expense containing a certain item, during a specific day, with a certain total price or supplier. 
-4. The **owner** can sort the table by using the first row.
-5. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
-6. The **owner** can click on the *logOut* button to logout. (Page 0.1)
+3. The **owner** can search for a specific expense using the search bar. They can look for an expense containing a certain item, during a specific day, with a certain amount or supplier. 
+4. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
+5. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
-![Change information](../GUI files/List_of_expenses.png)
+![Change informatio](../GUI files/Placeholder.png)
 15.2
 
-1.  The **owner** can click on the checkboxes to change the state of each expense. State are boolean and include: invoice sent, payment completed and products delivered.
+1. By clicking on the checkboxes the **owner** can change the state of each expense. State are boolean and include: invoice sent, payment completed and products delivered.
 
 
 ## 16 Salaries
@@ -332,21 +332,18 @@ This page contais the list of employees and respective salaries.
 1. The **owner** can click on the *Print* button to print the list of employees and past and resent salaries.
 2. The **owner** can select a salarie and click on the *Pay* button to pay the salary. The button will open a browser window on the bank web site and will fill the fields necessary to pay said salary.
 3. The **owner** can search for a specific employee or salary using the search bar. They can look for a specific employee, a certain number of hours worked, by the amount or by date.
-4. The **owner** can sort the table by using the first row.
-5. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
-6. The **owner** can click on the *logOut* button to logout. (Page 0.1)
+4. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
+5. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
 ## 17 Daily balance
-![Daily balance](../GUI files/Daily_balance.png)
+![Daily balance](../GUI files/Placeholder.png)
 17.1
 
 This page contains the daily balance. 
 
 1. The **owner** can click on the *Print* button to print the daily balance so far.
-2. The **owner** can search for a specific date.
-3. The **owner** can sort the table by using the first row.
-4. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
-5. The **owner** can click on the *logOut* button to logout. (Page 0.1)
+2. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
+3. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
 ## 18 Forgot password
 
