@@ -47,7 +47,7 @@ EZShop is a software application to:
 | Employee | An employee of the shop |
 | Product | A product sold by the shop |
 | Fidelity card | A card that contains fidelity points.  |
-| POS system | - |
+| POS system | POS system is the place where the customer makes a payment for products in the store |
 | Supplier | The supplier from whom the owner buys the products |
 | Bank | The bank on which the owner owns an account | 
 
