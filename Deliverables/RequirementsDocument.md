@@ -802,7 +802,7 @@ Right level
 }
 class "Fidelity Card" as fidelityCard{
 ID
-fcReader
+Barcode
 Fidelity points
 Creation date 
 Lost 
