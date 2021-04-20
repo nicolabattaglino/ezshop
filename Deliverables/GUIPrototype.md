@@ -48,13 +48,26 @@ This page is the homepage of the Owner. It is similar to the Subscriber Homepage
 
 ![Selling](../GUI files/Selling.png)
 1.1  
-This page is described selling steps that **Owner** or **Employee** can use this form, Products can be found by them name or barcode. After inserting Barcode(s), if the customer paid, the receipt will print. Subscriber/Customer buy products with/without coupon/discount.
+This page is described selling steps that **Owner** or **Employee** can use this form, Subscriber/Customer can buy products with/without coupon/discount.
 
-1. **Fidelity card** barcode will be written via **fcReader** and their information will appear automatically
-2. If **Pay in Cash** is selected, these two textboxes are activated, Refunds textbox will be automatically calculated with the total amount of the receipt.
-3. Check Printer allows Owner/Employee to show the printer queue and the connection between the application and the printer  (is included in the Windows).
 
-**Home** button linked to the homepage, **Accounting** button allows Owner/Employee to have report sales, **Reprint** button can print the previous receipt by searching, 
+
+**Home** button linked to the homepage, **Accounting** button allows Owner/Employee to have report sales and **Reprint** button can print the previous receipt by searching. **Logout** will used to logging out.
+
+**List of Products** with information about the receipt (Paid, Refounds, Number of products, Coupon used for (...) Item(s), Total Discount, IVA, Total Amount, Fidelity Points, Points Added) also user can controls item(s) in the List by **Delete / ncrease / Decrease** buttons.
+
+**Search field set** used to **Adding product(s)** with their name/barcode searching and quantitiy of them by clicking on the **Entry** button.
+
+in the **Fidelity field set**, if **Card checkbox** was selected, ID/Barcode will read by cashier and **Cardholder name** and **Fidelity points** will be shown automatically.
+
+**Coupon field set** if **Coupon checkbox** was selected, ID of the coupon must be put, **Discount amount** and **Expiration date** and **Used** points until before by Subscriber will appear.
+
+in the **Payment Methods field set** if **Pay in Cash** was selected, The amount of **Paid** must be insert and **Refounds** must be automaticaly count =(PaidAmount-TotalAmount)
+
+Then **Points added = (TotalAmount/10) will automatically generating when thr Total Amount were equal and greater than 10
+
+At the end and after inserting / scanning Barcode(s), if the Subscriber / Customer(s) paid theirs and if employee clicked on the submite button, the receipt will be printable by **Print the Receipt button**
+
 ##
 ![Reprint](../GUI files/Reprint.png)
 1.2  
