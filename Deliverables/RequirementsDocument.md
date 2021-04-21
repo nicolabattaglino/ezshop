@@ -195,7 +195,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 |  NFR1     | Usability  | EZ Shop is easy to undestand and use in less than 5 minutes | All|
 |  NFR2     | Efficiency | Operations should take less than 10 seconds | All|
 |  NFR3     | Portability | EZ Shop should be available on several OS (Windows, MacOS and Linux)| All|
-|  NFR4		| Privacy | Database data are encrypted | Fr2, Fr3, Fr4| 
+|  NFR4		| Privacy | Database data are encrypted | FR2, FR3, FR4| 
 |  NFR5		| Availability | The system has to be available 99% of the time| All|
 |  NFR6		| Localisation | Decimal numbers use . (dot) as decimal separator|FR1, FR2, FR4|
 
@@ -713,9 +713,9 @@ owner ---> (warning)
 |  2     | The owner opens the salary section|
 |  3     | The system dispalys a list of all employees and their respective salary |
 |  4 	 | The owner selects a specific employee and attempts to pay their salaty
-|  8	 | The system opens a web page on the bank web site |
-|  9 	 | The system initiates a transfer to the employee bank account with the correct amount |
-| 10	 | The owner completes the transfer |
+|  5	 | The system opens a web page on the bank web site |
+|  6 	 | The system initiates a transfer to the employee bank account with the correct amount |
+| 7		 | The owner completes the transfer |
 
 ### Use case 17, UC17 Display daily balance
 | Actors Involved	 	| Owner |
