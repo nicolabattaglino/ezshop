@@ -488,10 +488,10 @@ owner ---> (warning)
 |  Precondition     | Subscriber S is logged in|  
 |  Post condition     | Subscriber S information are changed |
 | Step#        | Description  |
-|  1     | The subscriber log in |
-|  2     | The subscriber clicks on "edit information" in the homepage |
-| 3      | The subscriber changes personal information (e-mail, password, date of birth, address(optional), phone number (optional))|
-| 4 	   | The subscriber confirms their information clicking on save |
+
+|  1     | The subscriber clicks on "edit information" in the homepage |
+| 2      | The subscriber changes personal information (e-mail, password, date of birth, address(optional), phone number (optional))|
+| 3	   | The subscriber confirms their information clicking on save |
 
 
 ### Use case 8, UC8 Registration, Request fidelity card
