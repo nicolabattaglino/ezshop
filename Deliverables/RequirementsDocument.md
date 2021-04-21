@@ -682,7 +682,7 @@ owner ---> (warning)
 |  2     | The owner clicks on the "Expenses" button|
 |  3     | The system dispalys a list of all expenses |
 |  4 	 | The owner clicks on one of the checkboxes regurding a specific expense (Invoice, payment or delivery) |
-|  5	 | The state of the checkbox is changed and saved by the system |
+|  5	 | The state of the checkbox is changed and saved automatically by the system |
 
  
 ### Use case 16, UC16 Pay salaries 
