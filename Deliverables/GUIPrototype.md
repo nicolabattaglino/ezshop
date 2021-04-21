@@ -52,9 +52,7 @@ This page is the homepage of the Owner. It is similar to the Subscriber Homepage
 This page is described selling steps that **Owner** or **Employee** can use this form, Subscriber/Customer can buy products with or without coupon/discount. there are some additional buttons:
 
 1. The owner/employee can click on the **Home** button that linked to the homepage. (Page 0.3 (Page or 0.4)
-
 2. When the owner/employee clicks on the **Accounting** button, they can get reports about Transactions, Expenses, Pay salaries and Daily balance. (Page 14.1)
-
 3. The owner/employee can click on the **Reprint** button to print the previous receipt by searching. (Page 1.2)
 4. The owner/employee can click on the **Logout** button will used to logging out. (Page 0.1)
 
@@ -81,9 +79,7 @@ At the end and after inserting / scanning Barcode(s), if the Subscriber / Custom
 This page is described print again the previous receipt that **Owner** or **Employee** can use this form, No information can be edited. there are some additional buttons:
 
 1. The owner/employee can click on the **Home** button that linked to the homepage. (Page 0.3 (Page or 0.4)
-
 2. When the owner/employee clicks on the **Accounting** button, they can get reports about Transactions, Expenses, Pay salaries and Daily balance. (Page 14.1)
-
 3. The owner/employee can click on the **Sales** button to back to the selling produts (Page 1.1)
 4. The owner/employee can click on the **Logout** button will used to logging out. (Page 0.1)
 
@@ -103,25 +99,30 @@ At the end and after Searching by Date or Transaction ID, if the Owner or Employ
 
 ## 2 Waring on low stock, Buy product
 
-![Warning on low stock buy](../GUI files/Low_stock_products_owner.png)
+![Warning on low stock buy](../GUI files/low_stock_products_owner.png)
 2.1  
 
 Owner version.  
 
 The first version of the view is used to show the products that are low in stock to the **owner**. Then the **owner** can decide whether buy or not these products. In the table there are shown: the name, the quantity in stock, the supplier and the buying cost of each product that is low in stock.
-1. The **system** shows in the table all products that are low in stock.
-2. The **owner** can search the products either by barcode or by name, with the searchbox at the bottom. The search is performed when he/she presses the search button.
-3. The **system** shows in the table the products that matches with the search criteria, if any.
+1. The **system** shows into the table all products that are low in stock.
+2. The **owner** can search products among low stock products and the ordered ones at the same time. The search can be done either by barcode or by name, with the searchbox at the bottom. The search is performed when he/she presses the search button.
+3. The **system** shows into the tables the products that matches with the search criteria, if any.
 4. The **owner**, by checking the checkbox relative to the product that he wants to buy, can select the products to which is interested to.
 5. The **owner** can choose the quantity for each product, that is checked, by clicking on the realtive number stepper.
 6. The **owner** can buy the products by clicking on the order button.
+7. The **owner** can mark an order as delivered by clicking on the relative checkbox.
+8. The **owner** can increment the amount of the ordered product(s) by clicking on the button save.
 
-The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)
-The **owner** can log out by clicking on the LogOut button. (Page 0.1)
-The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)
-The **owner** can go to the *add new products* view by clicking on the relative button. (Page 3.1)
-The **owner** can go to the *edit product information* view by clicking on the relative button. (Page 6.1)
-The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. (Page 5.1)
+The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)  
+The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
+The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)  
+The **owner** can go to the *add new products* view by clicking on the relative button. (Page 3.1)  
+The **owner** can go to the *edit product information* view by clicking on the relative button. (Page 6.1)  
+The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. (Page 5.1)  
+
+![Warning on low stock buy error](../GUI files/low_stock_products_owner_error.png)
+2.1.1 This is the error shown when there are no products that match the search criteria.  
 
 ![Warning on low stock](../GUI files/low_stock_products_employee.png)
 2.2  
@@ -130,12 +131,15 @@ The **owner** can go to the *mark product as not sold anymore* view by clicking 
 
 The second version of the view is used to show the products that are low in stock to the **employee**. In the table there are shown the name, the quantity in stock and the supplier of each product that is low in stock.
 1. The **system** shows in the table all products that are low in stock.
-2. The **employee** can search the products either by barcode or by name, using the searchbox at the bottom. The search is performed when he/she presses the search button.
+2. The **employee** can search products among low stock products and the ordered ones at the same time. The search can be done either by barcode or by name, with the searchbox at the bottom. The search is performed when he/she presses the search button.
 3. The **system** shows in the table the products that matches with the search criteria, if any.
 
-The **employee** can go back to her/his *home* by clicking on the home button. (Page 0.2)
-The **employee** can log out by clicking on the LogOut button. (Page 0.1)
-The **employee** can go to the *check inventory* view by clicking on the relative button. (Page 4.2)
+The **employee** can go back to her/his *home* by clicking on the home button. (Page 0.2)  
+The **employee** can log out by clicking on the LogOut button. (Page 0.1)  
+The **employee** can go to the *check inventory* view by clicking on the relative button. (Page 4.2)  
+
+![Warning on low stock error](../GUI files/low_stock_products_employee_error.png)
+2.2.1 This is the error shown when there are no products that match the search criteria.
 
 ## 3 Add product
 
@@ -150,12 +154,15 @@ With this view the **owner** can add to the buyable products new products that a
 5. If the **owner** wants, he/she can check, by the checkboxes in the table, the products that he/she want to add to the buyable products.
 6. When the **owner** has done, he/she can add the product(s) by pressing the add button.
 
-The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)
-The **owner** can log out by clicking on the LogOut button. (Page 0.1)
-The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1) 
-The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)
-The **owner** can go to the *edit product information* view by clicking on the relative button. (Page 6.1)
-The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. (Page 5.1)
+The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)  
+The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
+The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)  
+The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)  
+The **owner** can go to the *edit product information* view by clicking on the relative button. (Page 6.1)  
+The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. (Page 5.1)  
+
+![Warning on low stock buy error](../GUI files/add_new_products_error.png)
+3.1.1 This is the error shown when there are no products that match the search criteria.
 
 ## 4 Check inventory
 
@@ -169,12 +176,15 @@ With this view the **owner** can view and search the products in the inventory. 
 2. The **owner** can search the products: by barcode, by name, by supplier and by price range with the searchbox at the bottom. The search is performed when he/she presses the search button.
 3. The **system** shows in the table all the products that matches with the search criteria, if any.
 
-The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)
-The **owner** can log out by clicking on the LogOut button. (Page 0.1)
-The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)
-The **owner** can go to the *add new products* view by clicking on the relative button. (Page 3.1)
-The **owner** can go to the *edit product information* view by clicking on the relative button. (Page 6.1)
-The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. (Page 5.1)
+The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)  
+The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
+The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)  
+The **owner** can go to the *add new products* view by clicking on the relative button. (Page 3.1)  
+The **owner** can go to the *edit product information* view by clicking on the relative button. (Page 6.1)  
+The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. (Page 5.1)  
+
+![Check inventory owner error](../GUI files/check_inventory_owner_error.png)
+4.1.1 This is the error shown when there are no products that match the search criteria.
 
 ![Check inventory employee](../GUI files/check_inventory_employee.png)
 4.2
@@ -186,9 +196,12 @@ With this view the **employee** can view and search the products in the inventor
 2. The **employee** can search the products: by barcode, by name, by supplier and by price range with the searchbox at the bottom. The search is performed when he/she presses the search button.
 3. The **system** shows in the table all the products that matches with the search criteria, if any.
 
-The **employee** can go back to her/his *home* by clicking on the home button. (Page 0.2)
-The **employee** can log out by clicking on the LogOut button. (Page 0.1)
-The **employee** can go to the *low stock products* view by clicking on the relative button. (Page 2.2)
+The **employee** can go back to her/his *home* by clicking on the home button. (Page 0.2)  
+The **employee** can log out by clicking on the LogOut button. (Page 0.1)  
+The **employee** can go to the *low stock products* view by clicking on the relative button. (Page 2.2)  
+
+![Check inventory employee](../GUI files/check_inventory_employee_error.png)
+4.2.1 This is the error shown when there are no products that match the search criteria.
 
 ## 5 Mark product as "not sold anymore"
 
@@ -202,12 +215,15 @@ With this view the **owner** can signal products in the inventory as not sold an
 4. The **owner**, by checking the checkbox relative to the product that he wants to remove, can select the products to which is interested to mark as not sold anymore.
 6. The **owner** can save the changes by clicking on the commit button.
 
-The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)
-The **owner** can log out by clicking on the LogOut button. (Page 0.1)
-The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)
-The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)
-The **owner** can go to the *add new products* view by clicking on the relative button.(Page 3.1)
-The **owner** can go to the *edit information* view by clicking on the relative button. (Page 6.1)
+The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)  
+The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
+The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)  
+The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)  
+The **owner** can go to the *add new products* view by clicking on the relative button.(Page 3.1)  
+The **owner** can go to the *edit information* view by clicking on the relative button. (Page 6.1)  
+
+![mark as not sold](../GUI files/mark_product_as_not_sold_anymore_error.png)
+5.1.1 This is the error shown when there are no products that match the search criteria.
 
 ## 6 Edit product information
 
@@ -221,12 +237,15 @@ With this view the **owner** can edit products in the inventory. It is possible 
 4. If the **owner** wants, he/she can reset the fields by pressing the reset field button.
 5. The **owner** can save the changes by pressing the commit button. 
 
-The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)
-The **owner** can log out by clicking on the LogOut button. (Page 0.1)
-The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)
-The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)
-The **owner** can go to the *add new products* view by clicking on the relative button.(Page 3.1)
-The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. (Page 5.1)
+The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)  
+The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
+The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)  
+The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)  
+The **owner** can go to the *add new products* view by clicking on the relative button.(Page 3.1)  
+The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. (Page 5.1)  
+
+![edit product information](../GUI files/edit_product_information_error.png)
+6.1.1 This is the error shown when there are no products that match the search criteria.
 
 ## 7 Edit information account
 
