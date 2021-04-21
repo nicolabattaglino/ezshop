@@ -630,7 +630,7 @@ owner ---> (warning)
 |  4     | The owner clicks on “Save”  |
 
 ### Use case 14, UC14 List sale transaction
-| Actors Involved        | Owner |
+| Actors Involved        | Owner, Printer |
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in and Transaction T1, ..., Tn are recorded |  
 |  Post condition     | - |
@@ -652,7 +652,7 @@ owner ---> (warning)
 
  
 ### Use case 15, UC15 Manage expenses
-| Actors Involved        | Owner |
+| Actors Involved        | Owner, Printer |
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in and Expenses E1, ... , En are recorded |  
 |  Post condition     | - |
@@ -685,7 +685,7 @@ owner ---> (warning)
 
  
 ### Use case 16, UC16 Pay salaries 
-| Actors Involved        | Owner, Employee |
+| Actors Involved        | Owner, Employee, Printer |
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in |  
 |  Post condition     | - |
@@ -720,7 +720,7 @@ owner ---> (warning)
 |  4 	 | The owner clicks on the print button |
 
 ### Use case 17, UC17 Display daily balance
-| Actors Involved	 	| Owner |
+| Actors Involved	 	| Owner, Printer |
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in and Transaction T1, ... , Tn are recorded |  
 |  Post condition     | - |
