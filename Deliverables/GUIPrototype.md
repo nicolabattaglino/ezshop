@@ -111,7 +111,7 @@ The first version of the view is used to show the products that are low in stock
 5. The **owner** can choose the quantity for each product, that is checked, by clicking on the realtive number stepper.
 6. The **owner** can buy the products by clicking on the order button.
 
-The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)  
+The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.4)  
 The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
 The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)  
 The **owner** can go to the *add new products* view by clicking on the relative button. (Page 3.1)  
@@ -131,7 +131,7 @@ The second version of the view is used to show the products that are low in stoc
 2. The **employee** can search the products either by barcode or by name, using the searchbox at the bottom. The search is performed when he/she presses the search button.
 3. The **system** shows in the table the products that matches with the search criteria, if any.
 
-The **employee** can go back to her/his *home* by clicking on the home button. (Page 0.2)  
+The **employee** can go back to her/his *home* by clicking on the home button. (Page 0.3)  
 The **employee** can log out by clicking on the LogOut button. (Page 0.1)  
 The **employee** can go to the *check inventory* view by clicking on the relative button. (Page 4.2)  
 
@@ -151,7 +151,7 @@ With this view the **owner** can add to the buyable products new products that a
 5. If the **owner** wants, he/she can check, by the checkboxes in the table, the products that he/she want to add to the buyable products.
 6. When the **owner** has done, he/she can add the product(s) by pressing the add button.
 
-The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)  
+The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.4)  
 The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
 The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)  
 The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)  
@@ -173,7 +173,7 @@ With this view the **owner** can view and search the products in the inventory. 
 2. The **owner** can search the products: by barcode, by name, by supplier and by price range with the searchbox at the bottom. The search is performed when he/she presses the search button.
 3. The **system** shows in the table all the products that matches with the search criteria, if any.
 
-The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)  
+The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.4)  
 The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
 The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)  
 The **owner** can go to the *add new products* view by clicking on the relative button. (Page 3.1)  
@@ -193,7 +193,7 @@ With this view the **employee** can view and search the products in the inventor
 2. The **employee** can search the products: by barcode, by name, by supplier and by price range with the searchbox at the bottom. The search is performed when he/she presses the search button.
 3. The **system** shows in the table all the products that matches with the search criteria, if any.
 
-The **employee** can go back to her/his *home* by clicking on the home button. (Page 0.2)  
+The **employee** can go back to her/his *home* by clicking on the home button. (Page 0.3)  
 The **employee** can log out by clicking on the LogOut button. (Page 0.1)  
 The **employee** can go to the *low stock products* view by clicking on the relative button. (Page 2.2)  
 
@@ -212,11 +212,11 @@ With this view the **owner** can signal products in the inventory as not sold an
 4. The **owner**, by checking the checkbox relative to the product that he wants to remove, can select the products to which is interested to mark as not sold anymore.
 6. The **owner** can save the changes by clicking on the commit button.
 
-The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)  
+The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.4)  
 The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
 The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)  
 The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)  
-The **owner** can go to the *add new products* view by clicking on the relative button.(Page 3.1)  
+The **owner** can go to the *add new products* view by clicking on the relative button. (Page 3.1)  
 The **owner** can go to the *edit information* view by clicking on the relative button. (Page 6.1)  
 
 ![mark as not sold](../GUI files/mark_product_as_not_sold_anymore_error.png)
@@ -234,11 +234,11 @@ With this view the **owner** can edit products in the inventory. It is possible 
 4. If the **owner** wants, he/she can reset the fields by pressing the reset field button.
 5. The **owner** can save the changes by pressing the commit button. 
 
-The **owner** can go back to her/his *home* by clicking on the home button. (Subscriber Page 0.2, Page 0.3 Employee, Page 0.4 Owner)
+The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.4)  
 The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
 The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)  
 The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)  
-The **owner** can go to the *add new products* view by clicking on the relative button.(Page 3.1)  
+The **owner** can go to the *add new products* view by clicking on the relative button. (Page 3.1)  
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. (Page 5.1)  
 
 ![edit product information](../GUI files/edit_product_information_error.png)
@@ -270,7 +270,7 @@ This page is used to create a new account.
 Here the subsciber can request a new fidelity card in case they lost it. 
 1. The **subscriber** can click on *Request new card* button to request the new card. The old card is automatically marked as lost and all the points and coupons are transferred to the new card.
 2. The **subscriber** can click on the *logout* button on top-right to log out. (Page 0.1) 
-3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage. (Subscriber Page 0.2, Page 0.3 Employee, Page 0.4 Owner)
+3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage. (Page 0.2) 
 
 ##
 ![Card Created](../GUI files/new_card_created.png)
