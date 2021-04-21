@@ -657,7 +657,7 @@ owner ---> (warning)
 |  Precondition     | Owner O is logged in and Expenses E1, ... , En are recorded |  
 |  Post condition     | - |
 |  Nominal Scenario     |The owner requests to manage of expenses. The list is printed|
-|  Variants     | Information about payment and delivery is stored in this list |
+|  Variants     | Update information about expenses |
 
 #### Scenario 15.1
 | Scenario | Print List of expenses|
@@ -667,7 +667,7 @@ owner ---> (warning)
 | Step#        | Description  |
 |  1     | The owner accesses the accounting section |
 |  2     | The owner opens the expenses section|
-|  3     | The system dispalys a list of all expenses |
+|  3     | The system displays a list of all expenses |
 |  4 	 | The owner clicks on the print button |
 
 #### Scenario 15.2
@@ -711,7 +711,7 @@ owner ---> (warning)
 |  1     | The owner accesses the accounting section |
 |  2     | The owner opens the salary section|
 |  3     | The system dispalys a list of all employees and their respective salary |
-|  4 	 | The owner selects a specific employee and attempts to pay their salaty
+|  4 	 | The owner selects a specific employee and attempts to pay their salary
 |  5	 | The system opens a web page on the bank web site |
 |  6 	 | The system initiates a transfer to the employee bank account with the correct amount |
 | 7		 | The owner completes the transfer |
