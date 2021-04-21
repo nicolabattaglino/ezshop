@@ -364,7 +364,7 @@ This page contains the list of sale transactions.
 
 
 ## 15 Expenses
-![Expenses](../GUI files/List_of_expenses.png)
+![Expenses](../GUI files/List_of_expenses_no_pop_up.png)
 15.1
 
 This page contains the list of expenses
@@ -375,7 +375,7 @@ This page contains the list of expenses
 4. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
 5. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
-![Change informatio](../GUI files/Placeholder.png)
+![Change informatio](../GUI files/List_of_expenses.png)
 15.2
 
 1. By clicking on the checkboxes the **owner** can change the state of each expense. State are boolean and include: invoice sent, payment completed and products delivered.
@@ -394,7 +394,7 @@ This page contais the list of employees and respective salaries.
 5. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
 ## 17 Daily balance
-![Daily balance](../GUI files/Placeholder.png)
+![Daily balance](../GUI files/Daily_balance.png)
 17.1
 
 This page contains the daily balance. 
