@@ -362,10 +362,9 @@ owner ---> (warning)
 |  2     | The owner select the product(s) and the quantity that he/she want to buy |
 |  3     | The owner decides to buy the product(s) |
 |  4	 | The owner select the amount of the product(s) |
-|  5 	 | The product(s) is/are added to the list of expenses |
+|  5 	 | The product(s) is/are added to an expense |
 |  6     | The products are issued, via e-mail, to the supplier |
-|  7     | The product(s) is/are delivered |
-|  8     | The amount of the product(s) is increased |
+|  7	 | The expense is recorded by the system |
 
 ##### Scenario 2.1
 | Scenario  | Employee wants to view the product(s)|
@@ -383,7 +382,7 @@ owner ---> (warning)
 |  Precondition     | Owner O is logged in, Product P is not in the inventory or P is marked as “not sold anymore” |  
 |  Post condition     | Product P is added in the inventory and P is marked as sold |
 |  Nominal Scenario     | New product is added to the inventory  |
-|  Variants     | If the product(s) is marked as “not sold anymore”-> Product is readded to the inventory |
+|  Variants     | If the product(s) is marked as “not sold anymore”-> Product is added to the inventory |
  
  ##### Scenario 3.1
 | Scenario  | New product is added to the inventory |
@@ -402,7 +401,7 @@ owner ---> (warning)
 |  Post condition     | Product P is added in the inventory and P is marked as sold|
 | Step#        | Description  |
 |  1     | Owner searches the product(s) that he wants to unmark as "not sold anymore" |  
-|  2     | The product(s) is/are unmarked as "not sold anymore"|
+|  2     | The product(s) is/are marked as sold|
 |  3     | The system shows the product(s) as low in stock |
 
 ### Use case 4, UC4 Check inventory
@@ -445,7 +444,7 @@ owner ---> (warning)
 ##### Scenario 5.1
 | Scenario  | Product(s) are not sold anymore |
 | ------------- |:-------------:| 
-|  Precondition     | Owner O is logged in and Product P1, ... , Pn are not marked as “not sold anymore” |
+|  Precondition     | Owner O is logged in and Product P1, ... , Pn are not marked as not sold anymore |
 |  Post condition     | P1, ... , Pn are marked as not sold anymore|
 | Step#        | Description  |
 |  1     | Owner searches the product(s) that he wants to not sell anymore |  
