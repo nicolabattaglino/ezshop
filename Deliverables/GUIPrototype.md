@@ -63,7 +63,7 @@ In the **Fidelity field set**, if **Card checkbox** was selected, ID/Barcode wil
 
 The **Coupon field set** if **Coupon checkbox** was selected, ID of the coupon must be put, **Discount amount** and **Expiration date** and **Used** points until before by Subscriber will appear.
 
-In the **Payment Methods field set** if **Pay in Cash** was selected, The amount of **Paid** must be insert and **Refounds** must be automaticaly count =(PaidAmount-TotalAmount)
+In the **Payment Methods field set** if **Pay in Cash** was selected, The amount of **Paid** must be insert and **Refounds** must be automatically count =(PaidAmount-TotalAmount)
 
 Then **Points added = (TotalAmount/10) will automatically generating when thr Total Amount were equal and greater than 10
 
@@ -112,7 +112,7 @@ The first version of the view is used to show the products that are low in stock
 6. The **owner** can buy the products by clicking on the order button.
 
 The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.4)  
-The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
+The **owner** can *log out* by clicking on the LogOut button. (Page 0.1)  
 The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)  
 The **owner** can go to the *add new products* view by clicking on the relative button. (Page 3.1)  
 The **owner** can go to the *edit product information* view by clicking on the relative button. (Page 6.1)  
@@ -132,7 +132,7 @@ The second version of the view is used to show the products that are low in stoc
 3. The **system** shows in the table the products that matches with the search criteria, if any.
 
 The **employee** can go back to her/his *home* by clicking on the home button. (Page 0.3)  
-The **employee** can log out by clicking on the LogOut button. (Page 0.1)  
+The **employee** can *log out* by clicking on the LogOut button. (Page 0.1)  
 The **employee** can go to the *check inventory* view by clicking on the relative button. (Page 4.2)  
 
 ![Warning on low stock error](../GUI files/low_stock_products_employee_error.png)
@@ -152,7 +152,7 @@ With this view the **owner** can add to the buyable products new products that a
 6. When the **owner** has done, he/she can add the product(s) by pressing the add button.
 
 The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.4)  
-The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
+The **owner** can *log out* by clicking on the LogOut button. (Page 0.1)  
 The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)  
 The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)  
 The **owner** can go to the *edit product information* view by clicking on the relative button. (Page 6.1)  
@@ -168,13 +168,13 @@ The **owner** can go to the *mark product as not sold anymore* view by clicking 
 
 *Owner version.*  
 
-With this view the **owner** can view and search the products in the inventory. The products are shown by a table. For each product the table shows: the name , the quantity, the supplier, the expiration, the price, the barcode, the discount and if is sold.
+With this view the **owner** can view and search the products in the inventory. The products are shown by a table. For each product the table shows: the name, the quantity, the supplier, the expiration, the price, the barcode, the discount and if is sold.
 1. The **system** shows in the table all products.
 2. The **owner** can search the products: by barcode, by name, by supplier and by price range with the searchbox at the bottom. The search is performed when he/she presses the search button.
 3. The **system** shows in the table all the products that matches with the search criteria, if any.
 
 The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.4)  
-The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
+The **owner** can *log out* by clicking on the LogOut button. (Page 0.1)  
 The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)  
 The **owner** can go to the *add new products* view by clicking on the relative button. (Page 3.1)  
 The **owner** can go to the *edit product information* view by clicking on the relative button. (Page 6.1)  
@@ -194,7 +194,7 @@ With this view the **employee** can view and search the products in the inventor
 3. The **system** shows in the table all the products that matches with the search criteria, if any.
 
 The **employee** can go back to her/his *home* by clicking on the home button. (Page 0.3)  
-The **employee** can log out by clicking on the LogOut button. (Page 0.1)  
+The **employee** can *log out* by clicking on the LogOut button. (Page 0.1)  
 The **employee** can go to the *low stock products* view by clicking on the relative button. (Page 2.2)  
 
 ![Check inventory employee](../GUI files/check_inventory_employee_error.png)
@@ -213,7 +213,7 @@ With this view the **owner** can signal products in the inventory as not sold an
 6. The **owner** can save the changes by clicking on the commit button.
 
 The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.4)  
-The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
+The **owner** can *log out* by clicking on the LogOut button. (Page 0.1)  
 The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)  
 The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)  
 The **owner** can go to the *add new products* view by clicking on the relative button. (Page 3.1)  
@@ -235,7 +235,7 @@ With this view the **owner** can edit products in the inventory. It is possible 
 5. The **owner** can save the changes by pressing the commit button. 
 
 The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.4)  
-The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
+The **owner** can *log out* by clicking on the LogOut button. (Page 0.1)  
 The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)  
 The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)  
 The **owner** can go to the *add new products* view by clicking on the relative button. (Page 3.1)  
@@ -330,7 +330,7 @@ This is the error shown when the credentials are wrong.
 In this page the owner can change the subscribers' rights.  
 
 1. The **owner** can click on the left box near the name and choose the subscriber's right: 'O' for the Owner, 'E' for the Employee, 'S' for the normal subsciber.   
-2. The **owner** can click on  the *Save* button on the bottom-right saves all the changes.  
+2. The **owner** can click on the *Save* button on the bottom-right to save all the changes.  
 3. The **owner** can click on the *logout* button on top-right to log out. (Page 0.1) 
 4. The **owner** can click on *Home* button on the top-left to go back to the Homepage. (Page 0.4)  
 
@@ -340,7 +340,7 @@ In this page the owner can change the subscribers' rights.
 
 This is the main accounting page from which the owner can access to all the accounting features.
 
-1. The **owner** can click on the *Sale transactios* button to view a detailed list of all sale trasanctions.(Page 14.2)
+1. The **owner** can click on the *Sale transactios* button to view a detailed list of all sale transactions.(Page 14.2)
 2. The **owner** can click on the *Expenses* button to view a list of all the expenses.(Page 15.1)
 3. The **owner** can click on the *Pay salaries* button to access a list of all employees and their respective salaries. (Page 16.2)
 4. The **owner** can click on the *Daily balance* button to access the daily balance. (Page 17.2)
