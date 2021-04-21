@@ -17,6 +17,7 @@ Version:
 - [Stories and personas](#stories-and-personas)
 - [Functional and non functional requirements](#functional-and-non-functional-requirements)
 	+ [Functional Requirements](#functional-requirements)
+	+ [Access right, actor vs function](#access-right-actor-vs-function)
 	+ [Non functional requirements](#non-functional-requirements)
 - [Use case diagram and use cases](#use-case-diagram-and-use-cases)
 	+ [Use case diagram](#use-case-diagram)
@@ -141,7 +142,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 | FR2.6  | Increase stock amount| 
 | FR2.7  | Decrease stock amount| 
 | FR2.8  | Edit product information| 
-| FR3  | Manage accounts| 
+| FR3  | Manage accounts | 
 | FR3.1  | Check fidelity points| 
 | FR3.2  | Registration| 
 | FR3.3  | Edit personal information| 
@@ -151,7 +152,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 | FR3.7  | Login| 
 | FR3.8  | Logout| 
 | FR3.9  | Manage rights| 
-| FR3.10  | Forgot Password| 
+| FR3.10  | Forgot Password | 
 | FR4  | Support accounting| 
 | FR4.1  | Keep track of sale transactions| 
 | FR4.2  | Keep track of expenses| 
@@ -192,8 +193,9 @@ APIs: Software to connect external systems to EZ Shop logically.
 |  NFR1     | Usability  | EZ Shop is easy to undestand and use in less than 5 minutes | All|
 |  NFR2     | Efficiency | Operations should take less than 10 seconds | All|
 |  NFR3     | Portability | EZ Shop should be available on several OS (Windows, MacOS and Linux)| All|
-| NFR4 | Privacy | Database data are encrypted| Fr3, Fr4| 
-| NFR5 | Localisation | Decimal numbers use . (dot) as decimal separator|
+|  NFR4		| Privacy | Database data are encrypted | Fr2, Fr3, Fr4| 
+|  NFR5		| Availability | The system has to be available 99% of the time| All|
+|  NFR6		| Localisation | Decimal numbers use . (dot) as decimal separator|FR1, FR2, FR4|
 
 # Use case diagram and use cases
 
@@ -837,8 +839,12 @@ class "Transaction" as transaction{
 Amount
 ID
 Date
+Method of Payment
+Payment Complete
 }
 class "Expense" as expense {
+	Invoice Sent
+	Is Delivered
 }
 
 class "Sale" as sale{
@@ -864,7 +870,7 @@ Name
 Email
 }
 
-note right of coupon : 10 points correspond to a coupon 
+note right of coupon : each 10 points correspond to 10€ discount
 note right of fidelityCard :10€ correspond to a fidelity point
 
 subscriber <|-- owner
@@ -943,7 +949,7 @@ node "Local terminal" as localTerminal
 artifact "GUI" as gui
 
 
-localServer --"*" localTerminal :HTTP/internet
+localServer --"*" localTerminal :HTTP/LAN
 EZShop ..> localServer:deploy
 gui ..> localTerminal:deploy
 @enduml
