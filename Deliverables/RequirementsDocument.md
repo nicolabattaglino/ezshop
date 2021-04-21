@@ -488,7 +488,6 @@ owner ---> (warning)
 |  Precondition     | Subscriber S is logged in|  
 |  Post condition     | Subscriber S information are changed |
 | Step#        | Description  |
-
 |  1     | The subscriber clicks on "edit information" in the homepage |
 | 2      | The subscriber changes personal information (e-mail, password, date of birth, address(optional), phone number (optional))|
 | 3	   | The subscriber confirms their information clicking on save |
@@ -500,7 +499,7 @@ owner ---> (warning)
 |  Precondition     | - |  
 |  Post condition     | Subscriber S is created , FidelityCard F is created and S.FidelityCard = F |
 |  Nominal Scenario     | Someone requests the registration, new fidelity card is created associated to the subscriber |
-|  Variants     | if subscriber entry is already present in the system -> request only the new fidelity card |
+|  Variants     | If subscriber entry is already present in the system -> request only the new fidelity card |
  
 #### Scenario 8.1
 |Scenario | Registration and card requested|
@@ -588,7 +587,7 @@ owner ---> (warning)
 |  Precondition     | Subscriber S is not logged in |  
 |  Post condition     | Subscriber S is logged in |
 |  Nominal Scenario     | The subscriber logs in |
-|  Variants     | if subscriber is not in the system -> error: Subscriber not found |
+|  Variants     | If subscriber is not in the system -> error: Subscriber not found |
 
 #### Scenario 12.1
 | Scenario | Login |
@@ -658,7 +657,7 @@ owner ---> (warning)
 |  Precondition     | Owner O is logged in and Expenses E1, ... , En are recorded |  
 |  Post condition     | - |
 |  Nominal Scenario     |The owner requests to manage of expenses. The list is printed|
-|  Variants     | information about payment and delivery is stored in this list |
+|  Variants     | Information about payment and delivery is stored in this list |
 
 #### Scenario 15.1
 | Scenario | Print List of expenses|
@@ -742,7 +741,7 @@ owner ---> (warning)
 |  Precondition     | Subscriber S is registered |  
 |  Post condition     | S.Password = newPassword |
 |  Nominal Scenario     | Subscriber insert the email, SSN and the new password. |
-|  Variants     | if subscriber is not in the system -> error: Subscriber not found |
+|  Variants     | If subscriber is not in the system -> error: Subscriber not found |
 
 #### Scenario 18.1
 | Scenario | Forgot Password|
