@@ -52,9 +52,7 @@ This page is the homepage of the Owner. It is similar to the Subscriber Homepage
 This page is described selling steps that **Owner** or **Employee** can use this form, Subscriber/Customer can buy products with or without coupon/discount. there are some additional buttons:
 
 1. The owner/employee can click on the **Home** button that linked to the homepage. (Page 0.3 (Page or 0.4)
-
 2. When the owner/employee clicks on the **Accounting** button, they can get reports about Transactions, Expenses, Pay salaries and Daily balance. (Page 14.1)
-
 3. The owner/employee can click on the **Reprint** button to print the previous receipt by searching. (Page 1.2)
 4. The owner/employee can click on the **Logout** button will used to logging out. (Page 0.1)
 
@@ -81,9 +79,7 @@ At the end and after inserting / scanning Barcode(s), if the Subscriber / Custom
 This page is described print again the previous receipt that **Owner** or **Employee** can use this form, No information can be edited. there are some additional buttons:
 
 1. The owner/employee can click on the **Home** button that linked to the homepage. (Page 0.3 (Page or 0.4)
-
 2. When the owner/employee clicks on the **Accounting** button, they can get reports about Transactions, Expenses, Pay salaries and Daily balance. (Page 14.1)
-
 3. The owner/employee can click on the **Sales** button to back to the selling produts (Page 1.1)
 4. The owner/employee can click on the **Logout** button will used to logging out. (Page 0.1)
 
@@ -110,11 +106,13 @@ Owner version.
 
 The first version of the view is used to show the products that are low in stock to the **owner**. Then the **owner** can decide whether buy or not these products. In the table there are shown: the name, the quantity in stock, the supplier and the buying cost of each product that is low in stock.
 1. The **system** shows into the table all products that are low in stock.
-2. The **owner** can search  products among low stock products and the ordered ones at the same time. The search can be done either by barcode or by name, with the searchbox at the bottom. The search is performed when he/she presses the search button.
+2. The **owner** can search products among low stock products and the ordered ones at the same time. The search can be done either by barcode or by name, with the searchbox at the bottom. The search is performed when he/she presses the search button.
 3. The **system** shows into the tables the products that matches with the search criteria, if any.
 4. The **owner**, by checking the checkbox relative to the product that he wants to buy, can select the products to which is interested to.
 5. The **owner** can choose the quantity for each product, that is checked, by clicking on the realtive number stepper.
 6. The **owner** can buy the products by clicking on the order button.
+7. The **owner** can mark an order as delivered by clicking on the relative checkbox.
+8. The **owner** can increment the amount of the ordered product(s) by clicking on the button save.
 
 The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)
 The **owner** can log out by clicking on the LogOut button. (Page 0.1)
@@ -123,6 +121,9 @@ The **owner** can go to the *add new products* view by clicking on the relative 
 The **owner** can go to the *edit product information* view by clicking on the relative button. (Page 6.1)
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. (Page 5.1)
 
+![Warning on low stock buy error](../GUI files/Low_stock_products_owner_error.png)
+This is the error shown when there are no products that match the search criteria.
+
 ![Warning on low stock](../GUI files/low_stock_products_employee.png)
 2.2  
 
@@ -130,12 +131,15 @@ The **owner** can go to the *mark product as not sold anymore* view by clicking 
 
 The second version of the view is used to show the products that are low in stock to the **employee**. In the table there are shown the name, the quantity in stock and the supplier of each product that is low in stock.
 1. The **system** shows in the table all products that are low in stock.
-2. The **employee** can search the products either by barcode or by name, using the searchbox at the bottom. The search is performed when he/she presses the search button.
+2. The **employee** can search products among low stock products and the ordered ones at the same time. The search can be done either by barcode or by name, with the searchbox at the bottom. The search is performed when he/she presses the search button.
 3. The **system** shows in the table the products that matches with the search criteria, if any.
 
 The **employee** can go back to her/his *home* by clicking on the home button. (Page 0.2)
 The **employee** can log out by clicking on the LogOut button. (Page 0.1)
 The **employee** can go to the *check inventory* view by clicking on the relative button. (Page 4.2)
+
+![Warning on low stock error](../GUI files/low_stock_products_employee_error.png)
+This is the error shown when there are no products that match the search criteria.
 
 ## 3 Add product
 

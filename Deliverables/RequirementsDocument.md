@@ -220,24 +220,23 @@ rectangle "EZShop" as EZShop{
 "Fideliy Card" as fidelityCard
 "Subscriber" as subscriber
 
-subscriber <|- owner
-employee -|>subscriber
+subscriber <|- owner 
+employee -|> subscriber 
 (warning) <-- (handleTransaction) 
-owner-->(handleTransaction)
-employee-->(handleTransaction)
-(handleTransaction) --> product
-(handleTransaction) --> bcScanner
-owner-->(checkInventory)
-employee -->(checkInventory)
+owner --> (handleTransaction) 
+employee --> (handleTransaction)
+(handleTransaction) --> product 
+(handleTransaction) --> bcScanner 
+owner --> (checkInventory) 
+employee -->(checkInventory) 
+employee --> (warning) 
 subscriber -> (manageAccount) 
-owner --> (ownerTasks)
+owner --> (ownerTasks) 
 
-supplier<---(warning)
-(warning)-->product
-(ownerTasks)-->product
-owner--->(warning)
-
-
+supplier <--- (warning) 
+(warning) --> product 
+(ownerTasks) --> product 
+owner ---> (warning) 
 
 (manageAccount) --> fidelityCard
 (handleTransaction) --> fidelityCard
@@ -266,13 +265,13 @@ owner--->(warning)
 "Add fidelity points" as (addPoints)
 "Handle transaction" as (handleTransaction)
 (ownerTasks) ..> (addProduct):include
-(acoounting)..>(listSale):include
-(acoounting)..>(listExpenses):include
-(acoounting)..>(paySalaries):include
-(ownerTasks)..>(notSold):include
-(ownerTasks)..>(accounting):include
-(ownerTasks)..>(manageRights):include
-(ownerTasks)..>(editProduct):include
+(acoounting) ..> (listSale):include
+(acoounting) ..> (listExpenses):include
+(acoounting) ..> (paySalaries):include
+(ownerTasks) ..> (notSold):include
+(ownerTasks) ..> (accounting):include
+(ownerTasks) ..> (manageRights):include
+(ownerTasks) ..> (editProduct):include
 (handleTransaction) --> (addPoints)
 @enduml
 ```
@@ -287,13 +286,13 @@ owner--->(warning)
 "Create cooupon" as (coupon)
 "Forgot password" as (forgotPassword)
 "Login" as (login)
-(manageAccount)..>(checkPoints):include
-(manageAccount)..>(registration):include
-(manageAccount)..>(request):include
-(manageAccount)..>(edit):include
-(manageAccount)..>(coupon):include
-(manageAccount)..>(forgotPassword):include
-(manageAccount)..>(login):include
+(manageAccount) ..> (checkPoints):include
+(manageAccount) ..> (registration):include
+(manageAccount) ..> (request):include
+(manageAccount) ..> (edit):include
+(manageAccount) ..> (coupon):include
+(manageAccount) ..> (forgotPassword):include
+(manageAccount) ..> (login):include
 @enduml
 ```
 
@@ -349,7 +348,7 @@ owner--->(warning)
 |  8     | Decrease quantity of products in the inventory |
 
 ### Use case 2, UC2 Waring on low stock, Buy product
-| Actors Involved        | Owner, Employee, Product |
+| Actors Involved        | Owner, Employee, Product, Supplier |
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in or Employee E is logged in, Product P1, ... , Pn have an amount below 10 units and P1, ... , Pn are maked as sold | 
 |  Post condition     | P1.amount += newAmount1, ... , Pn.amount += newAmountn | 
@@ -359,25 +358,25 @@ owner--->(warning)
 ##### Scenario 2.1
 | Scenario  | Owner decides to buy the product(s)|
 | ------------- |:-------------:| 
-|  Precondition     | Owner O is logged in, Product P1, ... , Pn have an amount below 10 units and P1, ... , Pn are maked as sold |
+|  Precondition     | Owner O is logged in, Product P1, ... , Pn have an amount <= 10 units and P1, ... , Pn are maked as sold |
 |  Post condition     | P1.amount += newAmount1, ... , Pn.amount += newAmountn |
 | Step#        | Description  |
-|  1     | The system shows that one on more products are low on stock (less than 10 units)  |
+|  1     | The system shows that one on more products are low on stock|
 |  2     | The owner select the product(s) and the quantity that he/she want to buy |
 |  3     | The owner decides to buy the product(s) |
 |  4	 | The owner select the amount of the product(s) |
-|  4 	 | The product(s) is/are added to the list of expenses |
-|  5     | An order is issued via e-mail |
-|  6     | The product(s) is/are delivered |
-|  7     | The amount of the product(s) is increased |
+|  5 	 | The product(s) is/are added to the list of expenses |
+|  6     | The products are issued, via e-mail, to the supplier |
+|  7     | The product(s) is/are delivered |
+|  8     | The amount of the product(s) is increased |
 
 ##### Scenario 2.1
 | Scenario  | Employee wants to view the product(s)|
 | ------------- |:-------------:| 
-|  Precondition     | Employee E is logged in, Product P1, ... , Pn have an amount below 10 units and P1, ... , Pn are maked as sold |
+|  Precondition     | Employee E is logged in, Product P1, ... , Pn have an amount 10 units and P1, ... , Pn are maked as sold |
 |  Post condition     | - |
 | Step#        | Description  |
-|  1     | The system shows that one on more products are low on stock (less than 10 units)  |
+|  1     | The system shows that one on more products are low on stock  |
 
  
 ### Use case 3, UC3 Add product
@@ -879,10 +878,10 @@ Email
 note right of coupon : 10 points correspond to a coupon 
 note right of fidelityCard :10€ correspond to a fidelity point
 
-subscriber<|-- owner
-subscriber<|-- employee
+subscriber <|-- owner
+subscriber <|-- employee
 fidelityCard"1...*" -- subscriber
-EZShop--"*"fidelityCard 
+EZShop --"*" fidelityCard 
 subscriber -- right
 EZShop - LT
 localServer - EZShop  
@@ -894,13 +893,13 @@ EZShop -- "*"transaction
 customer <|- subscriber
 transaction <|-- sale
 transaction <|-- expense
-fidelityCard -- "*"coupon 
-sale - "0...1"coupon
-sale"*" -- customer
+fidelityCard --"*" coupon 
+sale - "0...1" coupon
+sale "*"-- customer
 (product,transaction). amount
 LT <|-- cashRegister
-cashRegister -- "0...1" barcodeReader
-PT"*" -- supplier 
+cashRegister --"0...1" barcodeReader
+PT "*"-- supplier 
 
 @enduml
 ```
@@ -954,7 +953,7 @@ node "Local terminal" as localTerminal
 artifact "GUI" as gui
 
 
-localServer -- "*" localTerminal :HTTP/internet
+localServer --"*" localTerminal :HTTP/internet
 EZShop ..> localServer:deploy
 gui ..> localTerminal:deploy
 @enduml
