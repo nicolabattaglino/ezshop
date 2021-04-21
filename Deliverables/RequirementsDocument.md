@@ -400,11 +400,11 @@ employee-->(handleTransaction)
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in or Employee E is logged in |  
 |  Post condition     | - |
-|  Nominal Scenario     | Prouct(s) is found |
-|  Variants     | Prouct(s) not found |
+|  Nominal Scenario     | Product(s) is found |
+|  Variants     | Product(s) not found |
 
 ##### Scenario 4.1
-| Scenario  | Prouct(s) are found |
+| Scenario  | Product(s) are found |
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in or Employee E is logged in and Product P1, ... , Pn are in the inventory |
 |  Post condition     | - |
@@ -414,7 +414,7 @@ employee-->(handleTransaction)
 
 
 ##### Scenario 4.2
-| Scenario  | Prouct(s) are not found |
+| Scenario  | Product(s) are not found |
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in or Employee E is logged in and Product P1, ... , Pn are not in the inventory |
 |  Post condition     | - |
@@ -446,7 +446,7 @@ employee-->(handleTransaction)
  
  ### Use case 6, UC6 Edit product information
 
-| Actors Involved        | Owner, product |
+| Actors Involved        | Owner, Product |
 | ------------- |:-------------:| 
 |  Precondition     | Product P is not marked as “not sold anymore” |  
 |  Post condition     | - |
@@ -520,20 +520,20 @@ employee-->(handleTransaction)
 | Actors Involved        | Subscriber |
 | ------------- |:-------------:| 
 |  Precondition     | Subscriber S is logged in and S.FidelityCard.points >= 10|  
-|  Post condition     | A Coupon is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= 10 |
-|  Nominal Scenario     | new coupon is generated and added to the Subscriber account, 10 points are subtracted from the subscriber’s total, the subscriber perform a logout |
+|  Post condition     | A Coupon is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= N points |
+|  Nominal Scenario     | New coupon is generated and added to the Subscriber's Fidelity Card, 10 points for each 10 euro added to the coupon's amount are subtracted from the subscriber’s total |
 |  Variants     | - |
 
 #### Scenario 9.1
 | Scenario | Create coupon|
 | ------------- |:-------------:| 
 |  Precondition     | Subscriber S is logged in and S.FidelityCard.points >= 10|
-|  Post condition     | A Coupon is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= 10 |
+|  Post condition     | A Coupon is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= N points |
 | Step#        | Description  |
 |  1     | The subscriber clicks on “Create Coupon” in the home page|  
 |  2     | The subscriber chooses the amount of the coupon |
 |  3     | The subscriber clicks on “Create coupon”  |
-|  4     | The system adds the coupon on the fidelity card |
+|  4     | The system adds the coupon on the fidelity card and subtracts 10 points for each 10 euro added to the coupon's amount from the subscriber’s total |
  
 ### Use case 10, UC10 Check points
 | Actors Involved        | Subscriber |
