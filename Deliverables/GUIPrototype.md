@@ -65,7 +65,7 @@ The **Coupon field set** if **Coupon checkbox** was selected, ID of the coupon m
 
 In the **Payment Methods field set** if **Pay in Cash** was selected, The amount of **Paid** must be insert and **Refounds** must be automaticaly count =(PaidAmount-TotalAmount)
 
-Then **Points added = (TotalAmount/10) will automatically generating when thr Total Amount were equal and greater than 10
+Then **Points** added = (TotalAmount/10) will automatically generating when thr Total Amount were equal and greater than 10
 
 Also there is a Chech Printer button that can open the printer queue in the Windows.
 
@@ -84,7 +84,7 @@ This page is described print again the previous receipt that **Owner** or **Empl
 
 The **List of Products** with information about the receipt (Paid, Refounds, Number of products, Coupon used for (...) Item(s), Total Discount, IVA, Total Amount, Fidelity Points, Points Added) that they never can edited.
 
-The **Search field set** used to searching product(s)** with their Date or Transaction ID by clicking on the **Search** button.
+The **Search field set** used to searching **product(s)** with their Date or Transaction ID by clicking on the **Search** button.
 
 In the **Fidelity field set**, all this information **ID/Barcode, Cardholder name, Fidelity points** will appear automatically when Transaction has been being searched that they never can edited.
 
