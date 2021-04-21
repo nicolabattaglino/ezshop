@@ -104,7 +104,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 | Employee       | Screen keyboard mouse on PC | GUI |
 | Subscriber       | Screen keyboard mouse on PC | GUI |
 | Supplier       | Internet connection | Email |
-| POS system       | Internet connection | REST API v67 as described in https://docs.adyen.com/api-explorer/#/Payment/v64/overview |
+| POS system       | Internet connection | REST API v67 as described in <br/> https://docs.adyen.com/api-explorer/#/Payment/v64/overview |
 | Product       | Laser beam | Barcode |
 | Bank | Internet connection | Bank website |
 | Printer | Usb cable | Drivers |
@@ -300,8 +300,8 @@ owner ---> (warning)
 |  Precondition     | Employee E or Owner O are logged in and Product P1, ... , Pn are in the inventory|  
 |  Post condition     | Transation T is registered and P1.amount -= T.P1.amount, ... , Pn.amount -= T.Pn.amount |
 |  Nominal Scenario     | Read the barcode(s) through manually or scanner. Start sale transaction with scanning each barcode of product(s). End sale transaction and handle product(s) to the customer |
-|  Variants | if a subscriber requests a discount and also have a coupon -> apply discount  
-|           | if the customer is a subscriber -> add fidelity points |
+|  Variants | If a subscriber requests a discount and also have a coupon -> apply discount  
+|           | If the customer is a subscriber -> add fidelity points |
  
 ##### Scenario 1.1
 | Scenario | Subscriber not registered |
@@ -348,7 +348,7 @@ owner ---> (warning)
 | Actors Involved        | Owner, Employee, Product, Supplier |
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in or Employee E is logged in, Product P1, ... , Pn have an amount below 10 units and P1, ... , Pn are maked as sold | 
-|  Post condition     | P1.amount += newAmount1, ... , Pn.amount += newAmountn | 
+|  Post condition     | P1.amount += newAmount1, ... , Pn.amount += newAmount | 
 |  Nominal Scenario     | Owner decides to buy the product(s) |
 |  Variants     | - |
  
@@ -356,7 +356,7 @@ owner ---> (warning)
 | Scenario  | Owner decides to buy the product(s)|
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in, Product P1, ... , Pn have an amount <= 10 units and P1, ... , Pn are maked as sold |
-|  Post condition     | P1.amount += newAmount1, ... , Pn.amount += newAmountn |
+|  Post condition     | P1.amount += newAmount1, ... , Pn.amount += newAmount |
 | Step#        | Description  |
 |  1     | The system shows that one on more products are low on stock|
 |  2     | The owner select the product(s) and the quantity that he/she want to buy |
@@ -366,7 +366,7 @@ owner ---> (warning)
 |  6     | The products are issued, via e-mail, to the supplier |
 |  7	 | The expense is recorded by the system |
 
-##### Scenario 2.1
+##### Scenario 2.2
 | Scenario  | Employee wants to view the product(s)|
 | ------------- |:-------------:| 
 |  Precondition     | Employee E is logged in, Product P1, ... , Pn have an amount 10 units and P1, ... , Pn are maked as sold |
