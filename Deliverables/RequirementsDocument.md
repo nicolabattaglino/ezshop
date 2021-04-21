@@ -690,20 +690,10 @@ owner ---> (warning)
 |  Precondition     | Owner O is logged in |  
 |  Post condition     | - |
 |  Nominal Scenario     | The owner can access a list of all employees, the hours they worked and their respective salaries. The owner can also pay salaries from this window |
-|  Variants     | - |
+|  Variants     | Print list of salaries |
+
 
 #### Scenario 16.1
-| Scenario | Print list of salaries|
-| ------------- |:-------------:| 
-|  Precondition     | Owner O is logged in and Employee E1, ... , En are registered |
-|  Post condition     | - |
-| Step#        | Description  |
-|  1     | The owner accesses the accounting section |
-|  2     | The owner opens the salary section|
-|  3     | The system dispalys a list of all employees and their respective salary |
-|  4 	 | The owner clicks on the print button |
-
-#### Scenario 16.2
 | Scenario | Pay a salary|
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in and Employee E1, ... , En are registered |
@@ -716,6 +706,18 @@ owner ---> (warning)
 |  5	 | The system opens a web page on the bank web site |
 |  6 	 | The system initiates a transfer to the employee bank account with the correct amount |
 | 7		 | The owner completes the transfer |
+
+
+#### Scenario 16.2
+| Scenario | Print list of salaries|
+| ------------- |:-------------:| 
+|  Precondition     | Owner O is logged in and Employee E1, ... , En are registered |
+|  Post condition     | - |
+| Step#        | Description  |
+|  1     | The owner accesses the accounting section |
+|  2     | The owner opens the salary section|
+|  3     | The system dispalys a list of all employees and their respective salary |
+|  4 	 | The owner clicks on the print button |
 
 ### Use case 17, UC17 Display daily balance
 | Actors Involved	 	| Owner |
