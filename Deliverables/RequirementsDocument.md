@@ -295,7 +295,7 @@ owner ---> (warning)
 | ------------- |:-------------:| 
 |  Precondition     | Employee E or Owner O are logged in and Product P1, ... , Pn are in the inventory|  
 |  Post condition     | Transation T is registered and P1.amount -= T.P1.amount, ... , Pn.amount -= T.Pn.amount |
-|  Nominal Scenario     | Read the barcode(s) through manually, scanner or auto-machine. Start sale transaction with scanning each barcode of product(s). End sale transaction and handle product(s) to the customer |
+|  Nominal Scenario     | Read the barcode(s) through manually or scanner. Start sale transaction with scanning each barcode of product(s). End sale transaction and handle product(s) to the customer |
 |  Variants | if a subscriber requests a discount and also have a coupon -> apply discount  
 |           | if the customer is a subscriber -> add fidelity points |
  
