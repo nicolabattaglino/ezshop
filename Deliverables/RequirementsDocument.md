@@ -528,19 +528,19 @@ owner ---> (warning)
 | ------------- |:-------------:| 
 |  Precondition     | Subscriber S is logged in and S.FidelityCard.points >= 10|  
 |  Post condition     | A Coupon is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= C.discountAmount |
-|  Nominal Scenario     | New coupon is generated and added to the Subscriber's Fidelity Card, 10 points for each 10 euro added to the coupon's amount are subtracted from the subscriber’s total |
+|  Nominal Scenario     | New coupon is generated and added to the Subscriber's Fidelity Card, 10 points, for each 10 euro added to the coupon's amount, are subtracted from the subscriber’s total points |
 |  Variants     | - |
 
 #### Scenario 9.1
 | Scenario | Create coupon|
 | ------------- |:-------------:| 
 |  Precondition     | Subscriber S is logged in and S.FidelityCard.points >= 10|
-|  Post condition     | A Coupon is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= N points |
+|  Post condition     | A Coupon is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= C.discountAmount |
 | Step#        | Description  |
 |  1     | The subscriber clicks on “Create Coupon” in the home page|  
 |  2     | The subscriber chooses the amount of the coupon |
 |  3     | The subscriber clicks on “Create coupon”  |
-|  4     | The system adds the coupon on the fidelity card and subtracts 10 points for each 10 euro added to the coupon's amount from the subscriber’s total |
+|  4     | The system adds the coupon on the fidelity card and subtracts, from the subscriber’s total points, 10 points for each 10 euro added to the coupon's amount  |
  
 ### Use case 10, UC10 Check points
 | Actors Involved        | Subscriber |
