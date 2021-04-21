@@ -122,7 +122,7 @@ The **owner** can go to the *edit product information* view by clicking on the r
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. (Page 5.1)
 
 ![Warning on low stock buy error](../GUI files/Low_stock_products_owner_error.png)
-This is the error shown when there are no products that match the search criteria.
+2.1.1 This is the error shown when there are no products that match the search criteria.
 
 ![Warning on low stock](../GUI files/low_stock_products_employee.png)
 2.2  
@@ -139,7 +139,7 @@ The **employee** can log out by clicking on the LogOut button. (Page 0.1)
 The **employee** can go to the *check inventory* view by clicking on the relative button. (Page 4.2)
 
 ![Warning on low stock error](../GUI files/low_stock_products_employee_error.png)
-This is the error shown when there are no products that match the search criteria.
+2.2.1 This is the error shown when there are no products that match the search criteria.
 
 ## 3 Add product
 
@@ -161,6 +161,9 @@ The **owner** can go to the *check inventory* view by clicking on the relative b
 The **owner** can go to the *edit product information* view by clicking on the relative button. (Page 6.1)
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. (Page 5.1)
 
+![Warning on low stock buy error](../GUI files/add_new_products_error.png)
+3.1.1 This is the error shown when there are no products that match the search criteria.
+
 ## 4 Check inventory
 
 ![Check inventory owner](../GUI files/check_inventory_owner.png)
@@ -180,6 +183,9 @@ The **owner** can go to the *add new products* view by clicking on the relative 
 The **owner** can go to the *edit product information* view by clicking on the relative button. (Page 6.1)
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. (Page 5.1)
 
+![Check inventory owner error](../GUI files/check_inventory_owner_error.png)
+4.1.1 This is the error shown when there are no products that match the search criteria.
+
 ![Check inventory employee](../GUI files/check_inventory_employee.png)
 4.2
 
@@ -193,6 +199,9 @@ With this view the **employee** can view and search the products in the inventor
 The **employee** can go back to her/his *home* by clicking on the home button. (Page 0.2)
 The **employee** can log out by clicking on the LogOut button. (Page 0.1)
 The **employee** can go to the *low stock products* view by clicking on the relative button. (Page 2.2)
+
+![Check inventory employee](../GUI files/check_inventory_employee_error.png)
+4.2.1 This is the error shown when there are no products that match the search criteria.
 
 ## 5 Mark product as "not sold anymore"
 
@@ -213,6 +222,9 @@ The **owner** can go to the *check inventory* view by clicking on the relative b
 The **owner** can go to the *add new products* view by clicking on the relative button.(Page 3.1)
 The **owner** can go to the *edit information* view by clicking on the relative button. (Page 6.1)
 
+![mark as not sold](../GUI files/mark_product_as_not_sold_anymore_error.png)
+5.1.1 This is the error shown when there are no products that match the search criteria.
+
 ## 6 Edit product information
 
 ![edit product information](../GUI files/edit_product_information.png)
@@ -231,6 +243,9 @@ The **owner** can go to the *low stock products* view by clicking on the relativ
 The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)
 The **owner** can go to the *add new products* view by clicking on the relative button.(Page 3.1)
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. (Page 5.1)
+
+![edit product information](../GUI files/edit_product_information_error.png)
+6.1.1 This is the error shown when there are no products that match the search criteria.
 
 ## 7 Edit information account
 
