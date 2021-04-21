@@ -302,7 +302,7 @@ This page shows the pop up that appears after the creation of the coupon.
 ![Check Points](../GUI files/account_page.png)
 10.1
 
-This is the homepage where the subsciber can check its own points in the top rectangle.  
+This is the homepage where the subscriber can check its own points in the top rectangle.  
 1. The **subscriber** can click on the *logout* button on top-right to log out. (Page 0.1) 
 2. The **subscriber** can click on *Home* button on the top-left to go back to the  Homeage.(Page 0.2) 
 
