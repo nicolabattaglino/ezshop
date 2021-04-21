@@ -699,11 +699,10 @@ owner ---> (warning)
 |  Precondition     | Owner O is logged in and Employee E1, ... , En are registered |
 |  Post condition     | - |
 | Step#        | Description  |
-|  1     | The owner logs in |  
-|  2     | The owner clicks on the accounting button on their home page  |
-|  3     | The owner clicks on the "Pay salaries" button|
-|  4     | The system dispalys a list of all employees and their respective salary |
-|  5 	 | The owner clicks on the print button |
+|  1     | The owner clicks on the accounting button on their home page  |
+|  2     | The owner clicks on the "Pay salaries" button|
+|  3     | The system dispalys a list of all employees and their respective salary |
+|  4 	 | The owner clicks on the print button |
 
 #### Scenario 16.2
 | Scenario | Pay a salary|
