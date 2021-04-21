@@ -113,9 +113,11 @@ APIs: Software to connect external systems to EZ Shop logically.
 # Stories and personas
 
 	-Paolo is 24, he's a student at Polytechnic of Turin. He cannot spend a lot of money because he has a limited budget. For this reason he looks to the biggest discounts in the shop. He likes the fact that he can use the fidelity points to create coupons and have more discounts.
-	-Mattia is 27, he works in a little shop in Turin as a cashier. He loves his job and he wants to be as productive as possible. Because of that, he likes to work with a simple system that guarantees simple operations. He hates when there are too many customers in the queue in front of his cash register. Hence he wants to process as many customers as possible.
-	-Hossein is 40, he works as an owner in a small shop. He must handle his job and make business decisions. The important part of his task is managing employees in an easy way (He must have an easy Managing App to manage working hours, gain money, reduce human acting …)
-	-Stefania is 42, she’s a family mother and she often needs to buy a lot of food  a few times a week. To  quicken this process she would like to waste as little time as possible in line or with the cashier. Due to her fidelity to the shop she would also like to have some kind of reward, such as discounts, based on how much she spends.
+	-Mattia is 27, he works in a little shop in Turin as a cashier. He loves his job and he wants to be as productive as possible. Because of that, he likes to work with a simple system that guarantees simple operations. He hates when there are too many customers in the queue in front of his cash register, hence he wants to process as many customers as possible.
+	-Hossein is 40, he owns a small shop. He must handle his job and make business decisions. The important part of his task is managing employees in an easy way. He wants a Managing App that is easy to use, so he can manage working hours, gain money and reduce human error as much and as easily as possible.
+	-Stefania is 42, she’s a family mother and she often needs to buy a lot of food a few times a week. To quicken this process she would like to waste as little time as possible in line or with the cashier. Due to her fidelity to the shop she would also like to have some kind of reward, such as discounts, based on how much she spends.
+
+
 
 
 
@@ -528,7 +530,7 @@ owner ---> (warning)
 | ------------- |:-------------:| 
 |  Precondition     | Subscriber S is logged in and S.FidelityCard.points >= 10|  
 |  Post condition     | A Coupon C is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= C.discountAmount |
-|  Nominal Scenario     | New coupon is generated and added to the Subscriber's Fidelity Card.  10 points, for each 10 euro added to the coupon's amount, are subtracted from the subscriber’s total points |
+|  Nominal Scenario     | New coupon is generated and added to the Subscriber's Fidelity Card. 10 points, for each 10 euro added to the coupon's amount, are subtracted from the subscriber’s total points |
 |  Variants     | - |
 
 #### Scenario 9.1

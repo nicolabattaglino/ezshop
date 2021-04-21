@@ -358,9 +358,10 @@ This page contains the list of sale transactions.
 
 1. The **owner** can click on the *Print* button to print the list of transactions.
 2. The **owner** can select a few transactions and lick on the *Print* button to print the selected transactions.
-3. The **owner** can search for a specific transaction using the search bar. They can look for a transaction containing a certain item, during a specific day, with a certain amount or card ID. 
-4. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
-5. The **owner** can click on the *logOut* button to logout. (Page 0.1)
+3. The **owner** can search for a specific transaction using the search bar. They can look for a transaction containing a certain item, during a specific day, with a certain total price or card ID. 
+4. The **owner** can sort the table by using the first row.
+5. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
+6. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
 
 ## 15 Expenses
@@ -371,9 +372,10 @@ This page contains the list of expenses
 
 1. The **owner** can click on the *Print* button to print the list of expenses.
 2. The **owner** can select a few expenses and lick on the *Print* button to print the selected transactions.
-3. The **owner** can search for a specific expense using the search bar. They can look for an expense containing a certain item, during a specific day, with a certain amount or supplier. 
-4. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
-5. The **owner** can click on the *logOut* button to logout. (Page 0.1)
+3. The **owner** can search for a specific expense using the search bar. They can look for an expense containing a certain item, during a specific day, with a certain total price or supplier. 
+4. The **owner** can sort the table by using the first row.
+5. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
+6. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
 ![Change informatio](../GUI files/List_of_expenses.png)
 15.2
@@ -390,8 +392,10 @@ This page contais the list of employees and respective salaries.
 1. The **owner** can click on the *Print* button to print the list of employees and past and resent salaries.
 2. The **owner** can select a salarie and click on the *Pay* button to pay the salary. The button will open a browser window on the bank web site and will fill the fields necessary to pay said salary.
 3. The **owner** can search for a specific employee or salary using the search bar. They can look for a specific employee, a certain number of hours worked, by the amount or by date.
-4. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
-5. The **owner** can click on the *logOut* button to logout. (Page 0.1)
+4. The **owner** can sort the table by using the first row.
+5. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
+6. The **owner** can click on the *logOut* button to logout. (Page 0.1)
+
 
 ## 17 Daily balance
 ![Daily balance](../GUI files/Daily_balance.png)
@@ -400,8 +404,11 @@ This page contais the list of employees and respective salaries.
 This page contains the daily balance. 
 
 1. The **owner** can click on the *Print* button to print the daily balance so far.
-2. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
-3. The **owner** can click on the *logOut* button to logout. (Page 0.1)
+2. The **owner** can search for a specific date.
+3. The **owner** can sort the table by using the first row.
+4. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
+5. The **owner** can click on the *logOut* button to logout. (Page 0.1)
+
 
 ## 18 Forgot password
 
