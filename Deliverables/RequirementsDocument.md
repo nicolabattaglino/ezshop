@@ -527,7 +527,7 @@ owner ---> (warning)
 | Actors Involved        | Subscriber, Fidelity Card |
 | ------------- |:-------------:| 
 |  Precondition     | Subscriber S is logged in and S.FidelityCard.points >= 10|  
-|  Post condition     | A Coupon is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= C.discountAmount |
+|  Post condition     | A Coupon C is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= C.discountAmount |
 |  Nominal Scenario     | New coupon is generated and added to the Subscriber's Fidelity Card, 10 points, for each 10 euro added to the coupon's amount, are subtracted from the subscriber’s total points |
 |  Variants     | - |
 
@@ -535,7 +535,7 @@ owner ---> (warning)
 | Scenario | Create coupon|
 | ------------- |:-------------:| 
 |  Precondition     | Subscriber S is logged in and S.FidelityCard.points >= 10|
-|  Post condition     | A Coupon is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= C.discountAmount |
+|  Post condition     | A Coupon C is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= C.discountAmount |
 | Step#        | Description  |
 |  1     | The subscriber clicks on “Create Coupon” in the home page|  
 |  2     | The subscriber chooses the amount of the coupon |
