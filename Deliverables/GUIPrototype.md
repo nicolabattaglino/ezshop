@@ -217,7 +217,7 @@ The **owner** can go back to her/his *home* by clicking on the home button. (Pag
 The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
 The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)  
 The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)  
-The **owner** can go to the *add new products* view by clicking on the relative button.(Page 3.1)  
+The **owner** can go to the *add new products* view by clicking on the relative button. (Page 3.1)  
 The **owner** can go to the *edit information* view by clicking on the relative button. (Page 6.1)  
 
 ![mark as not sold](../GUI files/mark_product_as_not_sold_anymore_error.png)
@@ -239,7 +239,7 @@ The **owner** can go back to her/his *home* by clicking on the home button. (Pag
 The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
 The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)  
 The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)  
-The **owner** can go to the *add new products* view by clicking on the relative button.(Page 3.1)  
+The **owner** can go to the *add new products* view by clicking on the relative button. (Page 3.1)  
 The **owner** can go to the *mark product as not sold anymore* view by clicking on the relative button. (Page 5.1)  
 
 ![edit product information](../GUI files/edit_product_information_error.png)
@@ -271,7 +271,7 @@ This page is used to create a new account.
 Here the subsciber can request a new fidelity card in case they lost it. 
 1. The **subscriber** can click on *Request new card* button to request the new card. The old card is automatically marked as lost and all the points and coupons are transferred to the new card.
 2. The **subscriber** can click on the *logout* button on top-right to log out. (Page 0.1) 
-3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage.(Page 0.2) 
+3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage. (Page 0.2) 
 
 ##
 ![Card Created](../GUI files/new_card_created.png)
