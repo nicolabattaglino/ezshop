@@ -864,10 +864,6 @@ Name
 Email
 }
 
-
-
-
-
 note right of coupon : 10 points correspond to a coupon 
 note right of fidelityCard :10€ correspond to a fidelity point
 
@@ -884,11 +880,12 @@ PT -- "*"product
 
 EZShop -- "*"transaction
 customer <|- subscriber
-transaction <|-- sale
-transaction <|-- expense
+transaction <|- sale
+expense -|> transaction
 fidelityCard --"*" coupon 
 sale - "0...1" coupon
 sale "*"-- customer
+product "*" -- transaction
 (product,transaction). amount
 LT <|-- cashRegister
 cashRegister --"0...1" barcodeReader
