@@ -252,7 +252,7 @@ The **owner** can go to the *mark product as not sold anymore* view by clicking 
 This is the page in which the subscriber can modify its own information. Name, Surname, SSN and date of birth cannot be modified.  
 1. The **subscriber** can modify its own information and the click on *save* to save.  
 2. The **subscriber** can click on the *logout* button on top-right to log out. (Page 0.1) 
-3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage. (Page 0.2) 
+3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage. (Subscriber Page 0.2, Page 0.3 Employee, Page 0.4 Owner)
 
 ## 8 Registration, Request fidelity card
 
