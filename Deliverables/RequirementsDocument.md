@@ -195,7 +195,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 |  NFR1     | Usability  | EZ Shop is easy to undestand and use in less than 5 minutes | All|
 |  NFR2     | Efficiency | Operations should take less than 10 seconds | All|
 |  NFR3     | Portability | EZ Shop should be available on several OS (Windows, MacOS and Linux)| All|
-|  NFR4		| Privacy | Database data are encrypted | Fr2, Fr3, Fr4| 
+|  NFR4		| Privacy | Database data are encrypted | FR2, FR3, FR4| 
 |  NFR5		| Availability | The system has to be available 99% of the time| All|
 |  NFR6		| Localisation | Decimal numbers use . (dot) as decimal separator|FR1, FR2, FR4|
 
