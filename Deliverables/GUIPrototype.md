@@ -2,9 +2,9 @@
 
 Authors: Stefano, Mattia, Nicola, Hossein
 
-Date: 18 April 2021
+Date: 21 April 2021
 
-Version: 1.0
+Version: 2.0
 
 ## 0 Welcome and Homepages 
 

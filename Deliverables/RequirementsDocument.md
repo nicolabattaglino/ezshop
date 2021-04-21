@@ -1,10 +1,10 @@
 # Requirements Document 
 
-Authors:
+Authors: Stefano, Mattia, Nicola, Hossein
 
-Date:
+Date: 21 April 2021
 
-Version:
+Version: 2.0
 
 # Contents
 
@@ -379,10 +379,10 @@ owner ---> (warning)
  
 | Actors Involved        | Product, Owner |
 | ------------- |:-------------:| 
-|  Precondition     | Owner O is logged in, Product P is not in the inventory or P is marked as “not sold anymore” |  
+|  Precondition     | Owner O is logged in, Product P is not in the inventory or P is marked as not sold |  
 |  Post condition     | Product P is added in the inventory and P is marked as sold |
 |  Nominal Scenario     | New product is added to the inventory  |
-|  Variants     | If the product(s) is marked as “not sold anymore”-> Product is added to the inventory |
+|  Variants     | If the product(s) is marked as not sold -> Product is added to the inventory |
  
  ##### Scenario 3.1
 | Scenario  | New product is added to the inventory |
@@ -397,10 +397,10 @@ owner ---> (warning)
  ##### Scenario 3.2
 | Scenario  | Product is added to the inventory |
 | ------------- |:-------------:| 
-|  Precondition     | Owner O is logged in, Product P1, ..., Pn are marked as “not sold anymore” |
+|  Precondition     | Owner O is logged in, Product P1, ..., Pn are marked as not sold |
 |  Post condition     | Product P is added in the inventory and P is marked as sold|
 | Step#        | Description  |
-|  1     | Owner searches the product(s) that he wants to unmark as "not sold anymore" |  
+|  1     | Owner searches the product(s) that he wants to unmark as not sold  |  
 |  2     | The product(s) is/are marked as sold|
 |  3     | The system shows the product(s) as low in stock |
 
@@ -436,29 +436,29 @@ owner ---> (warning)
 
 | Actors Involved        | Owner, Product |
 | ------------- |:-------------:| 
-|  Precondition     | Owner O is logged in and Product P1, ... , Pn are not marked as “not sold anymore” |  
-|  Post condition     | P1, ... , Pn are marked as not sold anymore|
-|  Nominal Scenario     | Product(s) are not sold anymore |
+|  Precondition     | Owner O is logged in and Product P1, ... , Pn are not marked as not sold |  
+|  Post condition     | P1, ... , Pn are marked as not sold|
+|  Nominal Scenario     | Product(s) are not sold |
 |  Variants     | - |
  
 ##### Scenario 5.1
-| Scenario  | Product(s) are not sold anymore |
+| Scenario  | Product(s) are not sold|
 | ------------- |:-------------:| 
-|  Precondition     | Owner O is logged in and Product P1, ... , Pn are not marked as not sold anymore |
-|  Post condition     | P1, ... , Pn are marked as not sold anymore|
+|  Precondition     | Owner O is logged in and Product P1, ... , Pn are not marked as not sold|
+|  Post condition     | P1, ... , Pn are marked as not sold |
 | Step#        | Description  |
 |  1     | Owner searches the product(s) that he wants to not sell anymore |  
 |  2     | The system add the product(s) into a list |
 |  3     | The owner checks if everything is correct |
 |  4     | The owner commit the changes |
-|  5     | The product(s) is/are then marked as not sold anymore |
+|  5     | The product(s) is/are then marked as not sold |
 
  
  ### Use case 6, UC6 Edit product information
 
 | Actors Involved        | Owner, Product |
 | ------------- |:-------------:| 
-|  Precondition     | Product P is not marked as “not sold anymore” |  
+|  Precondition     | Product P is not marked as not sold |  
 |  Post condition     | - |
 |  Nominal Scenario     | Edit product information |
 |  Variants     | - |
@@ -466,7 +466,7 @@ owner ---> (warning)
 ##### Scenario 6.1
 | Scenario  | Edit product information |
 | ------------- |:-------------:| 
-|  Precondition     | Product P is not marked as “not sold anymore” |
+|  Precondition     | Product P is not marked as not sold |
 |  Post condition     | Product P information are changed |
 | Step#        | Description  |
 |  1     | Owner inserts the barcode about the product that he wants to edit |  
@@ -817,9 +817,10 @@ Name
 Barcode
 Price 
 Amount
-Selling
+Is sold
 Buying Cost
 }
+
 class "Coupon" as coupon{
 ID
 Discount amount
