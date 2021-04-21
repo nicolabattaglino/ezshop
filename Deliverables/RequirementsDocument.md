@@ -240,15 +240,8 @@ owner ---> (warning)
 
 (manageAccount) --> fidelityCard
 (handleTransaction) --> fidelityCard
-```
-
-
-
 @enduml
-
-
-
-
+```
 
 ```plantuml
 @startuml
