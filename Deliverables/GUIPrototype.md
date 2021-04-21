@@ -302,7 +302,7 @@ This page shows the pop up that appears after the creation of the coupon.
 ![Check Points](../GUI files/account_page.png)
 10.1
 
-This is the homepage where the subsciber can check its own points in the top rectangle.  
+This is the homepage where the subscriber can check its own points in the top rectangle.  
 1. The **subscriber** can click on the *logout* button on top-right to log out. (Page 0.1) 
 2. The **subscriber** can click on *Home* button on the top-left to go back to the  Homeage.(Page 0.2) 
 
@@ -364,7 +364,7 @@ This page contains the list of sale transactions.
 
 
 ## 15 Expenses
-![Expenses](../GUI files/List_of_expenses.png)
+![Expenses](../GUI files/List_of_expenses_no_pop_up.png)
 15.1
 
 This page contains the list of expenses
@@ -375,10 +375,10 @@ This page contains the list of expenses
 4. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
 5. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
-![Change informatio](../GUI files/Placeholder.png)
+![Change informatio](../GUI files/List_of_expenses.png)
 15.2
 
-1. By clicking on the checkboxes the **owner** can change the state of each expense. State are boolean and include: invoice sent, payment completed and products delivered.
+1. he **owner** can click on the checkboxes to change the state of each expense. State are boolean and include: invoice sent, payment completed and products delivered.
 
 
 ## 16 Salaries
@@ -394,7 +394,7 @@ This page contais the list of employees and respective salaries.
 5. The **owner** can click on the *logOut* button to logout. (Page 0.1)
 
 ## 17 Daily balance
-![Daily balance](../GUI files/Placeholder.png)
+![Daily balance](../GUI files/Daily_balance.png)
 17.1
 
 This page contains the daily balance. 

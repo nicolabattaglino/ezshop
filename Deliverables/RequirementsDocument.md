@@ -158,7 +158,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 | FR4.2  | Keep track of expenses| 
 | FR4.3  | Pay salaries| 
 | FR4.4  | List sale transactions| 
-| FR4.5  | List expenses| 
+| FR4.5  | Manage expenses| 
 
 ## Access right, actor vs function
 | Function| Owner| Employee| Subscriber|
@@ -255,7 +255,7 @@ owner ---> (warning)
 "Add product" as (addProduct)
 "Accounting" as (acoounting)
 "List sale transactions" as (listSale)
-"List expenses" as (listExpenses)
+"Manage expenses" as (listExpenses)
 "Pay salaries" as (paySalaries)
 "Add fidelity points" as (addPoints)
 "Handle transaction" as (handleTransaction)
@@ -297,7 +297,7 @@ owner ---> (warning)
 | ------------- |:-------------:| 
 |  Precondition     | Employee E or Owner O are logged in and Product P1, ... , Pn are in the inventory|  
 |  Post condition     | Transation T is registered and P1.amount -= T.P1.amount, ... , Pn.amount -= T.Pn.amount |
-|  Nominal Scenario     | Read the barcode(s) through manually, scanner or auto-machine. Start sale transaction with scanning each barcode of product(s). End sale transaction and handle product(s) to the customer |
+|  Nominal Scenario     | Read the barcode(s) through manually or scanner. Start sale transaction with scanning each barcode of product(s). End sale transaction and handle product(s) to the customer |
 |  Variants | if a subscriber requests a discount and also have a coupon -> apply discount  
 |           | if the customer is a subscriber -> add fidelity points |
  
@@ -409,11 +409,11 @@ owner ---> (warning)
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in or Employee E is logged in |  
 |  Post condition     | - |
-|  Nominal Scenario     | Prouct(s) is found |
-|  Variants     | Prouct(s) not found |
+|  Nominal Scenario     | Product(s) is found |
+|  Variants     | Product(s) not found |
 
 ##### Scenario 4.1
-| Scenario  | Prouct(s) are found |
+| Scenario  | Product(s) are found |
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in or Employee E is logged in and Product P1, ... , Pn are in the inventory |
 |  Post condition     | - |
@@ -423,7 +423,7 @@ owner ---> (warning)
 
 
 ##### Scenario 4.2
-| Scenario  | Prouct(s) are not found |
+| Scenario  | Product(s) are not found |
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in or Employee E is logged in and Product P1, ... , Pn are not in the inventory |
 |  Post condition     | - |
@@ -455,7 +455,7 @@ owner ---> (warning)
  
  ### Use case 6, UC6 Edit product information
 
-| Actors Involved        | Owner, product |
+| Actors Involved        | Owner, Product |
 | ------------- |:-------------:| 
 |  Precondition     | Product P is not marked as “not sold anymore” |  
 |  Post condition     | - |
@@ -529,20 +529,20 @@ owner ---> (warning)
 | Actors Involved        | Subscriber, Fidelity Card |
 | ------------- |:-------------:| 
 |  Precondition     | Subscriber S is logged in and S.FidelityCard.points >= 10|  
-|  Post condition     | A Coupon is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= 10 |
-|  Nominal Scenario     | new coupon is generated and added to the Subscriber account, 10 points are subtracted from the subscriber’s total, the subscriber perform a logout |
+|  Post condition     | A Coupon C is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= C.discountAmount |
+|  Nominal Scenario     | New coupon is generated and added to the Subscriber's Fidelity Card.  10 points, for each 10 euro added to the coupon's amount, are subtracted from the subscriber’s total points |
 |  Variants     | - |
 
 #### Scenario 9.1
 | Scenario | Create coupon|
 | ------------- |:-------------:| 
 |  Precondition     | Subscriber S is logged in and S.FidelityCard.points >= 10|
-|  Post condition     | A Coupon is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= 10 |
+|  Post condition     | A Coupon C is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= C.discountAmount |
 | Step#        | Description  |
 |  1     | The subscriber clicks on “Create Coupon” in the home page|  
 |  2     | The subscriber chooses the amount of the coupon |
 |  3     | The subscriber clicks on “Create coupon”  |
-|  4     | The system adds the coupon on the fidelity card |
+|  4     | The system adds the coupon on the fidelity card and subtracts, from the subscriber’s total points, 10 points for each 10 euro added to the coupon's amount  |
  
 ### Use case 10, UC10 Check points
 | Actors Involved        | Subscriber |
@@ -652,12 +652,12 @@ owner ---> (warning)
 
 
  
-### Use case 15, UC15 List expenses
+### Use case 15, UC15 Manage expenses
 | Actors Involved        | Owner |
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in and Expenses E1, ... , En are recorded |  
 |  Post condition     | - |
-|  Nominal Scenario     |The owner requests a list of expenses. The list is printed|
+|  Nominal Scenario     |The owner requests to manage of expenses. The list is printed|
 |  Variants     | information about payment and delivery is stored in this list |
 
 #### Scenario 15.1
