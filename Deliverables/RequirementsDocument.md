@@ -528,7 +528,7 @@ owner ---> (warning)
 | ------------- |:-------------:| 
 |  Precondition     | Subscriber S is logged in and S.FidelityCard.points >= 10|  
 |  Post condition     | A Coupon C is added to the Subscriber S.FidelityCard and S.FidelityCard.points -= C.discountAmount |
-|  Nominal Scenario     | New coupon is generated and added to the Subscriber's Fidelity Card. 10 points, for each 10 euro added to the coupon's amount, are subtracted from the subscriber’s total points |
+|  Nominal Scenario     | New coupon is generated and added to the Subscriber's Fidelity Card.  10 points, for each 10 euro added to the coupon's amount, are subtracted from the subscriber’s total points |
 |  Variants     | - |
 
 #### Scenario 9.1
