@@ -234,7 +234,7 @@ With this view the **owner** can edit products in the inventory. It is possible 
 4. If the **owner** wants, he/she can reset the fields by pressing the reset field button.
 5. The **owner** can save the changes by pressing the commit button. 
 
-The **owner** can go back to her/his *home* by clicking on the home button. (Page 0.2)  
+The **owner** can go back to her/his *home* by clicking on the home button. (Subscriber Page 0.2, Page 0.3 Employee, Page 0.4 Owner)
 The **owner** can log out by clicking on the LogOut button. (Page 0.1)  
 The **owner** can go to the *low stock products* view by clicking on the relative button. (Page 2.1)  
 The **owner** can go to the *check inventory* view by clicking on the relative button. (Page 4.1)  
@@ -270,7 +270,7 @@ This page is used to create a new account.
 Here the subsciber can request a new fidelity card in case they lost it. 
 1. The **subscriber** can click on *Request new card* button to request the new card. The old card is automatically marked as lost and all the points and coupons are transferred to the new card.
 2. The **subscriber** can click on the *logout* button on top-right to log out. (Page 0.1) 
-3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage.(Page 0.2) 
+3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage. (Subscriber Page 0.2, Page 0.3 Employee, Page 0.4 Owner)
 
 ##
 ![Card Created](../GUI files/new_card_created.png)
@@ -286,7 +286,7 @@ This is the page that confirms with a pop up the creation of the new card.
 This page is used to create a coupon that appears after clicking on *Create Coupon* in the Homepage.   
 1. The **subscriber** can choose the amount of the coupon and click on *create coupon*.
 2. The **subscriber** can click on the *logout* button on top-right to log out. (Page 0.1) 
-3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage. (Page 0.2) 
+3. The **subscriber** can click on *Home* button on the top-left to go back to the Homepage. (Subscriber Page 0.2, Page 0.3 Employee, Page 0.4 Owner)
 
 ##
 ![Coupon Created](../GUI files/coupon_created.png)
@@ -301,7 +301,7 @@ This page shows the pop up that appears after the creation of the coupon.
 
 This is the homepage where the subscriber can check its own points in the top rectangle.  
 1. The **subscriber** can click on the *logout* button on top-right to log out. (Page 0.1) 
-2. The **subscriber** can click on *Home* button on the top-left to go back to the  Homeage.(Page 0.2) 
+2. The **subscriber** can click on *Home* button on the top-left to go back to the  Homeage. (Subscriber Page 0.2, Page 0.3 Employee, Page 0.4 Owner)
 
 
 
