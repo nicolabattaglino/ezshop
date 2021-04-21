@@ -157,7 +157,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 | FR4.2  | Keep track of expenses| 
 | FR4.3  | Pay salaries| 
 | FR4.4  | List sale transactions| 
-| FR4.5  | List expenses| 
+| FR4.5  | Manage expenses| 
 
 ## Access right, actor vs function
 | Function| Owner| Employee| Subscriber|
@@ -253,7 +253,7 @@ owner ---> (warning)
 "Add product" as (addProduct)
 "Accounting" as (acoounting)
 "List sale transactions" as (listSale)
-"List expenses" as (listExpenses)
+"Manage expenses" as (listExpenses)
 "Pay salaries" as (paySalaries)
 "Add fidelity points" as (addPoints)
 "Handle transaction" as (handleTransaction)
@@ -650,12 +650,12 @@ owner ---> (warning)
 
 
  
-### Use case 15, UC15 List expenses
+### Use case 15, UC15 Manage expenses
 | Actors Involved        | Owner |
 | ------------- |:-------------:| 
 |  Precondition     | Owner O is logged in and Expenses E1, ... , En are recorded |  
 |  Post condition     | - |
-|  Nominal Scenario     |The owner requests a list of expenses. The list is printed|
+|  Nominal Scenario     |The owner requests to manage of expenses. The list is printed|
 |  Variants     | information about payment and delivery is stored in this list |
 
 #### Scenario 15.1
