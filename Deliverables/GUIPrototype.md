@@ -51,7 +51,7 @@ This page is the homepage of the Owner. It is similar to the Subscriber Homepage
 
 This page is described selling steps that **Owner** or **Employee** can use this form, Subscriber/Customer can buy products with or without coupon/discount. there are some additional buttons:
 
-1. The Owner/Employee can click on the **Home** button that linked to the homepage. (Page 0.3/0.4)
+1. The Owner/Employee can click on the **Home** button that linked to the homepage. (Page 0.3 employee Page 0.4 Owner)
 2. The Owner/Employee can click on the **Reprint** button to print the previous receipt by searching. (Page 1.2)
 3. The Owner/Employee can click on the **Logout** button will used to logging out. (Page 0.1)
 
@@ -78,7 +78,7 @@ At the end and after inserting / scanning Barcode(s), if the Subscriber / Custom
 This page is described print again the previous receipt that **Owner** or **Employee** can use this form, No information can be edited. there are some additional buttons:
 
 
-1. The Owner/Employee can click on the **Home** button that linked to the homepage. (Page 0.3/0.4)
+1. The Owner/Employee can click on the **Home** button that linked to the homepage. (Page 0.3 employee Page 0.4 Owner)
 2. The Owner/Employee can click on the **Sales** button to back to the Selling products page. (Page 1.1)
 3. The Owner/Employee can click on the **Logout** button will used to logging out. (Page 0.1)
 
