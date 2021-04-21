@@ -202,6 +202,7 @@ APIs: Software to connect external systems to EZ Shop logically.
 ```plantuml
 @startuml
 
+
 rectangle "EZShop" as EZShop{
 "Warning on low stock, buy product" as (warning)
 "Handle transaction" as (handleTransaction)
@@ -213,32 +214,42 @@ rectangle "EZShop" as EZShop{
 
 "Owner" as owner
 "Employee" as employee
-"Subscriber" as subscriber
 "Supplier" as supplier
 "Product" as product
 "Barcode scanner" as bcScanner
 "Fideliy Card" as fidelityCard
+"Subscriber" as subscriber
+
+subscriber <|- owner
+employee -|>subscriber
+(warning) <-- (handleTransaction) 
+owner-->(handleTransaction)
+employee-->(handleTransaction)
+(handleTransaction) --> product
+(handleTransaction) --> bcScanner
 owner-->(checkInventory)
 employee -->(checkInventory)
+subscriber -> (manageAccount) 
 owner --> (ownerTasks)
-(handleTransaction)->product
-(handleTransaction) --> bcScanner
-owner--->(warning)
-employee--->(warning)
-supplier<---(warning)
-(warning)->product
-(ownerTasks)->product
-owner-->(handleTransaction)
 
-owner--|> subscriber
-employee --|>subscriber
-subscriber -->(manageAccount)
-employee-->(handleTransaction)
-(handleTransaction) --> (warning)
+supplier<---(warning)
+(warning)-->product
+(ownerTasks)-->product
+owner--->(warning)
+
+
+
+(manageAccount) --> fidelityCard
+(handleTransaction) --> fidelityCard
+```
+
 
 
 @enduml
-```
+
+
+
+
 
 ```plantuml
 @startuml
@@ -934,17 +945,18 @@ The EZShop application runs on a server.
 ```plantuml
 @startuml
 
-node "Local server" as localServer{
-artifact "EZShop application" as EZShop{
+artifact "EZShop application" as EZShop
+node "Local server" as localServer {
+	node "Oracle DBMS" as generalDB
 }
-node "Oracle DBMS" as generalDB
-}
-node "Local terminal" as localTerminal{
+
+node "Local terminal" as localTerminal
 artifact "GUI" as gui
-}
+
 
 localServer -- "*" localTerminal :HTTP/internet
-
+EZShop ..> localServer:deploy
+gui ..> localTerminal:deploy
 @enduml
 
 ```
