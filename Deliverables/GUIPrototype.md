@@ -99,7 +99,7 @@ At the end and after Searching by Date or Transaction ID, if the Owner or Employ
 
 ## 2 Waring on low stock, Buy product
 
-![Warning on low stock buy](../GUI files/Low_stock_products_owner.png)
+![Warning on low stock buy](../GUI files/low_stock_products_owner.png)
 2.1  
 
 Owner version.  
