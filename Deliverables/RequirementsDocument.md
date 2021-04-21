@@ -681,6 +681,7 @@ owner ---> (warning)
 |  3     | The system dispalys a list of all expenses |
 |  4 	 | The owner changes the information regurding a specific expense (Invoice, payment or delivery) |
 |  5	 | The state of that expense is changed and saved automatically by the system |
+|  6 	 | If the delivery state is changed, the inventory is updated |
 
  
 ### Use case 16, UC16 Pay salaries 
