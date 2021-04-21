@@ -645,8 +645,8 @@ owner ---> (warning)
 |  Precondition     | Owner O is logged in and Transaction T1, ... , Tn are recorded |
 |  Post condition     | - |
 | Step#        | Description  |
-|  1     | The owner clicks on the accounting button on their home page  |
-|  2     | The owner clicks on the "Sale transactions" button|
+|  1     | The owner accesses the accounting section |
+|  2     | The owner opens the sale transaction section|
 |  3     | The system dispalys a list of all sale transactions |
 |  4 	 | The owner clicks on the print button |
 
@@ -667,8 +667,8 @@ owner ---> (warning)
 |  Precondition     | Owner O is logged in and Expenses E1, ... , En are recorded |
 |  Post condition     | - |
 | Step#        | Description  |
-| 1     | The owner clicks on the accounting button on their home page  |
-|  2     | The owner clicks on the "Expenses" button|
+|  1     | The owner accesses the accounting section |
+|  2     | The owner opens the expenses section|
 |  3     | The system dispalys a list of all expenses |
 |  4 	 | The owner clicks on the print button |
 
@@ -678,11 +678,11 @@ owner ---> (warning)
 |  Precondition     | Owner O is logged in and Expenses E1, ... , En are recorded |
 |  Post condition     | Owner O is logged in and Expenses E1, ... , En information are changed  |
 | Step#        | Description  |
-|  1     | The owner clicks on the accounting button on their home page  |
-|  2     | The owner clicks on the "Expenses" button|
+|  1     | The owner accesses the accounting section |
+|  2     | The owner opens the expenses section|
 |  3     | The system dispalys a list of all expenses |
-|  4 	 | The owner clicks on one of the checkboxes regurding a specific expense (Invoice, payment or delivery) |
-|  5	 | The state of the checkbox is changed and saved automatically by the system |
+|  4 	 | The owner changes the information regurding a specific expense (Invoice, payment or delivery) |
+|  5	 | The state of that expense is changed and saved automatically by the system |
 
  
 ### Use case 16, UC16 Pay salaries 
@@ -699,8 +699,8 @@ owner ---> (warning)
 |  Precondition     | Owner O is logged in and Employee E1, ... , En are registered |
 |  Post condition     | - |
 | Step#        | Description  |
-|  1     | The owner clicks on the accounting button on their home page  |
-|  2     | The owner clicks on the "Pay salaries" button|
+|  1     | The owner accesses the accounting section |
+|  2     | The owner opens the salary section|
 |  3     | The system dispalys a list of all employees and their respective salary |
 |  4 	 | The owner clicks on the print button |
 
@@ -710,13 +710,10 @@ owner ---> (warning)
 |  Precondition     | Owner O is logged in and Employee E1, ... , En are registered |
 |  Post condition     | - |
 | Step#        | Description  |
-|  1     | The owner clicks on the accounting button on their home page  |
-|  2     | The owner clicks on the "Pay salaries" button|
+|  1     | The owner accesses the accounting section |
+|  2     | The owner opens the salary section|
 |  3     | The system dispalys a list of all employees and their respective salary |
-|  4 	 | The owner clicks on one of the record in the table |
-|  5	 | The system highlights the record |
-|  6	 | The "Pay" button is enabled by the system |
-|  7	 | The onwer clicks on the button |
+|  4 	 | The owner selects a specific employee and attempts to pay their salaty
 |  8	 | The system opens a web page on the bank web site |
 |  9 	 | The system initiates a transfer to the employee bank account with the correct amount |
 | 10	 | The owner completes the transfer |
@@ -735,9 +732,9 @@ owner ---> (warning)
 |  Precondition     | Owner O is logged in and Transaction T1, ... , Tn are recorded |
 |  Post condition     | - |
 | Step#        | Description  |
-|  1     | The owner clicks on the accounting button on their home page  |
-|  2     | The owner clicks on the "Daily balance" button|
-|  3     | The system dispalys the daily balance so far |
+|  1     | The owner accesses the accounting section |
+|  2     | The owner opens the daily balance section|
+|  3     | The system dispalys a daily balance |
 |  4 	 | The owner clicks on the print button |
 
 ### Use case 18, UC18 Forgot Password 
