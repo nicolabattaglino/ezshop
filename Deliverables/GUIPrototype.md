@@ -355,7 +355,7 @@ This is the main accounting page from which the owner can access to all the acco
 This page contains the list of sale transactions. 
 
 1. The **owner** can click on the *Print* button to print the list of transactions.
-2. The **owner** can select a few transactions and lick on the *Print* button to print the selected transactions.
+2. The **owner** can select a few transactions and click on the *Print* button to print the selected transactions.
 3. The **owner** can search for a specific transaction using the search bar. They can look for a transaction containing a certain item, during a specific day, with a certain total price or card ID. 
 4. The **owner** can sort the table by using the first row.
 5. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
@@ -369,7 +369,7 @@ This page contains the list of sale transactions.
 This page contains the list of expenses
 
 1. The **owner** can click on the *Print* button to print the list of expenses.
-2. The **owner** can select a few expenses and lick on the *Print* button to print the selected transactions.
+2. The **owner** can select a few expenses and click on the *Print* button to print the selected transactions.
 3. The **owner** can search for a specific expense using the search bar. They can look for an expense containing a certain item, during a specific day, with a certain total price or supplier. 
 4. The **owner** can sort the table by using the first row.
 5. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
@@ -378,7 +378,7 @@ This page contains the list of expenses
 ![Change informatio](../GUI files/List_of_expenses.png)
 15.2
 
-1. he **owner** can click on the checkboxes to change the state of each expense. State are boolean and include: invoice sent, payment completed and products delivered.
+1. The **owner** can click on the checkboxes to change the state of each expense. State are boolean and include: invoice sent, payment completed and products delivered.
 
 
 ## 16 Salaries
@@ -388,7 +388,7 @@ This page contains the list of expenses
 This page contais the list of employees and respective salaries. 
 
 1. The **owner** can click on the *Print* button to print the list of employees and past and resent salaries.
-2. The **owner** can select a salarie and click on the *Pay* button to pay the salary. The button will open a browser window on the bank web site and will fill the fields necessary to pay said salary.
+2. The **owner** can select a salary and click on the *Pay* button to pay the salary. The button will open a browser window on the bank web site and will fill the fields necessary to pay said salary.
 3. The **owner** can search for a specific employee or salary using the search bar. They can look for a specific employee, a certain number of hours worked, by the amount or by date.
 4. The **owner** can sort the table by using the first row.
 5. The **owner** can click on the *Home* button to go back to their home page. (Page 0.4)
