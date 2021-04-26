@@ -140,7 +140,65 @@ ReturnTransaction "*" - ProductType
 @enduml
 
 ```
+@startuml
 
+class UsersManager{
+    User: List
+    createUser(name: String, surname: String, password: String, privilege: String)
+    modifyUser(u: User)
+    deleteUser(u: User)
+    listUsers()
+    searchUser(name: String, surname: String)
+    setRightsUser(u: User, privilege: String )
+}
+
+class CustomersManager {
+    Customer: List
+    createCustomer(name: String, surname: String) : Customer
+    deleteCustomer(cu: Customer)
+    listCustomers()
+    createCard() : Card
+    attachCard(cu: Customer, c: Card )
+    modifyPoints(c: Card, points: Integer)
+}
+
+
+class User {
+  name: String
+  surname: String
+  password: String
+  privilege: String
+  
+
+
+}
+
+class Administrator {
+    
+    
+}
+
+class Customer {
+    name: String
+    surname: String
+    card: Card
+   
+    
+    
+}
+
+class Card {
+    id: Integer
+    points: Integer
+ 
+}
+
+Administrator -- UsersManager
+User <|-- "1" Administrator
+CustomersManager -- "*" Customer
+User "*" -- CustomersManager
+CustomersManager -- "*" Card
+@enduml
 
 # Verification traceability matrix
 
