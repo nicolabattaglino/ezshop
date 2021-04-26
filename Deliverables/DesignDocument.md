@@ -140,6 +140,8 @@ ReturnTransaction "*" - ProductType
 @enduml
 
 ```
+
+```plantuml
 @startuml
 
 class UsersManager{
@@ -200,6 +202,7 @@ User "*" -- CustomersManager
 CustomersManager -- "*" Card
 @enduml
 
+```
 # Verification traceability matrix
 
 \<for each functional requirement from the requirement document, list which classes concur to implement it>
