@@ -34,11 +34,112 @@ The design must satisfy the Official Requirements document, notably functional a
 <for each package, report class diagram>
 
 
+```plantuml
 
+@startuml
+class Shop{
+    accountBalance
+    productTypes
+    saleTransactions
 
+    startSaleTransaction()
+    closeSaleTransaction()
+    searchBarCodeProduct()
+    getTicketByNumber()
+    closeSaleTransaction()
+    startReturnTransaction()
+    returnProduct()
+    deleteReturnTransaction()
+    deleteSaleTicket()
+	computeSalePoints()
+    getSaleTicket()
+    receiveCashPayment()
+    receiveCreditCardPayment()
+    returnPaymentCash()
+    returnPaymentWithCreditCard()
+}
 
+class Credit 
+class Debit
 
+Credit --|> FinancialTransaction
+Debit --|> FinancialTransaction
 
+class Order
+class Sale
+class Return
+
+Order --|> Debit
+Sale --|> Credit
+Return --|> Debit
+
+class ProductType{
+    barcode
+    description
+    sellPrice
+    quantity
+    discountRate
+    notes
+}
+
+Shop - "*" ProductType
+
+class SaleTransaction {
+    ID 
+    date
+    time
+    cost
+    paymentType
+    discount rate
+    loyalityCardCode
+    customerIds
+
+    addProductToSale()
+    deleteProductFromSale()
+    applyDiscountRateToSale()
+    applyDiscountRateToProduct() 
+    computePointsForSale()
+}
+
+Shop --"*" SaleTransaction
+SaleTransaction - "*" ProductType
+
+class SaleTicket{
+    ticketNumber
+    printSaleTicket()
+}
+
+SaleTransaction -- SaleTicket
+
+class LoyaltyCard {
+    ID
+    points
+    attachCustomer()
+}
+
+class Customer {
+    name
+    surname
+}
+
+LoyaltyCard "0..1" - Customer
+
+SaleTransaction "*" -- "0..1" LoyaltyCard
+
+Order "*" - ProductType
+
+class ReturnTransaction {
+  quantity
+  returnedValue
+
+endReturnTransaction()
+}
+
+ReturnTransaction "*" - SaleTransaction
+ReturnTransaction "*" - ProductType
+@enduml
+
+```
 
 
 # Verification traceability matrix
