@@ -32,6 +32,12 @@ The design must satisfy the Official Requirements document, notably functional a
 # Low level design
 
 <for each package, report class diagram>
+
+
+```plantuml
+
+@startuml
+
 interface EzShopInterface {
 
     +reset()
@@ -90,11 +96,6 @@ interface EzShopInterface {
     +getCreditsAndDebits(from: LocalDate, to: LocalDate): List<BalanceOperation>
     +computeBalance(): double
 }
-
-```plantuml
-
-@startuml
-
 
 class Shop 
 
