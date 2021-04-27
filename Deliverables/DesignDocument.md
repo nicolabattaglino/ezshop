@@ -197,8 +197,8 @@ class Card {
 }
 
 class Authentication {
-    login(username: String, password: String)
-    logout()
+    login(username: String, password: String) : User
+    logout() : Boolean
 }
 
 Administrator -- UsersManager
