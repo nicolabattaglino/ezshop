@@ -32,26 +32,18 @@ The design must satisfy the Official Requirements document, notably functional a
 # Low level design
 
 <for each package, report class diagram>
+interface EzShopInterface {
 
+    +reset()
+    +createUser(username: String, password: String, role: String) : Integer
+    +deleteUser(id: Integer): boolean
+    +getAllUser(): List<User>
+    +getUser(id: Integer): User
+    +updateUserRights(id: Integer, role: String): Boolean
+    +getUser(id: Integer) : User
 
-```plantuml
-
-@startuml
-class Shop{
-    accountBalance
-    productTypes
-    saleTransactions
-
-    reset()
-    createUser(username: String, password: String, role: String) : Integer
-    deleteUser(id: Integer) : boolean
-    getAllUser() : List<User>
-    getUser(id: Integer) : User
-    updateUserRights(id: Integer, role: String) : Boolean
-    getUser(id: Integer) : User
-
-    login(username: String, password: String) : User
-    logout() : boolean
+    +login(username: String, password: String): User
+    +logout(): boolean
 
     +createProductType(description: String, productCode: String, pricePerUnit: double, note: String): Integer
     +updateProduct(id: Integer, newDescription: String, newCode: String, newPrice: double, newNote: String): boolean
@@ -62,45 +54,156 @@ class Shop{
 
     +updateQuantity(Integer productId, int toBeAdded): boolean
     +updatePosition(Integer productId, String newPos): boolean
-    +issueReorder(String productCode, int quantity, double pricePerUnit): Integer
+    +issueOrder(String productCode, int quantity, double pricePerUnit): Integer
     +payOrderFor(String productCode, int quantity, double pricePerUnit): Integer
     +payOrder(Integer orderId): boolean
     +recordOrderArrival(Integer orderId): boolean
     +getAllOrders(): List<Order> 
 
-    defineCustomer(customerName: String) : Customer
-    modifyCustomer(id: Integer, newCustomerName: String, newCustomerCard) : boolean
-    deleteCustomer(id: Integer) : boolean
-    getAllCustomers() : List<Customer>
-    getCustomer(id : Integer): Customer
-    createCard() : String
-    attachCardToCustomer(customerCard: String, customerId: String ) : boolean
-    modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer) : boolean
+    +defineCustomer(customerName: String): Customer
+    +modifyCustomer(id: Integer, newCustomerName: String, newCustomerCard): boolean
+    +deleteCustomer(id: Integer): boolean
+    +getAllCustomers(): List<Customer>
+    +getCustomer(id : Integer): Customer
+    +createCard(): String
+    +attachCardToCustomer(customerCard: String, customerId: String ): boolean
+    +modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer): boolean
 
-    startSaleTransaction() : Integer
-    addProductToSale(transactionId: Integer, productCode: String, amount: Integer) : boolean
-    deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer) : boolean
-    applyDiscountRateToProduct(transactionId: Integer, productCode: String, discountRate: double) : boolean
-    applyDiscountRateToSale(transactionId: Integer, discountRate: double) : boolean
-    computePointsForSale(transactionId: Integer) : int
-    endSaleTransaction(transactionId: Integer) : boolean
-    getSaleTransaction(transactionId: Integer) : boolean
-    startReturnTransaction(transactionId: Integer) : Integer
+    +startSaleTransaction() : Integer
+    +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
+    +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
+    +applyDiscountRateToProduct(transactionId: Integer, productCode: String, discountRate: double): boolean
+    +applyDiscountRateToSale(transactionId: Integer, discountRate: double) : boolean
+    +computePointsForSale(transactionId: Integer): int
+    +endSaleTransaction(transactionId: Integer): boolean
+    +getSaleTransaction(transactionId: Integer): boolean
+    +startReturnTransaction(transactionId: Integer): Integer
+    +returnProduct(returnId : Integer, productCode: String, amount: int): boolean
+    +endReturnTransaction(returnId : Integer, commit: boolean): boolean
+    +deleteReturnTransaction(returnId: Integer): boolean
+    +receiveCashPayment(transactionId: Integer, cash: double): double
+    +receiveCreditCardPayment(transactionId: Integer, creditCard: String): boolean
+    +returnCashPayment(returnId: Integer): double
+    +returnCreditCardPayment(returnId: Integer, creditCard: String): double
 
-    searchBarCodeProduct()
-    getTicketByNumber()
-    closeSaleTransaction()
-    startReturnTransaction()
-    returnProduct()
-    deleteReturnTransaction()
-    deleteSaleTicket()
-	computeSalePoints()
-    getSaleTicket()
-    receiveCashPayment()
-    receiveCreditCardPayment()
-    returnPaymentCash()
-    returnPaymentWithCreditCard()
+    +recordBalanceUpdate(toBeAdded: double): boolean
+    +getCreditsAndDebits(from: LocalDate, to: LocalDate): List<BalanceOperation>
+    +computeBalance(): double
 }
+
+```plantuml
+
+@startuml
+
+
+class Shop 
+
+class UserManager{
+    -userIdGen: Integer
+    -loggedUser: User
+    
+    +createUser(username: String, password: String, role: String) : Integer
+    +deleteUser(id: Integer) : Boolean
+    +getAllUsers() : List<User>
+    +updateUserRights(id: Integer, role: String) : Boolean
+    +getUser(id: Integer) : User
+
+    +login(username: String, password: String) : User
+    +logout() : boolean
+
+}
+
+class User {
+    -id: Integer
+    -username: String
+    -password: String
+    -role: String
+}
+
+class Customer {
+    -id: Integer
+    -name: String
+    -surname: String
+}
+
+LoyaltyCard "0..1" <- Customer: -loyaltyCard
+
+class LoyaltyCard {
+    -cardCode: String
+    -points: Integer
+}
+
+UserManager -->"*" User: -userList
+Customer "*"<-- CustomerManager: -customerMap
+LoyaltyCard "*"<-- CustomerManager: -cardMap
+
+class CustomerManager {
+    -userIdGen: Integer
+    -loyaltyCardIdGen: long
+
+    +defineCustomer(customerName: String): Customer
+    +modifyCustomer(id: Integer, newCustomerName: String, newCustomerCard): boolean
+    +deleteCustomer(id: Integer): boolean
+    +getAllCustomers(): List<Customer>
+    +getCustomer(id : Integer): Customer
+    +createCard(): String
+    +attachCardToCustomer(customerCard: String, customerId: String ): boolean
+    +modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer): boolean
+}
+
+
+class ProductOrderManager {
+
+    -productIdGen: Integer
+    -orderIdGen: Integer
+
+    +createProductType(description: String, productCode: String, pricePerUnit: double, note: String): Integer
+    +updateProduct(id: Integer, newDescription: String, newCode: String, newPrice: double, newNote: String): boolean
+    +deleteProductType(id: Integer): boolean
+    +getAllProductTypes():  List<ProductType>
+    +getProductTypeByBarCode(barCode: String): ProductType
+    +getProductTypesByDescription(description: String): List<ProductType>
+
+    +updateQuantity(Integer productId, int toBeAdded): boolean
+    +updatePosition(Integer productId, String newPos): boolean
+
+    +issueOrder(String productCode, int quantity, double pricePerUnit): Integer
+    +payOrderFor(String productCode, int quantity, double pricePerUnit): Integer
+    
+    +payOrder(Integer orderId): boolean
+    +recordOrderArrival(Integer orderId): boolean
+    +getAllOrders(): List<Order> 
+}
+
+ProductOrderManager -->"*" ProductType: -productMap
+ProductOrderManager -->"*" Order: -orderMap
+
+class TransactionManager {
+    +startSaleTransaction() : Integer
+    +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
+    +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
+    +applyDiscountRateToProduct(transactionId: Integer, productCode: String, discountRate: double): boolean
+    +applyDiscountRateToSale(transactionId: Integer, discountRate: double) : boolean
+    +computePointsForSale(transactionId: Integer): int
+    +endSaleTransaction(transactionId: Integer): boolean
+    +getSaleTransaction(transactionId: Integer): boolean
+    +startReturnTransaction(transactionId: Integer): Integer
+    +returnProduct(returnId : Integer, productCode: String, amount: int): boolean
+    +endReturnTransaction(returnId : Integer, commit: boolean): boolean
+    +deleteReturnTransaction(returnId: Integer): boolean
+    +receiveCashPayment(transactionId: Integer, cash: double): double
+    +receiveCreditCardPayment(transactionId: Integer, creditCard: String): boolean
+    +returnCashPayment(returnId: Integer): double
+    +returnCreditCardPayment(returnId: Integer, creditCard: String): double
+}
+
+
+Shop --> UserManager
+Shop --> CustomerManager
+Shop --> ProductOrderManager
+Shop -->TransactionManager
+
+EzShopInterface <|.. Shop
 
 class Credit 
 class Debit
@@ -108,24 +211,46 @@ class Debit
 Credit --|> FinancialTransaction
 Debit --|> FinancialTransaction
 
-class Order
-class Sale
-class Return
-
-Order --|> Debit
-Sale --|> Credit
-Return --|> Debit
-
-class ProductType{
-    barcode
-    description
-    sellPrice
-    quantity
-    discountRate
-    notes
+class Order{
+    -id: Integer
+    -supplier
+    -pricePerUnit: double
+    -quantity: Integer
+    -status: OrderStatus
 }
 
-Shop - "*" ProductType
+enum OrderStatus{
+    ISSUED
+    ORDERED
+    PAYED
+    COMPLETED
+}
+
+OrderStatus <- Order
+
+Order --|> Debit
+ReturnTransaction --|> Debit
+
+class ProductType {
+    -id: Integer
+    -String: barCode
+    -String: description
+    -double: sellPrice
+    -int: discountRate
+    -String: notes
+
+}
+
+class Product
+
+ProductType <--"*" Product: -type 
+class Position {
+    -aisleID: Integer
+    -rackID: Integer
+    -levelID: Integer
+}
+ProductType ->"0..1" Position: -position
+
 
 class SaleTransaction {
     ID 
@@ -144,15 +269,14 @@ class SaleTransaction {
     computePointsForSale()
 }
 
-Shop --"*" SaleTransaction
-SaleTransaction - "*" ProductType
+SaleTransaction -- "*" ProductType
+(SaleTransaction,ProductType).. Quantity
+SaleTransaction -|> Credit
 
-class SaleTicket{
-    ticketNumber
-    printSaleTicket()
+class Quantity {
+    quantity: Integer
 }
 
-SaleTransaction -- SaleTicket
 
 class LoyaltyCard {
     ID
@@ -160,14 +284,9 @@ class LoyaltyCard {
     attachCustomer()
 }
 
-class Customer {
-    name
-    surname
-}
 
-LoyaltyCard "0..1" - Customer
 
-SaleTransaction "*" -- "0..1" LoyaltyCard
+SaleTransaction "*" --> "0..1" LoyaltyCard: -loyaltyCard
 
 Order "*" - ProductType
 
@@ -188,24 +307,24 @@ ReturnTransaction "*" - ProductType
 @startuml
 
 class UsersManager{
-    createUser(username: String, password: String, role: String) : Integer
-    deleteUser(id: Integer) : Boolean
-    getAllUsers() : List<User>
-    updateUserRights(id: Integer, role: String) : Boolean
-    getUser(id: Integer) : User
+    +createUser(username: String, password: String, role: String) : Integer
+    +deleteUser(id: Integer) : Boolean
+    +getAllUsers() : List<User>
+    +updateUserRights(id: Integer, role: String) : Boolean
+    +getUser(id: Integer) : User
 
 }
 
 class CustomersManager {
   
-    defineCustomer(customerName: String) : Customer
-    modifyCustomer(id: Integer, newCustomerName: String, newCustomerCard) : boolean
-    deleteCustomer(id: Integer) : boolean
-    getAllCustomers() : List<Customer>
-    getCustomer(id : Integer): Customer
-    createCard() : String
-    attachCardToCustomer(customerCard: String, customerId: String ) : boolean
-    modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer) : boolean
+    +defineCustomer(customerName: String) : Customer
+    +modifyCustomer(id: Integer, newCustomerName: String, newCustomerCard) : boolean
+    +deleteCustomer(id: Integer) : boolean
+    +getAllCustomers() : List<Customer>
+    +getCustomer(id : Integer): Customer
+    +createCard() : String
+    +attachCardToCustomer(customerCard: String, customerId: String ) : boolean
+    +modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer) : boolean
 }
 
 
@@ -226,7 +345,6 @@ class Customer {
     id: Integer
     customerName: String
     surname: String
-    cuatomerCard: String
    
     
     
@@ -275,7 +393,6 @@ class OrderManager {
 }
 
 class Product{
-    +Product(type: ProductType)
 }
 
 class Order{
