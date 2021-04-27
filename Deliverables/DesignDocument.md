@@ -42,8 +42,51 @@ class Shop{
     productTypes
     saleTransactions
 
-    startSaleTransaction()
-    closeSaleTransaction()
+    reset()
+    createUser(username: String, password: String, role: String) : Integer
+    deleteUser(id: Integer) : boolean
+    getAllUser() : List<User>
+    getUser(id: Integer) : User
+    updateUserRights(id: Integer, role: String) : Boolean
+    getUser(id: Integer) : User
+
+    login(username: String, password: String) : User
+    logout() : boolean
+
+    +createProductType(description: String, productCode: String, pricePerUnit: double, note: String): Integer
+    +updateProduct(id: Integer, newDescription: String, newCode: String, newPrice: double, newNote: String): boolean
+    +deleteProductType(id: Integer): boolean
+    +getAllProductTypes():  List<ProductType>
+    +getProductTypeByBarCode(barCode: String): ProductType
+    +getProductTypesByDescription(description: String): List<ProductType>
+
+    +updateQuantity(Integer productId, int toBeAdded): boolean
+    +updatePosition(Integer productId, String newPos): boolean
+    +issueReorder(String productCode, int quantity, double pricePerUnit): Integer
+    +payOrderFor(String productCode, int quantity, double pricePerUnit): Integer
+    +payOrder(Integer orderId): boolean
+    +recordOrderArrival(Integer orderId): boolean
+    +getAllOrders(): List<Order> 
+
+    defineCustomer(customerName: String) : Customer
+    modifyCustomer(id: Integer, newCustomerName: String, newCustomerCard) : boolean
+    deleteCustomer(id: Integer) : boolean
+    getAllCustomers() : List<Customer>
+    getCustomer(id : Integer): Customer
+    createCard() : String
+    attachCardToCustomer(customerCard: String, customerId: String ) : boolean
+    modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer) : boolean
+
+    startSaleTransaction() : Integer
+    addProductToSale(transactionId: Integer, productCode: String, amount: Integer) : boolean
+    deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer) : boolean
+    applyDiscountRateToProduct(transactionId: Integer, productCode: String, discountRate: double) : boolean
+    applyDiscountRateToSale(transactionId: Integer, discountRate: double) : boolean
+    computePointsForSale(transactionId: Integer) : int
+    endSaleTransaction(transactionId: Integer) : boolean
+    getSaleTransaction(transactionId: Integer) : boolean
+    startReturnTransaction(transactionId: Integer) : Integer
+
     searchBarCodeProduct()
     getTicketByNumber()
     closeSaleTransaction()
@@ -145,25 +188,24 @@ ReturnTransaction "*" - ProductType
 @startuml
 
 class UsersManager{
-    User: List
     createUser(username: String, password: String, role: String) : Integer
     deleteUser(id: Integer) : Boolean
-    getAllUsers() : List
-    updateUserRights(it: Integer, role: String) : Boolean
+    getAllUsers() : List<User>
+    updateUserRights(id: Integer, role: String) : Boolean
     getUser(id: Integer) : User
 
 }
 
 class CustomersManager {
-    Customer: List
+  
     defineCustomer(customerName: String) : Customer
-    modifyCustomer(id: Integer, newCustomerName: String, newCustomerCard) : Boolean
-    deleteCustomer(id: Integer) : Boolean
-    getAllCustomers() : List
+    modifyCustomer(id: Integer, newCustomerName: String, newCustomerCard) : boolean
+    deleteCustomer(id: Integer) : boolean
+    getAllCustomers() : List<Customer>
     getCustomer(id : Integer): Customer
     createCard() : String
-    attachCardToCustomer(customerCard: String, customerId: String ) : Boolean
-    modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer) : Boolean
+    attachCardToCustomer(customerCard: String, customerId: String ) : boolean
+    modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer) : boolean
 }
 
 
@@ -198,7 +240,7 @@ class Card {
 
 class Authentication {
     login(username: String, password: String) : User
-    logout() : Boolean
+    logout() : boolean
 }
 
 Administrator -- UsersManager
