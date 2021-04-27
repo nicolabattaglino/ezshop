@@ -146,32 +146,32 @@ ReturnTransaction "*" - ProductType
 
 class UsersManager{
     User: List
-    createUser(name: String, surname: String, password: String, privilege: String)
-    modifyUser(u: User)
-    deleteUser(u: User)
-    listUsers()
-    searchUser(name: String, surname: String)
-    setRightsUser(u: User, privilege: String )
+    createUser(username: String, password: String, role: String) : Integer
+    deleteUser(id: Integer) : Boolean
+    getAllUsers() : List
+    updateUserRights(it: Integer, role: String) : Boolean
+    getUser(id: Integer) : User
+
 }
 
 class CustomersManager {
     Customer: List
-    createCustomer(name: String, surname: String) : Customer
-    deleteCustomer(cu: Customer)
-    listCustomers()
-    createCard() : Card
-    attachCard(cu: Customer, c: Card )
-    modifyPoints(c: Card, points: Integer)
+    defineCustomer(customerName: String) : Customer
+    modifyCustomer(id: Integer, newCustomerName: String, newCustomerCard) : Boolean
+    deleteCustomer(id: Integer) : Boolean
+    getAllCustomers() : List
+    getCustomer(id : Integer): Customer
+    createCard() : String
+    attachCardToCustomer(customerCard: String, customerId: String ) : Boolean
+    modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer) : Boolean
 }
 
 
 class User {
-  name: String
-  surname: String
-  password: String
-  privilege: String
-  
-
+    id: Integer
+    username: String
+    password: String
+    role: String
 
 }
 
@@ -181,18 +181,24 @@ class Administrator {
 }
 
 class Customer {
-    name: String
+    id: Integer
+    customerName: String
     surname: String
-    card: Card
+    cuatomerCard: String
    
     
     
 }
 
 class Card {
-    id: Integer
+    cardCode: String
     points: Integer
  
+}
+
+class Authentication {
+    login(username: String, password: String)
+    logout()
 }
 
 Administrator -- UsersManager
@@ -200,6 +206,7 @@ User <|-- "1" Administrator
 CustomersManager -- "*" Customer
 User "*" -- CustomersManager
 CustomersManager -- "*" Card
+User -- Authentication
 @enduml
 
 ```
