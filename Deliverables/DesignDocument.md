@@ -485,27 +485,84 @@ ProductType -->"0..1" Position: -position
 ## Scenario 1.1
 ```plantuml
 @startuml
+actor ShopManager
+participant "/ : Shop" as Shop
+participant "/ : ProductOrderManager" as ProductOrderManager
+participant "p : Product" as Product
+participant "pos : Position" as Position
+
+ShopManager -> Shop: 1 : createProductType(description, productCode, pricePerUnit, note)
+activate Shop
+
+Shop -> ProductOrderManager: 2 : createProductType()
+activate ProductOrderManager
+create Product
+ProductOrderManager -> Product: 3 : new
+
+deactivate ProductOrderManager
+deactivate Shop
+ShopManager -> Shop: 4 : updatePosition(id, position)
+activate Shop
+Shop -> ProductOrderManager: 5 : updatePosition(id, position)
+activate ProductOrderManager
+create Position
+ProductOrderManager -> Position: 6 : new 
+
+ProductOrderManager -> Product: 7 : setPosition(pos)
+activate Product
+deactivate Product
+deactivate ProductOrderManager
+deactivate Shop
+@enduml
+```
+
+## Scenario 1.2
+```plantuml
+@startuml
+@startuml
 participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
 participant "p : Product" as Product
 participant "pos : Position" as Position
 activate Shop
-Shop -> ProductOrderManager: 1 : createProductType(description, productCode, pricePerUnit, note)
+Shop -> ProductOrderManager: 1 : getProductTypeByBarCode(barCode)
 activate ProductOrderManager
-create Product
-ProductOrderManager -> Product: 2 : new
-
 deactivate ProductOrderManager
 
 
-Shop -> ProductOrderManager: 3 : updatePosition(id, pos)
+Shop -> ProductOrderManager: 2 : updatePosition(p.id, position)
 activate ProductOrderManager
 create Position
-ProductOrderManager -> Position: 4 : new 
+ProductOrderManager -> Position: 3 : new 
 
-ProductOrderManager -> Product: 5 : setPosition(pos)
+ProductOrderManager -> Product: 4 : setPosition(pos)
 activate Product
 deactivate Product
+deactivate ProductOrderManager
+deactivate Shop
+@enduml
+```
+
+## Scenario 1.3
+```plantuml
+@startuml
+participant "/ : Shop" as Shop
+participant "/ : ProductOrderManager" as ProductOrderManager
+
+
+activate Shop
+Shop -> ProductOrderManager: 1 : getProductTypeByBarCode(barCode)
+activate ProductOrderManager
+deactivate ProductOrderManager
+
+
+Shop -> ProductOrderManager: 2 : updateProduct(newPrice)
+activate ProductOrderManager
+
+
+
+
+
 deactivate ProductOrderManager
 deactivate Shop
 @enduml
