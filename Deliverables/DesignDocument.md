@@ -22,9 +22,22 @@ The design must satisfy the Official Requirements document, notably functional a
 # High level design 
 
 <discuss architectural styles used, if any>
+
+The entire application is based on the MVC architectural pattern, we used Layered style design to divide the GUI from the business logic/data level. The two layers communicate with eachother with a common interface defined by the Façade design pattern.
+
 <report package diagram>
 
+plantuml
 
+@startuml
+
+package gui 
+
+package model_controller
+
+gui ..> model_controller
+
+@enduml
 
 
 
