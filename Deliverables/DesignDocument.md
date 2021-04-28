@@ -554,18 +554,18 @@ Shop -> TransactionManager: startReturnTransacion()
 activate TransactionManager
 TransactionManager -> ProductOrderManager: updateQuantity()
 activate ProductOrderManager
-ProductOrderManager -> TransactionManager: return
+ProductOrderManager -> TransactionManager: return()
 deactivate ProductOrderManager
 TransactionManager -> TransactionManager:returnCreditCardPayment()
 activate TransactionManager
 TransactionManager -> TransactionManager: luhnAlgorithm()
 note right: Card validated
 deactivate TransactionManager 
-TransactionManager  -> Shop: return
+TransactionManager  -> Shop: return()
 deactivate TransactionManager 
 Shop -> TransactionManager: endReturnTransaciton()
 activate TransactionManager
-TransactionManager -> Shop:return 
+TransactionManager -> Shop:return()
 deactivate TransactionManager 
 @enduml
 ```
@@ -575,7 +575,7 @@ deactivate TransactionManager
 @startuml
 Shop -> TransactionManager: getCreditsAndDebits()
 activate TransactionManager
-TransactionManager  -> Shop: return
+TransactionManager  -> Shop: return()
 deactivate TransactionManager 
 @enduml
 ```
