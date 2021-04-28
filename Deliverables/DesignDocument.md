@@ -656,27 +656,27 @@ participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : Transaction" as Transaction
-Shop -> TransactionManager: startReturnTransacion()
+Shop -> TransactionManager:1 startReturnTransacion()
 activate TransactionManager
-TransactionManager -> ProductOrderManager: updateQuantity()
+TransactionManager -> ProductOrderManager:2 updateQuantity()
 activate ProductOrderManager
-ProductOrderManager -> TransactionManager: return()
+ProductOrderManager -> TransactionManager:3 return()
 deactivate ProductOrderManager
-TransactionManager -> TransactionManager:returnCreditCardPayment()
+TransactionManager -> TransactionManager:4 returnCreditCardPayment()
 activate TransactionManager
-TransactionManager -> TransactionManager: luhnAlgorithm()
+TransactionManager -> TransactionManager:5 luhnAlgorithm()
 note right: Card validated
 deactivate TransactionManager 
-TransactionManager  -> Shop: return()
+TransactionManager  -> Shop:6 return()
 deactivate TransactionManager 
-Shop -> TransactionManager: endReturnTransaciton()
+Shop -> TransactionManager:7 endReturnTransaciton()
 activate TransactionManager
-TransactionManager-> Transaction: getAmount()
+TransactionManager-> Transaction:8 getAmount()
 activate Transaction
-Transaction -> TransactionManger: return()
+Transaction -> TransactionManger:9 return()
 deactivate Transaction
-TransactionManager -> TransactionManager: recordBalance() 
-TransactionManager -> Shop:return()
+TransactionManager -> TransactionManager:10 recordBalance() 
+TransactionManager -> Shop:11 return()
 deactivate TransactionManager 
 @enduml
 ```
@@ -690,23 +690,23 @@ participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : Transaction" as Transaction
-Shop -> TransactionManager: startReturnTransacion()
+Shop -> TransactionManager:1 startReturnTransacion()
 activate TransactionManager
-TransactionManager -> ProductOrderManager: updateQuantity()
+TransactionManager -> ProductOrderManager:2 updateQuantity()
 activate ProductOrderManager
-ProductOrderManager -> TransactionManager: return()
+ProductOrderManager -> TransactionManager:3 return()
 deactivate ProductOrderManager
-TransactionManager -> TransactionManager:returnCashPayment()
-TransactionManager  -> Shop: return()
+TransactionManager -> TransactionManager:4 returnCashPayment()
+TransactionManager  -> Shop:5 return()
 deactivate TransactionManager 
-Shop -> TransactionManager: endReturnTransaciton()
+Shop -> TransactionManager:6 endReturnTransaciton()
 activate TransactionManager
-TransactionManager-> Transaction: getAmount()
+TransactionManager-> Transaction:7 getAmount()
 activate Transaction
-Transaction -> TransactionManger: return()
+Transaction -> TransactionManger:8 return()
 deactivate Transaction
-TransactionManager -> TransactionManager: recordBalance() 
-TransactionManager -> Shop:return()
+TransactionManager -> TransactionManager:9 recordBalance() 
+TransactionManager -> Shop:10 return()
 deactivate TransactionManager 
 @enduml
 ```
@@ -717,9 +717,9 @@ deactivate TransactionManager
 
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
-Shop -> TransactionManager: getCreditsAndDebits()
+Shop -> TransactionManager:1 getCreditsAndDebits()
 activate TransactionManager
-TransactionManager  -> Shop: return()
+TransactionManager  -> Shop:2 return()
 deactivate TransactionManager 
 @enduml
 ```
@@ -732,12 +732,11 @@ deactivate TransactionManager
 
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : Transaction" as Transaction
-TransactionManager-> Transaction: getAmount()
+TransactionManager-> Transaction:1 getAmount()
 activate Transaction
-Transaction -> TransactionManger: return()
+Transaction -> TransactionManager:2 return()
 deactivate Transaction
-TransactionManager -> TransactionManager: recordBalance() 
-TransactionManager -> Shop:return()
+TransactionManager -> TransactionManager:3 recordBalance() 
 
 @enduml
 ```
@@ -751,11 +750,10 @@ TransactionManager -> Shop:return()
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : Transaction" as Transaction
 
-TransactionManager-> Transaction: getAmount()
+TransactionManager-> Transaction:1 getAmount()
 activate Transaction
-Transaction -> TransactionManger: return()
+Transaction -> TransactionManager:2 return()
 deactivate Transaction
-TransactionManager -> TransactionManager: recordBalance() 
-TransactionManager -> Shop:return()
+TransactionManager -> TransactionManager:3 recordBalance() 
 @enduml
 ```
