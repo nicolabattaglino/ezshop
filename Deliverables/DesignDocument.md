@@ -690,7 +690,7 @@ participant "/ : TransactionManager" as TransactionManager
 participant "/ : Transaction" as Transaction
 TransactionManager-> Transaction:1 getAmount()
 activate Transaction
-Transaction -> TransactionManger:2 return()
+Transaction -> TransactionManager:2 return()
 deactivate Transaction
 TransactionManager -> TransactionManager:3 recordBalance() 
 
@@ -708,7 +708,7 @@ participant "/ : Transaction" as Transaction
 
 TransactionManager-> Transaction:1 getAmount()
 activate Transaction
-Transaction -> TransactionManger:2 return()
+Transaction -> TransactionManager:2 return()
 deactivate Transaction
 TransactionManager -> TransactionManager:3 recordBalance() 
 @enduml
