@@ -27,7 +27,7 @@ The entire application is based on the MVC architectural pattern, we used Layere
 
 <report package diagram>
 
-plantuml
+```plantuml
 
 @startuml
 
@@ -39,7 +39,7 @@ gui ..> model_controller
 
 @enduml
 
-
+```
 
 
 # Low level design
