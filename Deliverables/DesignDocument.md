@@ -482,7 +482,36 @@ ProductType -->"0..1" Position: -position
 # Verification sequence diagrams 
 \<select key scenarios from the requirement document. For each of them define a sequence diagram showing that the scenario can be implemented by the classes and methods in the design>
 
-Scenario 2.1
+## Scenario 1.1
+```plantuml
+@startuml
+participant "/ : Shop" as Shop
+participant "/ : ProductOrderManager" as ProductOrderManager
+participant "p : Product" as Product
+participant "pos : Position" as Position
+activate Shop
+Shop -> ProductOrderManager: 1 : createProductType(description, productCode, pricePerUnit, note)
+activate ProductOrderManager
+create Product
+ProductOrderManager -> Product: 2 : new
+
+deactivate ProductOrderManager
+
+
+Shop -> ProductOrderManager: 3 : updatePosition(id, pos)
+activate ProductOrderManager
+create Position
+ProductOrderManager -> Position: 4 : new 
+
+ProductOrderManager -> Product: 5 : setPosition(pos)
+activate Product
+deactivate Product
+deactivate ProductOrderManager
+deactivate Shop
+@enduml
+```
+
+## Scenario 2.1
 ```plantuml
 @startuml
 Shop -> UserManager: createUser()
@@ -495,7 +524,7 @@ deactivate UserManager
 
 @enduml
 ```
-Scenario 2.2
+## Scenario 2.2
 ```plantuml
 @startuml
 Shop -> UserManager: deleteUser()
@@ -505,7 +534,7 @@ deactivate UserManager
 
 @enduml
 ```
-Scenario 2.3
+## Scenario 2.3
 ```plantuml
 @startuml
 Shop -> UserManager: modifyUserRights()
@@ -518,7 +547,7 @@ deactivate UserManager
 
 
 
-Scenarion 8.1
+## Scenarion 8.1
 ```plantuml
 @startuml
 Shop -> TransactionManager: startReturnTransacion()
@@ -541,7 +570,7 @@ deactivate TransactionManager
 @enduml
 ```
 
-Scenarin 9.1
+## Scenarin 9.1
 ```plantuml
 @startuml
 Shop -> TransactionManager: getCreditsAndDebits()
