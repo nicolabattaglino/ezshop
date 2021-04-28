@@ -487,8 +487,10 @@ Scenarion 8.1
 @startuml
 Shop -> TransactionManager: startReturnTransacion()
 activate TransactionManager
-TransacrionManager -> ProductOrderManager: updateQuantity()
+TransactionManager -> ProductOrderManager: updateQuantity()
+activate ProductOrderManager
 ProductOrderManager -> TransactionManager: return
+deactivate ProductOrderManager
 TransactionManager -> TransactionManager:returnCreditCardPayment()
 activate TransactionManager
 TransactionManager -> TransactionManager: luhnAlgorithm()
