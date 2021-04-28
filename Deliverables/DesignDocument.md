@@ -485,7 +485,7 @@ ProductType -->"0..1" Position: -position
 Scenarion 8.1
 ```plantuml
 @startuml
-Shop -> transactionManager: startReturnTransacion()
+Shop -> TransactionManager: startReturnTransacion()
 activate TransactionManager
 TransacrionManager -> ProductOrderManager: updateQuantity()
 ProductOrderManager -> TransactionManager: return
@@ -508,7 +508,7 @@ Scenarin 9.1
 @startuml
 Shop -> TransactionManager: getCreditsAndDebits()
 activate TransactionManager
-TransactionManager  -> : return
+TransactionManager  -> Shop: return
 deactivate TransactionManager 
 @enduml
 ```
