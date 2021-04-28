@@ -607,6 +607,11 @@ deactivate UserManager
 ## Scenarion 8.1
 ```plantuml
 @startuml
+
+participant "/ : Shop" as Shop
+participant "/ : ProductOrderManager" as ProductOrderManager
+participant "/ : TransactionManager" as TransactionManager
+participant "/ : Transaction" as Transaction
 Shop -> TransactionManager: startReturnTransacion()
 activate TransactionManager
 TransactionManager -> ProductOrderManager: updateQuantity()
@@ -622,6 +627,41 @@ TransactionManager  -> Shop: return()
 deactivate TransactionManager 
 Shop -> TransactionManager: endReturnTransaciton()
 activate TransactionManager
+TransactionManager-> Transaction: getAmount()
+activate Transaction
+Transaction -> TransactionManger: return()
+deactivate Transaction
+TransactionManager -> TransactionManager: recordBalance() 
+TransactionManager -> Shop:return()
+deactivate TransactionManager 
+@enduml
+```
+
+## Scenarion 8.2
+
+```plantuml
+@startuml
+
+participant "/ : Shop" as Shop
+participant "/ : ProductOrderManager" as ProductOrderManager
+participant "/ : TransactionManager" as TransactionManager
+participant "/ : Transaction" as Transaction
+Shop -> TransactionManager: startReturnTransacion()
+activate TransactionManager
+TransactionManager -> ProductOrderManager: updateQuantity()
+activate ProductOrderManager
+ProductOrderManager -> TransactionManager: return()
+deactivate ProductOrderManager
+TransactionManager -> TransactionManager:returnCashPayment()
+TransactionManager  -> Shop: return()
+deactivate TransactionManager 
+Shop -> TransactionManager: endReturnTransaciton()
+activate TransactionManager
+TransactionManager-> Transaction: getAmount()
+activate Transaction
+Transaction -> TransactionManger: return()
+deactivate Transaction
+TransactionManager -> TransactionManager: recordBalance() 
 TransactionManager -> Shop:return()
 deactivate TransactionManager 
 @enduml
@@ -630,9 +670,48 @@ deactivate TransactionManager
 ## Scenarin 9.1
 ```plantuml
 @startuml
+
+participant "/ : Shop" as Shop
+participant "/ : TransactionManager" as TransactionManager
 Shop -> TransactionManager: getCreditsAndDebits()
 activate TransactionManager
 TransactionManager  -> Shop: return()
 deactivate TransactionManager 
+@enduml
+```
+
+## Scenario 10.1
+
+```plantuml
+@startuml
+
+
+participant "/ : TransactionManager" as TransactionManager
+participant "/ : Transaction" as Transaction
+TransactionManager-> Transaction: getAmount()
+activate Transaction
+Transaction -> TransactionManger: return()
+deactivate Transaction
+TransactionManager -> TransactionManager: recordBalance() 
+TransactionManager -> Shop:return()
+
+@enduml
+```
+
+## Scenario 10.2
+
+```plantuml
+@startuml
+
+
+participant "/ : TransactionManager" as TransactionManager
+participant "/ : Transaction" as Transaction
+
+TransactionManager-> Transaction: getAmount()
+activate Transaction
+Transaction -> TransactionManger: return()
+deactivate Transaction
+TransactionManager -> TransactionManager: recordBalance() 
+TransactionManager -> Shop:return()
 @enduml
 ```
