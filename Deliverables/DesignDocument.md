@@ -108,7 +108,6 @@ class UserManager{
     +getAllUsers() : List<User>
     +updateUserRights(id: Integer, role: String) : Boolean
     +getUser(id: Integer) : User
-
     +login(username: String, password: String) : User
     +logout() : boolean
 
@@ -571,12 +570,34 @@ deactivate Shop
 ## Scenario 2.1
 ```plantuml
 @startuml
-Shop -> UserManager: createUser()
+actor ShopManager
+participant "/ : Shop" as Shop
+participant "/ : UserManager" as UserManager
+participant "u : User" as User
+ShopManager -> Shop: 1: createUser()
+activate Shop
+Shop -> UserManager: 2: createUser()
 activate UserManager
-Shop -> UserManager: updateUserRights()
-activate UserManager
+create User
+UserManager -> User: 3: new
+deactivate Shop
+deactivate UserManager
 
-UserManager -> Shop: return()
+ShopManager -> Shop: 4: getUser(id)
+activate Shop
+Shop -> UserManager: 5: getUser(id)
+activate UserManager
+deactivate UserManager
+deactivate Shop
+
+ShopManager -> Shop: 5: updateUserRights(u.id, role)
+activate Shop
+Shop -> UserManager: 6: updateUserRights(id, role)
+activate UserManager
+UserManager -> User: 7: setRole()
+activate User
+deactivate User
+
 deactivate UserManager
 
 @enduml
@@ -584,25 +605,48 @@ deactivate UserManager
 ## Scenario 2.2
 ```plantuml
 @startuml
-Shop -> UserManager: deleteUser()
+actor ShopManager
+participant "/ : Shop" as Shop
+participant "/ : UserManager" as UserManager
+participant "u : User" as User
+
+ShopManager -> Shop: 4: getUser()
+activate Shop
+Shop -> UserManager
 activate UserManager
-UserManager -> Shop: return()
 deactivate UserManager
+deactivate Shop
+
+ShopManager -> Shop: 1: deleteUser(u.id)
+activate Shop
+Shop -> UserManager: 2: deleteUser(u.id)
+activate UserManager
+UserManager -> User: delete
+destroy User
+deactivate UserManager
+deactivate Shop
 
 @enduml
 ```
 ## Scenario 2.3
 ```plantuml
 @startuml
-Shop -> UserManager: modifyUserRights()
+actor ShopManager
+participant "/ : Shop" as Shop
+participant "/ : UserManager" as UserManager
+participant "u : User" as User
+ShopManager -> Shop: 1: updateUserRights(u.id, role)
+activate Shop
+Shop -> UserManager: 2: updateUserRights(id, role)
 activate UserManager
-UserManager -> Shop: return()
+UserManager -> User: 3: setRole()
+activate User
+deactivate User
 deactivate UserManager
+deactivate Shop
 
 @enduml
 ```
-
-
 
 ## Scenarion 8.1
 ```plantuml
