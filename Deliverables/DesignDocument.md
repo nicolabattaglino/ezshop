@@ -201,6 +201,7 @@ class TransactionManager {
     -recordBalanceUpdate ( double toBeAdded) : boolean
     +getCreditsAndDebits(from: LocalDate, to: LocalDate): List<BalanceOperation>
     +computeBalance(): double
+    -luhnAlgorithm (int creditCardNumber): boolean
 }
 
 class Transaction {
@@ -481,3 +482,33 @@ ProductType -->"0..1" Position: -position
 # Verification sequence diagrams 
 \<select key scenarios from the requirement document. For each of them define a sequence diagram showing that the scenario can be implemented by the classes and methods in the design>
 
+Scenarion 8.1
+```plantuml
+@startuml
+Shop -> transactionManager: startReturnTransacion()
+activate TransactionManager
+TransacrionManager -> ProductOrderManager: updateQuantity()
+ProductOrderManager -> TransactionManager: return
+TransactionManager -> TransactionManager:returnCreditCardPayment()
+activate TransactionManager
+TransactionManager -> TransactionManager: luhnAlgorithm()
+note right: Card validated
+deactivate TransactionManager 
+TransactionManager  -> Shop: return
+deactivate TransactionManager 
+Shop -> TransactionManager: endReturnTransaciton()
+activate TransactionManager
+TransactionManager -> Shop:return 
+deactivate TransactionManager 
+@enduml
+```
+
+Scenarin 9.1
+```plantuml
+@startuml
+Shop -> TransactionManager: getCreditsAndDebits()
+activate TransactionManager
+TransactionManager  -> : return
+deactivate TransactionManager 
+@enduml
+```
