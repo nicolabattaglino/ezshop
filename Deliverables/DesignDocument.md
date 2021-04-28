@@ -180,6 +180,8 @@ ProductOrderManager -->"*" ProductType: -productMap
 ProductOrderManager -->"*" Order: -orderMap
 
 class TransactionManager {
+    -transactionMap <transactionID, transaction>
+    -balanceOrderedList <Balance>
     +startSaleTransaction() : Integer
     +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
@@ -196,6 +198,23 @@ class TransactionManager {
     +receiveCreditCardPayment(transactionId: Integer, creditCard: String): boolean
     +returnCashPayment(returnId: Integer): double
     +returnCreditCardPayment(returnId: Integer, creditCard: String): double
+    -recordBalanceUpdate ( double toBeAdded) : boolean
+    +getCreditsAndDebits(from: LocalDate, to: LocalDate): List<BalanceOperation>
+    +computeBalance(): double
+}
+
+class Transaction {
+    -double amount
+    -string creditCard
+    -int ID
+    
+}
+TransactionManager <-- Transaction : transactionID
+
+class Balance{
+    -int Amount
+    -string From
+    -string to
 }
 
 
