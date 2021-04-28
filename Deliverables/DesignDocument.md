@@ -482,6 +482,42 @@ ProductType -->"0..1" Position: -position
 # Verification sequence diagrams 
 \<select key scenarios from the requirement document. For each of them define a sequence diagram showing that the scenario can be implemented by the classes and methods in the design>
 
+Scenario 2.1
+```plantuml
+@startuml
+Shop -> UserManager: createUser()
+activate UserManager
+Shop -> UserManager: updateUserRights()
+activate UserManager
+
+UserManager -> Shop: return()
+deactivate UserManager
+
+@enduml
+```
+Scenario 2.2
+```plantuml
+@startuml
+Shop -> UserManager: deleteUser()
+activate UserManager
+UserManager -> Shop: return()
+deactivate UserManager
+
+@enduml
+```
+Scenario 2.3
+```plantuml
+@startuml
+Shop -> UserManager: modifyUserRights()
+activate UserManager
+UserManager -> Shop: return()
+deactivate UserManager
+
+@enduml
+```
+
+
+
 Scenarion 8.1
 ```plantuml
 @startuml
