@@ -217,6 +217,8 @@ class Balance{
     -string to
 }
 
+TransactionManager <-- Balance: OrderedList
+
 
 Shop --> UserManager
 Shop --> CustomerManager
