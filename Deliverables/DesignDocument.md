@@ -546,25 +546,23 @@ deactivate Shop
 ## Scenario 1.3
 ```plantuml
 @startuml
-@startuml
 participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
-participant "p : Product" as Product
-participant "pos : Position" as Position
+
+
 activate Shop
 Shop -> ProductOrderManager: 1 : getProductTypeByBarCode(barCode)
 activate ProductOrderManager
 deactivate ProductOrderManager
 
 
-Shop -> ProductOrderManager: 2 : updatePosition(p.id, position)
+Shop -> ProductOrderManager: 2 : updateProduct(newPrice)
 activate ProductOrderManager
-create Position
-ProductOrderManager -> Position: 3 : new 
 
-ProductOrderManager -> Product: 4 : setPosition(pos)
-activate Product
-deactivate Product
+
+
+
+
 deactivate ProductOrderManager
 deactivate Shop
 @enduml
