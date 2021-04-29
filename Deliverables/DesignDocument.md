@@ -107,6 +107,10 @@ interface Shop {
     +computeBalance(): double
 }
 
+class Shop {
+    +addPayedOrder(order: Order): boolean
+}
+
 class UserManager{
     -userIdGen: Integer
     -loggedUser: User
@@ -184,7 +188,7 @@ class ProductOrderManager {
     
     +payOrder(Integer orderId): boolean
     +recordOrderArrival(Integer orderId): boolean
-    +getAllOrders(): List<Order> 
+    
     +clear()
 
 }
@@ -213,6 +217,9 @@ class TransactionManager {
     +getCreditsAndDebits(from: LocalDate, to: LocalDate): List<BalanceOperation>
     +computeBalance(): double
     -luhnAlgorithm (int creditCardNumber): boolean
+
+
+    +addPayedOrder(order: Order): boolean
     +clear()
     +getAllOrders(): List<Order> 
 }
@@ -267,17 +274,16 @@ ReturnTransaction --|> Debit
 
 class ProductType {
     -id: Integer
-    -String: barCode
-    -String: description
-    -double: sellPrice
-    -int: discountRate
-    -String: notes
+    -barCode: String
 
+    -description: String
+    -sellPrice: double
+    -discountRate: int
+    -notes: String
+    -amount: int
 }
 
-class Product
 
-ProductType <--"*" Product: -type 
 class Position {
     -aisleID: Integer
     -rackID: Integer
