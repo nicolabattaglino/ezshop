@@ -265,7 +265,6 @@ class Order{
 
 enum OrderStatus{
     ISSUED
-    ORDERED
     PAYED
     COMPLETED
 }
