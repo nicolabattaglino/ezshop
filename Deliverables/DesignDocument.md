@@ -158,6 +158,8 @@ class ProductOrderManager {
     -productIdGen: Integer
     -orderIdGen: Integer
 
+    -checkBarcode(barCode: String): boolean
+
     +createProductType(description: String, productCode: String, pricePerUnit: double, note: String): Integer
     +updateProduct(id: Integer, newDescription: String, newCode: String, newPrice: double, newNote: String): boolean
     +deleteProductType(id: Integer): boolean
@@ -174,6 +176,7 @@ class ProductOrderManager {
     +payOrder(Integer orderId): boolean
     +recordOrderArrival(Integer orderId): boolean
     +getAllOrders(): List<Order> 
+
 }
 
 ProductOrderManager -->"*" ProductType: -productMap
@@ -198,7 +201,7 @@ class TransactionManager {
     +receiveCreditCardPayment(transactionId: Integer, creditCard: String): boolean
     +returnCashPayment(returnId: Integer): double
     +returnCreditCardPayment(returnId: Integer, creditCard: String): double
-    -recordBalanceUpdate ( double toBeAdded) : boolean
+    +recordBalanceUpdate ( double toBeAdded) : boolean
     +getCreditsAndDebits(from: LocalDate, to: LocalDate): List<BalanceOperation>
     +computeBalance(): double
     -luhnAlgorithm (int creditCardNumber): boolean
@@ -234,9 +237,15 @@ class Debit
 Credit --|> FinancialTransaction
 Debit --|> FinancialTransaction
 
+class FinancialTransaction {
+    -description: String
+    -amount: int
+    -date: LocalDate
+}
+
 class Order{
     -id: Integer
-    -supplier
+    -supplier: String
     -pricePerUnit: double
     -quantity: Integer
     -status: OrderStatus
@@ -311,7 +320,7 @@ class LoyaltyCard {
 
 SaleTransaction "*" --> "0..1" LoyaltyCard: -loyaltyCard
 
-Order "*" - ProductType
+Order "*" -> ProductType: -product
 
 class ReturnTransaction {
   quantity
@@ -438,7 +447,7 @@ ProductType <--"*" Product: -type
 Order "*" --> ProductType: products
 
 class ProductType {
-    -/id: Integer
+    -id: Integer
     -String: barCode
     -String: description
     -double: sellPrice
@@ -485,6 +494,9 @@ ProductType -->"0..1" Position: -position
 ## Scenario 1.1
 ```plantuml
 @startuml
+
+title Create product type X
+
 actor ShopManager
 participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
@@ -496,14 +508,58 @@ activate Shop
 
 Shop -> ProductOrderManager: 2 : createProductType()
 activate ProductOrderManager
+
+ProductOrderManager -> ProductOrderManager: 3 : checkBarcode(productCode)
+activate ProductOrderManager
+deactivate ProductOrderManager
+
 create Product
-ProductOrderManager -> Product: 3 : new
+ProductOrderManager -> Product: 4 : new
 
 deactivate ProductOrderManager
 deactivate Shop
-ShopManager -> Shop: 4 : updatePosition(id, position)
+ShopManager -> Shop: 5 : updatePosition(id, position)
 activate Shop
-Shop -> ProductOrderManager: 5 : updatePosition(id, position)
+Shop -> ProductOrderManager: 6 : updatePosition(id, position)
+activate ProductOrderManager
+create Position
+ProductOrderManager -> Position: 7 : new 
+
+ProductOrderManager -> Product: 8 : setPosition(pos)
+activate Product
+deactivate Product
+deactivate ProductOrderManager
+deactivate Shop
+@enduml
+```
+
+## Scenario 1.2
+```plantuml
+@startuml
+
+title Modify product type location
+
+actor ShopManager
+participant "/ : Shop" as Shop
+participant "/ : ProductOrderManager" as ProductOrderManager
+participant "p : Product" as Product
+participant "pos : Position" as Position
+
+ShopManager -> Shop: 1 : getProductTypeByBarCode(barCode)
+activate Shop
+Shop -> ProductOrderManager: 2 : getProductTypeByBarCode(barCode)
+activate ProductOrderManager
+
+ProductOrderManager -> ProductOrderManager: 3 : checkBarcode(barCode)
+activate ProductOrderManager
+deactivate ProductOrderManager
+
+deactivate ProductOrderManager
+deactivate Shop
+
+ShopManager -> Shop: 4 : updatePosition(p.id, position)
+activate Shop
+Shop -> ProductOrderManager: 5 : updatePosition(p.id, position)
 activate ProductOrderManager
 create Position
 ProductOrderManager -> Position: 6 : new 
@@ -516,54 +572,32 @@ deactivate Shop
 @enduml
 ```
 
-## Scenario 1.2
+## Scenario 1.3
 ```plantuml
 @startuml
+
+title Modify product type price per unit
+
 actor ShopManager
 participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
 participant "p : Product" as Product
-participant "pos : Position" as Position
-
+ShopManager -> Shop: 1 : getProductTypeByBarCode(barCode)
 activate Shop
-Shop -> ProductOrderManager: 1 : getProductTypeByBarCode(barCode)
+Shop -> ProductOrderManager: 2 : getProductTypeByBarCode(barCode)
+activate ProductOrderManager
+ProductOrderManager -> ProductOrderManager: 3 : checkBarcode(barCode)
 activate ProductOrderManager
 deactivate ProductOrderManager
+deactivate ProductOrderManager
 deactivate Shop
-ShopMmnager -> Shop
+ShopManager -> Shop: 3 : updateProduct(p.id, newPrice)
 activate Shop
-Shop -> ProductOrderManager: 2 : updatePosition(p.id, position)
+Shop -> ProductOrderManager: 4 : updateProduct(p.id, newPrice)
 activate ProductOrderManager
-create Position
-ProductOrderManager -> Position: 3 : new 
-
-ProductOrderManager -> Product: 4 : setPosition(pos)
+ProductOrderManager -> Product: 5 : setPrice(newPrice)
 activate Product
 deactivate Product
-deactivate ProductOrderManager
-deactivate Shop
-@enduml
-```
-
-## Scenario 1.3
-```plantuml
-@startuml
-participant "/ : Shop" as Shop
-participant "/ : ProductOrderManager" as ProductOrderManager
-
-
-activate Shop
-Shop -> ProductOrderManager: 1 : getProductTypeByBarCode(barCode)
-activate ProductOrderManager
-deactivate ProductOrderManager
-
-
-Shop -> ProductOrderManager: 2 : updateProduct(newPrice)
-activate ProductOrderManager
-
-
-
-
 
 deactivate ProductOrderManager
 deactivate Shop
@@ -573,6 +607,9 @@ deactivate Shop
 ## Scenario 2.1
 ```plantuml
 @startuml
+
+title Create user and define rights
+
 Shop -> UserManager: createUser()
 activate UserManager
 Shop -> UserManager: updateUserRights()
@@ -586,6 +623,9 @@ deactivate UserManager
 ## Scenario 2.2
 ```plantuml
 @startuml
+
+title Delete user
+
 Shop -> UserManager: deleteUser()
 activate UserManager
 UserManager -> Shop: return()
@@ -596,6 +636,9 @@ deactivate UserManager
 ## Scenario 2.3
 ```plantuml
 @startuml
+
+title Modify user rights
+
 Shop -> UserManager: modifyUserRights()
 activate UserManager
 UserManager -> Shop: return()
@@ -603,12 +646,83 @@ deactivate UserManager
 
 @enduml
 ```
+## Scenario 3.1
+```plantuml
+@startuml
+
+title Order of product type X issued
+actor ShopManager
+actor ShopManager
+participant "/ : Shop" as Shop
+participant "/ : ProductOrderManager" as ProductOrderManager
+participant "/ : Order" as Order
+ShopManager -> Shop: 1 : issueOrder(productCode, quantity, pricePerUnit)
+activate Shop
+Shop -> ProductOrderManager: 2 : issueOrder(productCode, quantity, pricePerUnit)
+activate ProductOrderManager
+ProductOrderManager -> ProductOrderManager: 3 : checkBarcode(barCode)
+activate ProductOrderManager
+deactivate ProductOrderManager
+create Order
+ProductOrderManager -> Order: 4 : new
+note right: When created, an Order is in the issued state
+deactivate ProductOrderManager
+deactivate Shop
+
+@enduml
+```
+## Scenario 3.2
+```plantuml
+@startuml
+
+title Order of product type X payed
+actor ShopManager
+participant "/ : Shop" as Shop
+participant "/ : ProductOrderManager" as ProductOrderManager
+participant "o : Order" as Order
+ShopManager -> Shop: 1 : payOrder(orderId)
+activate Shop
+Shop -> ProductOrderManager: 2 : payOrder(orderId)
+activate ProductOrderManager
+ProductOrderManager -> Shop: 3 : recordBalanceUpdate(-o.pricePerUnit*o.quantity)
+activate Shop
+deactivate Shop
+ProductOrderManager -> Order: 4 : setStatus(PAYED)
+activate Order
+deactivate Order
+deactivate ProductOrderManager
+
+@enduml
+```
+## Scenario 3.3
+```plantuml
+@startuml
+
+title Record order of product type X arrival
+actor ShopManager
+participant "/ : Shop" as Shop
+participant "/ : ProductOrderManager" as ProductOrderManager
+participant "o : Order" as Order
+ShopManager -> Shop: 1 : recordOrderArrival(orderId)
+activate Shop
+Shop -> ProductOrderManager: 2 : recordOrderArrival(orderId)
+activate ProductOrderManager
+
+ProductOrderManager -> ProductOrderManager: 3 updateQuantity(o.product.id, o.quantity)
+activate ProductOrderManager
+deactivate ProductOrderManager
+ProductOrderManager -> Order: 4 : setStatus(COMPLETED)
+activate Order
+deactivate Order
+deactivate ProductOrderManager
 
 
-
+@enduml
+```
 ## Scenarion 8.1
 ```plantuml
 @startuml
+title Return transaction of product type X completed, credit card
 Shop -> TransactionManager: startReturnTransacion()
 activate TransactionManager
 TransactionManager -> ProductOrderManager: updateQuantity()
@@ -632,6 +746,7 @@ deactivate TransactionManager
 ## Scenarin 9.1
 ```plantuml
 @startuml
+title List credits and debits
 Shop -> TransactionManager: getCreditsAndDebits()
 activate TransactionManager
 TransactionManager  -> Shop: return
