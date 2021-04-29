@@ -220,6 +220,7 @@ class TransactionManager {
     +computeBalance(): double
     -luhnAlgorithm (int creditCardNumber): boolean
     +clear()
+    +getAllOrders(): List<Order> 
 }
 
 
