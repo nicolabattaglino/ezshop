@@ -198,6 +198,7 @@ ProductOrderManager -->"*" Order: -orderMap
 
 class TransactionManager {
     -transactionMap <transactionID, transaction>
+    +startSaleTransaction() : Integer
     +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +applyDiscountRateToProduct(transactionId: Integer, productCode: String, discountRate: double): boolean
@@ -977,33 +978,35 @@ deactivate Shop
 
 
 
-
-
-
-
-
 ## Scenario 6.1
 ```plantuml
 @startuml
 
-title Record order of product type X arrival
-actor ShopManager
+title
+**Scenario 6.1** : Sale of product type X is completed
+end title
+
+actor Cashier
+
+participant "/ : Basket" as Basket
 participant "/ : Shop" as Shop
-participant "/ : ProductOrderManager" as ProductOrderManager
-participant "o : Order" as Order
-ShopManager -> Shop: 1 : recordOrderArrival(orderId)
-activate Shop
-Shop -> ProductOrderManager: 2 : recordOrderArrival(orderId)
-activate ProductOrderManager
+participant "/ : SaleTransaction" as SaleTransaction
+participant "/ : BalanceOperation" as BalanceOperation
+participant "/ : PaymentMethod" as PaymentMethod
 
-ProductOrderManager -> ProductOrderManager: 3 updateQuantity(o.product.id, o.quantity)
-activate ProductOrderManager
-deactivate ProductOrderManager
-ProductOrderManager -> Order: 4 : setStatus(COMPLETED)
-activate Order
-deactivate Order
-deactivate ProductOrderManager
+Basket -> Shop: 1 : startSaleTransaction()
+Basket ->  SaleTransaction: 2 : addProductToSale() 
+Cashier -> PaymentMethod: 3 : TransactionManager()
+Shop --> Basket: 4 : startReturnTransaction()
+Shop -> PaymentMethod : 5 : SaleTransaction getSaleTransaction()
+Shop --> Basket: 6 : returnProduct()
 
+BalanceOperation -> PaymentMethod : 7 : receiveCashPayment() or receiveCreditCardPayment()
+PaymentMethod --> Cashier: 8 : returnCashPayment() or returnCreditCardPayment()
+SaleTransaction --> Basket: 9 : endReturnTransaction()
+Shop --> Basket : 10 : endSaleTransaction()
+Shop --> Basket : 11 : deleteSaleTransaction()
+Shop --> Basket : 12 : deleteReturnTransaction()
 
 @enduml
 ```
