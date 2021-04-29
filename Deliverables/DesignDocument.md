@@ -663,7 +663,7 @@ actor ShopManager
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 participant "u : User" as User
-ShopManager -> Shop: 1: createUser()
+ShopManager -> Shop: 1: createUser(name, surname, role)
 activate Shop
 Shop -> UserManager: 2: createUser()
 activate UserManager
@@ -699,9 +699,9 @@ participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 participant "u : User" as User
 
-ShopManager -> Shop: 4: getUser()
+ShopManager -> Shop: 1: getUser(id)
 activate Shop
-Shop -> UserManager
+Shop -> UserManager: 4: getUser(id)
 activate UserManager
 deactivate UserManager
 deactivate Shop
@@ -724,11 +724,19 @@ actor ShopManager
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 participant "u : User" as User
-ShopManager -> Shop: 1: updateUserRights(u.id, role)
+
+ShopManager -> Shop: 1: getUser(id)
 activate Shop
-Shop -> UserManager: 2: updateUserRights(id, role)
+Shop -> UserManager: 2: getUser(id)
 activate UserManager
-UserManager -> User: 3: setRole()
+deactivate UserManager
+deactivate Shop
+
+ShopManager -> Shop: 3: updateUserRights(u.id, role)
+activate Shop
+Shop -> UserManager: 4: updateUserRights(u.id, role)
+activate UserManager
+UserManager -> User: 5: setRole()
 activate User
 deactivate User
 deactivate UserManager
