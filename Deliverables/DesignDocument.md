@@ -22,11 +22,24 @@ The design must satisfy the Official Requirements document, notably functional a
 # High level design 
 
 <discuss architectural styles used, if any>
+
+The entire application is based on the MVC architectural pattern, we used Layered style design to divide the GUI from the business logic/data level. The two layers communicate with eachother with a common interface defined by the Façade design pattern.
+
 <report package diagram>
 
+```plantuml
 
+@startuml
 
+package gui 
 
+package model_controller
+
+gui ..> model_controller
+
+@enduml
+
+```
 
 
 # Low level design
@@ -108,7 +121,6 @@ class UserManager{
     +getAllUsers() : List<User>
     +updateUserRights(id: Integer, role: String) : Boolean
     +getUser(id: Integer) : User
-
     +login(username: String, password: String) : User
     +logout() : boolean
 
@@ -479,16 +491,57 @@ ProductType -->"0..1" Position: -position
 \<for each functional requirement from the requirement document, list which classes concur to implement it>
 
 
+|       | Shop  |  CustomerManager |  UserManager |  TransactionManager  | ProductOrderManager |
+|-------|-------|------------------|--------------|----------------------|---------------------|
+| FR1.1 |   x   |                  |       x      |                      |                     |
+| FR1.2 |   x   |                  |       x      |                      |                     |
+| FR1.3 |   x   |                  |       x      |                      |                     |
+| FR1.4 |   x   |                  |       x      |                      |                     |
+| FR1.5 |   x   |                  |       x      |                      |                     |
+| FR3.1 |   x   |                  |              |                      |         x           |
+| FR3.2 |   x   |                  |              |                      |         x           |
+| FR3.3 |   x   |                  |              |                      |         x           |
+| FR3.4 |   x   |                  |              |                      |         x           |
+| FR4.1 |   x   |                  |              |                      |         x           |
+| FR4.2 |   x   |                  |              |                      |         x           |
+| FR4.3 |   x   |                  |              |                      |         x           |
+| FR4.4 |   x   |                  |              |                      |         x           |
+| FR4.5 |   x   |                  |              |         x            |         x           |
+| FR4.6 |   x   |                  |              |                      |         x           |
+| FR4.7 |   x   |                  |              |                      |         x           |
+| FR5.1 |   x   |        x         |              |                      |                     |
+| FR5.2 |   x   |        x         |              |                      |                     |
+| FR5.3 |   x   |        x         |              |                      |                     |
+| FR5.4 |   x   |        x         |              |                      |                     |
+| FR5.5 |   x   |        x         |              |                      |                     |
+| FR5.6 |   x   |        x         |              |                      |                     |
+| FR5.7 |   x   |        x         |              |         x            |                     |
+| FR6.1 |   x   |        x         |              |                      |                     |
+| FR6.2 |   x   |        x         |              |                      |                     |
+| FR6.3 |   x   |        x         |              |                      |                     |
+| FR6.4 |   x   |        x         |              |                      |                     |
+| FR6.5 |   x   |        x         |              |                      |                     |
+| FR6.6 |   x   |        x         |              |                      |                     |
+| FR6.7 |   x   |        x         |              |                      |                     |
+| FR6.8 |   x   |        x         |              |                      |                     |
+| FR6.9 |   x   |        x         |              |                      |                     |
+| FR6.10 |  x   |        x         |              |                      |                     |
+| FR6.11 |  x   |        x         |              |                      |                     |
+| FR6.12 |  x   |        x         |              |                      |                     |
+| FR6.13 |  x   |        x         |              |                      |                     |
+| FR6.14 |  x   |        x         |              |                      |                     |
+| FR6.15 |  x   |        x         |              |                      |                     |
+| FR7.1 |   x   |                  |              |          x           |                     |
+| FR7.2 |   x   |                  |              |          x           |                     |
+| FR7.3 |   x   |                  |              |          x           |                     |
+| FR7.4 |   x   |                  |              |          x           |                     |
+| FR8.1 |   x   |                  |              |          x           |                     |
+| FR8.2 |   x   |                  |              |          x           |                     |
+| FR8.3 |   x   |                  |              |          x           |                     |
+| FR8.4 |   x   |                  |              |          x           |                     |
 
 
-
-
-
-
-
-
-
-# Verification sequence diagrams 
+ # Verification sequence diagrams 
 \<select key scenarios from the requirement document. For each of them define a sequence diagram showing that the scenario can be implemented by the classes and methods in the design>
 
 ## Scenario 1.1
@@ -607,15 +660,34 @@ deactivate Shop
 ## Scenario 2.1
 ```plantuml
 @startuml
-
-title Create user and define rights
-
-Shop -> UserManager: createUser()
+actor ShopManager
+participant "/ : Shop" as Shop
+participant "/ : UserManager" as UserManager
+participant "u : User" as User
+ShopManager -> Shop: 1: createUser()
+activate Shop
+Shop -> UserManager: 2: createUser()
 activate UserManager
-Shop -> UserManager: updateUserRights()
-activate UserManager
+create User
+UserManager -> User: 3: new
+deactivate Shop
+deactivate UserManager
 
-UserManager -> Shop: return()
+ShopManager -> Shop: 4: getUser(id)
+activate Shop
+Shop -> UserManager: 5: getUser(id)
+activate UserManager
+deactivate UserManager
+deactivate Shop
+
+ShopManager -> Shop: 5: updateUserRights(u.id, role)
+activate Shop
+Shop -> UserManager: 6: updateUserRights(id, role)
+activate UserManager
+UserManager -> User: 7: setRole()
+activate User
+deactivate User
+
 deactivate UserManager
 
 @enduml
@@ -623,26 +695,45 @@ deactivate UserManager
 ## Scenario 2.2
 ```plantuml
 @startuml
+actor ShopManager
+participant "/ : Shop" as Shop
+participant "/ : UserManager" as UserManager
+participant "u : User" as User
 
-title Delete user
-
-Shop -> UserManager: deleteUser()
+ShopManager -> Shop: 4: getUser()
+activate Shop
+Shop -> UserManager
 activate UserManager
-UserManager -> Shop: return()
 deactivate UserManager
+deactivate Shop
+
+ShopManager -> Shop: 1: deleteUser(u.id)
+activate Shop
+Shop -> UserManager: 2: deleteUser(u.id)
+activate UserManager
+UserManager -> User: delete
+destroy User
+deactivate UserManager
+deactivate Shop
 
 @enduml
 ```
 ## Scenario 2.3
 ```plantuml
 @startuml
-
-title Modify user rights
-
-Shop -> UserManager: modifyUserRights()
+actor ShopManager
+participant "/ : Shop" as Shop
+participant "/ : UserManager" as UserManager
+participant "u : User" as User
+ShopManager -> Shop: 1: updateUserRights(u.id, role)
+activate Shop
+Shop -> UserManager: 2: updateUserRights(id, role)
 activate UserManager
-UserManager -> Shop: return()
+UserManager -> User: 3: setRole()
+activate User
+deactivate User
 deactivate UserManager
+deactivate Shop
 
 @enduml
 ```
@@ -719,26 +810,66 @@ deactivate ProductOrderManager
 
 @enduml
 ```
+
 ## Scenarion 8.1
 ```plantuml
 @startuml
-title Return transaction of product type X completed, credit card
-Shop -> TransactionManager: startReturnTransacion()
+
+participant "/ : Shop" as Shop
+participant "/ : ProductOrderManager" as ProductOrderManager
+participant "/ : TransactionManager" as TransactionManager
+participant "/ : Transaction" as Transaction
+Shop -> TransactionManager:1 startReturnTransacion()
 activate TransactionManager
-TransactionManager -> ProductOrderManager: updateQuantity()
+TransactionManager -> ProductOrderManager:2 updateQuantity()
 activate ProductOrderManager
-ProductOrderManager -> TransactionManager: return
+ProductOrderManager -> TransactionManager:3 return()
 deactivate ProductOrderManager
-TransactionManager -> TransactionManager:returnCreditCardPayment()
+TransactionManager -> TransactionManager:4 returnCreditCardPayment()
 activate TransactionManager
-TransactionManager -> TransactionManager: luhnAlgorithm()
+TransactionManager -> TransactionManager:5 luhnAlgorithm()
 note right: Card validated
 deactivate TransactionManager 
-TransactionManager  -> Shop: return
+TransactionManager  -> Shop:6 return()
 deactivate TransactionManager 
-Shop -> TransactionManager: endReturnTransaciton()
+Shop -> TransactionManager:7 endReturnTransaciton()
 activate TransactionManager
-TransactionManager -> Shop:return 
+TransactionManager-> Transaction:8 getAmount()
+activate Transaction
+Transaction -> TransactionManger:9 return()
+deactivate Transaction
+TransactionManager -> TransactionManager:10 recordBalance() 
+TransactionManager -> Shop:11 return()
+deactivate TransactionManager 
+@enduml
+```
+
+## Scenarion 8.2
+
+```plantuml
+@startuml
+
+participant "/ : Shop" as Shop
+participant "/ : ProductOrderManager" as ProductOrderManager
+participant "/ : TransactionManager" as TransactionManager
+participant "/ : Transaction" as Transaction
+Shop -> TransactionManager:1 startReturnTransacion()
+activate TransactionManager
+TransactionManager -> ProductOrderManager:2 updateQuantity()
+activate ProductOrderManager
+ProductOrderManager -> TransactionManager:3 return()
+deactivate ProductOrderManager
+TransactionManager -> TransactionManager:4 returnCashPayment()
+TransactionManager  -> Shop:5 return()
+deactivate TransactionManager 
+Shop -> TransactionManager:6 endReturnTransaciton()
+activate TransactionManager
+TransactionManager-> Transaction:7 getAmount()
+activate Transaction
+Transaction -> TransactionManger:8 return()
+deactivate Transaction
+TransactionManager -> TransactionManager:9 recordBalance() 
+TransactionManager -> Shop:10 return()
 deactivate TransactionManager 
 @enduml
 ```
@@ -746,10 +877,46 @@ deactivate TransactionManager
 ## Scenarin 9.1
 ```plantuml
 @startuml
-title List credits and debits
-Shop -> TransactionManager: getCreditsAndDebits()
+
+participant "/ : Shop" as Shop
+participant "/ : TransactionManager" as TransactionManager
+Shop -> TransactionManager:1 getCreditsAndDebits()
 activate TransactionManager
-TransactionManager  -> Shop: return
+TransactionManager  -> Shop:2 return()
 deactivate TransactionManager 
+@enduml
+```
+
+## Scenario 10.1
+
+```plantuml
+@startuml
+
+
+participant "/ : TransactionManager" as TransactionManager
+participant "/ : Transaction" as Transaction
+TransactionManager-> Transaction:1 getAmount()
+activate Transaction
+Transaction -> TransactionManager:2 return()
+deactivate Transaction
+TransactionManager -> TransactionManager:3 recordBalance() 
+
+@enduml
+```
+
+## Scenario 10.2
+
+```plantuml
+@startuml
+
+
+participant "/ : TransactionManager" as TransactionManager
+participant "/ : Transaction" as Transaction
+
+TransactionManager-> Transaction:1 getAmount()
+activate Transaction
+Transaction -> TransactionManager:2 return()
+deactivate Transaction
+TransactionManager -> TransactionManager:3 recordBalance() 
 @enduml
 ```
