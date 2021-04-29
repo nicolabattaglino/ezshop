@@ -107,6 +107,8 @@ interface EZShopInterface {
     +computeBalance(): double
 }
 
+EZShopInterface -|> Shop
+
 class Shop {
     +addPayedOrder(order: Order): boolean
 }
@@ -124,7 +126,7 @@ class UserManager{
     +getUser(id: Integer) : User
     +login(username: String, password: String) : User
     +logout() : boolean
-    +cleat()
+    +clear()
 
 }
 
@@ -321,12 +323,6 @@ class Quantity {
     quantity: Integer
 }
 
-
-class LoyaltyCard {
-    ID
-    points
-    attachCustomer() : boolean 
-}
 
 
 
@@ -689,14 +685,14 @@ participant "/ : UserManager" as UserManager
 
 Administrator -> Shop: 1: getUser(id)
 activate Shop
-Shop -> UserManager: 4: getUser(id)
+Shop -> UserManager: 2: getUser(id)
 activate UserManager
 deactivate UserManager
 deactivate Shop
 
-Administrator -> Shop: 1: deleteUser(u.id)
+Administrator -> Shop: 3: deleteUser(u.id)
 activate Shop
-Shop -> UserManager: 2: deleteUser(u.id)
+Shop -> UserManager: 4: deleteUser(u.id)
 activate UserManager
 deactivate UserManager
 deactivate Shop
@@ -846,18 +842,18 @@ CustomerManager -> LoyaltyCard: 3: new
 deactivate CustomerManager
 deactivate Shop
 
-User -> Shop: 1: getCustomer(id)
+User -> Shop: 4: getCustomer(id)
 activate Shop
-Shop -> CustomerManager: 2: getCustomer(id)
+Shop -> CustomerManager: 5: getCustomer(id)
 activate CustomerManager
 deactivate CustomerManager
 deactivate Shop
 
-User -> Shop: 1: attachCardToCustomer(l.id, cu.id) 
+User -> Shop: 6: attachCardToCustomer(l.id, cu.id) 
 activate Shop
-Shop -> CustomerManager: 2: attachCardToCustomer(l.id, cu.id)
+Shop -> CustomerManager: 7: attachCardToCustomer(l.id, cu.id)
 activate CustomerManager
-CustomerManager -> Customer: 3: setCard(l)
+CustomerManager -> Customer: 8: setCard(l)
 activate Customer
 deactivate Customer
 deactivate CustomerManager
@@ -882,11 +878,11 @@ activate CustomerManager
 deactivate CustomerManager
 deactivate Shop
 
-User -> Shop: 1: modifyCustomer(cu.id,cu.name)
+User -> Shop: 3: modifyCustomer(cu.id,cu.name)
 activate Shop
-Shop -> CustomerManager: 2: modifyCustomer(cu.id,cu.name)
+Shop -> CustomerManager: 4: modifyCustomer(cu.id,cu.name)
 activate CustomerManager
-CustomerManager -> Customer: 3: setCard(null)
+CustomerManager -> Customer: 5: setCard(null)
 activate Customer
 deactivate Customer
 deactivate CustomerManager
@@ -913,13 +909,13 @@ activate CustomerManager
 deactivate CustomerManager
 deactivate Shop
 
-User -> Shop: 1: modifyCustomer(cu.id, newCustomerName, newCustomerCard)
+User -> Shop: 3: modifyCustomer(cu.id, newCustomerName, newCustomerCard)
 activate Shop
-Shop -> CustomerManager: 2: modifyCustomer(cu.id, newCustomerName, newCustomerCard)
+Shop -> CustomerManager: 4: modifyCustomer(cu.id, newCustomerName, newCustomerCard)
 activate CustomerManager
-CustomerManager -> Customer: 3: setCard(newCustomerCard)
+CustomerManager -> Customer: 5: setCard(newCustomerCard)
 activate Customer
-CustomerManager -> Customer: 3: setName(newCustomerName)
+CustomerManager -> Customer: 6: setName(newCustomerName)
 deactivate Customer
 deactivate CustomerManager
 deactivate Shop
@@ -943,7 +939,7 @@ Shop -> UserManager: 2: login(username, password)
 activate UserManager
 UserManager -> User: 3: getUsername()
 activate User
-UserManager -> User: 3: getPassword()
+UserManager -> User: 4: getPassword()
 deactivate User
 deactivate Shop
 
