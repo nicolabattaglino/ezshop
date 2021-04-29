@@ -111,6 +111,8 @@ class Shop {
     +addPayedOrder(order: Order): boolean
 }
 
+Shop.|>EZShopInterface
+
 class UserManager{
     -userIdGen: Integer
     -loggedUser: User
