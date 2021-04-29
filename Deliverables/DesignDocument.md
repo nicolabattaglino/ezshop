@@ -682,7 +682,6 @@ deactivate UserManager
 actor Administrator
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
-participant "u : User" as User
 
 Administrator -> Shop: 1: getUser(id)
 activate Shop
@@ -695,8 +694,6 @@ Administrator -> Shop: 1: deleteUser(u.id)
 activate Shop
 Shop -> UserManager: 2: deleteUser(u.id)
 activate UserManager
-UserManager -> User: delete
-destroy User
 deactivate UserManager
 deactivate Shop
 
@@ -855,7 +852,7 @@ User -> Shop: 1: attachCardToCustomer(l.id, cu.id)
 activate Shop
 Shop -> CustomerManager: 2: attachCardToCustomer(l.id, cu.id)
 activate CustomerManager
-CustomerManager -> Customer: 3: setCard(l.id)
+CustomerManager -> Customer: 3: setCard(l)
 activate Customer
 deactivate Customer
 deactivate CustomerManager
@@ -871,7 +868,6 @@ title Detach Loyalty card from customer record
 actor User
 participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
-participant "l : Loyalty Card" as LoyaltyCard
 participant "cu : Customer" as Customer
 
 User -> Shop: 1: getCustomer(id)
@@ -885,7 +881,7 @@ User -> Shop: 1: modifyCustomer(cu.id,cu.name)
 activate Shop
 Shop -> CustomerManager: 2: modifyCustomer(cu.id,cu.name)
 activate CustomerManager
-CustomerManager -> Customer: 3: setCard(-1)
+CustomerManager -> Customer: 3: setCard(null)
 activate Customer
 deactivate Customer
 deactivate CustomerManager
@@ -907,12 +903,9 @@ Administrator -> Shop: 1: login(username, password)
 activate Shop
 Shop -> UserManager: 2: login(username, password)
 activate UserManager
-UserManager -> UserManager: 2: searchUser()
 UserManager -> User: 3: getUsername()
 activate User
 UserManager -> User: 3: getPassword()
-UserManager -> UserManager: 2: checkCredentials(u.username, u.password)
-activate UserManager
 deactivate User
 deactivate Shop
 
@@ -927,7 +920,6 @@ title logout
 actor Administrator
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
-participant "u : User" as User
 
 Administrator -> Shop: 1: logout()
 activate Shop
