@@ -918,7 +918,6 @@ activate CustomerManager
 CustomerManager -> Customer: 3: setCard(newCustomerCard)
 activate Customer
 CustomerManager -> Customer: 3: setName(newCustomerName)
-activate Customer
 deactivate Customer
 deactivate CustomerManager
 deactivate Shop
