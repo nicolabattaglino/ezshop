@@ -123,6 +123,7 @@ class UserManager{
     +getUser(id: Integer) : User
     +login(username: String, password: String) : User
     +logout() : boolean
+    +cleat()
 
 }
 
@@ -162,6 +163,7 @@ class CustomerManager {
     +createCard(): String
     +attachCardToCustomer(customerCard: String, customerId: String ): boolean
     +modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer): boolean
+    +clear()
 }
 
 
@@ -188,6 +190,7 @@ class ProductOrderManager {
     +payOrder(Integer orderId): boolean
     +recordOrderArrival(Integer orderId): boolean
     +getAllOrders(): List<Order> 
+    +clear()
 
 }
 
@@ -216,6 +219,7 @@ class TransactionManager {
     +getCreditsAndDebits(from: LocalDate, to: LocalDate): List<BalanceOperation>
     +computeBalance(): double
     -luhnAlgorithm (int creditCardNumber): boolean
+    +clear()
 }
 
 
@@ -246,6 +250,7 @@ class FinancialTransaction {
     -date: LocalDate
     -iD: int
     -creditCard: String
+    +isOrder(): boolean
 }
 
 class Order{
