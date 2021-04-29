@@ -107,7 +107,7 @@ interface EZShopInterface {
     +computeBalance(): double
 }
 
-EZShopInterface -|> Shop
+
 
 class Shop {
     +addPayedOrder(order: Order): boolean
