@@ -226,7 +226,7 @@ class TransactionManager {
 
     
 
-TransactionManager <-- FinancialTransaction : -transactionMap
+TransactionManager <-- BalanceOperation : -transactionMap
 
 
 
@@ -242,10 +242,10 @@ EzShopInterface <|.. Shop
 class Credit 
 class Debit
 
-Credit --|> FinancialTransaction
-Debit --|> FinancialTransaction
+Credit --|> BalanceOperation
+Debit --|> BalanceOperation
 
-class FinancialTransaction {
+class BalanceOperation {
     -description: String
     -amount: double
     -date: LocalDate
@@ -824,7 +824,7 @@ deactivate ProductOrderManager
 participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
 participant "/ : TransactionManager" as TransactionManager
-participant "/ : FinancialTransaction" as FinancialTransaction
+participant "/ : BalanceOperation" as BalanceOperation
 Shop -> TransactionManager:1 startReturnTransacion()
 activate TransactionManager
 TransactionManager -> ProductOrderManager:2 updateQuantity()
@@ -838,9 +838,9 @@ deactivate TransactionManager
 deactivate TransactionManager 
 Shop -> TransactionManager:5 endReturnTransaciton()
 activate TransactionManager
-TransactionManager-> FinancialTransaction:6 getAmount()
-activate FinancialTransaction
-deactivate FinancialTransaction
+TransactionManager-> BalanceOperation:6 getAmount()
+activate BalanceOperation
+deactivate BalanceOperation
 TransactionManager -> TransactionManager:7 recordBalance() 
 activate TransactionManager
 deactivate TransactionManager
@@ -856,7 +856,7 @@ deactivate TransactionManager
 participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
 participant "/ : TransactionManager" as TransactionManager
-participant "/ : FinancialTransaction" as FinancialTransaction
+participant "/ : BalanceOperation" as BalanceOperation
 Shop -> TransactionManager:1 startReturnTransacion()
 activate TransactionManager
 TransactionManager -> ProductOrderManager:2 updateQuantity()
@@ -866,9 +866,9 @@ TransactionManager -> TransactionManager:3 returnCashPayment()
 deactivate TransactionManager 
 Shop -> TransactionManager:4 endReturnTransaciton()
 activate TransactionManager
-TransactionManager-> FinancialTransaction:5 getAmount()
-activate FinancialTransaction
-deactivate FinancialTransaction
+TransactionManager-> BalanceOperation:5 getAmount()
+activate BalanceOperation
+deactivate BalanceOperation
 TransactionManager -> TransactionManager:6 recordBalance() 
 activate TransactionManager
 deactivate TransactionManager
@@ -895,11 +895,11 @@ deactivate TransactionManager
 
 
 participant "/ : TransactionManager" as TransactionManager
-participant "/ : FinancialTransaction" as FinancialTransaction
-TransactionManager-> FinancialTransaction:1 getAmount()
-activate FinancialTransaction
+participant "/ : BalanceOperation" as BalanceOperation
+TransactionManager-> BalanceOperation:1 getAmount()
+activate BalanceOperation
 
-deactivate FinancialTransaction
+deactivate BalanceOperation
 activate TransactionManager
 TransactionManager -> TransactionManager:3 recordBalance() 
 activate TransactionManager
@@ -916,11 +916,11 @@ deactivate TransactionManager
 
 
 participant "/ : TransactionManager" as TransactionManager
-participant "/ : FinancialTransaction" as FinancialTransaction
+participant "/ : BalanceOperation" as BalanceOperation
 
-TransactionManager-> FinancialTransaction:1 getAmount()
-activate FinancialTransaction
-deactivate FinancialTransaction
+TransactionManager-> BalanceOperation:1 getAmount()
+activate BalanceOperation
+deactivate BalanceOperation
 activate TransactionManager
 TransactionManager -> TransactionManager:2 recordBalance() 
 activate TransactionManager
