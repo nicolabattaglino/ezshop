@@ -890,8 +890,8 @@ TransactionManager-> FinancialTransaction:1 getAmount()
 activate FinancialTransaction
 
 deactivate FinancialTransaction
-TransactionManager -> TransactionManager:3 recordBalance() 
 activate TransactionManager
+TransactionManager -> TransactionManager:3 recordBalance() 
 deactivate TransactionManager
 
 @enduml
@@ -909,8 +909,8 @@ participant "/ : FinancialTransaction" as FinancialTransaction
 TransactionManager-> FinancialTransaction:1 getAmount()
 activate FinancialTransaction
 deactivate FinancialTransaction
-TransactionManager -> TransactionManager:2 recordBalance() 
 activate TransactionManager
+TransactionManager -> TransactionManager:2 recordBalance() 
 deactivate TransactionManager
 @enduml
 ```
