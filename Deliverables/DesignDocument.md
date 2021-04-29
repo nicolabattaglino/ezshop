@@ -280,17 +280,16 @@ ReturnTransaction --|> Debit
 
 class ProductType {
     -id: Integer
-    -String: barCode
-    -String: description
-    -double: sellPrice
-    -int: discountRate
-    -String: notes
+    -barCode: String
 
+    -description: String
+    -sellPrice: double
+    -discountRate: int
+    -notes: String
+    -amount: int
 }
 
-class Product
 
-ProductType <--"*" Product: -type 
 class Position {
     -aisleID: Integer
     -rackID: Integer
