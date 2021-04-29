@@ -107,6 +107,8 @@ interface EZShopInterface {
     +computeBalance(): double
 }
 
+EZShopInterface -|> Shop
+
 class Shop {
     +addPayedOrder(order: Order): boolean
 }
@@ -122,7 +124,7 @@ class UserManager{
     +getUser(id: Integer) : User
     +login(username: String, password: String) : User
     +logout() : boolean
-    +cleat()
+    +clear()
 
 }
 
@@ -319,12 +321,6 @@ class Quantity {
     quantity: Integer
 }
 
-
-class LoyaltyCard {
-    ID
-    points
-    attachCustomer() : boolean 
-}
 
 
 
