@@ -836,6 +836,8 @@ TransactionManager-> FinancialTransaction:6 getAmount()
 activate FinancialTransaction
 deactivate FinancialTransaction
 TransactionManager -> TransactionManager:7 recordBalance() 
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager 
 @enduml
 ```
@@ -862,6 +864,8 @@ TransactionManager-> FinancialTransaction:5 getAmount()
 activate FinancialTransaction
 deactivate FinancialTransaction
 TransactionManager -> TransactionManager:6 recordBalance() 
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager 
 @enduml
 ```
@@ -892,6 +896,8 @@ activate FinancialTransaction
 deactivate FinancialTransaction
 activate TransactionManager
 TransactionManager -> TransactionManager:3 recordBalance() 
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 
 @enduml
@@ -911,6 +917,8 @@ activate FinancialTransaction
 deactivate FinancialTransaction
 activate TransactionManager
 TransactionManager -> TransactionManager:2 recordBalance() 
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 @enduml
 ```
