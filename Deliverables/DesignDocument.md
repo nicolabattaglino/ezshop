@@ -220,7 +220,7 @@ class TransactionManager {
 
 
     
-}
+
 TransactionManager <-- FinancialTransaction : -transactionMap
 
 
