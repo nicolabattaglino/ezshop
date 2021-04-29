@@ -51,8 +51,7 @@ gui ..> model_controller
 
 @startuml
 
-interface EzShopInterface {
-
+interface EZShopInterface {
     +reset()
     +createUser(username: String, password: String, role: String) : Integer
     +deleteUser(id: Integer): boolean
@@ -87,8 +86,6 @@ interface EzShopInterface {
     +createCard(): String
     +attachCardToCustomer(customerCard: String, customerId: String ): boolean
     +modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer): boolean
-
-    +startSaleTransaction() : Integer
     +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +applyDiscountRateToProduct(transactionId: Integer, productCode: String, discountRate: double): boolean
@@ -201,7 +198,6 @@ ProductOrderManager -->"*" Order: -orderMap
 
 class TransactionManager {
     -transactionMap <transactionID, transaction>
-    +startSaleTransaction() : Integer
     +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +applyDiscountRateToProduct(transactionId: Integer, productCode: String, discountRate: double): boolean
@@ -241,8 +237,6 @@ Shop --> UserManager
 Shop --> CustomerManager
 Shop --> ProductOrderManager
 Shop -->TransactionManager
-
-EzShopInterface <|.. Shop
 
 class Credit 
 class Debit
@@ -306,13 +300,14 @@ class SaleTransaction {
     paymentType
     discount rate
     loyalityCardCode
-    customerIds
+    customerId
 
-    addProductToSale()
-    deleteProductFromSale()
-    applyDiscountRateToSale()
-    applyDiscountRateToProduct() 
-    computePointsForSale()
+    addProductToSale() : boolean
+    addProductToSale() : boolean
+    deleteProductFromSale() : boolean
+    applyDiscountRateToSale() : boolean
+    applyDiscountRateToProduct() : boolean
+    computePointsForSale() : int
 }
 
 SaleTransaction -- "*" ProductType
@@ -327,7 +322,7 @@ class Quantity {
 class LoyaltyCard {
     ID
     points
-    attachCustomer()
+    attachCustomer() : boolean 
 }
 
 
@@ -340,7 +335,7 @@ class ReturnTransaction {
   quantity
   returnedValue
 
-endReturnTransaction()
+endReturnTransaction() : boolean
 }
 
 ReturnTransaction "*" - SaleTransaction
@@ -511,28 +506,28 @@ ProductType -->"0..1" Position: -position
 | FR4.5 |   x   |                  |              |         x            |         x           |
 | FR4.6 |   x   |                  |              |                      |         x           |
 | FR4.7 |   x   |                  |              |                      |         x           |
-| FR5.1 |   x   |        x         |              |                      |                     |
-| FR5.2 |   x   |        x         |              |                      |                     |
-| FR5.3 |   x   |        x         |              |                      |                     |
-| FR5.4 |   x   |        x         |              |                      |                     |
-| FR5.5 |   x   |        x         |              |                      |                     |
-| FR5.6 |   x   |        x         |              |                      |                     |
-| FR5.7 |   x   |        x         |              |         x            |                     |
-| FR6.1 |   x   |        x         |              |                      |                     |
-| FR6.2 |   x   |        x         |              |                      |                     |
-| FR6.3 |   x   |        x         |              |                      |                     |
-| FR6.4 |   x   |        x         |              |                      |                     |
-| FR6.5 |   x   |        x         |              |                      |                     |
-| FR6.6 |   x   |        x         |              |                      |                     |
-| FR6.7 |   x   |        x         |              |                      |                     |
-| FR6.8 |   x   |        x         |              |                      |                     |
-| FR6.9 |   x   |        x         |              |                      |                     |
-| FR6.10 |  x   |        x         |              |                      |                     |
-| FR6.11 |  x   |        x         |              |                      |                     |
-| FR6.12 |  x   |        x         |              |                      |                     |
-| FR6.13 |  x   |        x         |              |                      |                     |
-| FR6.14 |  x   |        x         |              |                      |                     |
-| FR6.15 |  x   |        x         |              |                      |                     |
+| FR5.1 |   x   |                  |              |                      |                     |
+| FR5.2 |   x   |                  |              |                      |                     |
+| FR5.3 |   x   |                  |              |                      |                     |
+| FR5.4 |   x   |                  |              |                      |                     |
+| FR5.5 |   x   |                  |              |                      |                     |
+| FR5.6 |   x   |                  |              |                      |                     |
+| FR5.7 |   x   |                  |              |         x            |                     |
+| FR6.1 |   x   |                  |              |         x            |                     |
+| FR6.2 |   x   |                  |              |         x            |                     |
+| FR6.3 |   x   |                  |              |         x            |                     |
+| FR6.4 |   x   |                  |              |         x            |                     |
+| FR6.5 |   x   |                  |              |         x            |                     |
+| FR6.6 |   x   |                  |              |         x            |                     |
+| FR6.7 |   x   |                  |              |         x            |                     |
+| FR6.8 |   x   |                  |              |         x            |                     |
+| FR6.9 |   x   |                  |              |         x            |                     |
+| FR6.10 |  x   |                  |              |         x            |                     |
+| FR6.11 |  x   |                  |              |         x            |                     |
+| FR6.12 |  x   |                  |              |         x            |                     |
+| FR6.13 |  x   |                  |              |         x            |                     |
+| FR6.14 |  x   |                  |              |         x            |                     |
+| FR6.15 |  x   |                  |              |         x            |                     |
 | FR7.1 |   x   |                  |              |          x           |                     |
 | FR7.2 |   x   |                  |              |          x           |                     |
 | FR7.3 |   x   |                  |              |          x           |                     |
@@ -977,6 +972,41 @@ deactivate Shop
 ```
 
 
+
+
+
+
+
+
+
+
+
+
+## Scenario 6.1
+```plantuml
+@startuml
+
+title Record order of product type X arrival
+actor ShopManager
+participant "/ : Shop" as Shop
+participant "/ : ProductOrderManager" as ProductOrderManager
+participant "o : Order" as Order
+ShopManager -> Shop: 1 : recordOrderArrival(orderId)
+activate Shop
+Shop -> ProductOrderManager: 2 : recordOrderArrival(orderId)
+activate ProductOrderManager
+
+ProductOrderManager -> ProductOrderManager: 3 updateQuantity(o.product.id, o.quantity)
+activate ProductOrderManager
+deactivate ProductOrderManager
+ProductOrderManager -> Order: 4 : setStatus(COMPLETED)
+activate Order
+deactivate Order
+deactivate ProductOrderManager
+
+
+@enduml
+```
 
 ## Scenarion 8.1
 ```plantuml
