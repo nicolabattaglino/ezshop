@@ -93,6 +93,7 @@ interface EZShopInterface {
     +applyDiscountRateToSale(transactionId: Integer, discountRate: double) : boolean
     +computePointsForSale(transactionId: Integer): int
     +endSaleTransaction(transactionId: Integer): boolean
+    +deleteSaleTransaction(transactionId: Integer) : boolean
     +getSaleTransaction(transactionId: Integer): boolean
     +startSaleTransaction() : Integer
     +startReturnTransaction(transactionId: Integer): Integer
@@ -224,7 +225,7 @@ class TransactionManager {
     +getCreditsAndDebits(from: LocalDate, to: LocalDate): List<BalanceOperation>
     +computeBalance(): double
     -luhnAlgorithm (int creditCardNumber): boolean
-
+    +deleteSaleTransaction(transactionId: Integer) : boolean
 
     +addPayedOrder(order: Order): boolean
     +clear()
@@ -1197,20 +1198,75 @@ end title
 
 actor Cashier
 
-participant "/ : Basket" as Basket
 participant "/ : Shop" as Shop
-participant "/ : SaleTransaction" as SaleTransaction
-participant "/ : BalanceOperation" as BalanceOperation
-participant "/ : PaymentMethod" as PaymentMethod
+participant "/ : TransactionManager" as TransactionManager
+participant "t : SaleTransaction"  as SaleTransaction
+participant "/ : ProductOrderManager" as ProductOrderManager
+participant "/ : CustomerManager" as CustomerManager
 
-Basket -> Shop: 1 : startSaleTransaction()
-Cashier -> PaymentMethod: 2 : TransactionManager()
-Shop --> Basket: 3 : SaleTransaction getSaleTransaction()
-Basket ->  SaleTransaction: 4 : addProductToSale() or returnProduct()
-SaleTransaction -> PaymentMethod : 5 : applyDiscountRateToProduct() or applyDiscountRateToSale()
-BalanceOperation -> PaymentMethod : 6 : receiveCashPayment()
-BalanceOperation --> Shop: 7 : computePointsForSale()
-SaleTransaction --> Basket: 8 : endSaleTransaction()
+Cashier -> Shop: 1 : startSaleTransaction()
+activate Shop
+Shop -> TransactionManager : 2 : startSaleTransaction()
+activate TransactionManager
+create SaleTransaction
+TransactionManager -> SaleTransaction: 3 : new
+deactivate TransactionManager
+deactivate Shop
+Cashier -> Shop : 4 : addProductToSale(t.id, barcode, amount)
+activate Shop
+Shop -> TransactionManager: 5 : addProductToSale (t.id, barcode, amount)
+ 
+
+activate TransactionManager
+TransactionManager -> TransactionManager: 6 : getSaleTransaction(t.id) return t
+activate TransactionManager
+deactivate TransactionManager
+TransactionManager -> ProductOrderManager: 7 : getProductTypeByBarCode(barcode)
+activate ProductOrderManager
+
+
+TransactionManager <-- ProductOrderManager : 8 : return p : ProductType
+
+TransactionManager -> SaleTransaction : 9 : addProduct(p, amount)
+activate SaleTransaction
+deactivate SaleTransaction
+deactivate ProductOrderManager
+TransactionManager -> ProductOrderManager: 10 : updateQuantity(p.id, -amount)
+activate ProductOrderManager
+deactivate ProductOrderManager
+deactivate TransactionManager
+deactivate Shop
+Cashier -> Shop : 11 : EndSaleTransaction(t.id)
+activate Shop
+Shop -> TransactionManager : 12 : EndSaleTransaction(t.id)
+activate TransactionManager
+TransactionManager -> TransactionManager : 13 : getSaleTransaction(t.id) return t
+activate TransactionManager
+deactivate TransactionManager
+deactivate TransactionManager
+deactivate Shop
+
+Cashier -> Shop : 14 : computePointsForSale(t.id)
+activate Shop
+Shop -> TransactionManager : 15 :computePointsForSale(t.id)
+activate TransactionManager
+TransactionManager --> Shop : 16 : points : integer
+deactivate TransactionManager
+Shop --> Cashier : 17 : points : integer
+deactivate Shop
+Cashier -> Shop : 18 : modifyPointsOnCard(customerCard, points)
+activate Shop
+Shop -> CustomerManager : 19 : modifyPointsOnCard(customerCard, points)
+activate CustomerManager
+deactivate CustomerManager
+deactivate Shop
+
+Cashier -> Shop : recordBalanceUpdate(t.cost)
+activate Shop
+Shop -> TransactionManager : recordBalanceUpdate(t.cost)
+activate TransactionManager
+deactivate TransactionManager
+deactivate Shop
 
 @enduml
 ```
@@ -1226,22 +1282,59 @@ end title
 
 actor Cashier
 
-participant "/ : Basket" as Basket
 participant "/ : Shop" as Shop
-participant "/ : SaleTransaction" as SaleTransaction
-participant "/ : BalanceOperation" as BalanceOperation
-participant "/ : PaymentMethod" as PaymentMethod
+participant "/ : TransactionManager" as TransactionManager
+participant "t : SaleTransaction"  as SaleTransaction
+participant "/ : ProductOrderManager" as ProductOrderManager
 
-Basket -> Shop: 1 : startSaleTransaction()
-Cashier -> PaymentMethod: 2 : TransactionManager()
-Shop --> Basket: 3 : startReturnTransaction()
-Basket ->  SaleTransaction: 4 : returnProduct()
-BalanceOperation -> PaymentMethod : 5 : returnCashPayment()
-SaleTransaction --> Basket: 6 : endReturnTransaction()
-Shop --> Basket : 7 : deleteProductFromSale()
-Shop --> Basket : 8 : deleteSaleTransaction()
-SaleTransaction --> Basket : 9 : deleteReturnTransaction() 
+Cashier -> Shop: 1 : startSaleTransaction()
+activate Shop
+Shop -> TransactionManager : 2 : startSaleTransaction()
+activate TransactionManager
+create SaleTransaction
+TransactionManager -> SaleTransaction: 3 : new
+deactivate TransactionManager
+deactivate Shop
+Cashier -> Shop : 4 : addProductToSale(t.id, barcode, amount)
+activate Shop
+Shop -> TransactionManager: 5 : addProductToSale (t.id, barcode, amount)
+ 
 
+activate TransactionManager
+TransactionManager -> TransactionManager: 6 : getSaleTransaction(t.id) return t
+activate TransactionManager
+deactivate TransactionManager
+TransactionManager -> ProductOrderManager: 7 : getProductTypeByBarCode(barcode)
+activate ProductOrderManager
+
+
+TransactionManager <-- ProductOrderManager : 8 : return p : ProductType
+
+TransactionManager -> SaleTransaction : 9 : addProduct(p, amount)
+activate SaleTransaction
+deactivate SaleTransaction
+deactivate ProductOrderManager
+TransactionManager -> ProductOrderManager: 10 : updateQuantity(p.id, -amount)
+activate ProductOrderManager
+deactivate ProductOrderManager
+deactivate TransactionManager
+deactivate Shop
+Cashier -> Shop : 11 : EndSaleTransaction(t.id)
+activate Shop
+Shop -> TransactionManager : 12 : EndSaleTransaction(t.id)
+activate TransactionManager
+TransactionManager -> TransactionManager : 13 : getSaleTransaction(t.id) return t
+activate TransactionManager
+deactivate TransactionManager
+deactivate TransactionManager
+deactivate Shop
+
+Cashier -> Shop : recordBalanceUpdate(t.cost)
+activate Shop
+Shop -> TransactionManager : recordBalanceUpdate(t.cost)
+activate TransactionManager
+deactivate TransactionManager
+deactivate Shop
 @enduml
 ```
 
@@ -1256,28 +1349,81 @@ end title
 
 actor Cashier
 
-participant "/ : Basket" as Basket
 participant "/ : Shop" as Shop
-participant "/ : SaleTransaction" as SaleTransaction
-participant "/ : BalanceOperation" as BalanceOperation
-participant "/ : PaymentMethod" as PaymentMethod
+participant "/ : TransactionManager" as TransactionManager
+participant "t : SaleTransaction"  as SaleTransaction
+participant "/ : ProductOrderManager" as ProductOrderManager
 
-Basket -> Shop: 1 : startSaleTransaction()
-Cashier -> PaymentMethod: 2 : TransactionManager()
-Shop --> Basket: 3 : SaleTransaction getSaleTransaction() or startReturnTransaction()
-Basket ->  SaleTransaction: 4 : addProductToSale() or returnProduct()
-BalanceOperation -> PaymentMethod : 5 : receiveCashPayment() or returnCashPayment()
-BalanceOperation --> Shop: 6 : computePointsForSale() or Null
-SaleTransaction --> Basket: 7 : endSaleTransaction() or endReturnTransaction()
-Shop --> Basket : 8 : deleteProductFromSale()
-Shop --> Basket : 9 : deleteSaleTransaction()
-SaleTransaction --> Basket : 10 : deleteReturnTransaction() 
+Cashier -> Shop: 1 : startSaleTransaction()
+activate Shop
+Shop -> TransactionManager : 2 : startSaleTransaction()
+activate TransactionManager
+create SaleTransaction
+TransactionManager -> SaleTransaction: 3 : new
+deactivate TransactionManager
+deactivate Shop
+Cashier -> Shop : 4 : addProductToSale(t.id, barcode, amount)
+activate Shop
+Shop -> TransactionManager: 5 : addProductToSale (t.id, barcode, amount)
+ 
 
+activate TransactionManager
+TransactionManager -> TransactionManager: 6 : getSaleTransaction(t.id) return t
+activate TransactionManager
+deactivate TransactionManager
+TransactionManager -> ProductOrderManager: 7 : getProductTypeByBarCode(barcode)
+activate ProductOrderManager
+
+
+TransactionManager <-- ProductOrderManager : 8 : return p : ProductType
+
+TransactionManager -> SaleTransaction : 9 : addProduct(p, amount)
+activate SaleTransaction
+deactivate SaleTransaction
+deactivate ProductOrderManager
+TransactionManager -> ProductOrderManager: 10 : updateQuantity(p.id, -amount)
+activate ProductOrderManager
+deactivate ProductOrderManager
+deactivate TransactionManager
+deactivate Shop
+Cashier -> Shop : 11 : EndSaleTransaction(t.id)
+activate Shop
+Shop -> TransactionManager : 12 : EndSaleTransaction(t.id)
+activate TransactionManager
+TransactionManager -> TransactionManager : 13 : getSaleTransaction(t.id) return t
+activate TransactionManager
+deactivate TransactionManager
+deactivate TransactionManager
+deactivate Shop
+
+Cashier -> Shop : deleteSaleTransaction(t.id)
+activate Shop
+Shop -> TransactionManager : deleteSaleTransaction(t.id)
+activate TransactionManager
+TransactionManager -> TransactionManager : deleteProductFromSale(t.id, productCode, amount)
+activate TransactionManager
+TransactionManager -> ProductOrderManager:  : getProductTypeByBarCode(barcode)
+activate ProductOrderManager
+
+
+TransactionManager <-- ProductOrderManager :  : return p : ProductType
+
+TransactionManager -> SaleTransaction :  : addProduct(p, amount)
+activate SaleTransaction
+deactivate SaleTransaction
+deactivate ProductOrderManager
+TransactionManager -> ProductOrderManager:  : updateQuantity(p.id, -amount)
+activate ProductOrderManager
+deactivate ProductOrderManager
+deactivate TransactionManager
+
+deactivate TransactionManager
+deactivate Shop
 @enduml
 ```
 
 
-## Scenarion 8.1
+## Scenario 8.1
 ```plantuml
 @startuml
 
@@ -1308,7 +1454,7 @@ deactivate TransactionManager
 @enduml
 ```
 
-## Scenarion 8.2
+## Scenario 8.2
 
 ```plantuml
 @startuml
@@ -1336,7 +1482,7 @@ deactivate TransactionManager
 @enduml
 ```
 
-## Scenarin 9.1
+## Scenario 9.1
 ```plantuml
 @startuml
 
