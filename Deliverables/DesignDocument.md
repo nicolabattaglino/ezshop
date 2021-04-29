@@ -890,6 +890,40 @@ deactivate Shop
 @enduml
 ```
 
+## Scenario 4.4
+
+```plantuml
+@startuml
+
+title Update customer record
+actor User
+participant "/ : Shop" as Shop
+participant "/ : CustomerManager" as CustomerManager
+participant "cu : Customer" as Customer
+
+User -> Shop: 1: getCustomer(id)
+activate Shop
+Shop -> CustomerManager: 2: getCustomer(id)
+activate CustomerManager
+deactivate CustomerManager
+deactivate Shop
+
+User -> Shop: 1: modifyCustomer(cu.id, newCustomerName, newCustomerCard)
+activate Shop
+Shop -> CustomerManager: 2: modifyCustomer(cu.id, newCustomerName, newCustomerCard)
+activate CustomerManager
+CustomerManager -> Customer: 3: setCard(newCustomerCard)
+activate Customer
+CustomerManager -> Customer: 3: setName(newCustomerName)
+activate Customer
+deactivate Customer
+deactivate CustomerManager
+deactivate Shop
+@enduml
+```
+
+
+
 ## Scenario 5.1
 ```plantuml
 @startuml
@@ -929,38 +963,6 @@ deactivate UserManager
 deactivate Shop
 
 
-@enduml
-```
-
-## Scenario 4.4
-
-```plantuml
-@startuml
-
-title Update customer record
-actor User
-participant "/ : Shop" as Shop
-participant "/ : CustomerManager" as CustomerManager
-participant "cu : Customer" as Customer
-
-User -> Shop: 1: getCustomer(id)
-activate Shop
-Shop -> CustomerManager: 2: getCustomer(id)
-activate CustomerManager
-deactivate CustomerManager
-deactivate Shop
-
-User -> Shop: 1: modifyCustomer(cu.id, newCustomerName, newCustomerCard)
-activate Shop
-Shop -> CustomerManager: 2: modifyCustomer(cu.id, newCustomerName, newCustomerCard)
-activate CustomerManager
-CustomerManager -> Customer: 3: setCard(newCustomerCard)
-activate Customer
-CustomerManager -> Customer: 3: setName(newCustomerName)
-activate Customer
-deactivate Customer
-deactivate CustomerManager
-deactivate Shop
 @enduml
 ```
 
