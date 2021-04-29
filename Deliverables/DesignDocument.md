@@ -967,15 +967,39 @@ deactivate Shop
 
 
 
-
-
-
 ## Scenario 6.1
 ```plantuml
 @startuml
 
 title
-**Scenario 6.1** : Sale of product type X is completed
+Sale of product type X is completed
+end title
+
+actor Cashier
+
+participant "/ : Basket" as Basket
+participant "/ : Shop" as Shop
+participant "/ : SaleTransaction" as SaleTransaction
+participant "/ : BalanceOperation" as BalanceOperation
+participant "/ : PaymentMethod" as PaymentMethod 
+
+Basket -> Shop: 1 : startSaleTransaction()
+Cashier -> PaymentMethod: 2 : TransactionManager()
+Shop --> Basket: 3 : SaleTransaction getSaleTransaction()
+Basket ->  SaleTransaction: 4 : addProductToSale()
+BalanceOperation -> PaymentMethod : 5 : receiveCashPayment() or receiveCreditCardPayment()
+SaleTransaction --> Basket: 6 : endSaleTransaction()
+
+@enduml
+```
+
+
+## Scenario 6.2
+```plantuml
+@startuml
+
+title
+Sale of product type X with product discount
 end title
 
 actor Cashier
@@ -987,21 +1011,136 @@ participant "/ : BalanceOperation" as BalanceOperation
 participant "/ : PaymentMethod" as PaymentMethod
 
 Basket -> Shop: 1 : startSaleTransaction()
-Basket ->  SaleTransaction: 2 : addProductToSale() 
-Cashier -> PaymentMethod: 3 : TransactionManager()
-Shop --> Basket: 4 : startReturnTransaction()
-Shop -> PaymentMethod : 5 : SaleTransaction getSaleTransaction()
-Shop --> Basket: 6 : returnProduct()
-
-BalanceOperation -> PaymentMethod : 7 : receiveCashPayment() or receiveCreditCardPayment()
-PaymentMethod --> Cashier: 8 : returnCashPayment() or returnCreditCardPayment()
-SaleTransaction --> Basket: 9 : endReturnTransaction()
-Shop --> Basket : 10 : endSaleTransaction()
-Shop --> Basket : 11 : deleteSaleTransaction()
-Shop --> Basket : 12 : deleteReturnTransaction()
+Cashier -> PaymentMethod: 2 : TransactionManager()
+Shop --> Basket: 3 : SaleTransaction getSaleTransaction()
+Basket ->  SaleTransaction: 4 : addProductToSale()
+SaleTransaction -> PaymentMethod : 5 : applyDiscountRateToProduct()
+BalanceOperation -> PaymentMethod : 6 : receiveCashPayment()
+BalanceOperation --> Shop: 7 : computePointsForSale()
+SaleTransaction --> Basket: 8 : endSaleTransaction()
 
 @enduml
 ```
+
+
+## Scenario 6.3
+```plantuml
+@startuml
+
+title
+Sale of product type X with sale discount
+end title
+
+actor Cashier
+
+participant "/ : Basket" as Basket
+participant "/ : Shop" as Shop
+participant "/ : SaleTransaction" as SaleTransaction
+participant "/ : BalanceOperation" as BalanceOperation
+participant "/ : PaymentMethod" as PaymentMethod
+
+Basket -> Shop: 1 : startSaleTransaction()
+Cashier -> PaymentMethod: 2 : TransactionManager()
+Shop --> Basket: 3 : SaleTransaction getSaleTransaction()
+Basket ->  SaleTransaction: 4 : addProductToSale()
+SaleTransaction -> PaymentMethod : 5 : applyDiscountRateToSale()
+BalanceOperation -> PaymentMethod : 6 : receiveCashPayment()
+BalanceOperation --> Shop: 7 : computePointsForSale()
+SaleTransaction --> Basket: 8 : endSaleTransaction()
+
+@enduml
+```
+
+
+## Scenario 6.4
+```plantuml
+@startuml
+
+title
+Sale of product type X with Loyalty Card update
+end title
+
+actor Cashier
+
+participant "/ : Basket" as Basket
+participant "/ : Shop" as Shop
+participant "/ : SaleTransaction" as SaleTransaction
+participant "/ : BalanceOperation" as BalanceOperation
+participant "/ : PaymentMethod" as PaymentMethod
+
+Basket -> Shop: 1 : startSaleTransaction()
+Cashier -> PaymentMethod: 2 : TransactionManager()
+Shop --> Basket: 3 : SaleTransaction getSaleTransaction()
+Basket ->  SaleTransaction: 4 : addProductToSale() or returnProduct()
+SaleTransaction -> PaymentMethod : 5 : applyDiscountRateToProduct() or applyDiscountRateToSale()
+BalanceOperation -> PaymentMethod : 6 : receiveCashPayment()
+BalanceOperation --> Shop: 7 : computePointsForSale()
+SaleTransaction --> Basket: 8 : endSaleTransaction()
+
+@enduml
+```
+
+
+## Scenario 6.5
+```plantuml
+@startuml
+
+title
+Sale of product type X cancelled
+end title
+
+actor Cashier
+
+participant "/ : Basket" as Basket
+participant "/ : Shop" as Shop
+participant "/ : SaleTransaction" as SaleTransaction
+participant "/ : BalanceOperation" as BalanceOperation
+participant "/ : PaymentMethod" as PaymentMethod
+
+Basket -> Shop: 1 : startSaleTransaction()
+Cashier -> PaymentMethod: 2 : TransactionManager()
+Shop --> Basket: 3 : startReturnTransaction()
+Basket ->  SaleTransaction: 4 : returnProduct()
+BalanceOperation -> PaymentMethod : 5 : returnCashPayment()
+SaleTransaction --> Basket: 6 : endReturnTransaction()
+Shop --> Basket : 7 : deleteProductFromSale()
+Shop --> Basket : 8 : deleteSaleTransaction()
+SaleTransaction --> Basket : 9 : deleteReturnTransaction() 
+
+@enduml
+```
+
+
+## Scenario 6.6
+```plantuml
+@startuml
+
+title
+Sale of product type X completed (Cash)
+end title
+
+actor Cashier
+
+participant "/ : Basket" as Basket
+participant "/ : Shop" as Shop
+participant "/ : SaleTransaction" as SaleTransaction
+participant "/ : BalanceOperation" as BalanceOperation
+participant "/ : PaymentMethod" as PaymentMethod
+
+Basket -> Shop: 1 : startSaleTransaction()
+Cashier -> PaymentMethod: 2 : TransactionManager()
+Shop --> Basket: 3 : SaleTransaction getSaleTransaction() or startReturnTransaction()
+Basket ->  SaleTransaction: 4 : addProductToSale() or returnProduct()
+BalanceOperation -> PaymentMethod : 5 : receiveCashPayment() or returnCashPayment()
+BalanceOperation --> Shop: 6 : computePointsForSale() or Null
+SaleTransaction --> Basket: 7 : endSaleTransaction() or endReturnTransaction()
+Shop --> Basket : 8 : deleteProductFromSale()
+Shop --> Basket : 9 : deleteSaleTransaction()
+SaleTransaction --> Basket : 10 : deleteReturnTransaction() 
+
+@enduml
+```
+
 
 ## Scenarion 8.1
 ```plantuml
