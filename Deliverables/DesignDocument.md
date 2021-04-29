@@ -86,6 +86,7 @@ interface EZShopInterface {
     +createCard(): String
     +attachCardToCustomer(customerCard: String, customerId: String ): boolean
     +modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer): boolean
+
     +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +applyDiscountRateToProduct(transactionId: Integer, productCode: String, discountRate: double): boolean
@@ -93,6 +94,7 @@ interface EZShopInterface {
     +computePointsForSale(transactionId: Integer): int
     +endSaleTransaction(transactionId: Integer): boolean
     +getSaleTransaction(transactionId: Integer): boolean
+    +startSaleTransaction() : Integer
     +startReturnTransaction(transactionId: Integer): Integer
     +returnProduct(returnId : Integer, productCode: String, amount: int): boolean
     +endReturnTransaction(returnId : Integer, commit: boolean): boolean
@@ -283,7 +285,7 @@ class ProductType {
 
     -description: String
     -sellPrice: double
-    -discountRate: int
+    -discountRate: double
     -notes: String
     -amount: int
 }
@@ -298,21 +300,13 @@ ProductType ->"0..1" Position: -position
 
 
 class SaleTransaction {
-    ID 
-    date
-    time
-    cost
-    paymentType
-    discount rate
-    loyalityCardCode
-    customerId
+    ID : Integer
+    cost : double
+    paymentType : String
+    discountrRate : Integer
+    state: boolean
 
-    addProductToSale() : boolean
-    addProductToSale() : boolean
-    deleteProductFromSale() : boolean
-    applyDiscountRateToSale() : boolean
-    applyDiscountRateToProduct() : boolean
-    computePointsForSale() : int
+    addProduct(p: ProductType, Quantity : Integer) : boolean
 }
 
 SaleTransaction -- "*" ProductType
@@ -979,19 +973,59 @@ end title
 
 actor Cashier
 
-participant "/ : Basket" as Basket
 participant "/ : Shop" as Shop
-participant "/ : SaleTransaction" as SaleTransaction
-participant "/ : BalanceOperation" as BalanceOperation
-participant "/ : PaymentMethod" as PaymentMethod 
+participant "/ : TransactionManager" as TransactionManager
+participant "t : SaleTransaction"  as SaleTransaction
+participant "/ : ProductOrderManager" as ProductOrderManager
 
-Basket -> Shop: 1 : startSaleTransaction()
-Cashier -> PaymentMethod: 2 : TransactionManager()
-Shop --> Basket: 3 : SaleTransaction getSaleTransaction()
-Basket ->  SaleTransaction: 4 : addProductToSale()
-BalanceOperation -> PaymentMethod : 5 : receiveCashPayment() or receiveCreditCardPayment()
-SaleTransaction --> Basket: 6 : endSaleTransaction()
+Cashier -> Shop: 1 : startSaleTransaction()
+activate Shop
+Shop -> TransactionManager : 2 : startSaleTransaction()
+activate TransactionManager
+create SaleTransaction
+TransactionManager -> SaleTransaction: 3 : new
+deactivate TransactionManager
+deactivate Shop
+Cashier -> Shop : 4 : addProductToSale(t.id, barcode, amount)
+activate Shop
+Shop -> TransactionManager: 5 : addProductToSale (t.id, barcode, amount)
+ 
 
+activate TransactionManager
+TransactionManager -> TransactionManager: 6 : getSaleTransaction(t.id) return t
+activate TransactionManager
+deactivate TransactionManager
+TransactionManager -> ProductOrderManager: 7 : getProductTypeByBarCode(barcode)
+activate ProductOrderManager
+
+
+TransactionManager <-- ProductOrderManager : 8 : return p : ProductType
+
+TransactionManager -> SaleTransaction : 9 : addProduct(p, amount)
+activate SaleTransaction
+deactivate SaleTransaction
+deactivate ProductOrderManager
+TransactionManager -> ProductOrderManager: 10 : updateQuantity(p.id, -amount)
+activate ProductOrderManager
+deactivate ProductOrderManager
+deactivate TransactionManager
+deactivate Shop
+Cashier -> Shop : 11 : EndSaleTransaction(t.id)
+activate Shop
+Shop -> TransactionManager : 12 : EndSaleTransaction(t.id)
+activate TransactionManager
+TransactionManager -> TransactionManager : 13 : getSaleTransaction(t.id) return t
+activate TransactionManager
+deactivate TransactionManager
+deactivate TransactionManager
+deactivate Shop
+
+Cashier -> Shop : recordBalanceUpdate(t.cost)
+activate Shop
+Shop -> TransactionManager : recordBalanceUpdate(t.cost)
+activate TransactionManager
+deactivate TransactionManager
+deactivate Shop
 @enduml
 ```
 
