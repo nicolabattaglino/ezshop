@@ -196,7 +196,6 @@ ProductOrderManager -->"*" Order: -orderMap
 
 class TransactionManager {
     -transactionMap <transactionID, transaction>
-    -balanceOrderedList <Balance>
     +startSaleTransaction() : Integer
     +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
@@ -219,21 +218,13 @@ class TransactionManager {
     -luhnAlgorithm (int creditCardNumber): boolean
 }
 
-class Transaction {
-    -double amount
-    -string creditCard
-    -int ID
+
     
 }
-TransactionManager <-- Transaction : transactionID
+TransactionManager <-- FinancialTransaction : -transactionMap
 
-class Balance{
-    -int Amount
-    -string From
-    -string to
-}
 
-TransactionManager <-- Balance: OrderedList
+
 
 
 Shop --> UserManager
@@ -251,8 +242,10 @@ Debit --|> FinancialTransaction
 
 class FinancialTransaction {
     -description: String
-    -amount: int
+    -amount: double
     -date: LocalDate
+    -iD: int
+    -creditCard: String
 }
 
 class Order{
