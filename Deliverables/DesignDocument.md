@@ -110,7 +110,9 @@ interface EzShopInterface {
     +computeBalance(): double
 }
 
-class Shop 
+class Shop {
+    +addPayedOrder(order: Order): boolean
+}
 
 class UserManager{
     -userIdGen: Integer
@@ -187,7 +189,7 @@ class ProductOrderManager {
     
     +payOrder(Integer orderId): boolean
     +recordOrderArrival(Integer orderId): boolean
-    +getAllOrders(): List<Order> 
+    
 
 }
 
@@ -216,6 +218,9 @@ class TransactionManager {
     +getCreditsAndDebits(from: LocalDate, to: LocalDate): List<BalanceOperation>
     +computeBalance(): double
     -luhnAlgorithm (int creditCardNumber): boolean
+
+    +getAllOrders(): List<Order> 
+    +addPayedOrder(order: Order): boolean
 }
 
 
