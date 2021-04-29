@@ -658,6 +658,7 @@ deactivate Shop
 ## Scenario 2.1
 ```plantuml
 @startuml
+title Create user and define rights
 actor Administrator
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
@@ -679,6 +680,7 @@ deactivate UserManager
 ## Scenario 2.2
 ```plantuml
 @startuml
+title Delete User
 actor Administrator
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
@@ -702,6 +704,7 @@ deactivate Shop
 ## Scenario 2.3
 ```plantuml
 @startuml
+title Modify user rights
 actor Administrator
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
