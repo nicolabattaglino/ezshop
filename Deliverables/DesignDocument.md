@@ -51,7 +51,7 @@ gui ..> model_controller
 
 @startuml
 
-interface Shop {
+interface EZShopInterface {
     +reset()
     +createUser(username: String, password: String, role: String) : Integer
     +deleteUser(id: Integer): boolean
@@ -658,33 +658,19 @@ deactivate Shop
 ## Scenario 2.1
 ```plantuml
 @startuml
-actor ShopManager
+actor Administrator
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 participant "u : User" as User
-ShopManager -> Shop: 1: createUser(name, surname, role)
+Administrator -> Shop: 1: createUser(name, surname, role)
 activate Shop
-Shop -> UserManager: 2: createUser()
+Shop -> UserManager: 2: createUser(name, surname, role)
 activate UserManager
 create User
 UserManager -> User: 3: new
 deactivate Shop
 deactivate UserManager
 
-ShopManager -> Shop: 4: getUser(id)
-activate Shop
-Shop -> UserManager: 5: getUser(id)
-activate UserManager
-deactivate UserManager
-deactivate Shop
-
-ShopManager -> Shop: 5: updateUserRights(u.id, role)
-activate Shop
-Shop -> UserManager: 6: updateUserRights(id, role)
-activate UserManager
-UserManager -> User: 7: setRole()
-activate User
-deactivate User
 
 deactivate UserManager
 
@@ -693,19 +679,19 @@ deactivate UserManager
 ## Scenario 2.2
 ```plantuml
 @startuml
-actor ShopManager
+actor Administrator
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 participant "u : User" as User
 
-ShopManager -> Shop: 1: getUser(id)
+Administrator -> Shop: 1: getUser(id)
 activate Shop
 Shop -> UserManager: 4: getUser(id)
 activate UserManager
 deactivate UserManager
 deactivate Shop
 
-ShopManager -> Shop: 1: deleteUser(u.id)
+Administrator -> Shop: 1: deleteUser(u.id)
 activate Shop
 Shop -> UserManager: 2: deleteUser(u.id)
 activate UserManager
@@ -719,19 +705,19 @@ deactivate Shop
 ## Scenario 2.3
 ```plantuml
 @startuml
-actor ShopManager
+actor Administrator
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 participant "u : User" as User
 
-ShopManager -> Shop: 1: getUser(id)
+Administrator -> Shop: 1: getUser(id)
 activate Shop
 Shop -> UserManager: 2: getUser(id)
 activate UserManager
 deactivate UserManager
 deactivate Shop
 
-ShopManager -> Shop: 3: updateUserRights(u.id, role)
+Administrator -> Shop: 3: updateUserRights(u.id, role)
 activate Shop
 Shop -> UserManager: 4: updateUserRights(u.id, role)
 activate UserManager
@@ -816,6 +802,177 @@ deactivate ProductOrderManager
 
 @enduml
 ```
+
+## Scenario 4.1
+```plantuml
+@startuml
+
+title Create customer record
+actor User
+participant "/ : Shop" as Shop
+participant "/ : CustomerManager" as CustomerManager
+participant "cu : Customer" as Customer
+
+User -> Shop: 1: defineCustomer(customerName)
+activate Shop
+Shop -> CustomerManager: 2: defineCustomer(customerName)
+activate CustomerManager
+create Customer
+CustomerManager -> Customer:3: new
+deactivate CustomerManager
+deactivate Shop
+@enduml
+```
+
+## Scenario 4.2
+```plantuml
+@startuml
+
+title Attach Loyalty card to customer record
+actor User
+participant "/ : Shop" as Shop
+participant "/ : CustomerManager" as CustomerManager
+participant "l : Loyalty Card" as LoyaltyCard
+participant "cu : Customer" as Customer
+
+User -> Shop: 1: createCard()
+activate Shop
+Shop -> CustomerManager: 2: createCard()
+activate CustomerManager
+create LoyaltyCard
+CustomerManager -> LoyaltyCard: 3: new
+deactivate CustomerManager
+deactivate Shop
+
+User -> Shop: 1: getCustomer(id)
+activate Shop
+Shop -> CustomerManager: 2: getCustomer(id)
+activate CustomerManager
+deactivate CustomerManager
+deactivate Shop
+
+User -> Shop: 1: attachCardToCustomer(l.id, cu.id) 
+activate Shop
+Shop -> CustomerManager: 2: attachCardToCustomer(l.id, cu.id)
+activate CustomerManager
+CustomerManager -> Customer: 3: setCard(l.id)
+activate Customer
+deactivate Customer
+deactivate CustomerManager
+deactivate Shop
+
+@enduml
+```
+## Scenario 4.3
+```plantuml
+@startuml
+
+title Detach Loyalty card from customer record
+actor User
+participant "/ : Shop" as Shop
+participant "/ : CustomerManager" as CustomerManager
+participant "l : Loyalty Card" as LoyaltyCard
+participant "cu : Customer" as Customer
+
+User -> Shop: 1: getCustomer(id)
+activate Shop
+Shop -> CustomerManager: 2: getCustomer(id)
+activate CustomerManager
+deactivate CustomerManager
+deactivate Shop
+
+User -> Shop: 1: modifyCustomer(cu.id,cu.name)
+activate Shop
+Shop -> CustomerManager: 2: modifyCustomer(cu.id,cu.name)
+activate CustomerManager
+CustomerManager -> Customer: 3: setCard(-1)
+activate Customer
+deactivate Customer
+deactivate CustomerManager
+deactivate Shop
+
+@enduml
+```
+
+## Scenario 5.1
+```plantuml
+@startuml
+title login
+actor Administrator
+participant "/ : Shop" as Shop
+participant "/ : UserManager" as UserManager
+participant "u : User" as User
+
+Administrator -> Shop: 1: login(username, password)
+activate Shop
+Shop -> UserManager: 2: login(username, password)
+activate UserManager
+UserManager -> UserManager: 2: searchUser()
+UserManager -> User: 3: getUsername()
+activate User
+UserManager -> User: 3: getPassword()
+UserManager -> UserManager: 2: checkCredentials(u.username, u.password)
+activate UserManager
+deactivate User
+deactivate Shop
+
+
+@enduml
+```
+
+## Scenario 5.2
+```plantuml
+@startuml
+title logout
+actor Administrator
+participant "/ : Shop" as Shop
+participant "/ : UserManager" as UserManager
+participant "u : User" as User
+
+Administrator -> Shop: 1: logout()
+activate Shop
+Shop -> UserManager: 2: logout()
+activate UserManager
+deactivate UserManager
+deactivate Shop
+
+
+@enduml
+```
+
+## Scenario 4.4
+
+```plantuml
+@startuml
+
+title Update customer record
+actor User
+participant "/ : Shop" as Shop
+participant "/ : CustomerManager" as CustomerManager
+participant "cu : Customer" as Customer
+
+User -> Shop: 1: getCustomer(id)
+activate Shop
+Shop -> CustomerManager: 2: getCustomer(id)
+activate CustomerManager
+deactivate CustomerManager
+deactivate Shop
+
+User -> Shop: 1: modifyCustomer(cu.id, newCustomerName, newCustomerCard)
+activate Shop
+Shop -> CustomerManager: 2: modifyCustomer(cu.id, newCustomerName, newCustomerCard)
+activate CustomerManager
+CustomerManager -> Customer: 3: setCard(newCustomerCard)
+activate Customer
+CustomerManager -> Customer: 3: setName(newCustomerName)
+activate Customer
+deactivate Customer
+deactivate CustomerManager
+deactivate Shop
+@enduml
+```
+
+
 
 
 ## Scenario 6.1
