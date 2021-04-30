@@ -1366,11 +1366,13 @@ deactivate TransactionManger
 deactivate TransactionManger 
 TransactionManager -> TransactionManager:11 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager 
+deactivate TransactionManager 
 TransactionManager -> TransactionManager:12 computeBalance()
 activate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager 
+
 @enduml
 ```
 
@@ -1392,16 +1394,15 @@ activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManager
 TransactionManager -> TransactionManager:4 new returnTransaction()
-deactivate TransactionManager
 TransactionManager -> TransactionManager:5 returnProduct(Integer returnId, String productCode, int amount)
 activate TransactionManager
 TransactionManager -> ProductOrderManager:6 updateQuantity(Integer productId, int toBeAdded)
 activate ProductOrderManager
 deactivate ProductOrderManager
-activate TransactionManager
 TransactionManager -> TransactionManager:7 returnCashPayment(Integer returnId)
 activate TransactionManager
 deactivate TransactionManager 
+deactivate TransactionManager
 Shop -> TransactionManager:8 endReturnTransaction(Integer returnId, boolean commit)
 activate TransactionManager
 TransactionManager -> TransactionManager:9 getReturnTransaction(Integer transactionId)
