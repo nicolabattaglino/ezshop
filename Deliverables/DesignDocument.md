@@ -1355,6 +1355,7 @@ activate ProductOrderManager
 deactivate ProductOrderManager
 TransactionManager -> TransactionManager:7 returnCreditCardPayment()
 deactivate TransactionManager 
+deactivate TransactionManager 
 Shop -> TransactionManager:8 endReturnTransaction(Integer returnId, boolean commit)
 activate TransactionManager
 TransactionManager -> TransactionManager:9 getSaleTransaction(transactionId: Integer)
