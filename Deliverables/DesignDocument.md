@@ -53,7 +53,7 @@ ez_shop_model_controller .> ez_shop_exception
 ```plantuml
 
 @startuml
-scale 0.75
+scale 0.70
 interface EZShopInterface {
     +reset()
     +createUser(username: String, password: String, role: String) : Integer
@@ -153,7 +153,7 @@ class Customer {
     -surname: String
 }
 
-note right : Persistent
+note left : Persistent
 
 LoyaltyCard "0..1" <- Customer: -loyaltyCard
 
@@ -280,6 +280,8 @@ class Order{
     -quantity: Integer
     -status: OrderStatus
 }
+note right : Persistent
+
 
 enum OrderStatus{
     ISSUED
@@ -722,9 +724,9 @@ participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
 
 
-Cashier -> Shop: 1: modifyCustomer(cu.id,cu.name)
+Cashier -> Shop: 1: modifyCustomer(id,customerName)
 activate Shop
-Shop -> CustomerManager: 2: modifyCustomer(cu.id,cu.name)
+Shop -> CustomerManager: 2: modifyCustomer(id, customerName)
 activate CustomerManager
 CustomerManager -> Customer: 3: setCard(null)
 activate Customer
@@ -1320,9 +1322,9 @@ actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
-Cashier -> Shop:1 receiveCreditCardPayment(Integer transactionId, String creditCard)
+Cashier -> Shop:1 receiveCashPayment(Integer transactionId, double cash)
 activate Shop
-Shop -> TransactionManager:2 receiveCreditCardPayment(Integer transactionId, String creditCard)
+Shop -> TransactionManager:2 receiveCashPayment(Integer transactionId, double cash)
 deactivate Shop
 activate TransactionManager
 TransactionManager --> TransactionManager:3 recordBalanceUpdate(double toBeAdded)
@@ -1486,9 +1488,9 @@ deactivate TransactionManager
 actor Cashier
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
-Cashier -> Shop :1 receiveCreditCardPayment(Integer transactionId, String creditCard)
+Cashier -> Shop :1 returnCashPayment(Integer returnId)
 activate Shop
-TransactionManager -> TransactionManager:2 receiveCreditCardPayment(Integer transactionId, String creditCard)
+TransactionManager -> TransactionManager:2 returnCashPayment(Integer returnId)
 deactivate Shopactivate TransactionManager
 TransactionManager-> TransactionManager:3 getSaleTransaction(Integer transactionId)
 TransactionManager-> BalanceOperation:4 getAmount()
