@@ -1507,6 +1507,8 @@ Shop -> TransactionManager:2 receiveCreditCardPayment(Integer transactionId, Str
 deactivate Shop
 activate TransactionManager
 TransactionManager-> TransactionManager:3 getSaleTransaction(Integer transactionId)
+activate TransactionManager
+deactivate TransactionManager
 TransactionManager-> BalanceOperation:4 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
@@ -1514,7 +1516,11 @@ TransactionManager -> TransactionManager:5 luhnAlgorithm(String creditCard)
 activate TransactionManager
 note right : Card validated
 TransactionManager -> TransactionManager:6 recordBalanceUpdate(double toBeAdded)
+activate TransactionManager
 TransactionManager -> TransactionManager:7 computeBalance()
+activate TransactionManager
+deactivate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 note right: Balance is sufficient
 deactivate TransactionManager
@@ -1542,12 +1548,16 @@ Shop -> TransactionManager:2 returnCashPayment(Integer returnId)
 deactivate Shop
 activate TransactionManager
 TransactionManager-> TransactionManager:3 getSaleTransaction(Integer transactionId)
+activate TransactionManager
+deactivate TransactionManager
 TransactionManager-> BalanceOperation:4 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
 TransactionManager -> TransactionManager:5 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
+deactivate TransactionManager
 TransactionManager -> TransactionManager:6 computeBalance()
+activate TransactionManager
 deactivate TransactionManager
 note right: Balance is sufficient
 deactivate TransactionManager
