@@ -1650,13 +1650,17 @@ deactivate TransactionManager
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
 
-TransactionManager-> BalanceOperation:1 getAmount()
+TransactionManager -> TransactionManager:1 returnCashPayment(Integer returnId)
+activate TransactionManager
+TransactionManager-> TransactionManager:2 getSaleTransaction(Integer transactionId)
+TransactionManager-> BalanceOperation:3 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
+TransactionManager -> TransactionManager:4 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
-TransactionManager -> TransactionManager:2 recordBalance() 
-activate TransactionManager
+TransactionManager -> TransactionManager:5 computeBalance()
 deactivate TransactionManager
+note right: Balance is sufficient
 deactivate TransactionManager
 @enduml
 ```
