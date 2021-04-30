@@ -1257,26 +1257,30 @@ deactivate Shop
 ## Scenario 7.1
 ```plantuml
 @startuml
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
-Shop -> TransactionManager:1 reciveCashPayment(int transactionID, String creditCard)
+Cashier -> Shop:1 receiveCreditCardPayment(Integer transactionId, String creditCard)
+activate Shop
+Shop -> TransactionManager:2 receiveCreditCardPayment(Integer transactionId, String creditCard)
+deactivate Shop
 activate TransactionManager
-TransactionManager -> TransactionManager:2 luhnAlgorithm(String creditCard)
+TransactionManager -> TransactionManager:3 luhnAlgorithm(String creditCard)
 note right: Card validated
 activate TransactionManager
 deactivate TransactionManager
-TransactionManager -> TransactionManager:3 getSaleTransaction(transactionId: Integer)
+TransactionManager -> TransactionManager:4 getSaleTransaction(transactionId: Integer)
 activate TransactionManager
-TransactionManager -> BalanceOperation :4 getAmount()
+TransactionManager -> BalanceOperation :5 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManager
-TransactionManager -> TransactionManager:5 checkCreditCardBalance(String creditCard)
+TransactionManager -> TransactionManager:6 checkCreditCardBalance(String creditCard)
 note right: balance is sufficient
 activate TransactionManager
 deactivate TransactionManager
-TransactionManager -> TransactionManager:6 recordBalanceUpdate(double toBeAdded)
+TransactionManager -> TransactionManager:7 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager
@@ -1286,11 +1290,15 @@ deactivate TransactionManager
 ## Scenario 7.2
 ```plantuml
 @startuml
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
-Shop -> TransactionManager:1 reciveCashPayment(int transactionID, String creditCard)
+Cashier -> Shop:1 receiveCreditCardPayment(Integer transactionId, String creditCard)
+activate Shop
+Shop -> TransactionManager:2 receiveCreditCardPayment(Integer transactionId, String creditCard)
+deactivate Shop
 activate TransactionManager
-TransactionManager -> TransactionManager:2 luhnAlgorithm(String creditCard)
+TransactionManager -> TransactionManager:3 luhnAlgorithm(String creditCard)
 note right: Card NOT validated
 deactivate TransactionManager
 @enduml
@@ -1300,21 +1308,26 @@ deactivate TransactionManager
 ## Scenario 7.3
 ```plantuml
 @startuml
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
-Shop -> TransactionManager:1 reciveCashPayment(int transactionID, String creditCard)
+participant "/ : BalanceOperation" as BalanceOperation
+Cashier -> Shop:1 receiveCreditCardPayment(Integer transactionId, String creditCard)
+activate Shop
+Shop -> TransactionManager:2 receiveCreditCardPayment(Integer transactionId, String creditCard)
+deactivate Shop
 activate TransactionManager
-TransactionManager -> TransactionManager:2 luhnAlgorithm(String creditCard)
+TransactionManager -> TransactionManager:3 luhnAlgorithm(String creditCard)
 note right: Card validated
 activate TransactionManager
 deactivate TransactionManager
-TransactionManager -> TransactionManager:3 getSaleTransaction(transactionId: Integer)
+TransactionManager -> TransactionManager:4 getSaleTransaction(transactionId: Integer)
 activate TransactionManager
-TransactionManager -> BalanceOperation :4 getAmount()
+TransactionManager -> BalanceOperation :5 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManager
-TransactionManager -> TransactionManager:5 checkCreditCardBalance(String creditCard)
+TransactionManager -> TransactionManager:6 checkCreditCardBalance(String creditCard)
 note right: balance is NOT sufficient
 deactivate TransactionManager
 @enduml
@@ -1323,11 +1336,16 @@ deactivate TransactionManager
 ## Scenario 7.4
 ```plantuml
 @startuml
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
-Shop -> TransactionManager:1 receiveCashPayment(int transactionId, double cash)
+participant "/ : BalanceOperation" as BalanceOperation
+Cashier -> Shop:1 receiveCreditCardPayment(Integer transactionId, String creditCard)
+activate Shop
+Shop -> TransactionManager:2 receiveCreditCardPayment(Integer transactionId, String creditCard)
+deactivate Shop
 activate TransactionManager
-TransactionManager --> TransactionManager:2 recordBalanceUpdate(double toBeAdded)
+TransactionManager --> TransactionManager:3 recordBalanceUpdate(double toBeAdded)
 deactivate TransactionManager
 @enduml
 ```
@@ -1335,43 +1353,49 @@ deactivate TransactionManager
 ## Scenario 8.1
 ```plantuml
 @startuml
-
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
-Shop -> TransactionManager:1 startReturnTransaction(Integer transactionId)
+Cashier -> Shop :1 startReturnTransaction(Integer transactionId)
+activate Shop
+Shop -> TransactionManager:2 startReturnTransaction(Integer transactionId)
+Deactivate Shop
 activate TransactionManager
 activate TransactionManager
-TransactionManager -> TransactionManager:2 getSaleTransaction(transactionId: Integer)
+TransactionManager -> TransactionManager:3 getSaleTransaction(transactionId: Integer)
 activate TransactionManager
-TransactionManager -> BalanceOperation :3 getAmount()
+TransactionManager -> BalanceOperation :4 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManager
-TransactionManager -> TransactionManager:4 new returnTransaction()
+TransactionManager -> TransactionManager:5 new returnTransaction()
 deactivate TransactionManager
-Shop -> TransactionManager:5 returnProduct(Integer returnId, String productCode, int amount)
+Shop -> TransactionManager:6 returnProduct(Integer returnId, String productCode, int amount)
 activate TransactionManager
-TransactionManager -> ProductOrderManager:6 updateQuantity(Integer productId, int toBeAdded)
+TransactionManager -> ProductOrderManager:7 updateQuantity(Integer productId, int toBeAdded)
 activate ProductOrderManager
 deactivate ProductOrderManager
-TransactionManager -> TransactionManager:7 returnCreditCardPayment()
+TransactionManager -> TransactionManager:8 returnCreditCardPayment()
 deactivate TransactionManager 
 deactivate TransactionManager 
-Shop -> TransactionManager:8 endReturnTransaction(Integer returnId, boolean commit)
+Cashier -> Shop :9 endReturnTransaction(Integer returnId, boolean commit)
+activate Shop
+Shop -> TransactionManager:10 endReturnTransaction(Integer returnId, boolean commit)
+deactivate Shop
 activate TransactionManager
-TransactionManager -> TransactionManager:9 getSaleTransaction(transactionId: Integer)
+TransactionManager -> TransactionManager:11 getSaleTransaction(transactionId: Integer)
 activate TransactionManager
-TransactionManager -> BalanceOperation :10 getAmount()
+TransactionManager -> BalanceOperation :12 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManger 
 deactivate TransactionManger 
-TransactionManager -> TransactionManager:11 recordBalanceUpdate(double toBeAdded)
+TransactionManager -> TransactionManager:13 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager 
 deactivate TransactionManager 
-TransactionManager -> TransactionManager:12 computeBalance()
+TransactionManager -> TransactionManager:14 computeBalance()
 activate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager
@@ -1384,38 +1408,44 @@ deactivate TransactionManager
 
 ```plantuml
 @startuml
-
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
-Shop -> TransactionManager:1 startReturnTransaction(Integer transactionId)
+Cashier -> Shop :1 startReturnTransaction(Integer transactionId)
+activate Shop
+Shop -> TransactionManager:2 startReturnTransaction(Integer transactionId)
+Deactivate Shop
 activate TransactionManager
-TransactionManager -> TransactionManager:2 getSaleTransaction(Integer transactionId)
+TransactionManager -> TransactionManager:3 getSaleTransaction(Integer transactionId)
 activate TransactionManager
-TransactionManager -> BalanceOperation :3 getAmount()
+TransactionManager -> BalanceOperation :4 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManager
-TransactionManager -> TransactionManager:4 new returnTransaction()
-TransactionManager -> TransactionManager:5 returnProduct(Integer returnId, String productCode, int amount)
+TransactionManager -> TransactionManager:5 new returnTransaction()
+TransactionManager -> TransactionManager:6 returnProduct(Integer returnId, String productCode, int amount)
 activate TransactionManager
-TransactionManager -> ProductOrderManager:6 updateQuantity(Integer productId, int toBeAdded)
+TransactionManager -> ProductOrderManager:7 updateQuantity(Integer productId, int toBeAdded)
 activate ProductOrderManager
 deactivate ProductOrderManager
-TransactionManager -> TransactionManager:7 returnCashPayment(Integer returnId)
+TransactionManager -> TransactionManager:8 returnCashPayment(Integer returnId)
 deactivate TransactionManager 
 deactivate TransactionManager
-Shop -> TransactionManager:8 endReturnTransaction(Integer returnId, boolean commit)
+Cashier -> Shop :9 endReturnTransaction(Integer returnId, boolean commit)
+activate Shop
+Shop -> TransactionManager:10 endReturnTransaction(Integer returnId, boolean commit)
+deactivate Shop
 activate TransactionManager
-TransactionManager -> TransactionManager:9 getReturnTransaction(Integer transactionId)
-TransactionManager -> BalanceOperation :10 getAmount()
+TransactionManager -> TransactionManager:11 getReturnTransaction(Integer transactionId)
+TransactionManager -> BalanceOperation :12 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManger 
-TransactionManager -> TransactionManager:11 recordBalanceUpdate(double toBeAdded)
+TransactionManager -> TransactionManager:13 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
-TransactionManager -> TransactionManager:12 computeBalance()
+TransactionManager -> TransactionManager:14 computeBalance()
 deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager 
@@ -1426,10 +1456,13 @@ deactivate TransactionManager
 ## Scenario 9.1
 ```plantuml
 @startuml
-
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
-Shop -> TransactionManager:1 getCreditsAndDebits()
+Cashier -> Shop:1 getCreditsAndDebits()
+activate Shop
+Shop -> TransactionManager:2 getCreditsAndDebits()
+deactivate Shop
 activate TransactionManager
 deactivate TransactionManager 
 @enduml
@@ -1440,20 +1473,23 @@ deactivate TransactionManager
 ```plantuml
 @startuml
 
-
+actor Cashier
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
-TransactionManager -> TransactionManager:1 receiveCreditCardPayment(Integer transactionId, String creditCard)
+Cashier -> Shop :1 receiveCreditCardPayment(Integer transactionId, String creditCard)
+activate Shop
+TransactionManager -> TransactionManager:2 receiveCreditCardPayment(Integer transactionId, String creditCard)
+deactivate Shop
 activate TransactionManager
-TransactionManager-> TransactionManager:2 getSaleTransaction(Integer transactionId)
-TransactionManager-> BalanceOperation:3 getAmount()
+TransactionManager-> TransactionManager:3 getSaleTransaction(Integer transactionId)
+TransactionManager-> BalanceOperation:4 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
-TransactionManager -> TransactionManager:4 luhnAlgorithm(String creditCard)
+TransactionManager -> TransactionManager:5 luhnAlgorithm(String creditCard)
 activate TransactionManager
 note right : Card validated
-TransactionManager -> TransactionManager:5 recordBalanceUpdate(double toBeAdded)
-TransactionManager -> TransactionManager:6 computeBalance()
+TransactionManager -> TransactionManager:6 recordBalanceUpdate(double toBeAdded)
+TransactionManager -> TransactionManager:7 computeBalance()
 deactivate TransactionManager
 note right: Balance is sufficient
 deactivate TransactionManager
@@ -1467,18 +1503,20 @@ deactivate TransactionManager
 @startuml
 
 
+actor Cashier
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
-
-TransactionManager -> TransactionManager:1 returnCashPayment(Integer returnId)
-activate TransactionManager
-TransactionManager-> TransactionManager:2 getSaleTransaction(Integer transactionId)
-TransactionManager-> BalanceOperation:3 getAmount()
+Cashier -> Shop :1 receiveCreditCardPayment(Integer transactionId, String creditCard)
+activate Shop
+TransactionManager -> TransactionManager:2 receiveCreditCardPayment(Integer transactionId, String creditCard)
+deactivate Shopactivate TransactionManager
+TransactionManager-> TransactionManager:3 getSaleTransaction(Integer transactionId)
+TransactionManager-> BalanceOperation:4 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
-TransactionManager -> TransactionManager:4 recordBalanceUpdate(double toBeAdded)
+TransactionManager -> TransactionManager:5 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
-TransactionManager -> TransactionManager:5 computeBalance()
+TransactionManager -> TransactionManager:6 computeBalance()
 deactivate TransactionManager
 note right: Balance is sufficient
 deactivate TransactionManager
