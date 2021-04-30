@@ -366,13 +366,13 @@ ReturnTransaction "*" -> ProductType : -product
 | FR4.5 |   x   |                  |              |         x            |         x           |
 | FR4.6 |   x   |                  |              |                      |         x           |
 | FR4.7 |   x   |                  |              |                      |         x           |
-| FR5.1 |   x   |                  |              |                      |                     |
-| FR5.2 |   x   |                  |              |                      |                     |
-| FR5.3 |   x   |                  |              |                      |                     |
-| FR5.4 |   x   |                  |              |                      |                     |
-| FR5.5 |   x   |                  |              |                      |                     |
-| FR5.6 |   x   |                  |              |                      |                     |
-| FR5.7 |   x   |                  |              |         x            |                     |
+| FR5.1 |   x   |        x         |              |                      |                     |
+| FR5.2 |   x   |        x         |              |                      |                     |
+| FR5.3 |   x   |        x         |              |                      |                     |
+| FR5.4 |   x   |        x         |              |                      |                     |
+| FR5.5 |   x   |        x         |              |                      |                     |
+| FR5.6 |   x   |        x         |              |                      |                     |
+| FR5.7 |   x   |        x         |              |         x            |                     |
 | FR6.1 |   x   |                  |              |         x            |                     |
 | FR6.2 |   x   |                  |              |         x            |                     |
 | FR6.3 |   x   |                  |              |         x            |                     |
@@ -381,7 +381,6 @@ ReturnTransaction "*" -> ProductType : -product
 | FR6.6 |   x   |                  |              |         x            |                     |
 | FR6.7 |   x   |                  |              |         x            |                     |
 | FR6.8 |   x   |                  |              |         x            |                     |
-| FR6.9 |   x   |                  |              |         x            |                     |
 | FR6.10 |  x   |                  |              |         x            |                     |
 | FR6.11 |  x   |                  |              |         x            |                     |
 | FR6.12 |  x   |                  |              |         x            |                     |
@@ -660,7 +659,7 @@ participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
 
-User -> Shop: 1: defineCustomer(customerName)
+Cashier -> Shop: 1: defineCustomer(customerName)
 activate Shop
 Shop -> CustomerManager: 2: defineCustomer(customerName)
 activate CustomerManager
@@ -682,7 +681,7 @@ participant "/ : CustomerManager" as CustomerManager
 participant "l : Loyalty Card" as LoyaltyCard
 participant "cu : Customer" as Customer
 
-User -> Shop: 1: createCard()
+Cashier -> Shop: 1: createCard()
 activate Shop
 Shop -> CustomerManager: 2: createCard()
 activate CustomerManager
@@ -691,7 +690,7 @@ CustomerManager -> LoyaltyCard: 3: new
 deactivate CustomerManager
 deactivate Shop
 
-User -> Shop: 4: attachCardToCustomer(customerCard, customerId) 
+Cashier -> Shop: 4: attachCardToCustomer(customerCard, customerId) 
 activate Shop
 Shop -> CustomerManager: 5: attachCardToCustomer(customerCard, customerId)
 activate CustomerManager
@@ -714,7 +713,7 @@ participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
 
 
-User -> Shop: 1: modifyCustomer(cu.id,cu.name)
+Cashier -> Shop: 1: modifyCustomer(cu.id,cu.name)
 activate Shop
 Shop -> CustomerManager: 2: modifyCustomer(cu.id,cu.name)
 activate CustomerManager
@@ -738,7 +737,7 @@ participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
 
-User -> Shop: 1: modifyCustomer(id, newCustomerName, newCustomerCard)
+Cashier -> Shop: 1: modifyCustomer(id, newCustomerName, newCustomerCard)
 activate Shop
 Shop -> CustomerManager: 2: modifyCustomer(id, newCustomerName, newCustomerCard)
 activate CustomerManager
@@ -762,7 +761,7 @@ participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 participant "u : User" as User
 
-Administrator -> Shop: 1: login(username, password)
+Cashier -> Shop: 1: login(username, password)
 activate Shop
 Shop -> UserManager: 2: login(username, password)
 activate UserManager
@@ -784,7 +783,7 @@ actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 
-Administrator -> Shop: 1: logout()
+Cashier -> Shop: 1: logout()
 activate Shop
 Shop -> UserManager: 2: logout()
 activate UserManager
@@ -1329,8 +1328,6 @@ participant "/ : TransactionManager" as TransactionManager
 Shop -> TransactionManager:1 receiveCashPayment(int transactionId, double cash)
 activate TransactionManager
 TransactionManager --> TransactionManager:2 recordBalanceUpdate(double toBeAdded)
-activate TransactionManager
-deactivate TransactionManager
 deactivate TransactionManager
 @enduml
 ```
@@ -1345,7 +1342,6 @@ participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
 Shop -> TransactionManager:1 startReturnTransaction(Integer transactionId)
 activate TransactionManager
-
 activate TransactionManager
 TransactionManager -> TransactionManager:2 getSaleTransaction(transactionId: Integer)
 activate TransactionManager
@@ -1360,9 +1356,8 @@ activate TransactionManager
 TransactionManager -> ProductOrderManager:6 updateQuantity(Integer productId, int toBeAdded)
 activate ProductOrderManager
 deactivate ProductOrderManager
-activate TransactionManager
 TransactionManager -> TransactionManager:7 returnCreditCardPayment()
-activate TransactionManager
+deactivate TransactionManager 
 deactivate TransactionManager 
 Shop -> TransactionManager:8 endReturnTransaction(Integer returnId, boolean commit)
 activate TransactionManager
@@ -1372,13 +1367,16 @@ TransactionManager -> BalanceOperation :10 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManger 
+deactivate TransactionManger 
 TransactionManager -> TransactionManager:11 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager 
+deactivate TransactionManager 
 TransactionManager -> TransactionManager:12 computeBalance()
 activate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager 
+
 @enduml
 ```
 
@@ -1400,20 +1398,17 @@ activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManager
 TransactionManager -> TransactionManager:4 new returnTransaction()
-deactivate TransactionManager
 TransactionManager -> TransactionManager:5 returnProduct(Integer returnId, String productCode, int amount)
 activate TransactionManager
 TransactionManager -> ProductOrderManager:6 updateQuantity(Integer productId, int toBeAdded)
 activate ProductOrderManager
 deactivate ProductOrderManager
-activate TransactionManager
 TransactionManager -> TransactionManager:7 returnCashPayment(Integer returnId)
-activate TransactionManager
 deactivate TransactionManager 
+deactivate TransactionManager
 Shop -> TransactionManager:8 endReturnTransaction(Integer returnId, boolean commit)
 activate TransactionManager
 TransactionManager -> TransactionManager:9 getReturnTransaction(Integer transactionId)
-activate TransactionManager
 TransactionManager -> BalanceOperation :10 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
@@ -1421,7 +1416,6 @@ deactivate TransactionManger
 TransactionManager -> TransactionManager:11 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
 TransactionManager -> TransactionManager:12 computeBalance()
-activate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager 
@@ -1459,7 +1453,6 @@ TransactionManager -> TransactionManager:4 luhnAlgorithm(String creditCard)
 activate TransactionManager
 note right : Card validated
 TransactionManager -> TransactionManager:5 recordBalanceUpdate(double toBeAdded)
-activate TransactionManager
 TransactionManager -> TransactionManager:6 computeBalance()
 deactivate TransactionManager
 note right: Balance is sufficient
