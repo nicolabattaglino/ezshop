@@ -1402,12 +1402,12 @@ TransactionManager -> TransactionManager:2 luhnAlgorithm(String creditCard)
 note right: Card validated
 activate TransactionManager
 deactivate TransactionManager
-TransactionManager -> TransactionManager:3 getSaleTransaction(transactionId: Integer)
 activate TransactionManager
+TransactionManager -> TransactionManager:3 getSaleTransaction(transactionId: Integer)
 TransactionManager -> BalanceOperation :4 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
-deactivate TransactionManger 
+deactivate TransactionManager
 TransactionManager -> TransactionManager:5 checkCreditCardBalance(String creditCard)
 note right: balance is sufficient
 activate TransactionManager
@@ -1451,7 +1451,7 @@ activate TransactionManager
 TransactionManager -> BalanceOperation :4 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
-deactivate TransactionManger 
+deactivate TransactionManager
 TransactionManager -> TransactionManager!!:5 checkCreditCardBalance(String creditCard)
 note right: balance is NOT sufficient
 activate TransactionManager
