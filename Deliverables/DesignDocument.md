@@ -214,7 +214,7 @@ ProductOrderManager -->"*" ProductType: -productMap
 ProductOrderManager -->"*" Order: -orderMap
 
 class TransactionManager {
-    -transactionMap <transactionID, transaction>
+    -transactionMap <transactionID, BalamceOperation>
     -balance: double
     +startSaleTransaction() : Integer
     +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
