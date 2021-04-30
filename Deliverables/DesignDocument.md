@@ -247,7 +247,7 @@ class TransactionManager {
 
     
 
-TransactionManager <-- BalanceOperation : -transactionMap
+TransactionManager --> BalanceOperation : -transactionMap
 
 
 
