@@ -301,6 +301,7 @@ class ProductType {
     -notes: String
     -amount: int
 }
+note left : Persistent
 
 
 class Position {
@@ -321,6 +322,7 @@ class SaleTransaction {
     addProduct(p: ProductType, quantity : Integer) : boolean
     
 }
+note right: Persistent
 
 SaleTransaction -- "*" ProductType
 (SaleTransaction,ProductType).. Quantity
