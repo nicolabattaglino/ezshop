@@ -270,7 +270,6 @@ class BalanceOperation {
     -date: LocalDate
     -iD: int
     -creditCard: String
-    +isOrder(): boolean
 }
 
 class Order{
