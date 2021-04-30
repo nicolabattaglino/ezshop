@@ -1382,13 +1382,15 @@ activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManager
 TransactionManager -> TransactionManager:5 new returnTransaction()
+activate TransactionManager
 deactivate TransactionManager
-Shop -> TransactionManager:6 returnProduct(Integer returnId, String productCode, int amount)
+TransactionManager -> TransactionManager:6 returnProduct(Integer returnId, String productCode, int amount)
 activate TransactionManager
 TransactionManager -> ProductOrderManager:7 updateQuantity(Integer productId, int toBeAdded)
 activate ProductOrderManager
 deactivate ProductOrderManager
 TransactionManager -> TransactionManager:8 returnCreditCardPayment()
+deactivate TransactionManager
 deactivate TransactionManager 
 deactivate TransactionManager 
 Cashier -> Shop :9 endReturnTransaction(Integer returnId, boolean commit)
@@ -1403,9 +1405,7 @@ activate BalanceOperation
 deactivate BalanceOperation 
 TransactionManager -> TransactionManager:13 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager 
-deactivate TransactionManager 
 TransactionManager -> TransactionManager:14 computeBalance()
-activate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager 
@@ -1440,12 +1440,16 @@ activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManager
 TransactionManager -> TransactionManager:5 new returnTransaction()
+activate TransactionManager
+deactivate TransactionManager
 TransactionManager -> TransactionManager:6 returnProduct(Integer returnId, String productCode, int amount)
 activate TransactionManager
 TransactionManager -> ProductOrderManager:7 updateQuantity(Integer productId, int toBeAdded)
 activate ProductOrderManager
 deactivate ProductOrderManager
 TransactionManager -> TransactionManager:8 returnCashPayment(Integer returnId)
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager 
 deactivate TransactionManager
 Cashier -> Shop :9 endReturnTransaction(Integer returnId, boolean commit)
@@ -1454,12 +1458,16 @@ Shop -> TransactionManager:10 endReturnTransaction(Integer returnId, boolean com
 deactivate Shop
 activate TransactionManager
 TransactionManager -> TransactionManager:11 getReturnTransaction(Integer transactionId)
+activate TransactionManager
+deactivate TransactionManager
 TransactionManager -> BalanceOperation :12 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
 TransactionManager -> TransactionManager:13 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
 TransactionManager -> TransactionManager:14 computeBalance()
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager 
@@ -1555,9 +1563,9 @@ activate BalanceOperation
 deactivate BalanceOperation
 TransactionManager -> TransactionManager:5 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
-deactivate TransactionManager
 TransactionManager -> TransactionManager:6 computeBalance()
 activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 note right: Balance is sufficient
 deactivate TransactionManager
