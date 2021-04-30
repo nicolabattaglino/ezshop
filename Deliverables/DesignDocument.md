@@ -376,7 +376,7 @@ ReturnTransaction "*" -> ProductType : -product
 | FR4.1 |   x   |                  |              |                      |         x           |
 | FR4.2 |   x   |                  |              |                      |         x           |
 | FR4.3 |   x   |                  |              |                      |         x           |
-| FR4.4 |   x   |                  |              |                      |         x           |
+| FR4.4 |   x   |        x         |              |                      |         x           |
 | FR4.5 |   x   |                  |              |         x            |         x           |
 | FR4.6 |   x   |                  |              |                      |         x           |
 | FR4.7 |   x   |                  |              |                      |         x           |
@@ -392,7 +392,7 @@ ReturnTransaction "*" -> ProductType : -product
 | FR6.3 |   x   |                  |              |         x            |                     |
 | FR6.4 |   x   |                  |              |         x            |                     |
 | FR6.5 |   x   |                  |              |         x            |                     |
-| FR6.6 |   x   |                  |              |         x            |                     |
+| FR6.6 |   x   |        x         |              |         x            |                     |
 | FR6.7 |   x   |                  |              |         x            |                     |
 | FR6.8 |   x   |                  |              |         x            |                     |
 | FR6.10 |  x   |                  |              |         x            |                     |
