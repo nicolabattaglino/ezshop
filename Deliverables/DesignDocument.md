@@ -153,7 +153,7 @@ class Customer {
     -surname: String
 }
 
-note right : Persistent
+note left : Persistent
 
 LoyaltyCard "0..1" <- Customer: -loyaltyCard
 
