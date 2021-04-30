@@ -722,9 +722,9 @@ participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
 
 
-Cashier -> Shop: 1: modifyCustomer(cu.id,cu.name)
+Cashier -> Shop: 1: modifyCustomer(id,customerName)
 activate Shop
-Shop -> CustomerManager: 2: modifyCustomer(cu.id,cu.name)
+Shop -> CustomerManager: 2: modifyCustomer(id, customerName)
 activate CustomerManager
 CustomerManager -> Customer: 3: setCard(null)
 activate Customer
