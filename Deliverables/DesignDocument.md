@@ -61,7 +61,7 @@ interface EZShopInterface {
     +getAllUser(): List<User>
     +getUser(id: Integer): User
     +updateUserRights(id: Integer, role: String): Boolean
-    +getUser(id: Integer) : User
+
 
     +login(username: String, password: String): User
     +logout(): boolean
@@ -84,12 +84,14 @@ interface EZShopInterface {
     +defineCustomer(customerName: String): Customer
     +modifyCustomer(id: Integer, newCustomerName: String, newCustomerCard): boolean
     +deleteCustomer(id: Integer): boolean
-    +getAllCustomers(): List<Customer>
     +getCustomer(id : Integer): Customer
+    +getAllCustomers(): List<Customer>
+
     +createCard(): String
     +attachCardToCustomer(customerCard: String, customerId: String ): boolean
     +modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer): boolean
 
+    +startSaleTransaction() : Integer
     +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +applyDiscountRateToProduct(transactionId: Integer, productCode: String, discountRate: double): boolean
@@ -98,7 +100,6 @@ interface EZShopInterface {
     +endSaleTransaction(transactionId: Integer): boolean
     +deleteSaleTransaction(transactionId: Integer) : boolean
     +getSaleTransaction(transactionId: Integer): boolean
-    +startSaleTransaction() : Integer
     +startReturnTransaction(transactionId: Integer): Integer
     +returnProduct(returnId : Integer, productCode: String, amount: int): boolean
     +endReturnTransaction(returnId : Integer, commit: boolean): boolean
@@ -116,8 +117,7 @@ interface EZShopInterface {
 
 
 class Shop {
-    +reset()
-    +addPayedOrder(order: Order): boolean
+    +addOrder(order: Order): boolean
 }
 
 Shop.|>EZShopInterface
@@ -210,7 +210,6 @@ class ProductOrderManager {
 
 }
 
-ProductOrderManager -->"*" ProductType: -productMap
 ProductOrderManager -->"*" Order: -orderMap
 
 class TransactionManager {
@@ -238,10 +237,12 @@ class TransactionManager {
     +deleteSaleTransaction(transactionId: Integer) : boolean
     -checkCreditCardBalance (String creditCard): boolean
     +addPayedOrder(order: Order): boolean
+    +getAllOrders(): List<Order>
     +clear()
-    +getAllOrders(): List<Order> 
+     
     -getReturnTransaction(transactionId: Integer): ReturnTransaction
-    +issueOrder(Order): boolean
+    
+    +addOrder(order: Order): boolean
 }
 note right : Persistent
 
@@ -376,40 +377,40 @@ ReturnTransaction "*" -> ProductType : -product
 | FR3.4 |   x   |                  |              |                      |         x           |
 | FR4.1 |   x   |                  |              |                      |         x           |
 | FR4.2 |   x   |                  |              |                      |         x           |
-| FR4.3 |   x   |                  |              |                      |         x           |
+| FR4.3 |   x   |                  |              |         x            |         x           |
 | FR4.4 |   x   |                  |              |         x            |         x           |
 | FR4.5 |   x   |                  |              |         x            |         x           |
 | FR4.6 |   x   |                  |              |                      |         x           |
-| FR4.7 |   x   |                  |              |                      |         x           |
+| FR4.7 |   x   |                  |              |         x            |                     |
 | FR5.1 |   x   |        x         |              |                      |                     |
 | FR5.2 |   x   |        x         |              |                      |                     |
 | FR5.3 |   x   |        x         |              |                      |                     |
 | FR5.4 |   x   |        x         |              |                      |                     |
 | FR5.5 |   x   |        x         |              |                      |                     |
 | FR5.6 |   x   |        x         |              |                      |                     |
-| FR5.7 |   x   |        x         |              |         x            |                     |
-| FR6.1 |   x   |                  |              |         x            |                     |
-| FR6.2 |   x   |                  |              |         x            |                     |
+| FR5.7 |   x   |        x         |              |                      |                     |
+| FR6.1 |   x   |                  |              |         x            |         x           |
+| FR6.2 |   x   |                  |              |         x            |         x           |
 | FR6.3 |   x   |                  |              |         x            |                     |
 | FR6.4 |   x   |                  |              |         x            |                     |
 | FR6.5 |   x   |                  |              |         x            |                     |
 | FR6.6 |   x   |                  |              |         x            |                     |
-| FR6.7 |   x   |                  |              |         x            |                     |
-| FR6.8 |   x   |                  |              |         x            |                     |
+| FR6.7 |   x   |                  |              |         x            |         x           |
+| FR6.8 |       |                  |              |                      |                     |
 | FR6.10 |  x   |                  |              |         x            |                     |
-| FR6.11 |  x   |                  |              |         x            |                     |
+| FR6.11 |  x   |                  |              |         x            |         x           |
 | FR6.12 |  x   |                  |              |         x            |                     |
-| FR6.13 |  x   |                  |              |         x            |                     |
+| FR6.13 |  x   |                  |              |         x            |         x           |
 | FR6.14 |  x   |                  |              |         x            |                     |
-| FR6.15 |  x   |                  |              |         x            |                     |
-| FR7.1 |   x   |                  |              |          x           |                     |
-| FR7.2 |   x   |                  |              |          x           |                     |
-| FR7.3 |   x   |                  |              |          x           |                     |
-| FR7.4 |   x   |                  |              |          x           |                     |
-| FR8.1 |   x   |                  |              |          x           |                     |
-| FR8.2 |   x   |                  |              |          x           |                     |
-| FR8.3 |   x   |                  |              |          x           |                     |
-| FR8.4 |   x   |                  |              |          x           |                     |
+| FR6.15 |  x   |                  |              |         x            |         x           |
+| FR7.1 |   x   |                  |              |         x            |                     |
+| FR7.2 |   x   |                  |              |         x            |                     |
+| FR7.3 |   x   |                  |              |         x            |                     |
+| FR7.4 |   x   |                  |              |         x            |                     |
+| FR8.1 |   x   |                  |              |         x            |                     |
+| FR8.2 |   x   |                  |              |         x            |                     |
+| FR8.3 |   x   |                  |              |         x            |                     |
+| FR8.4 |   x   |                  |              |         x            |                     |
 
 
  # Verification sequence diagrams 
