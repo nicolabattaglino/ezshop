@@ -1286,7 +1286,7 @@ participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
 Shop -> TransactionManager:1 reciveCashPayment(int transactionID, String creditCard)
 activate TransactionManager
-TransactionManager -> TransactionManager!!:2 luhnAlgorithm(String creditCard)
+TransactionManager -> TransactionManager:2 luhnAlgorithm(String creditCard)
 note right: Card NOT validated
 deactivate TransactionManager
 @enduml
@@ -1310,7 +1310,7 @@ TransactionManager -> BalanceOperation :4 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManager
-TransactionManager -> TransactionManager!!:5 checkCreditCardBalance(String creditCard)
+TransactionManager -> TransactionManager:5 checkCreditCardBalance(String creditCard)
 note right: balance is NOT sufficient
 deactivate TransactionManager
 @enduml
