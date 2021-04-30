@@ -52,7 +52,7 @@
 52
 # Project Estimation  
 Authors: Stefano, Mattia, Nicola, Hossein
-Date: 24/04/2021
+Date: 24 April 2021
 Version: 1.0
 # Contents
 - [Estimate by product decomposition]
