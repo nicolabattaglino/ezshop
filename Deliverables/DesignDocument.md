@@ -1349,9 +1349,9 @@ actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
-Cashier -> Shop:1 receiveCreditCardPayment(Integer transactionId, String creditCard)
+Cashier -> Shop:1 receiveCashPayment(Integer transactionId, double cash)
 activate Shop
-Shop -> TransactionManager:2 receiveCreditCardPayment(Integer transactionId, String creditCard)
+Shop -> TransactionManager:2 receiveCashPayment(Integer transactionId, double cash)
 deactivate Shop
 activate TransactionManager
 TransactionManager --> TransactionManager:3 recordBalanceUpdate(double toBeAdded)
@@ -1515,9 +1515,9 @@ deactivate TransactionManager
 actor Cashier
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
-Cashier -> Shop :1 receiveCreditCardPayment(Integer transactionId, String creditCard)
+Cashier -> Shop :1 returnCashPayment(Integer returnId)
 activate Shop
-TransactionManager -> TransactionManager:2 receiveCreditCardPayment(Integer transactionId, String creditCard)
+TransactionManager -> TransactionManager:2 returnCashPayment(Integer returnId)
 deactivate Shopactivate TransactionManager
 TransactionManager-> TransactionManager:3 getSaleTransaction(Integer transactionId)
 TransactionManager-> BalanceOperation:4 getAmount()
