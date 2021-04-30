@@ -1294,6 +1294,8 @@ deactivate Shop
 activate TransactionManager
 TransactionManager -> TransactionManager:3 luhnAlgorithm(String creditCard)
 note right: Card NOT validated
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 @enduml
 ```
@@ -1329,6 +1331,8 @@ deactivate BalanceOperation
 deactivate TransactionManager
 TransactionManager -> TransactionManager:6 checkCreditCardBalance(String creditCard)
 note right: balance is NOT sufficient
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 @enduml
 ```
@@ -1350,7 +1354,9 @@ activate Shop
 Shop -> TransactionManager:2 receiveCashPayment(Integer transactionId, double cash)
 deactivate Shop
 activate TransactionManager
-TransactionManager --> TransactionManager:3 recordBalanceUpdate(double toBeAdded)
+TransactionManager -> TransactionManager:3 recordBalanceUpdate(double toBeAdded)
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 @enduml
 ```
@@ -1390,6 +1396,8 @@ TransactionManager -> ProductOrderManager:7 updateQuantity(Integer productId, in
 activate ProductOrderManager
 deactivate ProductOrderManager
 TransactionManager -> TransactionManager:8 returnCreditCardPayment()
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager 
 deactivate TransactionManager 
@@ -1406,6 +1414,8 @@ deactivate BalanceOperation
 TransactionManager -> TransactionManager:13 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager 
 TransactionManager -> TransactionManager:14 computeBalance()
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager 
