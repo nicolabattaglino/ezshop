@@ -1483,7 +1483,6 @@ Cashier -> Shop:1 getCreditsAndDebits()
 activate Shop
 Shop -> TransactionManager:2 getCreditsAndDebits()
 deactivate Shop
-activate TransactionManager
 deactivate TransactionManager 
 @enduml
 ```
