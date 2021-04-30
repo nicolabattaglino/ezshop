@@ -1307,6 +1307,8 @@ deactivate Shop
 activate TransactionManager
 TransactionManager -> TransactionManager:3 luhnAlgorithm(String creditCard)
 note right: Card NOT validated
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 @enduml
 ```
@@ -1342,6 +1344,8 @@ deactivate BalanceOperation
 deactivate TransactionManager
 TransactionManager -> TransactionManager:6 checkCreditCardBalance(String creditCard)
 note right: balance is NOT sufficient
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 @enduml
 ```
@@ -1363,7 +1367,9 @@ activate Shop
 Shop -> TransactionManager:2 receiveCashPayment(Integer transactionId, double cash)
 deactivate Shop
 activate TransactionManager
-TransactionManager --> TransactionManager:3 recordBalanceUpdate(double toBeAdded)
+TransactionManager -> TransactionManager:3 recordBalanceUpdate(double toBeAdded)
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 @enduml
 ```
@@ -1395,13 +1401,17 @@ activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManager
 TransactionManager -> TransactionManager:5 new returnTransaction()
+activate TransactionManager
 deactivate TransactionManager
-Shop -> TransactionManager:6 returnProduct(Integer returnId, String productCode, int amount)
+TransactionManager -> TransactionManager:6 returnProduct(Integer returnId, String productCode, int amount)
 activate TransactionManager
 TransactionManager -> ProductOrderManager:7 updateQuantity(Integer productId, int toBeAdded)
 activate ProductOrderManager
 deactivate ProductOrderManager
 TransactionManager -> TransactionManager:8 returnCreditCardPayment()
+activate TransactionManager
+deactivate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager 
 deactivate TransactionManager 
 Cashier -> Shop :9 endReturnTransaction(Integer returnId, boolean commit)
@@ -1416,9 +1426,9 @@ activate BalanceOperation
 deactivate BalanceOperation 
 TransactionManager -> TransactionManager:13 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager 
-deactivate TransactionManager 
 TransactionManager -> TransactionManager:14 computeBalance()
 activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager 
@@ -1453,12 +1463,16 @@ activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManager
 TransactionManager -> TransactionManager:5 new returnTransaction()
+activate TransactionManager
+deactivate TransactionManager
 TransactionManager -> TransactionManager:6 returnProduct(Integer returnId, String productCode, int amount)
 activate TransactionManager
 TransactionManager -> ProductOrderManager:7 updateQuantity(Integer productId, int toBeAdded)
 activate ProductOrderManager
 deactivate ProductOrderManager
 TransactionManager -> TransactionManager:8 returnCashPayment(Integer returnId)
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager 
 deactivate TransactionManager
 Cashier -> Shop :9 endReturnTransaction(Integer returnId, boolean commit)
@@ -1467,12 +1481,16 @@ Shop -> TransactionManager:10 endReturnTransaction(Integer returnId, boolean com
 deactivate Shop
 activate TransactionManager
 TransactionManager -> TransactionManager:11 getReturnTransaction(Integer transactionId)
+activate TransactionManager
+deactivate TransactionManager
 TransactionManager -> BalanceOperation :12 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
 TransactionManager -> TransactionManager:13 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
 TransactionManager -> TransactionManager:14 computeBalance()
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager 
@@ -1520,6 +1538,8 @@ Shop -> TransactionManager:2 receiveCreditCardPayment(Integer transactionId, Str
 deactivate Shop
 activate TransactionManager
 TransactionManager-> TransactionManager:3 getSaleTransaction(Integer transactionId)
+activate TransactionManager
+deactivate TransactionManager
 TransactionManager-> BalanceOperation:4 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
@@ -1527,7 +1547,11 @@ TransactionManager -> TransactionManager:5 luhnAlgorithm(String creditCard)
 activate TransactionManager
 note right : Card validated
 TransactionManager -> TransactionManager:6 recordBalanceUpdate(double toBeAdded)
+activate TransactionManager
 TransactionManager -> TransactionManager:7 computeBalance()
+activate TransactionManager
+deactivate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 note right: Balance is sufficient
 deactivate TransactionManager
@@ -1555,12 +1579,16 @@ Shop -> TransactionManager:2 returnCashPayment(Integer returnId)
 deactivate Shop
 activate TransactionManager
 TransactionManager-> TransactionManager:3 getSaleTransaction(Integer transactionId)
+activate TransactionManager
+deactivate TransactionManager
 TransactionManager-> BalanceOperation:4 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
 TransactionManager -> TransactionManager:5 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
 TransactionManager -> TransactionManager:6 computeBalance()
+activate TransactionManager
+deactivate TransactionManager
 deactivate TransactionManager
 note right: Balance is sufficient
 deactivate TransactionManager
