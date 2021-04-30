@@ -135,6 +135,7 @@ class UserManager{
     +logout() : boolean
     +clear()
 
+    +getLoggedUser() : User
 }
 
 class User {
@@ -142,10 +143,16 @@ class User {
     -id: Integer
     -username: String
     -password: String
-    -role: String
+}
+note right : Persistent
+
+enum UserRole{
+    CASHIER
+    SHOP_MANAGER
+    ADMINISTRATOR
 }
 
-note right : Persistent
+UserRole <- User : -role : UserRole
 
 class Customer {
     -id: Integer
@@ -155,7 +162,7 @@ class Customer {
 
 note right : Persistent
 
-LoyaltyCard "0..1" <- Customer: -loyaltyCard
+LoyaltyCard "0..1" <- Customer: -loyaltyCard : LoyaltyCard
 
 class LoyaltyCard {
     -cardCode: String
@@ -210,7 +217,7 @@ class ProductOrderManager {
 
 }
 
-ProductOrderManager -->"*" Order: -orderMap
+ProductOrderManager -->"*" ProductType : -productMap: HashMap<String, ProductType>
 
 class TransactionManager {
     -balance: double
@@ -236,30 +243,21 @@ class TransactionManager {
     -luhnAlgorithm (String creditCard): boolean
     +deleteSaleTransaction(transactionId: Integer) : boolean
     -checkCreditCardBalance (String creditCard): boolean
-    +addPayedOrder(order: Order): boolean
     +getAllOrders(): List<Order>
     +clear()
      
     -getReturnTransaction(transactionId: Integer): ReturnTransaction
-    
+    +addCompletedOrder(orderId: Integer): Order
     +addOrder(order: Order): boolean
 }
 note right : Persistent
 
-
-
-    
-
 TransactionManager --> "*" BalanceOperation : -operationMap HashMap<Integer, BlanceOperation>
 
-
-
-
-
-Shop --> UserManager : -userManager
-Shop --> CustomerManager : -customerManager
-Shop --> ProductOrderManager : -productOrderManager
-Shop --> TransactionManager : -transactionManager
+Shop --> UserManager : -userManager : UserManager
+Shop --> CustomerManager : -customerManager : CustomerManager
+Shop --> ProductOrderManager : -productOrderManager : ProductOrderManager
+Shop --> TransactionManager : -transactionManager : TransactionManager
 
 class Credit 
 class Debit
@@ -267,21 +265,21 @@ class Debit
 Credit --|> BalanceOperation
 Debit --|> BalanceOperation
 
-class BalanceOperation {
+abstract BalanceOperation {
+    {static} -idGen: int
+    -id: int
     -description: String
     -amount: double
     -date: LocalDate
-    -iD: int
-    +compute(): double
+    {abstract} +compute(): double
 }
-
+note right : Persistent
 class Order{
     -supplier: String
     -pricePerUnit: double
     -quantity: Integer
-    -status: OrderStatus
 }
-note right : Persistent
+note left : Persistent
 
 
 enum OrderStatus{
@@ -290,7 +288,7 @@ enum OrderStatus{
     COMPLETED
 }
 
-OrderStatus <- Order
+Order -> OrderStatus : -status: OrderStatus
 
 Order --|> Debit
 ReturnTransaction --|> Debit
@@ -316,7 +314,7 @@ class Position {
 note right : Persistent
 
 
-ProductType ->"0..1" Position: -position
+ProductType ->"0..1" Position: -position : Position
 
 
 class SaleTransaction {
@@ -329,27 +327,28 @@ class SaleTransaction {
 }
 note right: Persistent
 
-SaleTransaction -- "*" ProductType
-(SaleTransaction,ProductType).. Quantity
+SaleTransaction "1" <--> "*" Quantity : productList : ArrayList<Quantity>
+Quantity --> ProductType
 SaleTransaction -|> Credit
 
 class Quantity {
     quantity: Integer
+    saleTransaction: SaleTransaction
 }
-
-
+note right : Persistent
+ Quantity -> ProductType: -product : ProductType
 
 
 SaleTransaction "*" --> "0..1" LoyaltyCard: -loyaltyCard
 
-Order "*" -> ProductType: -product
+Order "*" -> ProductType: -product : ProductType
 
 class ReturnTransaction {
   -quantity
 }
 
-ReturnTransaction "*" - SaleTransaction : -sale
-ReturnTransaction "*" -> ProductType : -product
+ReturnTransaction "*" -> SaleTransaction : -sale : SaleTransaction
+ReturnTransaction "*" -> ProductType : -product : ProductType
 
 @enduml
 
@@ -376,7 +375,7 @@ ReturnTransaction "*" -> ProductType : -product
 | FR4.3 |   x   |                  |              |         x            |         x           |
 | FR4.4 |   x   |                  |              |         x            |         x           |
 | FR4.5 |   x   |                  |              |         x            |         x           |
-| FR4.6 |   x   |                  |              |                      |         x           |
+| FR4.6 |   x   |                  |              |         x            |         x           |
 | FR4.7 |   x   |                  |              |         x            |                     |
 | FR5.1 |   x   |        x         |              |                      |                     |
 | FR5.2 |   x   |        x         |              |                      |                     |
@@ -596,7 +595,8 @@ actor ShopManager
 actor ShopManager
 participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
-participant "/ : Order" as Order
+participant "o : Order" as Order
+participant "/ : TransactionManager" as TransactionManager
 ShopManager -> Shop: 1 : issueOrder(productCode, quantity, pricePerUnit)
 activate Shop
 Shop -> ProductOrderManager: 2 : issueOrder(productCode, quantity, pricePerUnit)
@@ -606,7 +606,10 @@ activate ProductOrderManager
 deactivate ProductOrderManager
 create Order
 ProductOrderManager -> Order: 4 : new
-note right: When created, an Order is in the issued state
+note right of Order: When created, an Order is in the issued state
+ProductOrderManager -> TransactionManager : 5 : addOrder(o)
+activate TransactionManager 
+deactivate TransactionManager
 deactivate ProductOrderManager
 deactivate Shop
 
@@ -621,16 +624,21 @@ actor ShopManager
 participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
 participant "o : Order" as Order
-ShopManager -> Shop: 1 : payOrder(orderId)
+participant "/ : TransactionManager" as TransactionManager
+ShopManager -> Shop: 1 : payOrder(o.id)
 activate Shop
-Shop -> ProductOrderManager: 2 : payOrder(orderId)
+Shop -> ProductOrderManager: 2 : payOrder(o.id)
 activate ProductOrderManager
-ProductOrderManager -> Shop: 3 : recordBalanceUpdate(-o.pricePerUnit*o.quantity)
-activate Shop
-deactivate Shop
-ProductOrderManager -> Order: 4 : setStatus(PAYED)
+ProductOrderManager -> TransactionManager: 4 : addPayedOrder(o.id)
+activate TransactionManager
+TransactionManager -> TransactionManager : 5 : recordBalanceUpdate(-o.pricePerUnit*o.quantity)
+activate TransactionManager
+deactivate TransactionManager
+
+TransactionManager -> Order: 6 : setStatus(PAYED)
 activate Order
 deactivate Order
+deactivate TransactionManager
 deactivate ProductOrderManager
 
 @enduml
@@ -644,17 +652,22 @@ actor ShopManager
 participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
 participant "o : Order" as Order
-ShopManager -> Shop: 1 : recordOrderArrival(orderId)
+participant "/ : TransactionManager" as TransactionManager
+ShopManager -> Shop: 1 : recordOrderArrival(o.id)
 activate Shop
-Shop -> ProductOrderManager: 2 : recordOrderArrival(orderId)
+Shop -> ProductOrderManager: 2 : recordOrderArrival(o.id)
 activate ProductOrderManager
 
-ProductOrderManager -> ProductOrderManager: 3 updateQuantity(o.product.id, o.quantity)
-activate ProductOrderManager
-deactivate ProductOrderManager
-ProductOrderManager -> Order: 4 : setStatus(COMPLETED)
+
+ProductOrderManager -> TransactionManager : 3 : addCompletedOrder(o.id)
+activate TransactionManager
+TransactionManager -> Order: 4 : setStatus(COMPLETED)
 activate Order
 deactivate Order
+deactivate TransactionManager
+ProductOrderManager -> ProductOrderManager: 5 : updateQuantity(o.product.id, o.quantity)
+activate ProductOrderManager
+deactivate ProductOrderManager
 deactivate ProductOrderManager
 
 
@@ -846,11 +859,11 @@ activate ProductOrderManager
 
 
 TransactionManager <-- ProductOrderManager : 8 : return p : ProductType
+deactivate ProductOrderManager
 
 TransactionManager -> SaleTransaction : 9 : addProduct(p, amount)
 activate SaleTransaction
 deactivate SaleTransaction
-deactivate ProductOrderManager
 TransactionManager -> ProductOrderManager: 10 : updateQuantity(p.id, -amount)
 activate ProductOrderManager
 deactivate ProductOrderManager
@@ -909,11 +922,11 @@ activate ProductOrderManager
 
 
 TransactionManager <-- ProductOrderManager : 8 : return p : ProductType
+deactivate ProductOrderManager
 
 TransactionManager -> SaleTransaction : 9 : addProduct(p, quantity)
 activate SaleTransaction
 deactivate SaleTransaction
-deactivate ProductOrderManager
 TransactionManager -> ProductOrderManager: 10 : updateQuantity(p.id, -amount)
 activate ProductOrderManager
 deactivate ProductOrderManager
@@ -984,11 +997,11 @@ activate ProductOrderManager
 
 
 TransactionManager <-- ProductOrderManager : 8 : return p : ProductType
+deactivate ProductOrderManager
 
 TransactionManager -> SaleTransaction : 9 : addProduct(p, quantity)
 activate SaleTransaction
 deactivate SaleTransaction
-deactivate ProductOrderManager
 TransactionManager -> ProductOrderManager: 10 : updateQuantity(p.id, -amount)
 activate ProductOrderManager
 deactivate ProductOrderManager
@@ -1060,11 +1073,11 @@ activate ProductOrderManager
 
 
 TransactionManager <-- ProductOrderManager : 8 : return p : ProductType
+deactivate ProductOrderManager
 
 TransactionManager -> SaleTransaction : 9 : addProduct(p, amount)
 activate SaleTransaction
 deactivate SaleTransaction
-deactivate ProductOrderManager
 TransactionManager -> ProductOrderManager: 10 : updateQuantity(p.id, -amount)
 activate ProductOrderManager
 deactivate ProductOrderManager
@@ -1140,11 +1153,11 @@ activate ProductOrderManager
 
 
 TransactionManager <-- ProductOrderManager : 8 : return p : ProductType
+deactivate ProductOrderManager
 
 TransactionManager -> SaleTransaction : 9 : addProduct(p, amount)
 activate SaleTransaction
 deactivate SaleTransaction
-deactivate ProductOrderManager
 TransactionManager -> ProductOrderManager: 10 : updateQuantity(p.id, -amount)
 activate ProductOrderManager
 deactivate ProductOrderManager
@@ -1210,11 +1223,11 @@ activate ProductOrderManager
 
 
 TransactionManager <-- ProductOrderManager : 8 : return p : ProductType
+deactivate ProductOrderManager
 
 TransactionManager -> SaleTransaction : 9 : addProduct(p, amount)
 activate SaleTransaction
 deactivate SaleTransaction
-deactivate ProductOrderManager
 TransactionManager -> ProductOrderManager: 10 : updateQuantity(p.id, -amount)
 activate ProductOrderManager
 deactivate ProductOrderManager
