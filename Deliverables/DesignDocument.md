@@ -243,6 +243,8 @@ class TransactionManager {
     -getReturnTransaction(transactionId: Integer): ReturnTransaction
     +issueOrder(Order): boolean
 }
+note right : Persistent
+
 
 
     
