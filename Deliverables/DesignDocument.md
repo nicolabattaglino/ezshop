@@ -312,6 +312,9 @@ class Position {
     -rackID: Integer
     -levelID: Integer
 }
+note right : Persistent
+
+
 ProductType ->"0..1" Position: -position
 
 
