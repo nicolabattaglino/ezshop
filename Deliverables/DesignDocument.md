@@ -241,6 +241,7 @@ class TransactionManager {
     +clear()
     +getAllOrders(): List<Order> 
     -getReturnTransaction(transactionId: Integer): ReturnTransaction
+    +issueOrder(Order): boolean
 }
 
 
