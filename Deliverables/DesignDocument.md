@@ -1162,7 +1162,7 @@ Cashier -> Shop : 11 : applyDiscountRateToSale(t.id, discountRate)
 activate Shop
 Shop -> TransactionManager : 12 : applyDiscountRateToSale(t.id discountRate)
 activate TransactionManager
-TransacionManager -> SaleTransaction : setCost(t.cost - t.cost*(1-discountRate))
+TransacionManager -> SaleTransaction : setCost(t.cost*(1-discountRate))
 activate SaleTransaction
 deactivate SaleTransaction
 deactivate TransactionManager
