@@ -152,7 +152,7 @@ enum UserRole{
     ADMINISTRATOR
 }
 
-UserRole <- User : -role : UserRole
+UserRole <- User : -role: UserRole
 
 class Customer {
     -id: Integer
@@ -162,7 +162,7 @@ class Customer {
 
 note right : Persistent
 
-LoyaltyCard "0..1" <- Customer: -loyaltyCard : LoyaltyCard
+LoyaltyCard "0..1" <- Customer: -loyaltyCard: LoyaltyCard
 
 class LoyaltyCard {
     -cardCode: String
@@ -217,7 +217,7 @@ class ProductOrderManager {
 
 }
 
-ProductOrderManager -->"*" ProductType : -productMap: HashMap<String, ProductType>
+ProductOrderManager -->"*" ProductType: -productMap: HashMap<String, ProductType>
 
 class TransactionManager {
     -balance: double
@@ -253,12 +253,12 @@ class TransactionManager {
 }
 note right : Persistent
 
-TransactionManager --> "*" BalanceOperation : -operationMap HashMap<Integer, BlanceOperation>
+TransactionManager --> "*" BalanceOperation: -operationMap: HashMap<Integer, BlanceOperation>
 
-Shop --> UserManager : -userManager : UserManager
-Shop --> CustomerManager : -customerManager : CustomerManager
-Shop --> ProductOrderManager : -productOrderManager : ProductOrderManager
-Shop --> TransactionManager : -transactionManager : TransactionManager
+Shop --> UserManager : -userManager:  UserManager
+Shop --> CustomerManager : -customerManager: CustomerManager
+Shop --> ProductOrderManager : -productOrderManager: ProductOrderManager
+Shop --> TransactionManager : -transactionManager: TransactionManager
 
 class Credit 
 class Debit
@@ -315,7 +315,7 @@ class Position {
 note right : Persistent
 
 
-ProductType ->"0..1" Position: -position : Position
+ProductType ->"0..1" Position: -position: Position
 
 
 class SaleTransaction {
@@ -328,7 +328,7 @@ class SaleTransaction {
 }
 note right: Persistent
 
-SaleTransaction "1" <--> "*" Quantity : productList : ArrayList<Quantity>
+SaleTransaction "1" <--> "*" Quantity: productList: ArrayList<Quantity>
 Quantity --> ProductType
 SaleTransaction -|> Credit
 
@@ -337,19 +337,19 @@ class Quantity {
     saleTransaction: SaleTransaction
 }
 note right : Persistent
- Quantity -> ProductType: -product : ProductType
+ Quantity -> ProductType: -product: ProductType
 
 
-SaleTransaction "*" --> "0..1" LoyaltyCard: -loyaltyCard
+SaleTransaction "*" --> "0..1" LoyaltyCard: -loyaltyCard: LoyaltyCard
 
-Order "*" -> ProductType: -product : ProductType
+Order "*" -> ProductType: -product: ProductType
 
 class ReturnTransaction {
   -quantity
 }
 
-ReturnTransaction "*" <- SaleTransaction : -sale : SaleTransaction
-ReturnTransaction "*" -> ProductType : -product : ProductType
+ReturnTransaction "*" <- SaleTransaction : -sale: SaleTransaction
+ReturnTransaction "*" -> ProductType : -product: ProductType
 
 @enduml
 
