@@ -1348,7 +1348,6 @@ end title
 actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
-participant "/ : BalanceOperation" as BalanceOperation
 Cashier -> Shop:1 receiveCashPayment(Integer transactionId, double cash)
 activate Shop
 Shop -> TransactionManager:2 receiveCashPayment(Integer transactionId, double cash)
