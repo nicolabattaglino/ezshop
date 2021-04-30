@@ -331,8 +331,6 @@ Order "*" -> ProductType: -product
 class ReturnTransaction {
   quantity
   returnedValue
-
-endReturnTransaction() : boolean
 }
 
 ReturnTransaction "*" - SaleTransaction
