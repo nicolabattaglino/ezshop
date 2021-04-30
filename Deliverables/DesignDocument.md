@@ -1456,6 +1456,7 @@ deactivate TransactionManager
 @startuml
 
 actor Cashier
+participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
 Cashier -> Shop :1 receiveCreditCardPayment(Integer transactionId, String creditCard)
@@ -1486,6 +1487,7 @@ deactivate TransactionManager
 
 
 actor Cashier
+participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
 Cashier -> Shop :1 returnCashPayment(Integer returnId)
