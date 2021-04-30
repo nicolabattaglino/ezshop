@@ -1400,13 +1400,11 @@ TransactionManager -> ProductOrderManager:6 updateQuantity(Integer productId, in
 activate ProductOrderManager
 deactivate ProductOrderManager
 TransactionManager -> TransactionManager:7 returnCashPayment(Integer returnId)
-activate TransactionManager
 deactivate TransactionManager 
 deactivate TransactionManager
 Shop -> TransactionManager:8 endReturnTransaction(Integer returnId, boolean commit)
 activate TransactionManager
 TransactionManager -> TransactionManager:9 getReturnTransaction(Integer transactionId)
-activate TransactionManager
 TransactionManager -> BalanceOperation :10 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
@@ -1414,7 +1412,6 @@ deactivate TransactionManger
 TransactionManager -> TransactionManager:11 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
 TransactionManager -> TransactionManager:12 computeBalance()
-activate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager 
