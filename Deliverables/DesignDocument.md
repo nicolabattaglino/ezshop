@@ -362,13 +362,13 @@ ReturnTransaction "*" - ProductType
 | FR4.5 |   x   |                  |              |         x            |         x           |
 | FR4.6 |   x   |                  |              |                      |         x           |
 | FR4.7 |   x   |                  |              |                      |         x           |
-| FR5.1 |   x   |                  |              |                      |                     |
-| FR5.2 |   x   |                  |              |                      |                     |
-| FR5.3 |   x   |                  |              |                      |                     |
-| FR5.4 |   x   |                  |              |                      |                     |
-| FR5.5 |   x   |                  |              |                      |                     |
-| FR5.6 |   x   |                  |              |                      |                     |
-| FR5.7 |   x   |                  |              |         x            |                     |
+| FR5.1 |   x   |        x         |              |                      |                     |
+| FR5.2 |   x   |        x         |              |                      |                     |
+| FR5.3 |   x   |        x         |              |                      |                     |
+| FR5.4 |   x   |        x         |              |                      |                     |
+| FR5.5 |   x   |        x         |              |                      |                     |
+| FR5.6 |   x   |        x         |              |                      |                     |
+| FR5.7 |   x   |        x         |              |         x            |                     |
 | FR6.1 |   x   |                  |              |         x            |                     |
 | FR6.2 |   x   |                  |              |         x            |                     |
 | FR6.3 |   x   |                  |              |         x            |                     |
