@@ -681,16 +681,10 @@ actor Administrator
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 
-Administrator -> Shop: 1: getUser(id)
-activate Shop
-Shop -> UserManager: 2: getUser(id)
-activate UserManager
-deactivate UserManager
-deactivate Shop
 
-Administrator -> Shop: 3: deleteUser(u.id)
+Administrator -> Shop: 1: deleteUser(id)
 activate Shop
-Shop -> UserManager: 4: deleteUser(u.id)
+Shop -> UserManager: 2: deleteUser(id)
 activate UserManager
 deactivate UserManager
 deactivate Shop
@@ -706,18 +700,12 @@ participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 participant "u : User" as User
 
-Administrator -> Shop: 1: getUser(id)
-activate Shop
-Shop -> UserManager: 2: getUser(id)
-activate UserManager
-deactivate UserManager
-deactivate Shop
 
-Administrator -> Shop: 3: updateUserRights(u.id, role)
+Administrator -> Shop: 1: updateUserRights(id, role)
 activate Shop
-Shop -> UserManager: 4: updateUserRights(u.id, role)
+Shop -> UserManager: 2: updateUserRights(id, role)
 activate UserManager
-UserManager -> User: 5: setRole()
+UserManager -> User: 3: setRole()
 activate User
 deactivate User
 deactivate UserManager
@@ -840,18 +828,11 @@ CustomerManager -> LoyaltyCard: 3: new
 deactivate CustomerManager
 deactivate Shop
 
-User -> Shop: 4: getCustomer(id)
+User -> Shop: 4: attachCardToCustomer(l.id, cu.id) 
 activate Shop
-Shop -> CustomerManager: 5: getCustomer(id)
+Shop -> CustomerManager: 5: attachCardToCustomer(l.id, cu.id)
 activate CustomerManager
-deactivate CustomerManager
-deactivate Shop
-
-User -> Shop: 6: attachCardToCustomer(l.id, cu.id) 
-activate Shop
-Shop -> CustomerManager: 7: attachCardToCustomer(l.id, cu.id)
-activate CustomerManager
-CustomerManager -> Customer: 8: setCard(l)
+CustomerManager -> Customer: 6: setCard(l)
 activate Customer
 deactivate Customer
 deactivate CustomerManager
@@ -869,18 +850,12 @@ participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
 
-User -> Shop: 1: getCustomer(id)
-activate Shop
-Shop -> CustomerManager: 2: getCustomer(id)
-activate CustomerManager
-deactivate CustomerManager
-deactivate Shop
 
-User -> Shop: 3: modifyCustomer(cu.id,cu.name)
+User -> Shop: 1: modifyCustomer(cu.id,cu.name)
 activate Shop
-Shop -> CustomerManager: 4: modifyCustomer(cu.id,cu.name)
+Shop -> CustomerManager: 2: modifyCustomer(cu.id,cu.name)
 activate CustomerManager
-CustomerManager -> Customer: 5: setCard(null)
+CustomerManager -> Customer: 3: setCard(null)
 activate Customer
 deactivate Customer
 deactivate CustomerManager
@@ -900,20 +875,13 @@ participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
 
-User -> Shop: 1: getCustomer(id)
+User -> Shop: 1: modifyCustomer(id, newCustomerName, newCustomerCard)
 activate Shop
-Shop -> CustomerManager: 2: getCustomer(id)
+Shop -> CustomerManager: 2: modifyCustomer(id, newCustomerName, newCustomerCard)
 activate CustomerManager
-deactivate CustomerManager
-deactivate Shop
-
-User -> Shop: 3: modifyCustomer(cu.id, newCustomerName, newCustomerCard)
-activate Shop
-Shop -> CustomerManager: 4: modifyCustomer(cu.id, newCustomerName, newCustomerCard)
-activate CustomerManager
-CustomerManager -> Customer: 5: setCard(newCustomerCard)
+CustomerManager -> Customer: 3: setCard(newCustomerCard)
 activate Customer
-CustomerManager -> Customer: 6: setName(newCustomerName)
+CustomerManager -> Customer: 4: setName(newCustomerName)
 deactivate Customer
 deactivate CustomerManager
 deactivate Shop
