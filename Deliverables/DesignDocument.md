@@ -137,11 +137,14 @@ class UserManager{
 }
 
 class User {
+    
     -id: Integer
     -username: String
     -password: String
     -role: String
 }
+
+note right : Persistent
 
 class Customer {
     -id: Integer
@@ -149,12 +152,15 @@ class Customer {
     -surname: String
 }
 
+note right : Persistent
+
 LoyaltyCard "0..1" <- Customer: -loyaltyCard
 
 class LoyaltyCard {
     -cardCode: String
     -points: Integer
 }
+note left : Persistent
 
 UserManager -->"*" User: -userList
 Customer "*"<-- CustomerManager: -customerMap
@@ -295,6 +301,7 @@ class ProductType {
     -notes: String
     -amount: int
 }
+note left : Persistent
 
 
 class Position {
@@ -315,6 +322,7 @@ class SaleTransaction {
     addProduct(p: ProductType, quantity : Integer) : boolean
     
 }
+note right: Persistent
 
 SaleTransaction -- "*" ProductType
 (SaleTransaction,ProductType).. Quantity
