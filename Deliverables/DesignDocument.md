@@ -329,7 +329,8 @@ class SaleTransaction {
 note right: Persistent
 
 SaleTransaction "1" <--> "*" Quantity : productList : ArrayList<Quantity>
-Quantity --> ProductType
+Quantity -> ProductType: -product : ProductType
+
 SaleTransaction -|> Credit
 
 class Quantity {
@@ -337,7 +338,6 @@ class Quantity {
     saleTransaction: SaleTransaction
 }
 note right : Persistent
- Quantity -> ProductType: -product : ProductType
 
 
 SaleTransaction "*" --> "0..1" LoyaltyCard: -loyaltyCard
