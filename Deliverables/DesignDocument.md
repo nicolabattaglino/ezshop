@@ -1,11 +1,11 @@
 # Design Document 
 
 
-Authors: 
+Authors: Stefano, Mattia, Nicola, Hossein
 
-Date:
+Date: 30 April 2021
 
-Version:
+Version: 3.0
 
 
 # Contents
