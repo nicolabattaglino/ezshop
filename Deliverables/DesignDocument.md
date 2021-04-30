@@ -249,7 +249,7 @@ note right : Persistent
 
     
 
-TransactionManager --> "*" BalanceOperation : -transactionMap
+TransactionManager --> "*" BalanceOperation : -operationMap HashMap<Integer, BlanceOperation>
 
 
 
