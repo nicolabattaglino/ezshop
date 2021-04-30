@@ -790,7 +790,7 @@ deactivate ProductOrderManager
 @startuml
 
 title Create customer record
-actor User
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
@@ -811,7 +811,7 @@ deactivate Shop
 @startuml
 
 title Attach Loyalty card to customer record
-actor User
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "l : Loyalty Card" as LoyaltyCard
@@ -826,9 +826,9 @@ CustomerManager -> LoyaltyCard: 3: new
 deactivate CustomerManager
 deactivate Shop
 
-User -> Shop: 4: attachCardToCustomer(l.id, cu.id) 
+User -> Shop: 4: attachCardToCustomer(customerCard, customerId) 
 activate Shop
-Shop -> CustomerManager: 5: attachCardToCustomer(l.id, cu.id)
+Shop -> CustomerManager: 5: attachCardToCustomer(customerCard, customerId)
 activate CustomerManager
 CustomerManager -> Customer: 6: setCard(l)
 activate Customer
@@ -843,7 +843,7 @@ deactivate Shop
 @startuml
 
 title Detach Loyalty card from customer record
-actor User
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
@@ -868,7 +868,7 @@ deactivate Shop
 @startuml
 
 title Update customer record
-actor User
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
@@ -892,7 +892,7 @@ deactivate Shop
 ```plantuml
 @startuml
 title login
-actor Administrator
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 participant "u : User" as User
@@ -915,7 +915,7 @@ deactivate Shop
 ```plantuml
 @startuml
 title logout
-actor Administrator
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 
