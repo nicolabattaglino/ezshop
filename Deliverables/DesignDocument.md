@@ -1364,6 +1364,7 @@ TransactionManager -> BalanceOperation :10 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManger 
+deactivate TransactionManger 
 TransactionManager -> TransactionManager:11 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager 
 TransactionManager -> TransactionManager:12 computeBalance()
