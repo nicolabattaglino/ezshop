@@ -164,7 +164,7 @@ class LoyaltyCard {
 note left : Persistent
 
 UserManager -->"*" User: -userList: ArrayList<User>
-Customer "*"<-- CustomerManager: -customerMap: HashMap<String, Customer>
+Customer "*"<-- CustomerManager: -customerMap: HashMap<Integer, Customer>
 LoyaltyCard "*"<-- CustomerManager: -cardMap: HashMap<String, LoyaltyCard>
 
 class CustomerManager {
