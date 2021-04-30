@@ -73,20 +73,21 @@ Version: 1.0
 ### 
 |         Activity name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| Requirements | 317 | 
-| Review | 60 | 
+| Requirements | 283 | 
+| Review | 30 | 
 | Identify interfaces requirements | 12 | 
 | Model system| 26 | 
-| Model use cases and scenarios| 86 | 
+| Model use cases and scenarios| 66 | 
 | Identify owner's requirements| 13 | 
 | Identify employees' requirements| 15 | 
 | Identify subscribers' requirements| 25 | 
 | GUI design| 35 | 
 | GUI prototype| 33 | 
+| Test planning | 16 |
 | Prepare software requirements specification document| 12 |   
 | Design| 145 |
-| Data level design| 65 |
-| Business logic design| 80 |
+| Architectural design| 65 |
+| Low level design| 80 |
 | Coding| 150 | 
 | Coding back-end| 60 |
 | Coding GUI| 90|
@@ -100,22 +101,20 @@ Insert here Gantt chart with above activities
 
 ```plantuml
 @startgantt
-[Requirements] lasts 40 days
-[Identify owner's requirements] lasts 2 days
-then [Identify employees' requirements] lasts 2 days
-then [Identify subscribers' requirements] lasts 4 days
-then [Identify interfaces' requirements] lasts 1 day
-then [Model use cases and scenarios] lasts 10 days
+[Requirements] lasts 35 days
+[Identify requirements] lasts 9 days
+then [Model use cases and scenarios] lasts 6 days
 then [Model system] lasts 4 days
 then [GUI design] lasts 4 days
-then [GUI protorype] lasts 4 days
-then [Review] lasts 7 days
+then [GUI prototype] lasts 4 days
+then [Test Planning] lasts 2 days
+then [Review] lasts 3 days
 then [Prapare documents] lasts 2 day
 [Design] lasts 18 days
 [Design] starts at [Requirements]'s end
-[Data level design] lasts 8 day
-[Data level design] starts at [Design]'s start
-then [Business logic design] lasts 10 days
+[Architectural design] lasts 8 day
+[Architectural design] starts at [Design]'s start
+then [Low level design] lasts 10 days
 [Coding] lasts 19 days
 [Coding] starts at [Design]'s end
 [Coding back-end] lasts 8 days

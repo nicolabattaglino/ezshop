@@ -244,6 +244,8 @@ class TransactionManager {
     
     +addOrder(order: Order): boolean
 }
+note right : Persistent
+
 
 
     
@@ -1001,7 +1003,7 @@ Cashier -> Shop : 11 : applyDiscountRateToSale(t.id, discountRate)
 activate Shop
 Shop -> TransactionManager : 12 : applyDiscountRateToSale(t.id discountRate)
 activate TransactionManager
-TransacionManager -> SaleTransaction : setCost(t.cost*(1-discountRate))
+TransactionManager -> SaleTransaction : setCost(t.cost*(1-discountRate))
 activate SaleTransaction
 deactivate SaleTransaction
 deactivate TransactionManager
@@ -1242,6 +1244,11 @@ deactivate Shop
 ## Scenario 7.1
 ```plantuml
 @startuml
+
+title
+Manage payment by valid credit card
+end title
+
 actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
@@ -1275,6 +1282,12 @@ deactivate TransactionManager
 ## Scenario 7.2
 ```plantuml
 @startuml
+
+title
+Manage payment by invalid credit card
+end title
+
+
 actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
@@ -1293,6 +1306,12 @@ deactivate TransactionManager
 ## Scenario 7.3
 ```plantuml
 @startuml
+
+title
+Manage credit card payment with not enough credit
+end title
+
+
 actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
@@ -1321,10 +1340,15 @@ deactivate TransactionManager
 ## Scenario 7.4
 ```plantuml
 @startuml
+
+title
+Manage cash payment
+end title
+
+
 actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
-participant "/ : BalanceOperation" as BalanceOperation
 Cashier -> Shop:1 receiveCashPayment(Integer transactionId, double cash)
 activate Shop
 Shop -> TransactionManager:2 receiveCashPayment(Integer transactionId, double cash)
@@ -1338,6 +1362,12 @@ deactivate TransactionManager
 ## Scenario 8.1
 ```plantuml
 @startuml
+
+title
+Return transaction of product type X completed, credit card
+end title
+
+
 actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
@@ -1374,9 +1404,7 @@ TransactionManager -> TransactionManager:11 getSaleTransaction(transactionId: In
 activate TransactionManager
 TransactionManager -> BalanceOperation :12 getAmount()
 activate BalanceOperation
-deactivate BalanceOperation
-deactivate TransactionManger 
-deactivate TransactionManger 
+deactivate BalanceOperation 
 TransactionManager -> TransactionManager:13 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager 
 deactivate TransactionManager 
@@ -1393,6 +1421,12 @@ deactivate TransactionManager
 
 ```plantuml
 @startuml
+
+title
+Return transaction of product type X completed, cash
+end title
+
+
 actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
@@ -1427,7 +1461,6 @@ TransactionManager -> TransactionManager:11 getReturnTransaction(Integer transac
 TransactionManager -> BalanceOperation :12 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
-deactivate TransactionManger 
 TransactionManager -> TransactionManager:13 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
 TransactionManager -> TransactionManager:14 computeBalance()
@@ -1441,6 +1474,12 @@ deactivate TransactionManager
 ## Scenario 9.1
 ```plantuml
 @startuml
+
+title
+List credits and debits
+end title
+
+
 actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
@@ -1457,6 +1496,11 @@ deactivate TransactionManager
 
 ```plantuml
 @startuml
+
+title
+Return payment by  credit card
+end title
+
 
 actor Cashier
 participant "/ : Shop" as Shop
@@ -1487,6 +1531,10 @@ deactivate TransactionManager
 
 ```plantuml
 @startuml
+
+title
+Return  cash payment
+end title
 
 
 actor Cashier
