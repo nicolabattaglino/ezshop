@@ -1449,7 +1449,6 @@ TransactionManager -> TransactionManager:4 luhnAlgorithm(String creditCard)
 activate TransactionManager
 note right : Card validated
 TransactionManager -> TransactionManager:5 recordBalanceUpdate(double toBeAdded)
-activate TransactionManager
 TransactionManager -> TransactionManager:6 computeBalance()
 deactivate TransactionManager
 note right: Balance is sufficient
