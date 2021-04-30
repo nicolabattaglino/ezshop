@@ -339,145 +339,6 @@ ReturnTransaction "*" - ProductType
 
 ```
 
-```plantuml
-@startuml
-
-class UsersManager{
-    +createUser(username: String, password: String, role: String) : Integer
-    +deleteUser(id: Integer) : Boolean
-    +getAllUsers() : List<User>
-    +updateUserRights(id: Integer, role: String) : Boolean
-    +getUser(id: Integer) : User
-
-}
-
-class CustomersManager {
-  
-    +defineCustomer(customerName: String) : Customer
-    +modifyCustomer(id: Integer, newCustomerName: String, newCustomerCard) : boolean
-    +deleteCustomer(id: Integer) : boolean
-    +getAllCustomers() : List<Customer>
-    +getCustomer(id : Integer): Customer
-    +createCard() : String
-    +attachCardToCustomer(customerCard: String, customerId: String ) : boolean
-    +modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer) : boolean
-}
-
-
-class User {
-    id: Integer
-    username: String
-    password: String
-    role: String
-
-}
-
-class Administrator {
-    
-    
-}
-
-class Customer {
-    id: Integer
-    customerName: String
-    surname: String
-   
-    
-    
-}
-
-class Card {
-    cardCode: String
-    points: Integer
- 
-}
-
-class Authentication {
-    login(username: String, password: String) : User
-    logout() : boolean
-}
-
-Administrator -- UsersManager
-User <|-- "1" Administrator
-CustomersManager -- "*" Customer
-User "*" -- CustomersManager
-CustomersManager -- "*" Card
-User -- Authentication
-@enduml
-
-```
-
-```plantuml
-@startuml
-'skinparam classAttributeIconSize 0
-class ProductManager {
-    +createProductType(description: String, productCode: String, pricePerUnit: double, note: String): Integer
-    +updateProduct(id: Integer, newDescription: String, newCode: String, newPrice: double, newNote: String): boolean
-    +deleteProductType(id: Integer): boolean
-    +getAllProductTypes():  List<ProductType>
-    +getProductTypeByBarCode(barCode: String): ProductType
-    +getProductTypesByDescription(description: String): List<ProductType>
-}
-class OrderManager {
-    +updateQuantity(Integer productId, int toBeAdded): boolean
-    +updatePosition(Integer productId, String newPos): boolean
-    +issueReorder(String productCode, int quantity, double pricePerUnit): Integer
-    +payOrderFor(String productCode, int quantity, double pricePerUnit): Integer
-    +payOrder(Integer orderId): boolean
-    +recordOrderArrival(Integer orderId): boolean
-    +getAllOrders(): List<Order> 
-}
-
-class Product{
-}
-
-class Order{
-    -id: Integer
-    -supplier
-    -pricePerUnit: double
-    -quantity: Integer
-    -status: OrderStatus
-}
-
-enum OrderStatus{
-    ISSUED
-    ORDERED
-    PAYED
-    COMPLETED
-}
-
-OrderStatus <-- Order
-ProductType <--"*" Product: -type
-Order "*" --> ProductType: products
-
-class ProductType {
-    -id: Integer
-    -String: barCode
-    -String: description
-    -double: sellPrice
-    -int: discountRate
-    -String: notes
-
-    +ProductType(description: String, productCode: String, pricePerUnit: double, note: String)
-    +GetBarcode(): String
-}
-
-note left of ProductType::id
-  {id = barCode.hashCode()}
-end note
-
-class Position {
-    -aisleID: Integer
-    -rackID: Integer
-    -levelID: Integer
-}
-
-ProductManager -->"*" ProductType: -productMap
-ProductType -->"0..1" Position: -position
-@enduml
-```
-
-
 # Verification traceability matrix
 
 \<for each functional requirement from the requirement document, list which classes concur to implement it>
@@ -790,7 +651,7 @@ deactivate ProductOrderManager
 @startuml
 
 title Create customer record
-actor User
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
@@ -811,7 +672,7 @@ deactivate Shop
 @startuml
 
 title Attach Loyalty card to customer record
-actor User
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "l : Loyalty Card" as LoyaltyCard
@@ -826,9 +687,9 @@ CustomerManager -> LoyaltyCard: 3: new
 deactivate CustomerManager
 deactivate Shop
 
-User -> Shop: 4: attachCardToCustomer(l.id, cu.id) 
+User -> Shop: 4: attachCardToCustomer(customerCard, customerId) 
 activate Shop
-Shop -> CustomerManager: 5: attachCardToCustomer(l.id, cu.id)
+Shop -> CustomerManager: 5: attachCardToCustomer(customerCard, customerId)
 activate CustomerManager
 CustomerManager -> Customer: 6: setCard(l)
 activate Customer
@@ -843,7 +704,7 @@ deactivate Shop
 @startuml
 
 title Detach Loyalty card from customer record
-actor User
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
@@ -868,7 +729,7 @@ deactivate Shop
 @startuml
 
 title Update customer record
-actor User
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
@@ -892,7 +753,7 @@ deactivate Shop
 ```plantuml
 @startuml
 title login
-actor Administrator
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 participant "u : User" as User
@@ -915,7 +776,7 @@ deactivate Shop
 ```plantuml
 @startuml
 title logout
-actor Administrator
+actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 
