@@ -1491,7 +1491,8 @@ participant "/ : BalanceOperation" as BalanceOperation
 Cashier -> Shop :1 returnCashPayment(Integer returnId)
 activate Shop
 TransactionManager -> TransactionManager:2 returnCashPayment(Integer returnId)
-deactivate Shopactivate TransactionManager
+deactivate Shop
+activate TransactionManager
 TransactionManager-> TransactionManager:3 getSaleTransaction(Integer transactionId)
 TransactionManager-> BalanceOperation:4 getAmount()
 activate BalanceOperation
