@@ -247,7 +247,7 @@ class TransactionManager {
 
     
 
-TransactionManager --> *BalanceOperation : -transactionMap
+TransactionManager --> "*" BalanceOperation : -transactionMap
 
 
 
@@ -318,11 +318,11 @@ ProductType ->"0..1" Position: -position
 
 
 class SaleTransaction {
-    ID : Integer
-    cost : double
-    paymentType : String
-    discountRate : double
-    state: boolean
+    -ID : Integer
+    -cost : double
+    -paymentType : String
+    -discountRate : double
+    -state: boolean
 
     addProduct(p: ProductType, quantity : Integer) : boolean
     
@@ -345,8 +345,8 @@ SaleTransaction "*" --> "0..1" LoyaltyCard: -loyaltyCard
 Order "*" -> ProductType: -product
 
 class ReturnTransaction {
-  quantity
-  returnedValue
+  -quantity
+  -returnedValue
 }
 
 ReturnTransaction "*" - SaleTransaction : -sale
@@ -375,7 +375,7 @@ ReturnTransaction "*" -> ProductType : -product
 | FR4.1 |   x   |                  |              |                      |         x           |
 | FR4.2 |   x   |                  |              |                      |         x           |
 | FR4.3 |   x   |                  |              |                      |         x           |
-| FR4.4 |   x   |        x         |              |                      |         x           |
+| FR4.4 |   x   |                  |              |                      |         x           |
 | FR4.5 |   x   |                  |              |         x            |         x           |
 | FR4.6 |   x   |                  |              |                      |         x           |
 | FR4.7 |   x   |                  |              |                      |         x           |
@@ -391,7 +391,7 @@ ReturnTransaction "*" -> ProductType : -product
 | FR6.3 |   x   |                  |              |         x            |                     |
 | FR6.4 |   x   |                  |              |         x            |                     |
 | FR6.5 |   x   |                  |              |         x            |                     |
-| FR6.6 |   x   |        x         |              |         x            |                     |
+| FR6.6 |   x   |                  |              |         x            |                     |
 | FR6.7 |   x   |                  |              |         x            |                     |
 | FR6.8 |   x   |                  |              |         x            |                     |
 | FR6.10 |  x   |                  |              |         x            |                     |
