@@ -1002,7 +1002,7 @@ Cashier -> Shop : 11 : applyDiscountRateToSale(t.id, discountRate)
 activate Shop
 Shop -> TransactionManager : 12 : applyDiscountRateToSale(t.id discountRate)
 activate TransactionManager
-TransacionManager -> SaleTransaction : setCost(t.cost*(1-discountRate))
+TransactionManager -> SaleTransaction : setCost(t.cost*(1-discountRate))
 activate SaleTransaction
 deactivate SaleTransaction
 deactivate TransactionManager
@@ -1243,6 +1243,11 @@ deactivate Shop
 ## Scenario 7.1
 ```plantuml
 @startuml
+
+title
+Manage payment by valid credit card
+end title
+
 actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
@@ -1276,6 +1281,12 @@ deactivate TransactionManager
 ## Scenario 7.2
 ```plantuml
 @startuml
+
+title
+Manage payment by invalid credit card
+end title
+
+
 actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
@@ -1294,6 +1305,12 @@ deactivate TransactionManager
 ## Scenario 7.3
 ```plantuml
 @startuml
+
+title
+Manage credit card payment with not enough credit
+end title
+
+
 actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
@@ -1322,6 +1339,12 @@ deactivate TransactionManager
 ## Scenario 7.4
 ```plantuml
 @startuml
+
+title
+Manage cash payment
+end title
+
+
 actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
@@ -1339,6 +1362,12 @@ deactivate TransactionManager
 ## Scenario 8.1
 ```plantuml
 @startuml
+
+title
+Return transaction of product type X completed, credit card
+end title
+
+
 actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
@@ -1394,6 +1423,12 @@ deactivate TransactionManager
 
 ```plantuml
 @startuml
+
+title
+Return transaction of product type X completed, cash
+end title
+
+
 actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : ProductOrderManager" as ProductOrderManager
@@ -1442,6 +1477,12 @@ deactivate TransactionManager
 ## Scenario 9.1
 ```plantuml
 @startuml
+
+title
+List credits and debits
+end title
+
+
 actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
@@ -1458,6 +1499,11 @@ deactivate TransactionManager
 
 ```plantuml
 @startuml
+
+title
+Return payment by  credit card
+end title
+
 
 actor Cashier
 participant "/ : Shop" as Shop
@@ -1488,6 +1534,10 @@ deactivate TransactionManager
 
 ```plantuml
 @startuml
+
+title
+Return  cash payment
+end title
 
 
 actor Cashier
