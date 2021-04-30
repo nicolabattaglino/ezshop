@@ -1485,7 +1485,7 @@ activate TransactionManager
 TransactionManager -> BalanceOperation :4 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
-deactivete TransactionManger 
+deactivate TransactionManger 
 TransactionManager --> TransactionManager:5 checkCreditCardBalance(String creditCard)
 note right: balance is NOT sufficient
 activate TransactionManager
