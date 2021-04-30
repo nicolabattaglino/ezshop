@@ -1404,9 +1404,7 @@ TransactionManager -> TransactionManager:11 getSaleTransaction(transactionId: In
 activate TransactionManager
 TransactionManager -> BalanceOperation :12 getAmount()
 activate BalanceOperation
-deactivate BalanceOperation
-deactivate TransactionManger 
-deactivate TransactionManger 
+deactivate BalanceOperation 
 TransactionManager -> TransactionManager:13 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager 
 deactivate TransactionManager 
@@ -1463,7 +1461,6 @@ TransactionManager -> TransactionManager:11 getReturnTransaction(Integer transac
 TransactionManager -> BalanceOperation :12 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
-deactivate TransactionManger 
 TransactionManager -> TransactionManager:13 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
 TransactionManager -> TransactionManager:14 computeBalance()
