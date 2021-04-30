@@ -1353,10 +1353,7 @@ activate TransactionManager
 TransactionManager -> ProductOrderManager:6 updateQuantity(Integer productId, int toBeAdded)
 activate ProductOrderManager
 deactivate ProductOrderManager
-deactivate TransactionManager
-activate TransactionManager
 TransactionManager -> TransactionManager:7 returnCreditCardPayment()
-deactivate TransactionManager 
 deactivate TransactionManager 
 Shop -> TransactionManager:8 endReturnTransaction(Integer returnId, boolean commit)
 activate TransactionManager
