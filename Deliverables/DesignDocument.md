@@ -53,7 +53,7 @@ ez_shop_model_controller .> ez_shop_exception
 ```plantuml
 
 @startuml
-scale 0.65
+scale 0.55
 interface EZShopInterface {
     +reset()
     +createUser(username: String, password: String, role: String) : Integer
