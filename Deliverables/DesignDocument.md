@@ -280,6 +280,8 @@ class Order{
     -quantity: Integer
     -status: OrderStatus
 }
+note right : Persistent
+
 
 enum OrderStatus{
     ISSUED
