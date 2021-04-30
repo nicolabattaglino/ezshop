@@ -50,7 +50,7 @@ gui ..> model_controller
 ```plantuml
 
 @startuml
-
+scale 0.75
 interface EZShopInterface {
     +reset()
     +createUser(username: String, password: String, role: String) : Integer
