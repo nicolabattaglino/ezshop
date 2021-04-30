@@ -862,12 +862,8 @@ activate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager
 deactivate Shop
-
-Cashier -> Shop : recordBalanceUpdate(t.cost)
+Cashier -> Shop : 14 : recieveCreditCardPayment(t.id, creditCard)
 activate Shop
-Shop -> TransactionManager : recordBalanceUpdate(t.cost)
-activate TransactionManager
-deactivate TransactionManager
 deactivate Shop
 @enduml
 ```
@@ -941,11 +937,8 @@ deactivate TransactionManager
 deactivate TransactionManager
 deactivate Shop
 
-Cashier -> Shop : recordBalanceUpdate(t.cost)
+Cashier -> Shop : 16 : recieveCreditCardPayment(t.id, creditCard)
 activate Shop
-Shop -> TransactionManager : recordBalanceUpdate(t.cost)
-activate TransactionManager
-deactivate TransactionManager
 deactivate Shop
 @enduml
 ```
@@ -1019,11 +1012,8 @@ deactivate TransactionManager
 deactivate TransactionManager
 deactivate Shop
 
-Cashier -> Shop : recordBalanceUpdate(t.cost)
+Cashier -> Shop : 16 : recieveCreditCardPayment(t.id, creditCard)
 activate Shop
-Shop -> TransactionManager : recordBalanceUpdate(t.cost)
-activate TransactionManager
-deactivate TransactionManager
 deactivate Shop
 @enduml
 ```
@@ -1087,26 +1077,23 @@ deactivate TransactionManager
 deactivate TransactionManager
 deactivate Shop
 
-Cashier -> Shop : 14 : computePointsForSale(t.id)
+Cashier -> Shop : 14 : recieveCreditCardPayment(t.id, creditCard)
 activate Shop
-Shop -> TransactionManager : 15 :computePointsForSale(t.id)
-activate TransactionManager
-TransactionManager --> Shop : 16 : points : integer
-deactivate TransactionManager
-Shop --> Cashier : 17 : points : integer
-deactivate Shop
-Cashier -> Shop : 18 : modifyPointsOnCard(customerCard, points)
-activate Shop
-Shop -> CustomerManager : 19 : modifyPointsOnCard(customerCard, points)
-activate CustomerManager
-deactivate CustomerManager
 deactivate Shop
 
-Cashier -> Shop : recordBalanceUpdate(t.cost)
+Cashier -> Shop : 15 : computePointsForSale(t.id)
 activate Shop
-Shop -> TransactionManager : recordBalanceUpdate(t.cost)
+Shop -> TransactionManager : 16 :computePointsForSale(t.id)
 activate TransactionManager
+TransactionManager --> Shop : 17 : points : integer
 deactivate TransactionManager
+Shop --> Cashier : 18 : points : integer
+deactivate Shop
+Cashier -> Shop : 19 : modifyPointsOnCard(customerCard, points)
+activate Shop
+Shop -> CustomerManager : 20 : modifyPointsOnCard(customerCard, points)
+activate CustomerManager
+deactivate CustomerManager
 deactivate Shop
 
 @enduml
@@ -1169,13 +1156,16 @@ activate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager
 deactivate Shop
-
-Cashier -> Shop : recordBalanceUpdate(t.cost)
+Cashier -> Shop : 14 : deleteSaleTransaction(t.id)
 activate Shop
-Shop -> TransactionManager : recordBalanceUpdate(t.cost)
+Shop -> TransactionManager : 15 : deleteSaleTransaction(t.id)
 activate TransactionManager
+TransactionManager -> ProductOrderManager : 16 : updateQuantity(p.id, amount)
+activate ProductOrderManager
+deactivate ProductOrderManager
 deactivate TransactionManager
 deactivate Shop
+
 @enduml
 ```
 
@@ -1237,29 +1227,10 @@ deactivate TransactionManager
 deactivate TransactionManager
 deactivate Shop
 
-Cashier -> Shop : deleteSaleTransaction(t.id)
+Cashier -> Shop : 14 : recieveCashPayment(t.id, cash)
 activate Shop
-Shop -> TransactionManager : deleteSaleTransaction(t.id)
-activate TransactionManager
-TransactionManager -> TransactionManager : deleteProductFromSale(t.id, productCode, amount)
-activate TransactionManager
-TransactionManager -> ProductOrderManager:  : getProductTypeByBarCode(barcode)
-activate ProductOrderManager
-
-
-TransactionManager <-- ProductOrderManager :  : return p : ProductType
-
-TransactionManager -> SaleTransaction :  : addProduct(p, amount)
-activate SaleTransaction
-deactivate SaleTransaction
-deactivate ProductOrderManager
-TransactionManager -> ProductOrderManager:  : updateQuantity(p.id, -amount)
-activate ProductOrderManager
-deactivate ProductOrderManager
-deactivate TransactionManager
-
-deactivate TransactionManager
 deactivate Shop
+
 @enduml
 ```
 
