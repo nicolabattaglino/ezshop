@@ -10,8 +10,8 @@ Version: 3.0
 
 # Contents
 
-- [High level design](#package-diagram)
-- [Low level design](#class-diagram)
+- [High level design](#high-level-design)
+- [Low level design](#low-level-design)
 - [Verification traceability matrix](#verification-traceability-matrix)
 - [Verification sequence diagrams](#verification-sequence-diagrams)
 
@@ -360,53 +360,53 @@ ReturnTransaction "*" -> ProductType : -product : ProductType
 \<for each functional requirement from the requirement document, list which classes concur to implement it>
 
 
-|       | Shop  |  CustomerManager |  UserManager |  TransactionManager  | ProductOrderManager |
-|-------|-------|------------------|--------------|----------------------|---------------------|
-| FR1.1 |   x   |                  |       x      |                      |                     |
-| FR1.2 |   x   |                  |       x      |                      |                     |
-| FR1.3 |   x   |                  |       x      |                      |                     |
-| FR1.4 |   x   |                  |       x      |                      |                     |
-| FR1.5 |   x   |                  |       x      |                      |                     |
-| FR3.1 |   x   |                  |              |                      |         x           |
-| FR3.2 |   x   |                  |              |                      |         x           |
-| FR3.3 |   x   |                  |              |                      |         x           |
-| FR3.4 |   x   |                  |              |                      |         x           |
-| FR4.1 |   x   |                  |              |                      |         x           |
-| FR4.2 |   x   |                  |              |                      |         x           |
-| FR4.3 |   x   |                  |              |         x            |         x           |
-| FR4.4 |   x   |                  |              |         x            |         x           |
-| FR4.5 |   x   |                  |              |         x            |         x           |
-| FR4.6 |   x   |                  |              |         x            |         x           |
-| FR4.7 |   x   |                  |              |         x            |                     |
-| FR5.1 |   x   |        x         |              |                      |                     |
-| FR5.2 |   x   |        x         |              |                      |                     |
-| FR5.3 |   x   |        x         |              |                      |                     |
-| FR5.4 |   x   |        x         |              |                      |                     |
-| FR5.5 |   x   |        x         |              |                      |                     |
-| FR5.6 |   x   |        x         |              |                      |                     |
-| FR5.7 |   x   |        x         |              |                      |                     |
-| FR6.1 |   x   |                  |              |         x            |         x           |
-| FR6.2 |   x   |                  |              |         x            |         x           |
-| FR6.3 |   x   |                  |              |         x            |                     |
-| FR6.4 |   x   |                  |              |         x            |                     |
-| FR6.5 |   x   |                  |              |         x            |                     |
-| FR6.6 |   x   |                  |              |         x            |                     |
-| FR6.7 |   x   |                  |              |         x            |         x           |
-| FR6.8 |       |                  |              |                      |                     |
-| FR6.10 |  x   |                  |              |         x            |                     |
-| FR6.11 |  x   |                  |              |         x            |         x           |
-| FR6.12 |  x   |                  |              |         x            |                     |
-| FR6.13 |  x   |                  |              |         x            |         x           |
-| FR6.14 |  x   |                  |              |         x            |                     |
-| FR6.15 |  x   |                  |              |         x            |         x           |
-| FR7.1 |   x   |                  |              |         x            |                     |
-| FR7.2 |   x   |                  |              |         x            |                     |
-| FR7.3 |   x   |                  |              |         x            |                     |
-| FR7.4 |   x   |                  |              |         x            |                     |
-| FR8.1 |   x   |                  |              |         x            |                     |
-| FR8.2 |   x   |                  |              |         x            |                     |
-| FR8.3 |   x   |                  |              |         x            |                     |
-| FR8.4 |   x   |                  |              |         x            |                     |
+|       | Shop  |  CustomerManager |  UserManager |  TransactionManager  | ProductOrderManager | User | Product | Order | Customer | LoyaltyCard | SaleTransaction | ReturnTransaction |
+|-------|-------|------------------|--------------|----------------------|---------------------| ---- | ------- | ----- | -------- | ----------- | --------------- | ----------------- |
+| FR1.1 |   x   |                  |       x      |                      |                     |  x   |         |       |          |             |                 |                   |
+| FR1.2 |   x   |                  |       x      |                      |                     |  x   |         |       |          |             |                 |                   |
+| FR1.3 |   x   |                  |       x      |                      |                     |  x   |         |       |          |             |                 |                   |
+| FR1.4 |   x   |                  |       x      |                      |                     |  x   |         |       |          |             |                 |                   |
+| FR1.5 |   x   |                  |       x      |                      |                     |  x   |         |       |          |             |                 |                   |
+| FR3.1 |   x   |                  |              |                      |         x           |      |    x    |       |          |             |                 |                   |
+| FR3.2 |   x   |                  |              |                      |         x           |      |    x    |       |          |             |                 |                   |
+| FR3.3 |   x   |                  |              |                      |         x           |      |    x    |       |          |             |                 |                   |
+| FR3.4 |   x   |                  |              |                      |         x           |      |    x    |       |          |             |                 |                   |
+| FR4.1 |   x   |                  |              |                      |         x           |      |    x    |       |          |             |                 |                   |
+| FR4.2 |   x   |                  |              |                      |         x           |      |    x    |       |          |             |                 |                   |
+| FR4.3 |   x   |                  |              |         x            |         x           |      |    x    |   x   |          |             |                 |                   |
+| FR4.4 |   x   |                  |              |         x            |         x           |      |    x    |   x   |          |             |                 |                   |
+| FR4.5 |   x   |                  |              |         x            |         x           |      |         |   x   |          |             |                 |                   |
+| FR4.6 |   x   |                  |              |         x            |         x           |      |         |   x   |          |             |                 |                   |
+| FR4.7 |   x   |                  |              |         x            |                     |      |         |   x   |          |             |                 |                   |
+| FR5.1 |   x   |        x         |              |                      |                     |      |         |       |    x     |             |                 |                   |
+| FR5.2 |   x   |        x         |              |                      |                     |      |         |       |    x     |             |                 |                   |
+| FR5.3 |   x   |        x         |              |                      |                     |      |         |       |    x     |             |                 |                   |
+| FR5.4 |   x   |        x         |              |                      |                     |      |         |       |    x     |             |                 |                   |
+| FR5.5 |   x   |        x         |              |                      |                     |      |         |       |          |      x      |                 |                   |
+| FR5.6 |   x   |        x         |              |                      |                     |      |         |       |    x     |      x      |                 |                   |
+| FR5.7 |   x   |        x         |              |                      |                     |      |         |       |          |      x      |                 |                   |
+| FR6.1 |   x   |                  |              |         x            |         x           |      |         |       |          |             |       x         |                   |
+| FR6.2 |   x   |                  |              |         x            |         x           |      |    x    |       |          |             |       x         |                   |
+| FR6.3 |   x   |                  |              |         x            |                     |      |    x    |       |          |             |       x         |                   |
+| FR6.4 |   x   |                  |              |         x            |                     |      |         |       |          |             |       x         |                   |
+| FR6.5 |   x   |                  |              |         x            |                     |      |    x    |       |          |             |       x         |                   |
+| FR6.6 |   x   |                  |              |         x            |                     |      |         |       |          |             |       x         |                   |
+| FR6.7 |   x   |                  |              |         x            |         x           |      |    x    |       |          |             |       x         |                   |
+| FR6.8 |       |                  |              |                      |                     |      |         |       |          |             |                 |                   |
+| FR6.10 |  x   |                  |              |         x            |                     |      |         |       |          |             |       x         |                   |
+| FR6.11 |  x   |                  |              |         x            |         x           |      |    x    |       |          |             |       x         |                   |
+| FR6.12 |  x   |                  |              |         x            |                     |      |         |       |          |             |                 |        x          |
+| FR6.13 |  x   |                  |              |         x            |         x           |      |    x    |       |          |             |       x         |        x          |
+| FR6.14 |  x   |                  |              |         x            |                     |      |         |       |          |             |                 |        x          |
+| FR6.15 |  x   |                  |              |         x            |         x           |      |    x    |       |          |             |                 |        x          |
+| FR7.1 |   x   |                  |              |         x            |                     |      |         |       |          |             |                 |                   |
+| FR7.2 |   x   |                  |              |         x            |                     |      |         |       |          |             |                 |                   |
+| FR7.3 |   x   |                  |              |         x            |                     |      |         |       |          |             |                 |                   |
+| FR7.4 |   x   |                  |              |         x            |                     |      |         |       |          |             |                 |                   |
+| FR8.1 |   x   |                  |              |         x            |                     |      |         |       |          |             |                 |                   |
+| FR8.2 |   x   |                  |              |         x            |                     |      |         |       |          |             |                 |                   |
+| FR8.3 |   x   |                  |              |         x            |                     |      |         |   x   |          |             |       x         |        x          |
+| FR8.4 |   x   |                  |              |         x            |                     |      |         |       |          |             |                 |                   |
 
 
  # Verification sequence diagrams 
