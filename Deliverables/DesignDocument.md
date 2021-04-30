@@ -1366,11 +1366,13 @@ deactivate TransactionManger
 deactivate TransactionManger 
 TransactionManager -> TransactionManager:11 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager 
+deactivate TransactionManager 
 TransactionManager -> TransactionManager:12 computeBalance()
 activate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager
 deactivate TransactionManager 
+
 @enduml
 ```
 
