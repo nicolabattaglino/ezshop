@@ -116,6 +116,7 @@ interface EZShopInterface {
 
 
 class Shop {
+    +reset()
     +addPayedOrder(order: Order): boolean
 }
 
