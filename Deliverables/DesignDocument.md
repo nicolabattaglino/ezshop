@@ -1325,8 +1325,6 @@ participant "/ : TransactionManager" as TransactionManager
 Shop -> TransactionManager:1 receiveCashPayment(int transactionId, double cash)
 activate TransactionManager
 TransactionManager --> TransactionManager:2 recordBalanceUpdate(double toBeAdded)
-activate TransactionManager
-deactivate TransactionManager
 deactivate TransactionManager
 @enduml
 ```
@@ -1341,7 +1339,6 @@ participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
 Shop -> TransactionManager:1 startReturnTransaction(Integer transactionId)
 activate TransactionManager
-
 activate TransactionManager
 TransactionManager -> TransactionManager:2 getSaleTransaction(transactionId: Integer)
 activate TransactionManager
@@ -1356,9 +1353,10 @@ activate TransactionManager
 TransactionManager -> ProductOrderManager:6 updateQuantity(Integer productId, int toBeAdded)
 activate ProductOrderManager
 deactivate ProductOrderManager
+deactivate TransactionManager
 activate TransactionManager
 TransactionManager -> TransactionManager:7 returnCreditCardPayment()
-activate TransactionManager
+deactivate TransactionManager 
 deactivate TransactionManager 
 Shop -> TransactionManager:8 endReturnTransaction(Integer returnId, boolean commit)
 activate TransactionManager
