@@ -58,7 +58,7 @@ interface EZShopInterface {
     +reset()
     +createUser(username: String, password: String, role: String) : Integer
     +deleteUser(id: Integer): boolean
-    +getAllUser(): List<User>
+    +getAllUsers(): List<User>
     +getUser(id: Integer): User
     +updateUserRights(id: Integer, role: String): Boolean
 
@@ -129,8 +129,8 @@ class UserManager{
     +createUser(username: String, password: String, role: String) : Integer
     +deleteUser(id: Integer) : Boolean
     +getAllUsers() : List<User>
-    +updateUserRights(id: Integer, role: String) : Boolean
     +getUser(id: Integer) : User
+    +updateUserRights(id: Integer, role: String) : Boolean
     +login(username: String, password: String) : User
     +logout() : boolean
     +clear()
@@ -181,8 +181,8 @@ class CustomerManager {
     +defineCustomer(customerName: String): Customer
     +modifyCustomer(id: Integer, newCustomerName: String, newCustomerCard): boolean
     +deleteCustomer(id: Integer): boolean
-    +getAllCustomers(): List<Customer>
     +getCustomer(id : Integer): Customer
+    +getAllCustomers(): List<Customer>
     +createCard(): String
     +attachCardToCustomer(customerCard: String, customerId: String ): boolean
     +modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer): boolean
@@ -228,6 +228,7 @@ class TransactionManager {
     +applyDiscountRateToSale(transactionId: Integer, discountRate: double) : boolean
     +computePointsForSale(transactionId: Integer): int
     +endSaleTransaction(transactionId: Integer): boolean
+    +deleteSaleTransaction(transactionId: Integer) : boolean
     +getSaleTransaction(transactionId: Integer): boolean
     +startReturnTransaction(transactionId: Integer): Integer
     +returnProduct(returnId : Integer, productCode: String, amount: int): boolean
@@ -240,10 +241,10 @@ class TransactionManager {
     +recordBalanceUpdate ( double toBeAdded) : boolean
     +getCreditsAndDebits(from: LocalDate, to: LocalDate): List<BalanceOperation>
     +computeBalance(): double
-    -luhnAlgorithm (String creditCard): boolean
-    +deleteSaleTransaction(transactionId: Integer) : boolean
-    -checkCreditCardBalance (String creditCard): boolean
     +getAllOrders(): List<Order>
+
+    -luhnAlgorithm (String creditCard): boolean
+    -checkCreditCardBalance (String creditCard): boolean
     +clear()
      
     -getReturnTransaction(transactionId: Integer): ReturnTransaction
@@ -347,7 +348,7 @@ class ReturnTransaction {
   -quantity
 }
 
-ReturnTransaction "*" -> SaleTransaction : -sale : SaleTransaction
+ReturnTransaction "*" <- SaleTransaction : -sale : SaleTransaction
 ReturnTransaction "*" -> ProductType : -product : ProductType
 
 @enduml
