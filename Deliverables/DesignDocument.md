@@ -1527,11 +1527,10 @@ activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManager
 TransactionManager -> TransactionManager:4 new returnTransaction()
+deactivate TransactionManager
+Shop -> TransactionManager:5 returnProduct(Integer returnId, String productCode, int amount)
 activate TransactionManager
-TransactionManager -> BalanceOperation :5 getProductCodes()
-activate BalanceOperation
-deactivate BalanceOperation
-TransactionManager -> ProductOrderManager:6 returnProduct(Integer returnId, String productCode, int amount)
+TransactionManager -> ProductOrderManager:6 updateQuantity(Integer productId, int toBeAdded)
 activate ProductOrderManager
 deactivate ProductOrderManager
 activate TransactionManager
@@ -1567,18 +1566,17 @@ participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
 Shop -> TransactionManager:1 startReturnTransaction(Integer transactionId)
 activate TransactionManager
-TransactionManager -> TransactionManager:2 getSaleTransaction(transactionId: Integer)
+TransactionManager -> TransactionManager:2 getSaleTransaction(Integer transactionId)
 activate TransactionManager
 TransactionManager -> BalanceOperation :3 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManager
 TransactionManager -> TransactionManager:4 new returnTransaction()
+deactivate TransactionManager
+TransactionManager -> TransactionManager:5 returnProduct(Integer returnId, String productCode, int amount)
 activate TransactionManager
-TransactionManager -> BalanceOperation :5 getProductCodes()
-activate BalanceOperation
-deactivate BalanceOperation
-TransactionManager -> ProductOrderManager:6 returnProduct(Integer returnId, String productCode, int amount)
+TransactionManager -> ProductOrderManager:6 updateQuantity(Integer productId, int toBeAdded)
 activate ProductOrderManager
 deactivate ProductOrderManager
 activate TransactionManager
@@ -1587,7 +1585,7 @@ activate TransactionManager
 deactivate TransactionManager 
 Shop -> TransactionManager:8 endReturnTransaction(Integer returnId, boolean commit)
 activate TransactionManager
-TransactionManager -> TransactionManager:9 getReturnTransaction(transactionId: Integer)
+TransactionManager -> TransactionManager:9 getReturnTransaction(Integer transactionId)
 activate TransactionManager
 TransactionManager -> BalanceOperation :10 getAmount()
 activate BalanceOperation
@@ -1624,16 +1622,20 @@ deactivate TransactionManager
 
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
-TransactionManager-> TransactionManager:1 getAmount()
-
-TransactionManager-> BalanceOperation:1 getAmount()
+TransactionManager -> TransactionManager:1 receiveCreditCardPayment(Integer transactionId, String creditCard)
+activate TransactionManager
+TransactionManager-> TransactionManager:2 getSaleTransaction(Integer transactionId)
+TransactionManager-> BalanceOperation:3 getAmount()
 activate BalanceOperation
-
 deactivate BalanceOperation
+TransactionManager -> TransactionManager:4 luhnAlgorithm(String creditCard)
 activate TransactionManager
-TransactionManager -> TransactionManager:3 recordBalance() 
+note right : Card validated
+TransactionManager -> TransactionManager:5 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
+TransactionManager -> TransactionManager:6 computeBalance()
 deactivate TransactionManager
+note right: Balance is sufficient
 deactivate TransactionManager
 
 @enduml
