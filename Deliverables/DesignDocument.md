@@ -50,7 +50,7 @@ gui ..> model_controller
 ```plantuml
 
 @startuml
-
+scale 0.75
 interface EZShopInterface {
     +reset()
     +createUser(username: String, password: String, role: String) : Integer
@@ -679,16 +679,10 @@ actor Administrator
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 
-Administrator -> Shop: 1: getUser(id)
-activate Shop
-Shop -> UserManager: 2: getUser(id)
-activate UserManager
-deactivate UserManager
-deactivate Shop
 
-Administrator -> Shop: 3: deleteUser(u.id)
+Administrator -> Shop: 1: deleteUser(id)
 activate Shop
-Shop -> UserManager: 4: deleteUser(u.id)
+Shop -> UserManager: 2: deleteUser(id)
 activate UserManager
 deactivate UserManager
 deactivate Shop
@@ -704,18 +698,12 @@ participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 participant "u : User" as User
 
-Administrator -> Shop: 1: getUser(id)
-activate Shop
-Shop -> UserManager: 2: getUser(id)
-activate UserManager
-deactivate UserManager
-deactivate Shop
 
-Administrator -> Shop: 3: updateUserRights(u.id, role)
+Administrator -> Shop: 1: updateUserRights(id, role)
 activate Shop
-Shop -> UserManager: 4: updateUserRights(u.id, role)
+Shop -> UserManager: 2: updateUserRights(id, role)
 activate UserManager
-UserManager -> User: 5: setRole()
+UserManager -> User: 3: setRole()
 activate User
 deactivate User
 deactivate UserManager
@@ -838,18 +826,11 @@ CustomerManager -> LoyaltyCard: 3: new
 deactivate CustomerManager
 deactivate Shop
 
-User -> Shop: 4: getCustomer(id)
+User -> Shop: 4: attachCardToCustomer(l.id, cu.id) 
 activate Shop
-Shop -> CustomerManager: 5: getCustomer(id)
+Shop -> CustomerManager: 5: attachCardToCustomer(l.id, cu.id)
 activate CustomerManager
-deactivate CustomerManager
-deactivate Shop
-
-User -> Shop: 6: attachCardToCustomer(l.id, cu.id) 
-activate Shop
-Shop -> CustomerManager: 7: attachCardToCustomer(l.id, cu.id)
-activate CustomerManager
-CustomerManager -> Customer: 8: setCard(l)
+CustomerManager -> Customer: 6: setCard(l)
 activate Customer
 deactivate Customer
 deactivate CustomerManager
@@ -867,18 +848,12 @@ participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
 
-User -> Shop: 1: getCustomer(id)
-activate Shop
-Shop -> CustomerManager: 2: getCustomer(id)
-activate CustomerManager
-deactivate CustomerManager
-deactivate Shop
 
-User -> Shop: 3: modifyCustomer(cu.id,cu.name)
+User -> Shop: 1: modifyCustomer(cu.id,cu.name)
 activate Shop
-Shop -> CustomerManager: 4: modifyCustomer(cu.id,cu.name)
+Shop -> CustomerManager: 2: modifyCustomer(cu.id,cu.name)
 activate CustomerManager
-CustomerManager -> Customer: 5: setCard(null)
+CustomerManager -> Customer: 3: setCard(null)
 activate Customer
 deactivate Customer
 deactivate CustomerManager
@@ -898,20 +873,13 @@ participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
 
-User -> Shop: 1: getCustomer(id)
+User -> Shop: 1: modifyCustomer(id, newCustomerName, newCustomerCard)
 activate Shop
-Shop -> CustomerManager: 2: getCustomer(id)
+Shop -> CustomerManager: 2: modifyCustomer(id, newCustomerName, newCustomerCard)
 activate CustomerManager
-deactivate CustomerManager
-deactivate Shop
-
-User -> Shop: 3: modifyCustomer(cu.id, newCustomerName, newCustomerCard)
-activate Shop
-Shop -> CustomerManager: 4: modifyCustomer(cu.id, newCustomerName, newCustomerCard)
-activate CustomerManager
-CustomerManager -> Customer: 5: setCard(newCustomerCard)
+CustomerManager -> Customer: 3: setCard(newCustomerCard)
 activate Customer
-CustomerManager -> Customer: 6: setName(newCustomerName)
+CustomerManager -> Customer: 4: setName(newCustomerName)
 deactivate Customer
 deactivate CustomerManager
 deactivate Shop
@@ -1483,7 +1451,7 @@ activate TransactionManager
 TransactionManager -> BalanceOperation :4 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
-deactivete TransactionManger 
+deactivate TransactionManger 
 TransactionManager --> TransactionManager:5 checkCreditCardBalance(String creditCard)
 note right: balance is NOT sufficient
 activate TransactionManager
@@ -1525,11 +1493,10 @@ activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManager
 TransactionManager -> TransactionManager:4 new returnTransaction()
+deactivate TransactionManager
+Shop -> TransactionManager:5 returnProduct(Integer returnId, String productCode, int amount)
 activate TransactionManager
-TransactionManager -> BalanceOperation :5 getProductCodes()
-activate BalanceOperation
-deactivate BalanceOperation
-TransactionManager -> ProductOrderManager:6 returnProduct(Integer returnId, String productCode, int amount)
+TransactionManager -> ProductOrderManager:6 updateQuantity(Integer productId, int toBeAdded)
 activate ProductOrderManager
 deactivate ProductOrderManager
 activate TransactionManager
@@ -1565,18 +1532,17 @@ participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
 Shop -> TransactionManager:1 startReturnTransaction(Integer transactionId)
 activate TransactionManager
-TransactionManager -> TransactionManager:2 getSaleTransaction(transactionId: Integer)
+TransactionManager -> TransactionManager:2 getSaleTransaction(Integer transactionId)
 activate TransactionManager
 TransactionManager -> BalanceOperation :3 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
 deactivate TransactionManager
 TransactionManager -> TransactionManager:4 new returnTransaction()
+deactivate TransactionManager
+TransactionManager -> TransactionManager:5 returnProduct(Integer returnId, String productCode, int amount)
 activate TransactionManager
-TransactionManager -> BalanceOperation :5 getProductCodes()
-activate BalanceOperation
-deactivate BalanceOperation
-TransactionManager -> ProductOrderManager:6 returnProduct(Integer returnId, String productCode, int amount)
+TransactionManager -> ProductOrderManager:6 updateQuantity(Integer productId, int toBeAdded)
 activate ProductOrderManager
 deactivate ProductOrderManager
 activate TransactionManager
@@ -1585,7 +1551,7 @@ activate TransactionManager
 deactivate TransactionManager 
 Shop -> TransactionManager:8 endReturnTransaction(Integer returnId, boolean commit)
 activate TransactionManager
-TransactionManager -> TransactionManager:9 getReturnTransaction(transactionId: Integer)
+TransactionManager -> TransactionManager:9 getReturnTransaction(Integer transactionId)
 activate TransactionManager
 TransactionManager -> BalanceOperation :10 getAmount()
 activate BalanceOperation
@@ -1622,16 +1588,20 @@ deactivate TransactionManager
 
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
-TransactionManager-> TransactionManager:1 getAmount()
-
-TransactionManager-> BalanceOperation:1 getAmount()
+TransactionManager -> TransactionManager:1 receiveCreditCardPayment(Integer transactionId, String creditCard)
+activate TransactionManager
+TransactionManager-> TransactionManager:2 getSaleTransaction(Integer transactionId)
+TransactionManager-> BalanceOperation:3 getAmount()
 activate BalanceOperation
-
 deactivate BalanceOperation
+TransactionManager -> TransactionManager:4 luhnAlgorithm(String creditCard)
 activate TransactionManager
-TransactionManager -> TransactionManager:3 recordBalance() 
+note right : Card validated
+TransactionManager -> TransactionManager:5 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
+TransactionManager -> TransactionManager:6 computeBalance()
 deactivate TransactionManager
+note right: Balance is sufficient
 deactivate TransactionManager
 
 @enduml
@@ -1646,13 +1616,17 @@ deactivate TransactionManager
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
 
-TransactionManager-> BalanceOperation:1 getAmount()
+TransactionManager -> TransactionManager:1 returnCashPayment(Integer returnId)
+activate TransactionManager
+TransactionManager-> TransactionManager:2 getSaleTransaction(Integer transactionId)
+TransactionManager-> BalanceOperation:3 getAmount()
 activate BalanceOperation
 deactivate BalanceOperation
+TransactionManager -> TransactionManager:4 recordBalanceUpdate(double toBeAdded)
 activate TransactionManager
-TransactionManager -> TransactionManager:2 recordBalance() 
-activate TransactionManager
+TransactionManager -> TransactionManager:5 computeBalance()
 deactivate TransactionManager
+note right: Balance is sufficient
 deactivate TransactionManager
 @enduml
 ```
