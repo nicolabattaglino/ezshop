@@ -377,7 +377,6 @@ ReturnTransaction "*" - ProductType
 | FR6.6 |   x   |                  |              |         x            |                     |
 | FR6.7 |   x   |                  |              |         x            |                     |
 | FR6.8 |   x   |                  |              |         x            |                     |
-| FR6.9 |   x   |                  |              |         x            |                     |
 | FR6.10 |  x   |                  |              |         x            |                     |
 | FR6.11 |  x   |                  |              |         x            |                     |
 | FR6.12 |  x   |                  |              |         x            |                     |
@@ -656,7 +655,7 @@ participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
 
-User -> Shop: 1: defineCustomer(customerName)
+Cashier -> Shop: 1: defineCustomer(customerName)
 activate Shop
 Shop -> CustomerManager: 2: defineCustomer(customerName)
 activate CustomerManager
@@ -678,7 +677,7 @@ participant "/ : CustomerManager" as CustomerManager
 participant "l : Loyalty Card" as LoyaltyCard
 participant "cu : Customer" as Customer
 
-User -> Shop: 1: createCard()
+Cashier -> Shop: 1: createCard()
 activate Shop
 Shop -> CustomerManager: 2: createCard()
 activate CustomerManager
@@ -687,7 +686,7 @@ CustomerManager -> LoyaltyCard: 3: new
 deactivate CustomerManager
 deactivate Shop
 
-User -> Shop: 4: attachCardToCustomer(customerCard, customerId) 
+Cashier -> Shop: 4: attachCardToCustomer(customerCard, customerId) 
 activate Shop
 Shop -> CustomerManager: 5: attachCardToCustomer(customerCard, customerId)
 activate CustomerManager
@@ -710,7 +709,7 @@ participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
 
 
-User -> Shop: 1: modifyCustomer(cu.id,cu.name)
+Cashier -> Shop: 1: modifyCustomer(cu.id,cu.name)
 activate Shop
 Shop -> CustomerManager: 2: modifyCustomer(cu.id,cu.name)
 activate CustomerManager
@@ -734,7 +733,7 @@ participant "/ : Shop" as Shop
 participant "/ : CustomerManager" as CustomerManager
 participant "cu : Customer" as Customer
 
-User -> Shop: 1: modifyCustomer(id, newCustomerName, newCustomerCard)
+Cashier -> Shop: 1: modifyCustomer(id, newCustomerName, newCustomerCard)
 activate Shop
 Shop -> CustomerManager: 2: modifyCustomer(id, newCustomerName, newCustomerCard)
 activate CustomerManager
@@ -758,7 +757,7 @@ participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 participant "u : User" as User
 
-Administrator -> Shop: 1: login(username, password)
+Cashier -> Shop: 1: login(username, password)
 activate Shop
 Shop -> UserManager: 2: login(username, password)
 activate UserManager
@@ -780,7 +779,7 @@ actor Cashier
 participant "/ : Shop" as Shop
 participant "/ : UserManager" as UserManager
 
-Administrator -> Shop: 1: logout()
+Cashier -> Shop: 1: logout()
 activate Shop
 Shop -> UserManager: 2: logout()
 activate UserManager
