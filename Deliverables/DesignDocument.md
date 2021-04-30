@@ -272,11 +272,10 @@ class BalanceOperation {
     -amount: double
     -date: LocalDate
     -iD: int
-    -creditCard: String
+    +compute(): double
 }
 
 class Order{
-    -id: Integer
     -supplier: String
     -pricePerUnit: double
     -quantity: Integer
@@ -321,8 +320,6 @@ ProductType ->"0..1" Position: -position
 
 
 class SaleTransaction {
-    -ID : Integer
-    -cost : double
     -paymentType : String
     -discountRate : double
     -state: boolean
@@ -349,7 +346,6 @@ Order "*" -> ProductType: -product
 
 class ReturnTransaction {
   -quantity
-  -returnedValue
 }
 
 ReturnTransaction "*" - SaleTransaction : -sale
