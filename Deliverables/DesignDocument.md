@@ -1459,11 +1459,12 @@ deactivate TransactionManager
 @startuml
 
 actor Cashier
+participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
 Cashier -> Shop :1 receiveCreditCardPayment(Integer transactionId, String creditCard)
 activate Shop
-TransactionManager -> TransactionManager:2 receiveCreditCardPayment(Integer transactionId, String creditCard)
+Shop -> TransactionManager:2 receiveCreditCardPayment(Integer transactionId, String creditCard)
 deactivate Shop
 activate TransactionManager
 TransactionManager-> TransactionManager:3 getSaleTransaction(Integer transactionId)
@@ -1489,12 +1490,14 @@ deactivate TransactionManager
 
 
 actor Cashier
+participant "/ : Shop" as Shop
 participant "/ : TransactionManager" as TransactionManager
 participant "/ : BalanceOperation" as BalanceOperation
 Cashier -> Shop :1 returnCashPayment(Integer returnId)
 activate Shop
-TransactionManager -> TransactionManager:2 returnCashPayment(Integer returnId)
-deactivate Shopactivate TransactionManager
+Shop -> TransactionManager:2 returnCashPayment(Integer returnId)
+deactivate Shop
+activate TransactionManager
 TransactionManager-> TransactionManager:3 getSaleTransaction(Integer transactionId)
 TransactionManager-> BalanceOperation:4 getAmount()
 activate BalanceOperation
