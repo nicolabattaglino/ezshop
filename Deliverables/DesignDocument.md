@@ -31,11 +31,14 @@ The entire application is based on the MVC architectural pattern, we used Layere
 
 @startuml
 
-package gui 
+package ez_shop_gui 
 
-package model_controller
+package ez_shop_model_controller
 
-gui ..> model_controller
+package ez_shop_exception
+
+ez_shop_gui ..> ez_shop_model_controller
+ez_shop_model_controller .> ez_shop_exception
 
 @enduml
 
@@ -243,10 +246,10 @@ TransactionManager <-- BalanceOperation : -transactionMap
 
 
 
-Shop --> UserManager
-Shop --> CustomerManager
-Shop --> ProductOrderManager
-Shop -->TransactionManager
+Shop --> UserManager : -userManager
+Shop --> CustomerManager : -customerManager
+Shop --> ProductOrderManager : -productOrderManager
+Shop --> TransactionManager : -transactionManager
 
 class Credit 
 class Debit
@@ -333,8 +336,9 @@ class ReturnTransaction {
   returnedValue
 }
 
-ReturnTransaction "*" - SaleTransaction
-ReturnTransaction "*" - ProductType
+ReturnTransaction "*" - SaleTransaction : -sale
+ReturnTransaction "*" -> ProductType : -product
+
 @enduml
 
 ```
