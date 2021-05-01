@@ -51,9 +51,9 @@
 51
 52
 # Project Estimation  
-Authors:
-Date:
-Version:
+Authors: Stefano, Mattia, Nicola, Hossein
+Date: 24 April 2021
+Version: 1.0
 # Contents
 - [Estimate by product decomposition]
 - [Estimate by activity decomposition ]
@@ -63,16 +63,67 @@ Version:
 ### 
 |             | Estimate                        |             
 | ----------- | ------------------------------- |  
-| NC =  Estimated number of classes to be developed   |                             |             
-|  A = Estimated average size per class, in LOC       |                            | 
-| S = Estimated size of project, in LOC (= NC * A) | |
-| E = Estimated effort, in person hours (here use productivity 10 LOC per person hour)  |                                      |   
-| C = Estimated cost, in euro (here use 1 person hour cost = 30 euro) | | 
-| Estimated calendar time, in calendar weeks (Assume team of 4 people, 8 hours per day, 5 days per week ) |                    |               
+| NC =  Estimated number of classes to be developed   |            15  +  23               |             
+|  A = Estimated average size per class, in LOC       |         (7* 350 + 4* 50 + 4* 10 +  275* 23 )  /48  = 240 |  
+| S = Estimated size of project, in LOC (= NC * A) | 9120 |
+| E = Estimated effort, in person hours (here use productivity 10 LOC per person hour)  |  912                                    |   
+| C = Estimated cost, in euro (here use 1 person hour cost = 30 euro) |27360 | 
+| Estimated calendar time, in calendar weeks (Assume team of 4 people, 8 hours per day, 5 days per week ) |      6              |               
 # Estimate by activity decomposition
 ### 
 |         Activity name    | Estimated effort (person hours)   |             
 | ----------- | ------------------------------- | 
-| | |
+| Requirements | 283 | 
+| Review | 30 | 
+| Identify interfaces requirements | 12 | 
+| Model system| 26 | 
+| Model use cases and scenarios| 66 | 
+| Identify owner's requirements| 13 | 
+| Identify employees' requirements| 15 | 
+| Identify subscribers' requirements| 25 | 
+| GUI design| 35 | 
+| GUI prototype| 33 | 
+| Test planning | 16 |
+| Prepare software requirements specification document| 12 |   
+| Design| 145 |
+| Architectural design| 65 |
+| Low level design| 80 |
+| Coding| 150 | 
+| Coding back-end| 60 |
+| Coding GUI| 90|
+| Testing| 228 |
+| Module testing| 152 |
+| System testing| 76 |
+
+
 ###
 Insert here Gantt chart with above activities
+
+```plantuml
+@startgantt
+[Requirements] lasts 35 days
+[Identify requirements] lasts 9 days
+then [Model use cases and scenarios] lasts 6 days
+then [Model system] lasts 4 days
+then [GUI design] lasts 4 days
+then [GUI prototype] lasts 4 days
+then [Test Planning] lasts 2 days
+then [Review] lasts 3 days
+then [Prapare documents] lasts 2 day
+[Design] lasts 18 days
+[Design] starts at [Requirements]'s end
+[Architectural design] lasts 8 day
+[Architectural design] starts at [Design]'s start
+then [Low level design] lasts 10 days
+[Coding] lasts 19 days
+[Coding] starts at [Design]'s end
+[Coding back-end] lasts 8 days
+[Coding back-end] starts at [Coding]'s start
+then [Coding GUI] lasts 11 days
+[Testing] lasts 29 days
+[Testing] starts at [Coding]'s end
+[Module testing] lasts 19 days
+[Module testing] starts at [Testing]'s start
+then [System testing] lasts 10 days
+@endgantt
+```
