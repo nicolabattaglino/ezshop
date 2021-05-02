@@ -7,6 +7,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class TransactionManager {
+    public List<Order> getAllOrders() throws UnauthorizedException {
+        return null;
+    }
+
     public Integer startReturnTransaction(Integer saleNumber) throws /*InvalidTicketNumberException,*/InvalidTransactionIdException, UnauthorizedException {
         return null;
     }
