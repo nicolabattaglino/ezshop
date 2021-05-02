@@ -1,4 +1,5 @@
 package it.polito.ezshop.classes;
+import java.lang.Double;
 
 import it.polito.ezshop.exceptions.*;
 import it.polito.ezshop.data.*;
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class TransactionManager {
+    private Double balance =  Double.valueOf("0");
     public List<Order> getAllOrders() throws UnauthorizedException {
         return null;
     }
@@ -53,4 +55,21 @@ public class TransactionManager {
     public double computeBalance() throws UnauthorizedException {
         return 0;
     }
+    public void clear() {
+
+    }
+     
+    public ReturnTransaction getReturnTransaction( Integer transactionId){
+        return null;
+    }
+    public Order addCompletedOrder(Integer orderId){
+        return null;
+        
+
+    }
+    boolean addOrder(Order order ){
+        return true;
+
+    }
 }
+
