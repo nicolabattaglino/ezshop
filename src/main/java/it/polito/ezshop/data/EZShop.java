@@ -1,5 +1,7 @@
 package it.polito.ezshop.data;
 
+import it.polito.ezshop.classes.ProductOrderManager;
+import it.polito.ezshop.classes.TransactionManager;
 import it.polito.ezshop.exceptions.*;
 
 import java.time.LocalDate;
@@ -7,13 +9,15 @@ import java.util.List;
 
 
 public class EZShop implements EZShopInterface {
-
-
+    
+    private ProductOrderManager productOrderManager;
+    private TransactionManager transactionManager;
+    
     @Override
     public void reset() {
-
+    
     }
-
+    
     @Override
     public Integer createUser(String username, String password, String role) throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
         return null;
