@@ -5,12 +5,15 @@ import it.polito.ezshop.exceptions.*;
 import it.polito.ezshop.data.*;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
 
 public class TransactionManager {
     private Double balance =  Double.valueOf("0");
+    private List<Order> orders = new LinkedList<Order>();
+
+
     public List<Order> getAllOrders() throws UnauthorizedException {
-        return null;
+        return orders;
     }
 
     public Integer startReturnTransaction(Integer saleNumber) throws /*InvalidTicketNumberException,*/InvalidTransactionIdException, UnauthorizedException {
