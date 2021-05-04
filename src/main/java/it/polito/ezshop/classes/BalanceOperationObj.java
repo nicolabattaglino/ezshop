@@ -1,11 +1,14 @@
 package it.polito.ezshop.classes;
+
+import it.polito.ezshop.data.BalanceOperation;
 import it.polito.ezshop.exceptions.*;
 import it.polito.ezshop.data.*;
 
 import java.time.LocalDate;
 import java.util.*;
+import it.polito.ezshop.data.*;
 
-public class ReturnTransaction implements BalanceOperation {
+public abstract class BalanceOperationObj implements BalanceOperation {
     private int balanceId;
     private LocalDate date;
     private double money;
@@ -46,5 +49,6 @@ public class ReturnTransaction implements BalanceOperation {
         this.type=type;
         return;
     }
+    
     
 }

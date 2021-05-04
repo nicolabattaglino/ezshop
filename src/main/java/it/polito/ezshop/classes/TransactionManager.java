@@ -48,7 +48,7 @@ public class TransactionManager {
         return false;
     }
 
-    public List<BalanceOperation> getCreditsAndDebits(LocalDate from, LocalDate to) throws UnauthorizedException {
+    public List<BalanceOperationObj> getCreditsAndDebits(LocalDate from, LocalDate to) throws UnauthorizedException {
         return null;
     }
 
