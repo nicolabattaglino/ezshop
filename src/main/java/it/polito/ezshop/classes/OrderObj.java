@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.*;
 import it.polito.ezshop.data.*;
 
-public class OrderObj extends BalanceOperationObj implements Order {
+public class OrderObj implements Order {
     private Integer balanceId;
     private String productCode;
     private double pricePerUnit;
