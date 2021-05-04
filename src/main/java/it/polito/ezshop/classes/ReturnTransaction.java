@@ -11,6 +11,13 @@ public class ReturnTransaction implements BalanceOperation {
     private double money;
     private String type;
 
+    public ReturnTransaction(int balanceId, LocalDate date, double money, String type){
+        this.balanceId=balanceId;
+        this. date= date;
+        this. money = money;
+        this.type= type;
+    }
+
     public int getBalanceId(){
         return balanceId;
     }
