@@ -13,6 +13,9 @@ public class TransactionManager {
     private Double balance =  Double.valueOf("0");
     private List<Order> orders = new LinkedList<Order>();
     private List<BalanceOperation> balanceOperations= new LinkedList<BalanceOperation>();
+    private List<ReturnTransaction> returnTransactions= new LinkedList<ReturnTransaction>();
+    private EZShop shop;
+
 
     public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException{
         return null;
@@ -30,14 +33,41 @@ public class TransactionManager {
             money+= (ticket.getAmount() * ticket.getPricePerUnit() * ticket.getDiscountRate());
         }
         
-        ReturnTransaction returning = new ReturnTransaction(Collections.max(balanceOperations.stream().map(s-> s.getBalanceId()).collect(java.util.stream.Collectors.toList())), LocalDate.now(), money, "Return");
+        ReturnTransaction returning = new ReturnTransaction(Collections.max(balanceOperations.stream().map(s-> s.getBalanceId()).collect(java.util.stream.Collectors.toList())), LocalDate.now(), money, "Return", saleNumber);
         balanceOperations.add(returning);
+        returnTransactions.add(returning);
         Integer output = returning.getBalanceId();
         return output;
     }
+    private ReturnTransaction getReturnTransaction (Integer returnId){
+        for (ReturnTransaction output : returnTransactions ){
+                if(output.getBalanceId() == (int)returnId) return output;
+        }
+        return null;
+    }
 
     public boolean returnProduct(Integer returnId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
-        return false;
+        //Exceptions are checked in the shop
+        ReturnTransaction target = getReturnTransaction(returnId);
+        if(target==null){ 
+            return false;
+        }
+        if(shop.getProductTypeByBarCode(productCode)== null) return false;
+        int oldID = target.getTransactionID();
+        SaleTransaction oldSale = this.getSaleTransaction(oldID);
+        List<TicketEntry> products =  oldSale.getEntries();
+        TicketEntry prodotto= null;
+        for (TicketEntry product : products){
+            if(product.getBarCode() == productCode){
+                prodotto = product;
+                break;
+            }
+        }
+        if(prodotto == null) return false;
+        if(prodotto.getAmount()< amount) return false;
+        prodotto.setAmount(amount);
+        target.addEntry(prodotto);
+        return true;
     }
     public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, UnauthorizedException {
         return false;
@@ -83,9 +113,6 @@ public class TransactionManager {
 
     }
      
-    public ReturnTransaction getReturnTransaction( Integer transactionId){
-        return null;
-    }
     public Order addCompletedOrder(Integer orderId){
         return null;
         

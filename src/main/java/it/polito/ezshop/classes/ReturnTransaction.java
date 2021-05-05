@@ -5,17 +5,61 @@ import it.polito.ezshop.data.*;
 import java.time.LocalDate;
 import java.util.*;
 
-public class ReturnTransaction implements BalanceOperation {
+public class ReturnTransaction implements BalanceOperation,it.polito.ezshop.data.SaleTransaction {
     private int balanceId;
     private LocalDate date;
     private double money;
     private String type;
+    private int returningID;
+    private Integer ticketNumber;
+    private double discountRate;
+    private  List<TicketEntry> entries = new ArrayList<TicketEntry>();
+    private double price;
+    
+    
+    public Integer getTicketNumber(){
+        return ticketNumber;
+    }
 
-    public ReturnTransaction(int balanceId, LocalDate date, double money, String type){
+    public void setTicketNumber(Integer ticketNumber){
+        this.ticketNumber = ticketNumber;
+    }
+
+    public List<TicketEntry> getEntries(){
+        return entries;
+    }
+
+    public void setEntries(List<TicketEntry> entries){
+        this.entries= entries;
+    }
+    public void addEntry(TicketEntry entry){
+        entries.add(entry);
+    }
+    public double getDiscountRate(){
+        return discountRate;
+    }
+
+    public void setDiscountRate(double discountRate){
+        this.discountRate = discountRate;
+    }
+
+    public double getPrice(){
+        return price;
+    }
+
+    public void setPrice(double price){
+        this.price = price;
+    }
+
+    public ReturnTransaction(int balanceId, LocalDate date, double money, String type, int returning){
         this.balanceId=balanceId;
         this. date= date;
         this. money = money;
         this.type= type;
+        this.returningID = returning;
+    }
+    public int getTransactionID(){
+        return returningID;
     }
 
     public int getBalanceId(){
