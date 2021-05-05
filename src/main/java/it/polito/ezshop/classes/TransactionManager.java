@@ -6,6 +6,8 @@ import it.polito.ezshop.exceptions.*;
 import it.polito.ezshop.data.*;
 import java.util.stream.Collectors.*;
 
+import javax.swing.plaf.metal.MetalBorders.ToolBarBorder;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -14,11 +16,15 @@ public class TransactionManager {
     private List<Order> orders = new LinkedList<Order>();
     private List<BalanceOperation> balanceOperations= new LinkedList<BalanceOperation>(); //list of all balance operations
     private List<ReturnTransaction> returnTransactions= new LinkedList<ReturnTransaction>(); // list of all return transactions (they are also included in balanceOperation)
-    private List<SaleTransactionObj> saleTransactions= new LinkedList<SaleTransactionObj>(); // list of all sale transactions (they are also included in balanceOperation)
+    private List<SaleTransactionObj> saleTransactionsObj= new LinkedList<SaleTransactionObj>(); // list of all sale transactions (they are also included in balanceOperation)
     private EZShop shop;
 
 
     public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException{
+        SaleTransactionObj output;
+        for(SaleTransactionObj obj : saleTransactionsObj){
+            if(obj.getBalanceId() == transactionId) return obj;
+        }
         return null;
     }
 
@@ -72,41 +78,79 @@ public class TransactionManager {
     }
     public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, UnauthorizedException, InvalidProductIdException, InvalidProductCodeException {
         // exceptions are checked in shop
+        // in the current design the return transaction's informations are created during the return product function, the end return method only closes the return
         ReturnTransaction target = null;
         for(ReturnTransaction returning : returnTransactions){
             if(returning.getBalanceId() == returnId) target = returning;
         }
         if(target == null)return false;
+        if(target.getStatus()!= "New")return false;
         if(!commit){
             returnTransactions.remove(returnTransactions.indexOf(target));
         }
-        else{
-            int amount=0;
-            SaleTransaction sale = this.getSaleTransaction(target.getTransactionID());
-            List<TicketEntry> targetEntries= target.getEntries();
-            List<TicketEntry> saleEntries= sale.getEntries(); 
-            List<TicketEntry> toBeUpdated= new ArrayList <TicketEntry>(); 
-            for (TicketEntry saleEntry : saleEntries ){
-                for(TicketEntry targetEntry : targetEntries ){
-                    if(saleEntry.getBarCode() == targetEntry.getBarCode()){
-                        amount = saleEntry.getAmount() - targetEntry.getAmount();
-                        // calculate the difference between the sold amount and the amount to be returned
-                        saleEntry.setAmount(amount);
-                        toBeUpdated.add(saleEntry);
-                        shop.updateQuantity(shop.getProductTypeByBarCode(saleEntry.getBarCode()).getId(), targetEntry.getAmount());
-                        //this line updates the quantity by the amount stored in the return transaction.
-                        // it might need to connect to the productOrderManager directly to avoid user problems!
-                    }
-                }
-        }
-    }
+        target.setStatus("Closed");
         return true;
 
     }
     public boolean deleteReturnTransaction(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
-        return false;
-    }
+         // exceptions are checked in shop
+         ReturnTransaction target = null;
+         for(ReturnTransaction returning : returnTransactions){
+             if(returning.getBalanceId() == returnId) target = returning;
+         }
+         if(target == null)return false;
+         if(target.getStatus()!= "Closed")return false;
+         else{
+             int amount=0;
+             SaleTransactionObj sale = this.getSaleTransactionObj(target.getTransactionID());
+             if(sale == null) return false;
+             int priceReduction=0;
+             List<TicketEntry> targetEntries= target.getEntries();
+             List<TicketEntry> saleEntries= sale.getEntries(); 
+             List<TicketEntry> toBeUpdated= new ArrayList <TicketEntry>(); 
+             for (TicketEntry saleEntry : saleEntries ){
+                 for(TicketEntry targetEntry : targetEntries ){
+                     if(saleEntry.getBarCode() == targetEntry.getBarCode()){
+                         amount = saleEntry.getAmount() - targetEntry.getAmount();
+                         // calculate the difference between the sold amount and the amount to be returned
+                         saleEntry.setAmount(amount);
+                         toBeUpdated.add(saleEntry);
+                         priceReduction += amount*saleEntry.getPricePerUnit();
+                         try {
+                            shop.updateQuantity(shop.getProductTypeByBarCode(saleEntry.getBarCode()).getId(), targetEntry.getAmount());
+                        } catch (InvalidProductIdException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        } catch (InvalidProductCodeException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
 
+                         //this line updates the quantity by the amount stored in the return transaction.
+                         // it might need to connect to the productOrderManager directly to avoid user problems!
+                     }
+                 }
+         }
+         // update the old sale
+         for(TicketEntry toAdd : toBeUpdated){
+            sale.updateEntry(toAdd);
+         }
+         sale.updatePrice(priceReduction);
+         
+     }
+        
+        return true;
+ 
+     }
+
+
+    private SaleTransactionObj getSaleTransactionObj(int transactionID) {
+        SaleTransactionObj output;
+        for(SaleTransactionObj obj : saleTransactionsObj){
+            if(obj.getBalanceId() == transactionID) return obj;
+        }
+        return null;
+    }
 
     public double receiveCashPayment(Integer ticketNumber, double cash) throws InvalidTransactionIdException, InvalidPaymentException, UnauthorizedException {
         return 0;

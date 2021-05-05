@@ -5,6 +5,8 @@ import it.polito.ezshop.data.*;
 import java.time.LocalDate;
 import java.util.*;
 
+import javax.swing.text.html.HTMLDocument.RunElement;
+
 public class ReturnTransaction implements BalanceOperation,it.polito.ezshop.data.SaleTransaction {
     private int balanceId;
     private LocalDate date;
@@ -15,9 +17,14 @@ public class ReturnTransaction implements BalanceOperation,it.polito.ezshop.data
     private double discountRate;
     private  List<TicketEntry> entries = new ArrayList<TicketEntry>();
     private double price;
-    private boolean status=false;
+    private String status="New";
     
-    
+    public String getStatus(){
+        return status;
+    }
+    public void setStatus(String status){
+        this.status = status;
+    }
     public Integer getTicketNumber(){
         return ticketNumber;
     }

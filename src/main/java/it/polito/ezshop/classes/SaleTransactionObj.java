@@ -9,7 +9,9 @@ import java.util.List;
 import it.polito.ezshop.data.*;
 
 public class SaleTransactionObj implements it.polito.ezshop.data.SaleTransaction, BalanceOperation {
-    List<TicketEntry> entries = new ArrayList<TicketEntry>();
+    private List<TicketEntry> entries = new ArrayList<TicketEntry>();
+    private double price;
+    
     public boolean updateEntry (TicketEntry entry){
         //this method updates a single entry in the entries list
         //returns true if successfull, false otherwise
@@ -21,6 +23,9 @@ public class SaleTransactionObj implements it.polito.ezshop.data.SaleTransaction
             }
         }
         return false;
+    }
+    public void updatePrice(double amount){
+        this.price+=amount;
     }
     public int getBalanceId(){
         return 0;
