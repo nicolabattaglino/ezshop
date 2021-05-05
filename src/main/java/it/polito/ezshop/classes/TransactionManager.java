@@ -12,8 +12,9 @@ import java.util.*;
 public class TransactionManager {
     private Double balance =  Double.valueOf("0");
     private List<Order> orders = new LinkedList<Order>();
-    private List<BalanceOperation> balanceOperations= new LinkedList<BalanceOperation>();
-    private List<ReturnTransaction> returnTransactions= new LinkedList<ReturnTransaction>();
+    private List<BalanceOperation> balanceOperations= new LinkedList<BalanceOperation>(); //list of all balance operations
+    private List<ReturnTransaction> returnTransactions= new LinkedList<ReturnTransaction>(); // list of all return transactions (they are also included in balanceOperation)
+    private List<SaleTransactionObj> saleTransactions= new LinkedList<SaleTransactionObj>(); // list of all sale transactions (they are also included in balanceOperation)
     private EZShop shop;
 
 
@@ -69,8 +70,38 @@ public class TransactionManager {
         target.addEntry(prodotto);
         return true;
     }
-    public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, UnauthorizedException {
-        return false;
+    public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, UnauthorizedException, InvalidProductIdException, InvalidProductCodeException {
+        // exceptions are checked in shop
+        ReturnTransaction target = null;
+        for(ReturnTransaction returning : returnTransactions){
+            if(returning.getBalanceId() == returnId) target = returning;
+        }
+        if(target == null)return false;
+        if(!commit){
+            returnTransactions.remove(returnTransactions.indexOf(target));
+        }
+        else{
+            int amount=0;
+            SaleTransaction sale = this.getSaleTransaction(target.getTransactionID());
+            List<TicketEntry> targetEntries= target.getEntries();
+            List<TicketEntry> saleEntries= sale.getEntries(); 
+            List<TicketEntry> toBeUpdated= new ArrayList <TicketEntry>(); 
+            for (TicketEntry saleEntry : saleEntries ){
+                for(TicketEntry targetEntry : targetEntries ){
+                    if(saleEntry.getBarCode() == targetEntry.getBarCode()){
+                        amount = saleEntry.getAmount() - targetEntry.getAmount();
+                        // calculate the difference between the sold amount and the amount to be returned
+                        saleEntry.setAmount(amount);
+                        toBeUpdated.add(saleEntry);
+                        shop.updateQuantity(shop.getProductTypeByBarCode(saleEntry.getBarCode()).getId(), targetEntry.getAmount());
+                        //this line updates the quantity by the amount stored in the return transaction.
+                        // it might need to connect to the productOrderManager directly to avoid user problems!
+                    }
+                }
+        }
+    }
+        return true;
+
     }
     public boolean deleteReturnTransaction(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
         return false;

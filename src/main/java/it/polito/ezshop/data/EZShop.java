@@ -1,5 +1,6 @@
 package it.polito.ezshop.data;
 
+import it.polito.ezshop.classes.TransactionManager;
 import it.polito.ezshop.exceptions.*;
 
 import java.time.LocalDate;
@@ -7,7 +8,7 @@ import java.util.List;
 
 
 public class EZShop implements EZShopInterface {
-
+    TransactionManager transactionManager;
 
     @Override
     public void reset() {
@@ -211,7 +212,13 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, UnauthorizedException {
-        return false;
+        try {
+            return transactionManager.endReturnTransaction(returnId, commit);
+        } catch (InvalidProductIdException | InvalidProductCodeException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

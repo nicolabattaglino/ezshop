@@ -15,6 +15,7 @@ public class ReturnTransaction implements BalanceOperation,it.polito.ezshop.data
     private double discountRate;
     private  List<TicketEntry> entries = new ArrayList<TicketEntry>();
     private double price;
+    private boolean status=false;
     
     
     public Integer getTicketNumber(){
@@ -59,6 +60,7 @@ public class ReturnTransaction implements BalanceOperation,it.polito.ezshop.data
         this.returningID = returning;
     }
     public int getTransactionID(){
+        //this method returns the ID of the sale transaction the return is linked to
         return returningID;
     }
 
