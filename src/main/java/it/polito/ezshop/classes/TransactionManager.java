@@ -5,6 +5,7 @@ import java.rmi.server.RemoteRef;
 import it.polito.ezshop.exceptions.*;
 import it.polito.ezshop.data.*;
 import java.util.stream.Collectors.*;
+import java.math.*;
 
 import javax.swing.plaf.metal.MetalBorders.ToolBarBorder;
 
@@ -153,7 +154,10 @@ public class TransactionManager {
     }
 
     public double receiveCashPayment(Integer ticketNumber, double cash) throws InvalidTransactionIdException, InvalidPaymentException, UnauthorizedException {
-        return 0;
+        SaleTransactionObj transaction = this.getSaleTransactionObj(ticketNumber);
+        if(transaction==null) return -1;
+        if(transaction.getPrice() > cash) return -1;
+        return cash - transaction.getPrice();
     }
 
     public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
@@ -177,8 +181,8 @@ public class TransactionManager {
         else return true;
     }
 
-    public List<BalanceOperationObj> getCreditsAndDebits(LocalDate from, LocalDate to) throws UnauthorizedException {
-        return null;
+    public List<BalanceOperation> getCreditsAndDebits(LocalDate from, LocalDate to) throws UnauthorizedException {
+        return balanceOperations;
     }
 
     public double computeBalance() throws UnauthorizedException {
@@ -186,6 +190,30 @@ public class TransactionManager {
     }
     public void clear() {
 
+    }
+    private boolean luhn (String creditCard){
+        int number = Integer.parseInt(creditCard);
+        //step 1
+        int step1N=0;
+        int tmp;
+        for(int i =100; i<Math.pow(10,17);i*=100 ){
+            tmp = number %i;
+            tmp= tmp*10/i;
+            tmp*=2;
+            if(tmp>=10) tmp = (tmp%10)+ (tmp/10);
+            //step 2
+            step1N +=tmp;
+        }
+        //step 3
+        int step3N=0;
+        for( int i =10; i<Math.pow(10,16); i*=100){
+            tmp = number%i;
+            tmp = tmp *10/i;
+            step3N += tmp;
+        }
+        //step 4
+        if(((step1N+step3N)%10)==0) return true;
+        else return false;
     }
      
     public Order addCompletedOrder(Integer orderId){
