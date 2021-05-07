@@ -7,6 +7,7 @@ import it.polito.ezshop.data.*;
 import java.util.stream.Collectors.*;
 import java.math.*;
 
+import javax.swing.TransferHandler.TransferSupport;
 import javax.swing.plaf.metal.MetalBorders.ToolBarBorder;
 
 import java.time.LocalDate;
@@ -17,13 +18,14 @@ public class TransactionManager {
     private List<Order> orders = new LinkedList<Order>();
     private List<BalanceOperation> balanceOperations= new LinkedList<BalanceOperation>(); //list of all balance operations
     private List<ReturnTransaction> returnTransactions= new LinkedList<ReturnTransaction>(); // list of all return transactions (they are also included in balanceOperation)
-    private List<SaleTransactionObj> saleTransactionsObj= new LinkedList<SaleTransactionObj>(); // list of all sale transactions (they are also included in balanceOperation)
+    private List<SaleTransactionObj> saleTransactions= new LinkedList<SaleTransactionObj>(); // list of all sale transactions (they are also included in balanceOperation)
     private EZShop shop;
+    private List<CreditCard> cards = new LinkedList<CreditCard>();
 
 
     public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException{
         SaleTransactionObj output;
-        for(SaleTransactionObj obj : saleTransactionsObj){
+        for(SaleTransactionObj obj : saleTransactions){
             if(obj.getBalanceId() == transactionId) return obj;
         }
         return null;
@@ -147,7 +149,7 @@ public class TransactionManager {
 
     private SaleTransactionObj getSaleTransactionObj(int transactionID) {
         SaleTransactionObj output;
-        for(SaleTransactionObj obj : saleTransactionsObj){
+        for(SaleTransactionObj obj : saleTransactions){
             if(obj.getBalanceId() == transactionID) return obj;
         }
         return null;
@@ -161,7 +163,21 @@ public class TransactionManager {
     }
 
     public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
-        return false;
+        CreditCard carta= null;
+        for(CreditCard card : cards){
+            if(card.getNumber() == creditCard) carta = card;
+        }
+        if (carta== null) return false;
+        if(!this.luhn(carta.getNumber())) return false;
+        SaleTransaction transaction = null;
+        for(SaleTransactionObj sale : saleTransactions){
+            if(sale.getBalanceId() == (int) ticketNumber) transaction= sale;
+        }
+        if(transaction == null) return false;
+        if (carta.getBalance()< transaction.getPrice()) return false;
+        carta.setBalance(carta.getBalance()- transaction.getPrice());
+        this.recordBalanceUpdate(transaction.getPrice());
+        return true;
     }
 
     public double returnCashPayment(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
@@ -182,7 +198,10 @@ public class TransactionManager {
     }
 
     public List<BalanceOperation> getCreditsAndDebits(LocalDate from, LocalDate to) throws UnauthorizedException {
-        return balanceOperations;
+        List<BalanceOperation> output= new LinkedList<BalanceOperation>();
+        output.add((BalanceOperation) saleTransactions);
+        output.add((BalanceOperation) returnTransactions);
+        return output;
     }
 
     public double computeBalance() throws UnauthorizedException {
