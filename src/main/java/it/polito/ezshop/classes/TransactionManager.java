@@ -148,7 +148,6 @@ public class TransactionManager {
 
 
     private SaleTransactionObj getSaleTransactionObj(int transactionID) {
-        SaleTransactionObj output;
         for(SaleTransactionObj obj : saleTransactions){
             if(obj.getBalanceId() == transactionID) return obj;
         }
