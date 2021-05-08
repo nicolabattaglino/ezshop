@@ -22,24 +22,20 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer createUser(String username, String password, String role) throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
-        if(username == null || username.equals("")){
-            throw  new InvalidUsernameException();
-        } else if (password == null || password.equals("")){
-            throw  new InvalidPasswordException();
-        } else if (role == null || role.equals("") || (!role.equals("Administrator") && !role.equals("Cashier") && !role.equals("ShopManager"))){ // manage role enum
-            throw new InvalidRoleException();
-        } else {
+        if(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString())){
             return userManager.createUser(username,password,role);
+
+        } else {
+            return null;
         }
     }
 
     @Override
     public boolean deleteUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
 
-        if (userManager.getUserLogged().getRole() != UserRole.ADMINISTRATOR || userManager.getUserLogged() == null) {
+        if (!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                userManager.getUserLogged() == null) {
             throw new UnauthorizedException();
-        }else if (id < 0){
-            throw new InvalidUserIdException();
         }else {
             return userManager.deleteUser(id);
         }
@@ -47,29 +43,24 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public List<User> getAllUsers() throws UnauthorizedException {
-        //return (List<User>) userManager.getAllUsers();
-        return null;
+        return userManager.getAllUsers();
     }
 
     @Override
     public User getUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
-        if (userManager.getUserLogged().getRole() != UserRole.ADMINISTRATOR || userManager.getUserLogged().getRole() == null) {
+        if (!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                userManager.getUserLogged() == null){
             throw new UnauthorizedException();
-        }else if (id < 0){
-            throw new InvalidUserIdException();
         }else {
-            return (User)userManager.getUser(id);
+            return userManager.getUser(id);
         }
     }
 
     @Override
     public boolean updateUserRights(Integer id, String role) throws InvalidUserIdException, InvalidRoleException, UnauthorizedException {
-        if (userManager.getUserLogged().getRole() != UserRole.ADMINISTRATOR || userManager.getUserLogged().getRole() == null) {
+        if (!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                userManager.getUserLogged() == null) {
             throw new UnauthorizedException();
-        }else if (id < 0){
-            throw new InvalidUserIdException();
-        }else if  (role == null || role.equals("") || (!role.equals("Administrator")  && !role.equals("Cashier") && !role.equals("ShopManager"))){ // manage role enum
-            throw new InvalidRoleException();
         } else {
             return userManager.updateUserRights(id,role);
         }
@@ -158,43 +149,91 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer defineCustomer(String customerName) throws InvalidCustomerNameException, UnauthorizedException {
-        return null;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString())) {
+            throw new UnauthorizedException();
+        } else {
+           return customerManager.defineCustomer(customerName);
+        }
     }
 
     @Override
     public boolean modifyCustomer(Integer id, String newCustomerName, String newCustomerCard) throws InvalidCustomerNameException, InvalidCustomerCardException, InvalidCustomerIdException, UnauthorizedException {
-        return false;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString())) {
+            throw new UnauthorizedException();
+        } else {
+           return customerManager.modifyCustomer(id,newCustomerName,newCustomerCard);
+        }
     }
 
     @Override
     public boolean deleteCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
-        return false;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return customerManager.deleteCustomer(id);
+        }
     }
 
     @Override
     public Customer getCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
-        return null;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return customerManager.getCustomer(id);
+        }
     }
 
     @Override
     public List<Customer> getAllCustomers() throws UnauthorizedException {
-        return null;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return customerManager.getAllCustomers();
+        }
     }
 
     @Override
     public String createCard() throws UnauthorizedException {
-        return null;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return customerManager.createCard();
+        }
     }
 
     @Override
     public boolean attachCardToCustomer(String customerCard, Integer customerId) throws InvalidCustomerIdException, InvalidCustomerCardException, UnauthorizedException {
-        return false;
+
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return customerManager.attachCardToCustomer(customerCard, customerId);
+        }
     }
 
     @Override
     public boolean modifyPointsOnCard(String customerCard, int pointsToBeAdded) throws InvalidCustomerCardException, UnauthorizedException {
-        return false;
-    }
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return customerManager.modifyPointsOnCard(customerCard, pointsToBeAdded);
+        }    }
 
     @Override
     public Integer startSaleTransaction() throws UnauthorizedException {

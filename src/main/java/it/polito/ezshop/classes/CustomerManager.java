@@ -3,15 +3,17 @@ import it.polito.ezshop.data.Customer;
 import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.exceptions.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class CustomerManager {
     private Integer userIdGen = 0;
     private long loyaltyCardIdGen;
     private EZShop shop;
 
-    HashMap<Integer,CustomerObj> customerMap = new HashMap<Integer,CustomerObj>();
+    HashMap<Integer,Customer> customerMap = new HashMap<Integer,Customer>();
     HashMap<String,LoyaltyCardObj> cardMap = new HashMap<>();
 
     public CustomerManager(EZShop shop) {
@@ -19,26 +21,26 @@ public class CustomerManager {
     }
 
     public Integer defineCustomer(String customerName) throws InvalidCustomerNameException, UnauthorizedException {
-        /*if(customerName == null || customerName.equals("")){
+        if(customerName == null || customerName.equals("")){
             throw  new InvalidCustomerNameException();
-        } else if ((um.getUserLogged().getRole() != UserRole.ADMINISTRATOR &&
-                    um.getUserLogged().getRole() != UserRole.CASHIER &&
-                    um.getUserLogged().getRole() != UserRole.SHOP_MANAGER)  ||
-                    um.getUserLogged().getRole() == null){ // manage role enum
-            throw new UnauthorizedException();
-
         } else {
-        }*/
-        Integer id = customerMap.size();
-        CustomerObj customer = new CustomerObj(id,customerName);
-        customerMap.put(id,customer);
-        return id;
-
+            Integer id = customerMap.size();
+            Customer customer = new CustomerObj(id, customerName);
+            customerMap.put(id, customer);
+            return id;
+        }
     }
     public boolean modifyCustomer(Integer id, String newCustomerName, String newCustomerCard) throws InvalidCustomerNameException, InvalidCustomerCardException, InvalidCustomerIdException, UnauthorizedException {
-        CustomerObj customer = customerMap.get(id);
+        Customer customer = customerMap.get(id);
         customer.setCustomerName(newCustomerName);
-        if (newCustomerCard == null || newCustomerCard.equals("")){
+
+        if (id < 0){
+            throw new InvalidCustomerIdException();
+        } else if (newCustomerName.equals("") || newCustomerName == null){
+            throw new InvalidCustomerNameException();
+        } else if (newCustomerCard.equals("") || newCustomerCard == null || !newCustomerCard.matches("^([0-9]{10}$)")) {
+            throw new InvalidCustomerCardException();
+        } else if (newCustomerCard == null || newCustomerCard.equals("")){
             customer.setCustomerCard(null);
         } else {
             customer.setCustomerCard(newCustomerCard);
@@ -46,33 +48,52 @@ public class CustomerManager {
         return false;
     }
     public boolean deleteCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
-        customerMap.remove(id);
-        return true;
+        if (id < 0){
+            throw  new InvalidCustomerIdException();
+        } else {
+            customerMap.remove(id);
+            return true;
+        }
     }
     public Customer getCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
-
-        return (Customer) customerMap.get(id);
+        if (id < 0){
+            throw  new InvalidCustomerIdException();
+        } else {
+            return customerMap.get(id);
+        }
     }
 
     public List<Customer> getAllCustomers() throws UnauthorizedException {
-        // ?
-        return null;
+        return (ArrayList<Customer>)customerMap.values();
     }
 
     public String createCard() throws UnauthorizedException {
-
-        return null;
+        String id = ""; // TODO add id
+        LoyaltyCardObj card = new LoyaltyCardObj(id);
+        cardMap.put(id,card);
+        return id;
     }
 
     public boolean attachCardToCustomer(String customerCard, Integer customerId) throws InvalidCustomerIdException, InvalidCustomerCardException, UnauthorizedException {
-        return false;
+        if (customerId < 0){
+            throw new InvalidCustomerIdException();
+        } else if (customerCard.equals("") || customerCard == null || !customerCard.matches("^([0-9]{10}$)")) {
+            throw new InvalidCustomerCardException();
+        } else {
+            customerMap.get(customerId).setCustomerCard(customerCard);
+            return true;
+        }
     }
 
 
     public boolean modifyPointsOnCard(String customerCard, int pointsToBeAdded) throws InvalidCustomerCardException, UnauthorizedException {
-        return false;
+        if (customerCard.equals("") || customerCard == null || !customerCard.matches("^([0-9]{10}$)")) {
+            throw new InvalidCustomerCardException();
+        } else {
+            customerMap.get(customerCard).setPoints(pointsToBeAdded);
+            return true;
+        }
     }
-
 
 
 }

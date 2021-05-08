@@ -1,6 +1,8 @@
 package it.polito.ezshop.classes;
 
-public class CustomerObj {
+import it.polito.ezshop.data.Customer;
+
+public class CustomerObj implements Customer {
 
     private Integer id;
     private String name;

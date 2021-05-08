@@ -1,11 +1,13 @@
 package it.polito.ezshop.classes;
 
-public class UserObj {
+import it.polito.ezshop.data.User;
+
+public class UserObj implements User {
 
     private Integer id;
     private String username;
     private String password;
-    private UserRole role; // to be converted in enum
+    private UserRole role;
 
     public UserObj(Integer id, String username, String password, UserRole role) {
         this.id = id;
@@ -39,12 +41,26 @@ public class UserObj {
         this.password = password;
     }
 
-    public UserRole getRole() {
-        return role;
+    public String getRole() {
+        return role.toString();
     }
 
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
+    public void setRole(String role) {
 
+        switch (UserRole.valueOf(role.toUpperCase())) {
+            case ADMINISTRATOR:
+                this.role = UserRole.ADMINISTRATOR;
+                break;
+            case CASHIER:
+                this.role = UserRole.CASHIER;
+                break;
+            case SHOPMANAGER:
+                this.role = UserRole.SHOPMANAGER;
+                break;
+            default:
+                this.role = null;
+                break;
+        }
+
+    }
 }

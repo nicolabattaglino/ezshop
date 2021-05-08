@@ -4,6 +4,11 @@ public class LoyaltyCardObj {
     private String cardCode;
     private Integer points;
 
+    public LoyaltyCardObj(String uuidAsString) {
+        this.cardCode = uuidAsString;
+        this.points = 0;
+    }
+
     public String getCardCode() {
         return cardCode;
     }

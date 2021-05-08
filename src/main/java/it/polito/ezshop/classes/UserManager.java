@@ -11,94 +11,102 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 public class UserManager {
 
     private Integer userIdGen = 0;
-    private UserObj loggedUser;
-    private static ArrayList<UserObj> userList = new ArrayList<>();
+    private User loggedUser;
+    private static LinkedList<User> userList = new LinkedList<>();
 
     public UserManager() {
         readFromFile();
     }
 
-
-    public UserObj getUserLogged(){
+    public User getUserLogged(){
         return loggedUser;
     }
 
     public Integer createUser(String username, String password, String role) throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
         UserRole r = null;
-            if (role.equals("Administrator")){
-                r = UserRole.ADMINISTRATOR;
-            } else if (role.equals("Cashier")) {
-                r = UserRole.CASHIER;
-            } else if (role.equals("ShopManager")){
-                r = UserRole.SHOP_MANAGER;
-            } else r = null;
 
-            UserObj u = new UserObj(userList.size(), username, password, r);
-            userIdGen = userList.size();
+        if(username == null || username.equals("")){
+            throw  new InvalidUsernameException();
+        } else if (password == null || password.equals("")){
+            throw  new InvalidPasswordException();
+        } else if (role == null || role.equals("") ||
+                            (!role.equals("Administrator") &&
+                            !role.equals("Cashier") &&
+                            !role.equals("ShopManager"))){ // manage role enum
+            throw new InvalidRoleException();
+        } else {
+
+            userIdGen = userList.getLast().getId()+1;
+            UserObj u = new UserObj(userIdGen, username, password, UserRole.valueOf(role.toUpperCase()));
             userList.add(u);
             writeToFile();
             return userIdGen;
-
+        }
     }
 
     public boolean deleteUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
         int i = 0;
+        if (id < 0){ // TODO if id == null
+            throw new InvalidUserIdException();
+        }else {
             for (i = 0; i < userList.size(); i++) {
                 if (userList.get(i).getId() == id) {
                     userList.remove(i);
                     return true;
                 }
             }
+        }
         return false;
     }
 
-    public List<UserObj> getAllUsers() throws UnauthorizedException {
+    public List<User> getAllUsers() throws UnauthorizedException {
         return userList;
     }
 
-    public UserObj getUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
+    public User getUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
         int i = 0;
-
+        if (id < 0){
+            throw new InvalidUserIdException();
+        }else {
             for (i = 0; i < userList.size(); i++) {
                 if (userList.get(i).getId() == id) {
                     return userList.get(i);
                 }
             }
+        }
 
         return null;
     }
 
     public boolean updateUserRights(Integer id, String role) throws InvalidUserIdException, InvalidRoleException, UnauthorizedException {
         int i = 0;
-        UserRole r = null;
-
-
-            if (role.equals("Administrator")) { // add to lower
-                r = UserRole.ADMINISTRATOR;
-            } else if (role.equals("Cashier")) {
-                r = UserRole.CASHIER;
-            } else if (role.equals("ShopManager")) {
-                r = UserRole.SHOP_MANAGER;
-            } else r = null;
-
+        if (id < 0){
+            throw new InvalidUserIdException();
+        }else if  (role == null || role.equals("") ||
+                         (!role.toUpperCase().equals(UserRole.ADMINISTRATOR.toString())  &&
+                        !role.toUpperCase().equals(UserRole.CASHIER.toString()) &&
+                        !role.toUpperCase(Locale.ROOT).equals(UserRole.SHOPMANAGER.toString()))) {
+            throw new InvalidRoleException();
+        } else {
             for (i = 0; i < userList.size(); i++) {
                 if (userList.get(i).getId() == id) {
-                    UserObj u = userList.get(i);
-                    u.setRole(r);
+                    User u = userList.get(i);
+                    u.setRole(role);
                     return true;
                 }
             }
-
+        }
         return false;
     }
 
-    public UserObj login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
+    public User login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
          int i = 0;
             for (i = 0; i < userList.size(); i++) {
                 if (userList.get(i).getUsername().equals(username) && userList.get(i).getPassword().equals(password)) {
@@ -148,7 +156,7 @@ public class UserManager {
             System.out.println(employeeList);
 
             //Iterate over employee array
-            employeeList.forEach( usr -> parseEmployeeObject( (JSONObject) usr ) );
+            employeeList.forEach( usr -> parseUserObject( (JSONObject) usr ) );
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -158,7 +166,7 @@ public class UserManager {
             e.printStackTrace();
         }
     }
-    private static void parseEmployeeObject(JSONObject user)
+    private static void parseUserObject(JSONObject user)
     {
         UserRole r;
 
@@ -180,13 +188,13 @@ public class UserManager {
                 r = UserRole.CASHIER;
                 break;
             case "ShopManager":
-                r = UserRole.SHOP_MANAGER;
+                r = UserRole.SHOPMANAGER;
                 break;
             default:
                 r = null;
                 break;
         }
-        UserObj u = new UserObj(id, username, password, r);
+        User u = new UserObj(id, username, password, r);
         userList.add(u);
 
     }
