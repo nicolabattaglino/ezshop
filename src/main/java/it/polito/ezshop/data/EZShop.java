@@ -1,6 +1,9 @@
 package it.polito.ezshop.data;
 
+import it.polito.ezshop.classes.CustomerManager;
 import it.polito.ezshop.classes.TransactionManager;
+import it.polito.ezshop.classes.UserManager;
+import it.polito.ezshop.classes.UserRole;
 import it.polito.ezshop.exceptions.*;
 
 import java.time.LocalDate;
@@ -9,6 +12,8 @@ import java.util.List;
 
 public class EZShop implements EZShopInterface {
     TransactionManager transactionManager;
+    CustomerManager customerManager;
+    UserManager userManager;
 
     @Override
     public void reset() {
@@ -17,37 +22,73 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer createUser(String username, String password, String role) throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
-        return null;
+        if(username == null || username.equals("")){
+            throw  new InvalidUsernameException();
+        } else if (password == null || password.equals("")){
+            throw  new InvalidPasswordException();
+        } else if (role == null || role.equals("") || (!role.equals("Administrator") && !role.equals("Cashier") && !role.equals("ShopManager"))){ // manage role enum
+            throw new InvalidRoleException();
+        } else {
+            return userManager.createUser(username,password,role);
+        }
     }
 
     @Override
     public boolean deleteUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
-        return false;
+
+        if (userManager.getUserLogged().getRole() != UserRole.ADMINISTRATOR || userManager.getUserLogged() == null) {
+            throw new UnauthorizedException();
+        }else if (id < 0){
+            throw new InvalidUserIdException();
+        }else {
+            return userManager.deleteUser(id);
+        }
     }
 
     @Override
     public List<User> getAllUsers() throws UnauthorizedException {
+        //return (List<User>) userManager.getAllUsers();
         return null;
     }
 
     @Override
     public User getUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
-        return null;
+        if (userManager.getUserLogged().getRole() != UserRole.ADMINISTRATOR || userManager.getUserLogged().getRole() == null) {
+            throw new UnauthorizedException();
+        }else if (id < 0){
+            throw new InvalidUserIdException();
+        }else {
+            return (User)userManager.getUser(id);
+        }
     }
 
     @Override
     public boolean updateUserRights(Integer id, String role) throws InvalidUserIdException, InvalidRoleException, UnauthorizedException {
-        return false;
+        if (userManager.getUserLogged().getRole() != UserRole.ADMINISTRATOR || userManager.getUserLogged().getRole() == null) {
+            throw new UnauthorizedException();
+        }else if (id < 0){
+            throw new InvalidUserIdException();
+        }else if  (role == null || role.equals("") || (!role.equals("Administrator")  && !role.equals("Cashier") && !role.equals("ShopManager"))){ // manage role enum
+            throw new InvalidRoleException();
+        } else {
+            return userManager.updateUserRights(id,role);
+        }
     }
 
     @Override
     public User login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
-        return null;
+        if(username == null || username.equals("")){
+            throw  new InvalidUsernameException();
+        } else if (password == null || password.equals("")){
+            throw  new InvalidPasswordException();
+        } else {
+            return (User) userManager.login(username, password);
+        }
     }
 
     @Override
     public boolean logout() {
-        return false;
+        return userManager.logout();
     }
 
     @Override

@@ -5,9 +5,9 @@ public class UserObj {
     private Integer id;
     private String username;
     private String password;
-    private String role; // to be converted in enum
+    private UserRole role; // to be converted in enum
 
-    public UserObj(Integer id, String username, String password, String role) {
+    public UserObj(Integer id, String username, String password, UserRole role) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -39,11 +39,11 @@ public class UserObj {
         this.password = password;
     }
 
-    public String getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 
