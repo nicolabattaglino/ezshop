@@ -1,6 +1,7 @@
 package it.polito.ezshop.data;
 
 import it.polito.ezshop.classes.CustomerManager;
+import it.polito.ezshop.classes.ProductOrderManager;
 import it.polito.ezshop.classes.TransactionManager;
 import it.polito.ezshop.classes.UserManager;
 import it.polito.ezshop.classes.UserRole;
@@ -14,6 +15,7 @@ public class EZShop implements EZShopInterface {
     TransactionManager transactionManager;
     CustomerManager customerManager;
     UserManager userManager;
+    ProductOrderManager productOrderManager;
 
     @Override
     public void reset() {
@@ -85,7 +87,9 @@ public class EZShop implements EZShopInterface {
             return (User) userManager.login(username, password);
         }
     }
-
+    public ProductOrderManager getProductOrderManager(){
+        return this.productOrderManager;
+    }
     @Override
     public boolean logout() {
         return userManager.logout();

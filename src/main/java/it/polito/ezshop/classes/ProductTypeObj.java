@@ -88,4 +88,5 @@ public class ProductTypeObj implements ProductType {
     public void setId(Integer id) {
     
     }
+    
 }
