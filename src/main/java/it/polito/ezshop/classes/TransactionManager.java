@@ -16,6 +16,7 @@ import java.util.*;
 public class TransactionManager {
     private Double balance =  Double.valueOf("0");
     private List<Order> orders = new LinkedList<Order>();
+    // TODO all of this lists need to change to maps and getters need to return the actual object not a copy
     private List<BalanceOperation> balanceOperations= new LinkedList<BalanceOperation>(); //list of all balance operations
     private List<ReturnTransaction> returnTransactions= new LinkedList<ReturnTransaction>(); // list of all return transactions (they are also included in balanceOperation)
     private List<SaleTransactionObj> saleTransactions= new LinkedList<SaleTransactionObj>(); // list of all sale transactions (they are also included in balanceOperation)
@@ -43,7 +44,7 @@ public class TransactionManager {
             money+= (ticket.getAmount() * ticket.getPricePerUnit() * ticket.getDiscountRate());
         }
         
-        ReturnTransaction returning = new ReturnTransaction(Collections.max(balanceOperations.stream().map(s-> s.getBalanceId()).collect(java.util.stream.Collectors.toList())), LocalDate.now(), money, "Return", saleNumber);
+        ReturnTransaction returning = new ReturnTransaction(Collections.max(balanceOperations.stream().map(s-> s.getBalanceId()).collect(java.util.stream.Collectors.toList()))+1, LocalDate.now(), money, "Return", saleNumber);
         balanceOperations.add(returning);
         returnTransactions.add(returning);
         Integer output = returning.getBalanceId();
@@ -120,7 +121,7 @@ public class TransactionManager {
                          toBeUpdated.add(saleEntry);
                          priceReduction += amount*saleEntry.getPricePerUnit();
                          try {
-                            shop.updateQuantity(shop.getProductTypeByBarCode(saleEntry.getBarCode()).getId(), targetEntry.getAmount());
+                            shop.getProductOrderManager().updateQuantity(shop.getProductTypeByBarCode(saleEntry.getBarCode()).getId(), targetEntry.getAmount());
                         } catch (InvalidProductIdException e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
