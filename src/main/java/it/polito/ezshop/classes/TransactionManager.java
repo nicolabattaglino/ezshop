@@ -18,18 +18,14 @@ public class TransactionManager {
     private List<Order> orders = new LinkedList<Order>();
     // TODO all of this lists need to change to maps and getters need to return the actual object not a copy
     private List<BalanceOperation> balanceOperations= new LinkedList<BalanceOperation>(); //list of all balance operations
-    private List<ReturnTransaction> returnTransactions= new LinkedList<ReturnTransaction>(); // list of all return transactions (they are also included in balanceOperation)
-    private List<SaleTransactionObj> saleTransactions= new LinkedList<SaleTransactionObj>(); // list of all sale transactions (they are also included in balanceOperation)
+    private Map<Integer, ReturnTransaction> returnTransactions= new HashMap<Integer, ReturnTransaction>(); // list of all return transactions (they are also included in balanceOperation)
+    private Map<Integer, SaleTransactionObj> saleTransactions= new HashMap<Integer, SaleTransactionObj>(); // list of all sale transactions (they are also included in balanceOperation)
     private EZShop shop;
-    private List<CreditCard> cards = new LinkedList<CreditCard>();
+    private Map<String ,CreditCard> cards = new HashMap<String, CreditCard>();
 
 
     public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException{
-        SaleTransactionObj output;
-        for(SaleTransactionObj obj : saleTransactions){
-            if(obj.getBalanceId() == transactionId) return obj;
-        }
-        return null;
+        return saleTransactions.get(transactionId);
     }
 
     public List<Order> getAllOrders() throws UnauthorizedException {
@@ -46,15 +42,12 @@ public class TransactionManager {
         
         ReturnTransaction returning = new ReturnTransaction(Collections.max(balanceOperations.stream().map(s-> s.getBalanceId()).collect(java.util.stream.Collectors.toList()))+1, LocalDate.now(), money, "Return", saleNumber);
         balanceOperations.add(returning);
-        returnTransactions.add(returning);
+        returnTransactions.put(returning.getBalanceId(), returning);
         Integer output = returning.getBalanceId();
         return output;
     }
     private ReturnTransaction getReturnTransaction (Integer returnId){
-        for (ReturnTransaction output : returnTransactions ){
-                if(output.getBalanceId() == (int)returnId) return output;
-        }
-        return null;
+        return returnTransactions.get(returnId);
     }
 
     public boolean returnProduct(Integer returnId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
@@ -78,19 +71,18 @@ public class TransactionManager {
         if(prodotto.getAmount()< amount) return false;
         prodotto.setAmount(amount);
         target.addEntry(prodotto);
+        target.setPrice(target.getPrice()+ prodotto.getPricePerUnit() * amount);
+        //the previous line updates the price in the return transactio. The price in the return transaction is the amount of money that will be returned to the customer
         return true;
     }
     public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, UnauthorizedException, InvalidProductIdException, InvalidProductCodeException {
         // exceptions are checked in shop
         // in the current design the return transaction's informations are created during the return product function, the end return method only closes the return
-        ReturnTransaction target = null;
-        for(ReturnTransaction returning : returnTransactions){
-            if(returning.getBalanceId() == returnId) target = returning;
-        }
+        ReturnTransaction target = returnTransactions.get(returnId);
         if(target == null)return false;
         if(target.getStatus()!= "New")return false;
         if(!commit){
-            returnTransactions.remove(returnTransactions.indexOf(target));
+            returnTransactions.remove(target.getBalanceId());
         }
         target.setStatus("Closed");
         return true;
@@ -98,10 +90,7 @@ public class TransactionManager {
     }
     public boolean deleteReturnTransaction(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
          // exceptions are checked in shop
-         ReturnTransaction target = null;
-         for(ReturnTransaction returning : returnTransactions){
-             if(returning.getBalanceId() == returnId) target = returning;
-         }
+         ReturnTransaction target = returnTransactions.get(returnId);
          if(target == null)return false;
          if(target.getStatus()!= "Closed")return false;
          else{
@@ -140,6 +129,7 @@ public class TransactionManager {
             sale.updateEntry(toAdd);
          }
          sale.updatePrice(priceReduction);
+         target.setStatus("Ended");
          
      }
         
@@ -149,10 +139,8 @@ public class TransactionManager {
 
 
     private SaleTransactionObj getSaleTransactionObj(int transactionID) {
-        for(SaleTransactionObj obj : saleTransactions){
-            if(obj.getBalanceId() == transactionID) return obj;
-        }
-        return null;
+        
+        return saleTransactions.get(transactionID);
     }
 
     public double receiveCashPayment(Integer ticketNumber, double cash) throws InvalidTransactionIdException, InvalidPaymentException, UnauthorizedException {
@@ -163,16 +151,10 @@ public class TransactionManager {
     }
 
     public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
-        CreditCard carta= null;
-        for(CreditCard card : cards){
-            if(card.getNumber() == creditCard) carta = card;
-        }
+        CreditCard carta= cards.get(creditCard);
         if (carta== null) return false;
         if(!this.luhn(carta.getNumber())) return false;
-        SaleTransaction transaction = null;
-        for(SaleTransactionObj sale : saleTransactions){
-            if(sale.getBalanceId() == (int) ticketNumber) transaction= sale;
-        }
+        SaleTransaction transaction = saleTransactions.get(ticketNumber);
         if(transaction == null) return false;
         if (carta.getBalance()< transaction.getPrice()) return false;
         carta.setBalance(carta.getBalance()- transaction.getPrice());
@@ -181,11 +163,23 @@ public class TransactionManager {
     }
 
     public double returnCashPayment(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
-        return 0;
+        ReturnTransaction rTransaction = returnTransactions.get(returnId);
+        if(rTransaction == null) return -1;
+        if(rTransaction.getStatus()!="Ended") return -1;
+        double price =returnTransactions.get(rTransaction.getTransactionID()).getPrice(); //this price is the amount of money the customer will riceive 
+        if(!recordBalanceUpdate(-1*price))return -1;
+        return price;
     }
 
     public double returnCreditCardPayment(Integer returnId, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
-        return 0;
+        CreditCard carta= cards.get(creditCard);
+        if (carta== null) return -1;
+        if(!this.luhn(carta.getNumber())) return -1;
+        ReturnTransaction rTransaction = returnTransactions.get(returnId);
+        if(rTransaction == null) return -1;
+        double output = rTransaction.getPrice();
+        if (!recordBalanceUpdate(output)) return -1;
+        return output;
     }
 
     public boolean recordBalanceUpdate(double toBeAdded) throws UnauthorizedException {
