@@ -2,10 +2,7 @@ package it.polito.ezshop.classes;
 
 import it.polito.ezshop.EZShop;
 import it.polito.ezshop.data.ProductType;
-import it.polito.ezshop.exceptions.InvalidPricePerUnitException;
-import it.polito.ezshop.exceptions.InvalidProductCodeException;
-import it.polito.ezshop.exceptions.InvalidProductDescriptionException;
-import it.polito.ezshop.exceptions.InvalidProductIdException;
+import it.polito.ezshop.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -112,8 +109,37 @@ public class ProductOrderManager {
         final String desc = description == null ? "" : description;
         return productMap.values().stream().filter(productType -> productType.getProductDescription().equals(desc)).collect(Collectors.toList());
     }
-    public boolean updateQuantity(Integer productId, int toBeAdded) throws InvalidProductIdException{
-        //TODO implement
+    
+    public boolean updateQuantity(Integer productId, int toBeAdded) throws InvalidProductIdException {
+        if (productId == null || productId <= 0) throw new InvalidProductIdException();
+        ProductType target;
+        for (ProductType p : productMap.values()) {
+            if (p.getId().equals(productId) && p.getLocation() != null) {
+                int quantity = p.getQuantity() + toBeAdded;
+                if (quantity >= 0) {
+                    p.setQuantity(quantity);
+                    return true;
+                } else return false;
+            }
+        }
+        return false;
+    }
+    
+    public boolean updatePosition(Integer productId, String newPos) throws InvalidProductIdException, InvalidLocationException {
+        if (productId == null || productId <= 0) throw new InvalidProductIdException();
+        //TODO chiedi per le regex
+        if (newPos != null && !newPos.equals("") && !newPos.matches("^[1-9][0-9]*-[1-9][0-9]*-[1-9][0-9]*$"))
+            throw new InvalidLocationException();
+        newPos = (newPos == null) ? "" : newPos;
+        ProductType target = null;
+        for (ProductType p : productMap.values()) {
+            if (p.getLocation().equals(newPos) && !newPos.equals("")) return false;
+            if (p.getId().equals(productId))
+                target = p;
+        }
+        if (target == null) return false;
+        target.setLocation(newPos);
         return true;
     }
+    
 }

@@ -2,11 +2,14 @@ package it.polito.ezshop.classes;
 
 import it.polito.ezshop.data.ProductType;
 
+import java.util.Arrays;
+
 public class ProductTypeObj implements ProductType {
     
     private Integer amount, id;
     private String description, barCode, notes;
     private double selPrice, discountRate;
+    private Position position;
     
     //TODO add position
     public ProductTypeObj(Integer amount, Integer id, String description, String barCode, String notes, double selPrice, double discountRate) {
@@ -17,6 +20,7 @@ public class ProductTypeObj implements ProductType {
         this.notes = notes;
         this.selPrice = selPrice;
         this.discountRate = discountRate;
+        this.position = new Position();
     }
     
     @Override
@@ -31,12 +35,15 @@ public class ProductTypeObj implements ProductType {
     
     @Override
     public String getLocation() {
-        return null;
+        return position.toString();
     }
     
     @Override
     public void setLocation(String location) {
-    
+        Integer[] tokens = Arrays.stream(location.split("-"))
+                .map(Integer::parseInt)
+                .toArray(Integer[]::new);
+        new Position(tokens[0], tokens[1], tokens[2]);
     }
     
     @Override
