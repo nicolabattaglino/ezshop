@@ -15,14 +15,53 @@ import java.util.*;
 
 public class TransactionManager {
     private Double balance =  Double.valueOf("0");
+    //non so se orders mi serve
     private List<Order> orders = new LinkedList<Order>();
-    // TODO all of this lists need to change to maps and getters need to return the actual object not a copy
     private List<BalanceOperation> balanceOperations= new LinkedList<BalanceOperation>(); //list of all balance operations
     private Map<Integer, ReturnTransaction> returnTransactions= new HashMap<Integer, ReturnTransaction>(); // list of all return transactions (they are also included in balanceOperation)
     private Map<Integer, SaleTransactionObj> saleTransactions= new HashMap<Integer, SaleTransactionObj>(); // list of all sale transactions (they are also included in balanceOperation)
     private EZShop shop;
     private Map<String ,CreditCard> cards = new HashMap<String, CreditCard>();
 
+    public Integer startSaleTransaction() throws UnauthorizedException{
+        //TODO implement
+        return 0;
+    }
+
+    public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException{
+        //TODO implement
+        return false;
+    }
+
+    public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException{
+        //TODO implement
+        return false;
+    }
+
+    public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException, UnauthorizedException{
+        //TODO implement
+        return false;
+    }
+
+    public boolean applyDiscountRateToSale(Integer transactionId, double discountRate) throws InvalidTransactionIdException, InvalidDiscountRateException, UnauthorizedException{
+        //TODO implement
+        return false;
+    }
+
+    public int computePointsForSale(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException{
+        //TODO implement
+        return 0;
+    }
+
+    public boolean endSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException{
+        //TODO implement
+        return false;
+    }
+
+    public boolean deleteSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException{
+        //TODO implement
+        return false;
+    }
 
     public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException{
         return saleTransactions.get(transactionId);
@@ -202,7 +241,11 @@ public class TransactionManager {
         return balance;
     }
     public void clear() {
-
+        //maybe this needs to clear orders too?
+        saleTransactions.clear();
+        returnTransactions.clear();
+        cards.clear();
+        balance =0.0;
     }
     private boolean luhn (String creditCard){
         int number = Integer.parseInt(creditCard);

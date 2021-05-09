@@ -8,10 +8,24 @@ import java.util.List;
 
 import it.polito.ezshop.data.*;
 
-public class SaleTransactionObj implements it.polito.ezshop.data.SaleTransaction, BalanceOperation {
+public class SaleTransactionObj extends BalanceOperationObj implements it.polito.ezshop.data.SaleTransaction{
     private List<TicketEntry> entries = new ArrayList<TicketEntry>();
     private double price;
+    private double discount=0;
+    private int balanceId;
+    private LocalDate date;
+    private double money;
+    private String type;
+    private Integer ticketNumber;
+    private List<TicketEntry> tickets= new ArrayList<TicketEntry>();
+
     
+
+    public SaleTransactionObj(LocalDate date, double money, String type, List<TicketEntry> tickets){
+        super(date,money,type);
+        this.price = this.money;
+        this.tickets =tickets;
+    }
     public boolean updateEntry (TicketEntry entry){
         //this method updates a single entry in the entries list
         //returns true if successfull, false otherwise

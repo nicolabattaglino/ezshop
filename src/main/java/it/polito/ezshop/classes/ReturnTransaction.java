@@ -7,7 +7,7 @@ import java.util.*;
 
 import javax.swing.text.html.HTMLDocument.RunElement;
 
-public class ReturnTransaction implements BalanceOperation,it.polito.ezshop.data.SaleTransaction {
+public class ReturnTransaction extends BalanceOperationObj implements it.polito.ezshop.data.SaleTransaction {
     private int balanceId;
     private LocalDate date;
     private double money;
@@ -58,12 +58,9 @@ public class ReturnTransaction implements BalanceOperation,it.polito.ezshop.data
     public void setPrice(double price){
         this.price = price;
     }
-
+    
     public ReturnTransaction(int balanceId, LocalDate date, double money, String type, int returning){
-        this.balanceId=balanceId;
-        this. date= date;
-        this. money = money;
-        this.type= type;
+        super(date,money,type);
         this.returningID = returning;
     }
     public int getTransactionID(){
