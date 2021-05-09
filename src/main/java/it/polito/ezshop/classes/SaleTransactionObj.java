@@ -18,13 +18,24 @@ public class SaleTransactionObj extends BalanceOperationObj implements it.polito
     private String type;
     private Integer ticketNumber;
     private List<TicketEntry> tickets= new ArrayList<TicketEntry>();
+    private String status;
 
     
+    public String getStatus(){
+        return status;
+    }
 
-    public SaleTransactionObj(LocalDate date, double money, String type, List<TicketEntry> tickets){
-        super(date,money,type);
+    public void setStatus(String status){
+        this.status = status;
+    }
+    public void addEntry(TicketEntry entry){
+        tickets.add(entry);
+    }
+    public SaleTransactionObj(LocalDate date, double money, String type){
+        super(date,type);
+        this.money=money;
         this.price = this.money;
-        this.tickets =tickets;
+        this.status = "new";
     }
     public boolean updateEntry (TicketEntry entry){
         //this method updates a single entry in the entries list

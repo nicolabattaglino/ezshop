@@ -11,10 +11,9 @@ public abstract class BalanceOperationObj implements BalanceOperation {
     private double money;
     private String type;
     
-    public BalanceOperationObj (LocalDate date, double money, String type){
+    public BalanceOperationObj (LocalDate date,  String type){
         super();
         this.date =date;
-        this.money = money;
         this.type=type;
         balanceId = ++idGen;
     }

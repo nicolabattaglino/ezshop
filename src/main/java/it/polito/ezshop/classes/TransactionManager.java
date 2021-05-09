@@ -22,15 +22,27 @@ public class TransactionManager {
     private Map<Integer, SaleTransactionObj> saleTransactions= new HashMap<Integer, SaleTransactionObj>(); // list of all sale transactions (they are also included in balanceOperation)
     private EZShop shop;
     private Map<String ,CreditCard> cards = new HashMap<String, CreditCard>();
+    private ProductOrderManager POManager;
+
+    public TransactionManager (EZShop shop, ProductOrderManager POManager){
+        this.shop = shop;
+        this.POManager = POManager;
+    }
 
     public Integer startSaleTransaction() throws UnauthorizedException{
-        //TODO implement
-        return 0;
+        SaleTransactionObj sale = new SaleTransactionObj(LocalDate.now(), 0.0, "Sale");
+        return sale.getBalanceId();
     }
 
     public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException{
-        //TODO implement
-        return false;
+        SaleTransactionObj sale = saleTransactions.get(transactionId);
+        if(sale == null) return false;
+        if(sale.getStatus()!="new") return false;
+        ProductType prodotto = POManager.getProductTypeByBarCode(productCode);
+        if(prodotto == null) return false;
+        TickerEntryObj ticket = new TickerEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
+        sale.addEntry(ticket);
+        return true;
     }
 
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException{

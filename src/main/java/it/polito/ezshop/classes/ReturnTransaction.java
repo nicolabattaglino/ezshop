@@ -60,7 +60,8 @@ public class ReturnTransaction extends BalanceOperationObj implements it.polito.
     }
     
     public ReturnTransaction(int balanceId, LocalDate date, double money, String type, int returning){
-        super(date,money,type);
+        super(date,type);
+        this.money=money;
         this.returningID = returning;
     }
     public int getTransactionID(){
