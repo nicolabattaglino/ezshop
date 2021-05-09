@@ -1,71 +1,119 @@
 package it.polito.ezshop.classes;
 
+import it.polito.ezshop.EZShop;
 import it.polito.ezshop.data.ProductType;
-import it.polito.ezshop.exceptions.*;
+import it.polito.ezshop.exceptions.InvalidPricePerUnitException;
+import it.polito.ezshop.exceptions.InvalidProductCodeException;
+import it.polito.ezshop.exceptions.InvalidProductDescriptionException;
+import it.polito.ezshop.exceptions.InvalidProductIdException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductOrderManager {
-    HashMap<String, ProductType> productMap;
+    
+    private final EZShop shop;
+    private final HashMap<String, ProductType> productMap = new HashMap<>();
+    private int prouctIdGen;
+    
+    public ProductOrderManager(EZShop shop) {
+        this.shop = shop;
+        //TODO load map from persistance
+    }
     
     private boolean checkBarcode(String barCode) {
-        return false;
+        if (barCode == null) return false;
+        if (!barCode.matches("^([0-9]{8}|[0-9]{12,14}|[0-9]{17,18})$")) return false;
+        final int length = barCode.length();
+        int checkValue = barCode.charAt(length - 1);
+        //TODO vedi se va bene
+        int res = 0;
+        for (int i = 0; i < length - 1; i++) {
+            int factor = 1;
+            if (i % 2 == 0) factor = 3;
+            res += factor * (barCode.charAt(length - i - 2) - '0');
+        }
+        
+        res = 10 - (res % 10);
+        
+        return res == checkValue;
     }
     
-    public void clear() {
+    public Integer createProductType(String description, String productCode, double pricePerUnit, String note) throws InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException {
+        if (!checkBarcode(productCode)) {
+            throw new InvalidProductCodeException();
+        }
+        if (description == null || description.trim().length() == 0)
+            throw new InvalidProductDescriptionException();
+        if (pricePerUnit <= 0)
+            throw new InvalidPricePerUnitException();
+        if (productMap.containsKey(productCode))
+            return -1;
+        prouctIdGen++;
+        productMap.put(productCode, new ProductTypeObj(0, prouctIdGen, description, productCode, (note == null) ? "" : note, pricePerUnit, 0));
+        return prouctIdGen;
     }
     
-    public Integer createProductType(String description, String productCode, double pricePerUnit, String note)
-            throws InvalidProductDescriptionException, InvalidProductCodeException, InvalidPricePerUnitException, UnauthorizedException {
-        return null;
+    public boolean updateProduct(Integer id, String newDescription, String newCode, double newPrice, String newNote) throws InvalidProductIdException, InvalidProductDescriptionException, InvalidProductCodeException, InvalidPricePerUnitException {
+        if (id == null || id <= 0) throw new InvalidProductIdException();
+        if (newPrice <= 0) {
+            throw new InvalidPricePerUnitException();
+        }
+        if (newDescription == null || newDescription.trim().length() == 0)
+            throw new InvalidProductDescriptionException();
+        if (!checkBarcode(newCode))
+            throw new InvalidProductCodeException();
+        if (productMap.containsKey(newCode)) return false;
+        
+        ProductType candidate = null;
+        
+        for (ProductType productType : productMap.values()) {
+            if (productType.getId().equals(id)) candidate = productType;
+        }
+        if (candidate == null) return false;
+        
+        //TODO vedi se la remove rimuove anche la chiave
+        productMap.remove(candidate.getBarCode());
+        candidate.setProductDescription(newDescription);
+        candidate.setBarCode(newCode);
+        candidate.setPricePerUnit(newPrice);
+        candidate.setNote(newNote == null ? "" : newNote);
+        productMap.put(newCode, candidate);
+        return true;
     }
     
-    public boolean updateProduct(Integer id, String newDescription, String newCode, double newPrice, String newNote)
-            throws InvalidProductIdException, InvalidProductDescriptionException, InvalidProductCodeException, InvalidPricePerUnitException, UnauthorizedException {
-        return false;
+    public boolean deleteProductType(Integer id) throws InvalidProductIdException {
+        if (id == null || id <= 0) throw new InvalidProductIdException();
+        ProductType candidate = null;
+        
+        for (ProductType productType : productMap.values()) {
+            if (productType.getId().equals(id)) candidate = productType;
+        }
+        if (candidate == null) return false;
+        
+        //TODO vedi se la remove rimuove anche la chiave
+        productMap.remove(candidate.getBarCode());
+        return true;
     }
     
-    public boolean deleteProductType(Integer id) throws InvalidProductIdException, UnauthorizedException {
-        return false;
+    public List<ProductType> getAllProductTypes() {
+        //TODO chiedi per quanto riguarda l'aliasing
+        return new ArrayList<>(productMap.values());
     }
     
-    public List<ProductType> getAllProductTypes() throws UnauthorizedException {
-        return null;
+    public ProductType getProductTypeByBarCode(String barCode) throws InvalidProductCodeException {
+        if (!checkBarcode(barCode)) throw new InvalidProductCodeException();
+        return productMap.get(barCode);
     }
     
-    public ProductType getProductTypeByBarCode(String barCode) throws InvalidProductCodeException, UnauthorizedException {
-        return null;
+    public List<ProductType> getProductTypesByDescription(String description) {
+        final String desc = description == null ? "" : description;
+        return productMap.values().stream().filter(productType -> productType.getProductDescription().equals(desc)).collect(Collectors.toList());
     }
-    
-    public List<ProductType> getProductTypesByDescription(String description) throws UnauthorizedException {
-        return null;
+    public boolean updateQuantity(Integer productId, int toBeAdded) throws InvalidProductIdException{
+        //TODO implement
+        return true;
     }
-    
-    public boolean updateQuantity(Integer productId, int toBeAdded) throws InvalidProductIdException, UnauthorizedException {
-        return false;
-    }
-    
-    public boolean updatePosition(Integer productId, String newPos) throws InvalidProductIdException, InvalidLocationException, UnauthorizedException {
-        return false;
-    }
-    
-    public Integer issueOrder(String productCode, int quantity, double pricePerUnit)
-            throws InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException, UnauthorizedException {
-        return null;
-    }
-    
-    public Integer payOrderFor(String productCode, int quantity, double pricePerUnit)
-            throws InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException, UnauthorizedException {
-        return null;
-    }
-    
-    public boolean payOrder(Integer orderId) throws InvalidOrderIdException, UnauthorizedException {
-        return false;
-    }
-    
-    public boolean recordOrderArrival(Integer orderId) throws InvalidOrderIdException, UnauthorizedException, InvalidLocationException {
-        return false;
-    }
-    
 }
