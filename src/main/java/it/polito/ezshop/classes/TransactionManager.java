@@ -40,24 +40,57 @@ public class TransactionManager {
         if(sale.getStatus()!="new") return false;
         ProductType prodotto = POManager.getProductTypeByBarCode(productCode);
         if(prodotto == null) return false;
+        try {
+            if(!POManager.updateQuantity(prodotto.getId(), -1*amount)) return false;
+        } catch (InvalidProductIdException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         TickerEntryObj ticket = new TickerEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
         sale.addEntry(ticket);
         return true;
     }
 
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException{
-        //TODO implement
-        return false;
+        SaleTransactionObj sale = saleTransactions.get(transactionId);
+        if(sale == null) return false;
+        if(sale.getStatus()!="new") return false;
+        ProductType prodotto = POManager.getProductTypeByBarCode(productCode);
+        if(prodotto == null) return false;
+        try {
+            if(!POManager.updateQuantity(prodotto.getId(), amount)) return false;
+        } catch (InvalidProductIdException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        TickerEntryObj ticket = new TickerEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
+        sale.deleteEntry(ticket);
+        return true;
     }
 
     public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException, UnauthorizedException{
-        //TODO implement
-        return false;
+        if(discountRate>1 || discountRate <0) return false;
+        SaleTransactionObj sale = saleTransactions.get(transactionId);
+        if(sale == null)return false;
+        if(sale.getStatus()!= "new") return false;
+        List <TicketEntry> tickets= sale.getEntries();
+        int i;
+        for(i=0; i<tickets.size(); i++){
+            if(tickets.get(i).getBarCode() == productCode){
+                tickets.get(i).setDiscountRate(discountRate);
+            }
+        }
+        sale.setEntries(tickets);
+        return true;
     }
 
     public boolean applyDiscountRateToSale(Integer transactionId, double discountRate) throws InvalidTransactionIdException, InvalidDiscountRateException, UnauthorizedException{
-        //TODO implement
-        return false;
+        if(discountRate>1 || discountRate <0) return false;
+        SaleTransactionObj sale = saleTransactions.get(transactionId);
+        if(sale == null)return false;
+        if(sale.getStatus()== "payted") return false;
+        sale.setDiscountRate(discountRate);
+        return true;
     }
 
     public int computePointsForSale(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException{
@@ -179,7 +212,6 @@ public class TransactionManager {
          for(TicketEntry toAdd : toBeUpdated){
             sale.updateEntry(toAdd);
          }
-         sale.updatePrice(priceReduction);
          target.setStatus("Ended");
          
      }

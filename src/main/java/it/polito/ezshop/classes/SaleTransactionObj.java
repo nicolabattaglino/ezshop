@@ -28,14 +28,29 @@ public class SaleTransactionObj extends BalanceOperationObj implements it.polito
     public void setStatus(String status){
         this.status = status;
     }
+    private void updatePrice(){
+        int prezzo=0;
+        for(TicketEntry entry : entries){
+            prezzo += entry.getAmount() * entry.getPricePerUnit() * entry.getDiscountRate();
+        }
+        price = prezzo;
+        money = prezzo;
+    }
+
+    public void deleteEntry(TicketEntry entry){
+        tickets.remove(entry);
+        this.updatePrice();
+    }
+
     public void addEntry(TicketEntry entry){
         tickets.add(entry);
+        this.updatePrice();
     }
     public SaleTransactionObj(LocalDate date, double money, String type){
         super(date,type);
         this.money=money;
         this.price = this.money;
-        this.status = "new";
+        this.status = "new"; //equal to started, other states are closed and payed
     }
     public boolean updateEntry (TicketEntry entry){
         //this method updates a single entry in the entries list
@@ -49,64 +64,69 @@ public class SaleTransactionObj extends BalanceOperationObj implements it.polito
         }
         return false;
     }
-    public void updatePrice(double amount){
-        this.price+=amount;
-    }
     public int getBalanceId(){
-        return 0;
+        return balanceId;
     }
 
     public void setBalanceId(int balanceId){
+        this.balanceId = balanceId;
         return;
     }
 
     public LocalDate getDate(){
-        return null;
+        return date;
     }
 
     public void setDate(LocalDate date){
+        this.date = date;
         return;
     }
 
     public double getMoney(){
-        return 0;
+        return money;
     }
 
     public void setMoney(double money){
+        this.money= money;
         return;
     }
 
     public String getType(){
-        return null;
+        return type;
     }
 
     public void setType(String type){
+        this.type = type;
         return;
     }
     
     public Integer getTicketNumber(){
-        return 0;
+        return ticketNumber;
     }
 
     public void setTicketNumber(Integer ticketNumber){
+        this.ticketNumber = ticketNumber;
         return;
     }
 
     
 
     public double getDiscountRate(){
-        return 0;
+        return discount;
     }
 
     public void setDiscountRate(double discountRate){
+        this.discount = discountRate;
+        this.updatePrice();
         return;
     }
 
     public double getPrice(){
-        return 0;
+        return price;
     }
 
     public void setPrice(double price){
+        this.price = price;
         return;
     }
 
@@ -115,12 +135,13 @@ public class SaleTransactionObj extends BalanceOperationObj implements it.polito
     @Override
     public List<TicketEntry> getEntries() {
         // TODO Auto-generated method stub
-        return null;
+        return entries;
     }
 
     @Override
     public void setEntries(List<TicketEntry> entries) {
-        // TODO Auto-generated method stub
+        this.entries = entries;
+        this.updatePrice();
         
     }
     
