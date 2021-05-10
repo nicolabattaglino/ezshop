@@ -3,9 +3,9 @@
 
 Authors: Stefano, Mattia, Nicola, Hossein
 
-Date: 30 April 2021
+Date: 10 May 2021
 
-Version: 3.0
+Version: 3.1
 
 
 # Contents
@@ -260,6 +260,12 @@ Shop --> CustomerManager : -customerManager: CustomerManager
 Shop --> ProductOrderManager : -productOrderManager: ProductOrderManager
 Shop --> TransactionManager : -transactionManager: TransactionManager
 
+Shop <-- UserManager : -shop:  Shop
+Shop <-- CustomerManager : -shop:  Shop
+Shop <-- ProductOrderManager : -shop:  Shop
+Shop <-- TransactionManager : -shop:  Shop
+
+
 class Credit 
 class Debit
 
@@ -276,6 +282,7 @@ abstract BalanceOperation {
 }
 note right : Persistent
 class Order{
+    -orderId: Integer
     -supplier: String
     -pricePerUnit: double
     -quantity: Integer
@@ -291,7 +298,7 @@ enum OrderStatus{
 
 Order -> OrderStatus : -status: OrderStatus
 
-Order --|> Debit
+Order --> Debit
 ReturnTransaction --|> Debit
 
 class ProductType {
@@ -328,7 +335,7 @@ class SaleTransaction {
 }
 note right: Persistent
 
-SaleTransaction "1" <--> "*" Quantity : productList : ArrayList<Quantity>
+SaleTransaction "1" <--> "*" Quantity : -productList : ArrayList<Quantity>
 Quantity -> ProductType: -product : ProductType
 
 SaleTransaction -|> Credit
