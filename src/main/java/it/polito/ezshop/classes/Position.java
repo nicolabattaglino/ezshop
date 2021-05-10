@@ -1,5 +1,8 @@
 package it.polito.ezshop.classes;
 
+import it.polito.ezshop.exceptions.InvalidLocationException;
+
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Position {
@@ -8,10 +11,18 @@ public class Position {
     public final Integer levelId;
     private final boolean empty;
     
-    public Position(Integer aisleID, Integer rackID, Integer levelId) {
-        this.aisleID = aisleID;
-        this.rackID = rackID;
-        this.levelId = levelId;
+    public Position(String pos) throws InvalidLocationException {
+        //TODO chiedi per le regex, vedi se il controllo va bene qui
+        if (!pos.matches("^[1-9][0-9]*-[1-9][0-9]*-[1-9][0-9]*$"))
+            throw new InvalidLocationException();
+        Integer[] tokens = Arrays.stream(pos.split("-"))
+                .map(Integer::parseInt)
+                .filter(integer -> integer > 0)
+                .toArray(Integer[]::new);
+        if (tokens.length != 3) throw new InvalidLocationException();
+        this.aisleID = tokens[0];
+        this.rackID = tokens[1];
+        this.levelId = tokens[2];
         this.empty = false;
     }
     

@@ -2,56 +2,57 @@ package it.polito.ezshop.classes;
 
 import it.polito.ezshop.data.TicketEntry;
 
-public class TickerEntryObj implements TicketEntry{
+public class TickerEntryObj implements TicketEntry {
     private String barCode;
     private String description;
     private int amount;
     private double pricePerUnit;
     private double discountRate;
     
-    public TickerEntryObj (int amount, String barcode, String description, double pricePerUnit){
+    public TickerEntryObj(int amount, String barcode, String description, double pricePerUnit) {
         this.amount = amount;
-        this.barCode=barcode;
-        this.description= description;
+        this.barCode = barcode;
+        this.description = description;
         this.pricePerUnit = pricePerUnit;
     }
-    public String getBarCode(){
+    
+    public String getBarCode() {
         return barCode;
     }
-
-    public void setBarCode(String barCode){
+    
+    public void setBarCode(String barCode) {
         this.barCode = barCode;
     }
-
-    public String getProductDescription(){
+    
+    public String getProductDescription() {
         return description;
     }
-
-    public void setProductDescription(String productDescription){
-        this.description= productDescription;
+    
+    public void setProductDescription(String productDescription) {
+        this.description = productDescription;
     }
-
-    public int getAmount(){
+    
+    public int getAmount() {
         return amount;
     }
-
-    public void setAmount(int amount){
-        this.amount=amount;
+    
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
-
-    public double getPricePerUnit(){
+    
+    public double getPricePerUnit() {
         return pricePerUnit;
     }
-
-    public void setPricePerUnit(double pricePerUnit){
-        this.pricePerUnit= pricePerUnit;
+    
+    public void setPricePerUnit(double pricePerUnit) {
+        this.pricePerUnit = pricePerUnit;
     }
-
-    public double getDiscountRate(){
+    
+    public double getDiscountRate() {
         return discountRate;
     }
-
-    public void setDiscountRate(double discountRate){
+    
+    public void setDiscountRate(double discountRate) {
         this.discountRate = discountRate;
     }
 }

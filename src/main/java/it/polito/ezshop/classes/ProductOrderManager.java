@@ -1,6 +1,7 @@
 package it.polito.ezshop.classes;
 
 import it.polito.ezshop.EZShop;
+import it.polito.ezshop.data.Order;
 import it.polito.ezshop.data.ProductType;
 import it.polito.ezshop.exceptions.*;
 
@@ -13,7 +14,7 @@ public class ProductOrderManager {
     
     private final EZShop shop;
     private final HashMap<String, ProductType> productMap = new HashMap<>();
-    private int prouctIdGen;
+    private int prouctIdGen; // TODO mettilo di default a 1
     
     public ProductOrderManager(EZShop shop) {
         this.shop = shop;
@@ -127,9 +128,6 @@ public class ProductOrderManager {
     
     public boolean updatePosition(Integer productId, String newPos) throws InvalidProductIdException, InvalidLocationException {
         if (productId == null || productId <= 0) throw new InvalidProductIdException();
-        //TODO chiedi per le regex
-        if (newPos != null && !newPos.equals("") && !newPos.matches("^[1-9][0-9]*-[1-9][0-9]*-[1-9][0-9]*$"))
-            throw new InvalidLocationException();
         newPos = (newPos == null) ? "" : newPos;
         ProductType target = null;
         for (ProductType p : productMap.values()) {
@@ -140,6 +138,16 @@ public class ProductOrderManager {
         if (target == null) return false;
         target.setLocation(newPos);
         return true;
+    }
+    
+    public Integer issueOrder(String productCode, int quantity, double pricePerUnit) throws InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException {
+        if (quantity <= 0) throw new InvalidQuantityException();
+        if (pricePerUnit <= 0) throw new InvalidPricePerUnitException();
+        ProductType p = getProductTypeByBarCode(productCode);
+        if (p == null) return -1;
+        Order order = new OrderObj(p, pricePerUnit, quantity);
+        //todo aggiungilo da qualche parte
+        return order.getOrderId();
     }
     
 }

@@ -1,8 +1,7 @@
 package it.polito.ezshop.classes;
 
 import it.polito.ezshop.data.ProductType;
-
-import java.util.Arrays;
+import it.polito.ezshop.exceptions.InvalidLocationException;
 
 public class ProductTypeObj implements ProductType {
     
@@ -23,6 +22,22 @@ public class ProductTypeObj implements ProductType {
         this.position = new Position();
     }
     
+    public ProductTypeObj(ProductType product) {
+        this.amount = product.getQuantity();
+        this.id = product.getId();
+        this.description = product.getProductDescription();
+        this.barCode = product.getBarCode();
+        this.notes = product.getNote();
+        this.selPrice = product.getPricePerUnit();
+        //TODO manca il discount rate
+        try {
+            this.position = new Position(product.getLocation());
+        } catch (InvalidLocationException e) {
+            e.printStackTrace();
+        }
+        
+    }
+    
     @Override
     public Integer getQuantity() {
         return null;
@@ -40,10 +55,12 @@ public class ProductTypeObj implements ProductType {
     
     @Override
     public void setLocation(String location) {
-        Integer[] tokens = Arrays.stream(location.split("-"))
-                .map(Integer::parseInt)
-                .toArray(Integer[]::new);
-        new Position(tokens[0], tokens[1], tokens[2]);
+        if (location == null || location.equals("")) this.position = new Position();
+        try {
+            this.position = new Position(location);
+        } catch (InvalidLocationException e) {
+            e.printStackTrace();
+        }
     }
     
     @Override

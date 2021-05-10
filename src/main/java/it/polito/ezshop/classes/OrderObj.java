@@ -1,21 +1,34 @@
 package it.polito.ezshop.classes;
 
 import it.polito.ezshop.data.Order;
+import it.polito.ezshop.data.ProductType;
 
 public class OrderObj implements Order {
-    private Integer balanceId;
-    private String productCode;
+    
+    private static int OrderIdGen; //TODO aggiungilo al design
+    
+    private Integer orderId;
+    private ProductType product;
     private double pricePerUnit;
     private int quantity;
-    private String status;
-    private Integer orderId;
+    private String supplier; //TODO vedi che farci
+    private OrderStatus status;
+    private BalanceOperationObj balanceOp;
+    
+    public OrderObj(ProductType product, double pricePerUnit, int quantity) {
+        this.orderId = ++OrderIdGen;
+        this.product = new ProductTypeObj(product);
+        this.pricePerUnit = pricePerUnit;
+        this.quantity = quantity;
+        status = OrderStatus.ISSUED;
+    }
     
     public String getProductCode() {
-        return productCode;
+        return product.getBarCode();
     }
     
     public void setProductCode(String productCode) {
-        this.productCode = productCode;
+        this.product.setBarCode(productCode);
     }
     
     public double getPricePerUnit() {
@@ -35,11 +48,11 @@ public class OrderObj implements Order {
     }
     
     public String getStatus() {
-        return status;
+        return status.name();
     }
     
     public void setStatus(String status) {
-        this.status = status;
+        this.status = OrderStatus.valueOf(status.toUpperCase());
     }
     
     public Integer getOrderId() {
@@ -52,10 +65,12 @@ public class OrderObj implements Order {
     
     @Override
     public Integer getBalanceId() {
-        return balanceId;
+        return balanceOp.getBalanceId();
     }
     
     public void setBalanceId(Integer balanceId) {
-        this.balanceId = balanceId;
+        balanceOp.setBalanceId(balanceId);
     }
+    
+    
 }
