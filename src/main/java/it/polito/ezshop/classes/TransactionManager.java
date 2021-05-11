@@ -40,7 +40,7 @@ public class TransactionManager {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        TickerEntryObj ticket = new TickerEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
+        TicketEntryObj ticket = new TicketEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
         sale.addEntry(ticket);
         return true;
     }
@@ -57,7 +57,7 @@ public class TransactionManager {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        TickerEntryObj ticket = new TickerEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
+        TicketEntryObj ticket = new TicketEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
         sale.deleteEntry(ticket);
         return true;
     }

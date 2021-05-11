@@ -2,14 +2,14 @@ package it.polito.ezshop.classes;
 
 import it.polito.ezshop.data.TicketEntry;
 
-public class TickerEntryObj implements TicketEntry {
+public class TicketEntryObj implements TicketEntry {
     private String barCode;
     private String description;
     private int amount;
     private double pricePerUnit;
     private double discountRate;
     
-    public TickerEntryObj(int amount, String barcode, String description, double pricePerUnit) {
+    public TicketEntryObj(int amount, String barcode, String description, double pricePerUnit) {
         this.amount = amount;
         this.barCode = barcode;
         this.description = description;
