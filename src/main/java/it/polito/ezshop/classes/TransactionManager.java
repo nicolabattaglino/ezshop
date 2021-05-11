@@ -286,7 +286,9 @@ public class TransactionManager {
         output.add((BalanceOperation) saleTransactions);
         output.add((BalanceOperation) returnTransactions);
         for(OrderObj order : orders){
+            if(order.getBalanceOperation() !=null)
             output.add(order.getBalanceOperation());
+
         }
         return output;
     }
