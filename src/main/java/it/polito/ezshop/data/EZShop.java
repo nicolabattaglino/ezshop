@@ -241,12 +241,24 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer startSaleTransaction() throws UnauthorizedException {
-        return null;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString())) {
+            throw new UnauthorizedException();
+        } else {
+           return transactionManager.startSaleTransaction();
+        }
     }
 
     @Override
     public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
-        return false;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString())) {
+            throw new UnauthorizedException();
+        } else {
+           return transactionManager.addProductToSale(transactionId, productCode, amount);
+        }
     }
 
     @Override

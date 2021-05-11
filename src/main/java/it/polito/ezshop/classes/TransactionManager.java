@@ -26,10 +26,14 @@ public class TransactionManager {
     
     public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
         SaleTransactionObj sale = saleTransactions.get(transactionId);
-        if (sale == null) return false;
-        if (sale.getStatus() != "new") return false;
+        if (sale == null) {
+            throw new InvalidTransactionIdException();
+        }
         ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);
-        if (prodotto == null) return false;
+        if (prodotto == null) throw new InvalidProductCodeException();
+        if(amount<0) throw new InvalidQuantityException();
+        if (sale.getStatus() != "new") return false;
+        
         try {
             if (!shop.getProductOrderManager().updateQuantity(prodotto.getId(), -1 * amount)) return false;
         } catch (InvalidProductIdException e) {
