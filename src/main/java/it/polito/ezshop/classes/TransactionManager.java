@@ -7,19 +7,16 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class TransactionManager {
-    private Double balance = Double.valueOf("0");
+    private Double balance = 0.0;
     //non so se orders mi serve
-    private List<Order> orders = new LinkedList<Order>();
-    private List<BalanceOperation> balanceOperations = new LinkedList<BalanceOperation>(); //list of all balance operations
+    private List<OrderObj> orders = new LinkedList<OrderObj>();
     private Map<Integer, ReturnTransaction> returnTransactions = new HashMap<Integer, ReturnTransaction>(); // list of all return transactions (they are also included in balanceOperation)
     private Map<Integer, SaleTransactionObj> saleTransactions = new HashMap<Integer, SaleTransactionObj>(); // list of all sale transactions (they are also included in balanceOperation)
     private EZShop shop;
     private Map<String, CreditCard> cards = new HashMap<String, CreditCard>();
-    private ProductOrderManager POManager;
     
-    public TransactionManager(EZShop shop, ProductOrderManager POManager) {
+    public TransactionManager(EZShop shop) {
         this.shop = shop;
-        this.POManager = POManager;
     }
     
     public Integer startSaleTransaction() throws UnauthorizedException {
@@ -31,10 +28,10 @@ public class TransactionManager {
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
         if (sale.getStatus() != "new") return false;
-        ProductType prodotto = POManager.getProductTypeByBarCode(productCode);
+        ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);
         if (prodotto == null) return false;
         try {
-            if (!POManager.updateQuantity(prodotto.getId(), -1 * amount)) return false;
+            if (!shop.getProductOrderManager().updateQuantity(prodotto.getId(), -1 * amount)) return false;
         } catch (InvalidProductIdException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -48,10 +45,10 @@ public class TransactionManager {
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
         if (sale.getStatus() != "new") return false;
-        ProductType prodotto = POManager.getProductTypeByBarCode(productCode);
+        ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);
         if (prodotto == null) return false;
         try {
-            if (!POManager.updateQuantity(prodotto.getId(), amount)) return false;
+            if (!shop.getProductOrderManager().updateQuantity(prodotto.getId(), amount)) return false;
         } catch (InvalidProductIdException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -87,17 +84,25 @@ public class TransactionManager {
     }
     
     public int computePointsForSale(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
-        //TODO implement
-        return 0;
+        SaleTransactionObj sale = saleTransactions.get(transactionId);
+        if(sale == null) return -1;
+
+        return (int)(sale.getPrice()/10);
     }
     
     public boolean endSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
-        //TODO implement
-        return false;
+        SaleTransactionObj sale = saleTransactions.get(transactionId);
+        if(sale == null)return false;
+        if(sale.getStatus()!= "new") return false; // the transaction wasn't opern
+        sale.setStatus("closed");
+        return true;
     }
     
     public boolean deleteSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
-        //TODO implement
+        SaleTransactionObj sale = saleTransactions.get(transactionId);
+        if(sale == null)return false;
+        if(sale.getStatus()== "payed") return false; // the transaction wasn't opern
+        saleTransactions.remove(transactionId);
         return false;
     }
     
@@ -106,19 +111,22 @@ public class TransactionManager {
     }
     
     public List<Order> getAllOrders() throws UnauthorizedException {
-        return orders;
+        List <Order> output = new ArrayList <Order>();
+        for(Order ordine: orders){
+            output.add(ordine);
+        }
+        return output;
     }
     
     public Integer startReturnTransaction(Integer saleNumber) throws /*InvalidTicketNumberException,*/InvalidTransactionIdException, UnauthorizedException {
-        int money = 0;
+        double money = 0;
         SaleTransaction toBeReturned = this.getSaleTransaction(saleNumber);
         List<TicketEntry> tickets = toBeReturned.getEntries();
         for (TicketEntry ticket : tickets) {
             money += (ticket.getAmount() * ticket.getPricePerUnit() * ticket.getDiscountRate());
         }
         
-        ReturnTransaction returning = new ReturnTransaction(Collections.max(balanceOperations.stream().map(s -> s.getBalanceId()).collect(java.util.stream.Collectors.toList())) + 1, LocalDate.now(), money, "Return", saleNumber);
-        balanceOperations.add(returning);
+        ReturnTransaction returning = new ReturnTransaction( LocalDate.now(), money, "Return", (int)saleNumber);
         returnTransactions.put(returning.getBalanceId(), returning);
         Integer output = returning.getBalanceId();
         return output;
@@ -273,6 +281,9 @@ public class TransactionManager {
         List<BalanceOperation> output = new LinkedList<BalanceOperation>();
         output.add((BalanceOperation) saleTransactions);
         output.add((BalanceOperation) returnTransactions);
+        for(OrderObj order : orders){
+            output.add(order.getBalanceOperation());
+        }
         return output;
     }
     
@@ -285,6 +296,7 @@ public class TransactionManager {
         saleTransactions.clear();
         returnTransactions.clear();
         cards.clear();
+        orders.clear();
         balance = 0.0;
     }
     
@@ -314,12 +326,14 @@ public class TransactionManager {
     }
     
     public Order addCompletedOrder(Integer orderId) {
+        //TODO  I don't remember waht this method does or if it is actually important
         return null;
         
         
     }
     
-    boolean addOrder(Order order) {
+    boolean addOrder(OrderObj order) {
+        orders.add(order);
         return true;
         
     }
