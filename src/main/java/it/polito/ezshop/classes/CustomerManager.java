@@ -1,5 +1,11 @@
 package it.polito.ezshop.classes;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import it.polito.ezshop.data.Customer;
 import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.data.User;
@@ -10,36 +16,83 @@ import it.polito.ezshop.exceptions.UnauthorizedException;
 
 import java.io.*;
 import java.util.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-public class CustomerManager  {
-    HashMap<Integer, Customer> customerMap = new HashMap<Integer, Customer>();
-    HashMap<String, LoyaltyCardObj> cardMap = new HashMap<>();
+
+public class CustomerManager {
+    //Todo vedi che fare per le rollback
+    public static final String CARD_PATH = "data/loyaltyCards.json";
+    public static final String CUSTOMER_PATH = "data/customers.json";
+
+    @JsonSerialize(keyUsing = MapSerializer.class)
+    @JsonDeserialize
+    private HashMap<Integer, Customer> customerMap;
+
+    @JsonSerialize(keyUsing = MapSerializer.class)
+    @JsonDeserialize
+    private HashMap<String, LoyaltyCardObj> cardMap;
+
     private Integer customerIdGen = 0;
-    private String loyaltyCardIdGen = "";
-    //private long loyaltyCardIdGen;
+    private long loyaltyCardIdGen = 1000000000;
     private EZShop shop;
     
     public CustomerManager(EZShop shop) {
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<HashMap<String, LoyaltyCardObj>> typeRef = new TypeReference<HashMap<String, LoyaltyCardObj>>() {
+        };
+        File cards = new File(CARD_PATH);
+        try {
+            cards.createNewFile();
+            cardMap = mapper.readValue(cards, typeRef);
+        } catch (IOException e) {
+            cards.delete();
+            try {
+                cards.createNewFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } finally {
+                cardMap = new HashMap<>();
+            }
+        }
+        File customers = new File(CUSTOMER_PATH);
+        TypeReference<HashMap<Integer, Customer>> typeRef1 = new TypeReference<HashMap<Integer, Customer>>() {
+        };
+        try {
+            customers.createNewFile();
+            customerMap = mapper.readValue(customers, typeRef1);
+        } catch (IOException e) {
+            customers.delete();
+            try {
+                customers.createNewFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } finally {
+                customerMap = new HashMap<>();
+            }
+
+        }
         this.shop = shop;
     }
 
 
-
-    public Integer defineCustomer(String customerName) throws InvalidCustomerNameException, UnauthorizedException {
-        if (customerName == null || customerName.equals("")) {  //????? empty or null
+    public Integer defineCustomer(String customerName) throws InvalidCustomerNameException {
+        if (customerName == null || customerName.equals(""))
             throw new InvalidCustomerNameException();
-        } else {
-            Integer id = customerIdGen + 1;
-            Customer customer = new CustomerObj(id, customerName);
-            customerMap.put(id, customer);
-            return id;
+
+        Integer id = customerIdGen + 1;
+        Customer customer = new CustomerObj(id, customerName);
+        if (customerMap.put(id, customer) != null)
+            return -1;
+
+        try {
+            persistCustomers();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return id;
+
     }
-    
+
+
     public boolean modifyCustomer(Integer id, String newCustomerName, String newCustomerCard) throws InvalidCustomerNameException, InvalidCustomerCardException, InvalidCustomerIdException, UnauthorizedException {
 
         Customer customer = customerMap.get(id);
@@ -47,18 +100,21 @@ public class CustomerManager  {
             throw new InvalidCustomerIdException();
         } else if (newCustomerName == null || newCustomerName.equals("") ) {
             throw new InvalidCustomerNameException();
-        } else if (newCustomerCard == null || newCustomerCard.trim().equals("")  || !newCustomerCard.matches("^[0-9]{10}$")) { //?????????
+        } else if (newCustomerCard == null || newCustomerCard.trim().equals("") || !newCustomerCard.matches("^[0-9]{10}$")) {
+            //todo da rivedere
             throw new InvalidCustomerCardException();
         } else if (newCustomerCard.equals("")) {
-            cardMap.get(customer.getCustomerCard()).setIsAttached(false);
+            //todo da rivedere
+            //cardMap.get(customer.getCustomerCard()).setIsAttached(false);
             customer.setCustomerCard(null);
-        } else if (cardMap.get(newCustomerCard).getIsAttached() == true) {
+        } else if (cardMap.get(newCustomerCard).getIsAttached()) {
             return false;
         } else if (newCustomerCard == null){
 
         } else {
             customer.setCustomerCard(newCustomerCard);
             customer.setCustomerName(newCustomerName);
+
         }
         return false;
     }
@@ -72,7 +128,6 @@ public class CustomerManager  {
             String cardId = customerMap.get(id).getCustomerCard();
             cardMap.get(id).setPoints(0); // la carta la elimino?
             cardMap.get(id).setIsAttached(false);
-            //cardMap.remove(cardId); ???
             customerMap.remove(id);
             return true;
         }
@@ -91,50 +146,68 @@ public class CustomerManager  {
     public List<Customer> getAllCustomers() throws UnauthorizedException {
         return (ArrayList<Customer>) customerMap.values();
     }
-    
-    public String createCard() throws UnauthorizedException {
-        BufferedReader brTest = null;
-        String id = null;
 
-        try {
-            brTest = new BufferedReader(new FileReader("cardgen.txt"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            id = brTest.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        id = id + 1;
-        try (PrintStream out = new PrintStream(new FileOutputStream("cardgen.txt"))) {
-            out.print(id);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        ///////////////////////////////
+    public String createCard() {
         loyaltyCardIdGen = loyaltyCardIdGen + 1;
-        LoyaltyCardObj l = new LoyaltyCardObj(loyaltyCardIdGen);
-        return loyaltyCardIdGen;
+        LoyaltyCardObj l = new LoyaltyCardObj(String.valueOf(loyaltyCardIdGen));
+        cardMap.put(l.getCardCode(), l);
+        try {
+            persistCards();
+        } catch (IOException e) {
+            //Todo vedi che fare per le rollback
+            return "";
+        }
+        return l.getCardCode();
     }
     
     public boolean attachCardToCustomer(String customerCard, Integer customerId) throws InvalidCustomerIdException, InvalidCustomerCardException, UnauthorizedException {
-        if (customerId < 0) {
+        if (customerId <= 0)
             throw new InvalidCustomerIdException();
-        } else if (customerCard == null || customerCard.equals("") || !customerCard.matches("^([0-9]{10}$)")) {
+        if (customerCard == null || customerCard.equals("") || !customerCard.matches("^([0-9]{10}$)"))
             throw new InvalidCustomerCardException();
-        } else if (customerMap.get(customerId) == null || cardMap.get(customerCard).getIsAttached() == false)  {
+        LoyaltyCardObj target = cardMap.get(customerCard);
+        Customer customer = customerMap.get(customerId);
+        if (customer == null || target.getIsAttached())
             return false;
-        } else {
-            Customer customer = customerMap.get(customerId);
-            customer.setCustomerCard(customerCard); //  come passo la card al customer?
-            return true;
+        target.setIsAttached(true);
+        customer.setCustomerCard(customerCard);
+        try {
+            persistCards();
+            persistCustomers();
+        } catch (IOException e) {          //Todo vedi che fare per le rollback
+            return false;
         }
+
+        /*try {
+            persistCards();
+        } catch (IOException e) {
+            target.setIsAttached(false);
+            return false;
+        }
+        try {
+            customer.setCustomerCard(customerCard);
+            persistCustomers();
+        } catch (IOException e) {
+            target.setIsAttached(false);
+            customer.setCustomerCard(null);
+            try {
+                persistCards();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            return false;
+        } */
+
+        return true;
+
     }
     
     
     public boolean modifyPointsOnCard(String customerCard, int pointsToBeAdded) throws InvalidCustomerCardException, UnauthorizedException {
-        if (customerCard.equals("") || customerCard == null || !customerCard.matches("^([0-9]{10}$)")) {
+        if (customerCard == null || customerCard.trim().equals("") || !customerCard.matches("^([0-9]{10}$)"))
             throw new InvalidCustomerCardException();
         } else if (cardMap.get(customerCard) == null || pointsToBeAdded < 0) {
             // false   if there is no card with given code,
@@ -155,69 +228,15 @@ public class CustomerManager  {
 
     }
 
-
-    private static void parseCustomerObject(JSONObject customer) {
-        //UserRole r;
-
-        //String password = (String) customer.get("password");
-        //System.out.println(password);
-
-        String card = (String) customer.get("card");
-        //System.out.println(role);
-        Integer id = Integer.valueOf(customer.get("id").toString());
-        //System.out.println(id);
-
-        String name = (String) customer.get("name");
-        //System.out.println(username);
-
-        Customer c = new CustomerObj(id,name);
-
-
+    private void persistCards() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(new File(CARD_PATH), cardMap);
     }
 
-    private void writeToFile() {
-        int i = 0;
-        JSONArray customerListJSON = new JSONArray();
-        ArrayList<Customer> customerList = new ArrayList<Customer>(customerMap.values());
-        for (i = 0; i < customerList.size(); i++) {
-            JSONObject userDetails = new JSONObject();
-            userDetails.put("id", customerList.get(i).getId());
-            userDetails.put("name", customerList.get(i).getCustomerName());
-            userDetails.put("card", customerList.get(i).getCustomerCard());
-            customerListJSON.add(userDetails);
-        }
-        //Write JSON file
-        try (FileWriter file = new FileWriter("customer.json")) {
-            //We can write any JSONArray or JSONObject instance to the file
-            file.write(customerListJSON.toJSONString());
-            file.flush();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void persistCustomers() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(new File(CUSTOMER_PATH), customerMap);
     }
 
-    private void readFromFile() {
-        //JSON parser object to parse read file
-        JSONParser jsonParser = new JSONParser();
-
-        try (FileReader reader = new FileReader("customer.json")) {
-            //Read JSON file
-            Object obj = jsonParser.parse(reader);
-
-            JSONArray customerList = (JSONArray) obj;
-            //System.out.println(employeeList);
-
-            //Iterate over employee array
-            customerList.forEach(usr -> parseCustomerObject((JSONObject) usr));
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-    
 }

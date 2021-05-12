@@ -2,10 +2,7 @@ package it.polito.ezshop.classes;
 
 import it.polito.ezshop.data.User;
 import it.polito.ezshop.exceptions.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -22,7 +19,8 @@ public class UserManager {
     private User loggedUser;
     
     public UserManager() {
-        readFromFile();
+
+       // readFromFile();
     }
     
 
@@ -49,7 +47,7 @@ public class UserManager {
             UserObj u = new UserObj(userIdGen, username, password, UserRole.valueOf(role));
             System.out.println(u.getRole());
             userList.add(u);
-            writeToFile();
+            //writeToFile();
             return userIdGen;
         }
     }
@@ -62,7 +60,7 @@ public class UserManager {
             for (i = 0; i < userList.size(); i++) {
                 if (userList.get(i).getId() == id) {
                     userList.remove(i);
-                    writeToFile();
+                    //writeToFile();
                     return true;
                 }
             }
@@ -104,7 +102,7 @@ public class UserManager {
                 if (userList.get(i).getId() == id) {
                     User u = userList.get(i);
                     u.setRole(role);
-                    writeToFile();
+                    //writeToFile();
                     return true;
                 }
             }
@@ -127,7 +125,7 @@ public class UserManager {
         loggedUser = null;
         return true;
     }
-
+/*
     private static void parseUserObject(JSONObject user) {
         UserRole r;
 
@@ -204,5 +202,5 @@ public class UserManager {
             e.printStackTrace();
         }
     }
-    
+    */
 }
