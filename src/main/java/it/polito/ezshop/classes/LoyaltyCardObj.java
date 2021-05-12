@@ -3,12 +3,21 @@ package it.polito.ezshop.classes;
 public class LoyaltyCardObj {
     private String cardCode;
     private Integer points;
+    private boolean isAttached;
     
-    public LoyaltyCardObj(String uuidAsString) {
-        this.cardCode = uuidAsString;
+    public LoyaltyCardObj(String cardCode) {
+        this.cardCode = cardCode;
         this.points = 0;
+        this.isAttached = false;
     }
-    
+
+    public boolean getIsAttached(){
+        return isAttached;
+    }
+
+    public void setIsAttached(boolean card){
+         isAttached = card;
+    }
     public String getCardCode() {
         return cardCode;
     }

@@ -42,7 +42,7 @@ public class UserObj implements User {
     }
     
     public String getRole() {
-        return role.toString();
+        return String.valueOf(role);
     }
     
     public void setRole(String role) {
