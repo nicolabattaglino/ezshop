@@ -26,17 +26,21 @@ public class TransactionManager {
     
     public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
         SaleTransactionObj sale = saleTransactions.get(transactionId);
-        if (sale == null) return false;
-        if (sale.getStatus() != "new") return false;
+        if (sale == null) {
+            throw new InvalidTransactionIdException();
+        }
         ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);
-        if (prodotto == null) return false;
+        if (prodotto == null) throw new InvalidProductCodeException();
+        if(amount<0) throw new InvalidQuantityException();
+        if (sale.getStatus() != "new") return false;
+        
         try {
             if (!shop.getProductOrderManager().updateQuantity(prodotto.getId(), -1 * amount)) return false;
         } catch (InvalidProductIdException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        TickerEntryObj ticket = new TickerEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
+        TicketEntryObj ticket = new TicketEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
         sale.addEntry(ticket);
         return true;
     }
@@ -53,7 +57,7 @@ public class TransactionManager {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        TickerEntryObj ticket = new TickerEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
+        TicketEntryObj ticket = new TicketEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
         sale.deleteEntry(ticket);
         return true;
     }
@@ -282,7 +286,9 @@ public class TransactionManager {
         output.add((BalanceOperation) saleTransactions);
         output.add((BalanceOperation) returnTransactions);
         for(OrderObj order : orders){
+            if(order.getBalanceOperation() !=null)
             output.add(order.getBalanceOperation());
+
         }
         return output;
     }
