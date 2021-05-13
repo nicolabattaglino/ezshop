@@ -1,6 +1,5 @@
 package it.polito.ezshop.classes;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -8,14 +7,16 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import it.polito.ezshop.data.Customer;
 import it.polito.ezshop.data.EZShop;
-import it.polito.ezshop.data.User;
 import it.polito.ezshop.exceptions.InvalidCustomerCardException;
 import it.polito.ezshop.exceptions.InvalidCustomerIdException;
 import it.polito.ezshop.exceptions.InvalidCustomerNameException;
 import it.polito.ezshop.exceptions.UnauthorizedException;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class CustomerManager {
@@ -209,12 +210,12 @@ public class CustomerManager {
     public boolean modifyPointsOnCard(String customerCard, int pointsToBeAdded) throws InvalidCustomerCardException, UnauthorizedException {
         if (customerCard == null || customerCard.trim().equals("") || !customerCard.matches("^([0-9]{10}$)"))
             throw new InvalidCustomerCardException();
-        } else if (cardMap.get(customerCard) == null || pointsToBeAdded < 0) {
+        if (cardMap.get(customerCard) == null || pointsToBeAdded < 0)
             // false   if there is no card with given code,
             // if pointsToBeAdded is negative and there were not enough points on that card before this operation, ?????
             //if we cannot reach the db.
             return false;
-        } else {
+        
             /*for (Map.Entry<Integer, Customer> entry : customerMap.entrySet()) {
                 if(entry.getValue().getCustomerCard().equals(customerCard)){
                     entry.getValue().setPoints(pointsToBeAdded);
@@ -224,8 +225,8 @@ public class CustomerManager {
             points += pointsToBeAdded;
             cardMap.get(customerCard).setPoints(points);
             return true;
-        }
-
+    
+    
     }
 
     private void persistCards() throws IOException {
