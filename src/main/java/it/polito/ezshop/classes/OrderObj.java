@@ -19,6 +19,9 @@ public class OrderObj implements Order {
     public BalanceOperationObj getBalanceOperation (){
         return (BalanceOperationObj)balanceOp;
     }
+
+    public OrderObj() {}
+
     public OrderObj(ProductType product, double pricePerUnit, int quantity) {
         this.orderId = ++OrderIdGen;
         this.product = new ProductTypeObj(product);

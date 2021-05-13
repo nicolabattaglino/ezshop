@@ -1,21 +1,33 @@
 package it.polito.ezshop.classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import it.polito.ezshop.data.Customer;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
-public class CustomerObj implements Customer, Serializable {
+
+public class CustomerObj implements Customer {
     
-    private Integer id;
+    private Integer id, points;
     private String name;
    // private String surname;
 
     private LoyaltyCardObj loyaltyCard;
 
+    public CustomerObj() {}
+
     public CustomerObj(Integer id, String customerName) {
         this.id = id;
         this.name = customerName;
-        this.loyaltyCard = null;
     }
 
     public String getName() {
@@ -78,7 +90,7 @@ public class CustomerObj implements Customer, Serializable {
     }
     
     public void setPoints(Integer points) {
-        loyaltyCard.setPoints(points);
+       loyaltyCard.setPoints(points);
     }
     
 }

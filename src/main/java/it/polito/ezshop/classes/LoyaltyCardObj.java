@@ -4,7 +4,9 @@ public class LoyaltyCardObj {
     private String cardCode;
     private Integer points;
     private boolean isAttached;
-    
+
+    public LoyaltyCardObj() {}
+
     public LoyaltyCardObj(String cardCode) {
         this.cardCode = cardCode;
         this.points = 0;

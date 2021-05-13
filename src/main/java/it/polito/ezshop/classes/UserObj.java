@@ -16,7 +16,8 @@ public class UserObj implements User {
         this.role = role;
     }
     
-    
+    public  UserObj() {}
+
     public Integer getId() {
         return id;
     }
