@@ -3,6 +3,7 @@ package it.polito.ezshop.classes;
 import it.polito.ezshop.data.*;
 import it.polito.ezshop.exceptions.*;
 
+import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -46,9 +47,12 @@ public class TransactionManager {
     }
     
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
+        if(transactionId <=0 || transactionId == null) throw new InvalidTransactionIdException();
+        if(amount<0) throw new InvalidQuantityException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
         if (sale.getStatus() != "new") return false;
+        if(productCode == null) throw new InvalidProductCodeException();
         ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);
         if (prodotto == null) return false;
         try {
@@ -63,6 +67,9 @@ public class TransactionManager {
     }
     
     public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException, UnauthorizedException {
+        if(transactionId <=0 || transactionId == null) throw new InvalidTransactionIdException();
+        if(productCode == null) throw new InvalidProductCodeException();
+        if(discountRate<0.0 || discountRate >= 1.00) throw new InvalidDiscountRateException();
         if (discountRate > 1 || discountRate < 0) return false;
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
@@ -79,6 +86,8 @@ public class TransactionManager {
     }
     
     public boolean applyDiscountRateToSale(Integer transactionId, double discountRate) throws InvalidTransactionIdException, InvalidDiscountRateException, UnauthorizedException {
+        if(transactionId <=0 || transactionId == null) throw new InvalidTransactionIdException();
+        if(discountRate<0.0 || discountRate >= 1.00) throw new InvalidDiscountRateException();
         if (discountRate > 1 || discountRate < 0) return false;
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
@@ -88,6 +97,7 @@ public class TransactionManager {
     }
     
     public int computePointsForSale(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
+        if(transactionId <=0 || transactionId == null) throw new InvalidTransactionIdException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if(sale == null) return -1;
 
@@ -95,6 +105,7 @@ public class TransactionManager {
     }
     
     public boolean endSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
+        if(transactionId <=0 || transactionId == null) throw new InvalidTransactionIdException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if(sale == null)return false;
         if(sale.getStatus()!= "new") return false; // the transaction wasn't opern
@@ -103,6 +114,7 @@ public class TransactionManager {
     }
     
     public boolean deleteSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
+        if(transactionId <=0 || transactionId == null) throw new InvalidTransactionIdException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if(sale == null)return false;
         if(sale.getStatus()== "payed") return false; // the transaction wasn't opern
@@ -111,6 +123,7 @@ public class TransactionManager {
     }
     
     public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
+        if(transactionId <=0 || transactionId == null) throw new InvalidTransactionIdException();
         return saleTransactions.get(transactionId);
     }
     
@@ -123,6 +136,7 @@ public class TransactionManager {
     }
     
     public Integer startReturnTransaction(Integer saleNumber) throws /*InvalidTicketNumberException,*/InvalidTransactionIdException, UnauthorizedException {
+        if(saleNumber <=0 || saleNumber == null) throw new InvalidTransactionIdException();
         double money = 0;
         SaleTransaction toBeReturned = this.getSaleTransaction(saleNumber);
         List<TicketEntry> tickets = toBeReturned.getEntries();
@@ -141,7 +155,9 @@ public class TransactionManager {
     }
     
     public boolean returnProduct(Integer returnId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
-        //Exceptions are checked in the shop
+        if(returnId <=0 || returnId == null) throw new InvalidTransactionIdException();
+        if(productCode == null) throw new InvalidProductCodeException();
+        if(amount<0) throw new InvalidQuantityException();
         ReturnTransaction target = getReturnTransaction(returnId);
         if (target == null) {
             return false;
@@ -167,7 +183,7 @@ public class TransactionManager {
     }
     
     public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, UnauthorizedException, InvalidProductIdException, InvalidProductCodeException {
-        // exceptions are checked in shop
+        if(returnId <=0 || returnId == null) throw new InvalidTransactionIdException();
         // in the current design the return transaction's informations are created during the return product function, the end return method only closes the return
         ReturnTransaction target = returnTransactions.get(returnId);
         if (target == null) return false;
@@ -181,7 +197,7 @@ public class TransactionManager {
     }
     
     public boolean deleteReturnTransaction(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
-        // exceptions are checked in shop
+        if(returnId <=0 || returnId == null) throw new InvalidTransactionIdException();
         ReturnTransaction target = returnTransactions.get(returnId);
         if (target == null) return false;
         if (target.getStatus() != "Closed") return false;
@@ -235,6 +251,9 @@ public class TransactionManager {
     }
     
     public double receiveCashPayment(Integer ticketNumber, double cash) throws InvalidTransactionIdException, InvalidPaymentException, UnauthorizedException {
+        if(ticketNumber <=0 || ticketNumber == null) throw new InvalidTransactionIdException();
+        if(cash <= 0) throw new InvalidParameterException();
+
         SaleTransactionObj transaction = this.getSaleTransactionObj(ticketNumber);
         if (transaction == null) return -1;
         if (transaction.getPrice() > cash) return -1;
@@ -242,9 +261,12 @@ public class TransactionManager {
     }
     
     public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
+        if(ticketNumber <=0 || ticketNumber == null) throw new InvalidTransactionIdException();
+        if(creditCard == "" || creditCard == null) throw new InvalidCreditCardException();
+        
         CreditCard carta = cards.get(creditCard);
         if (carta == null) return false;
-        if (!this.luhn(carta.getNumber())) return false;
+        if (!this.luhn(carta.getNumber())) throw new InvalidCreditCardException();
         SaleTransaction transaction = saleTransactions.get(ticketNumber);
         if (transaction == null) return false;
         if (carta.getBalance() < transaction.getPrice()) return false;
@@ -254,6 +276,8 @@ public class TransactionManager {
     }
     
     public double returnCashPayment(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
+        if(returnId <=0 || returnId == null) throw new InvalidTransactionIdException();
+
         ReturnTransaction rTransaction = returnTransactions.get(returnId);
         if (rTransaction == null) return -1;
         if (rTransaction.getStatus() != "Ended") return -1;
@@ -263,9 +287,11 @@ public class TransactionManager {
     }
     
     public double returnCreditCardPayment(Integer returnId, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
+        if(returnId <=0 || returnId == null) throw new InvalidTransactionIdException();
+        if(creditCard == "" || creditCard == null) throw new InvalidCreditCardException();
         CreditCard carta = cards.get(creditCard);
         if (carta == null) return -1;
-        if (!this.luhn(carta.getNumber())) return -1;
+        if (!this.luhn(carta.getNumber())) throw new InvalidCreditCardException();
         ReturnTransaction rTransaction = returnTransactions.get(returnId);
         if (rTransaction == null) return -1;
         double output = rTransaction.getPrice();
@@ -283,10 +309,28 @@ public class TransactionManager {
     
     public List<BalanceOperation> getCreditsAndDebits(LocalDate from, LocalDate to) throws UnauthorizedException {
         List<BalanceOperation> output = new LinkedList<BalanceOperation>();
-        output.add((BalanceOperation) saleTransactions);
-        output.add((BalanceOperation) returnTransactions);
+        for(SaleTransactionObj sale :saleTransactions.values()){
+            if((from==null && to == null)||
+            (sale.getDate().isAfter(from) && to == null)||
+            (from == null && sale.getDate().isBefore(to))||
+            (sale.getDate().isAfter(from) && sale.getDate().isBefore(to))){
+                output.add((BalanceOperation) sale);
+            }
+        }
+        for(ReturnTransaction rTransaciton :returnTransactions.values()){
+            if((from==null && to == null)||
+            (rTransaciton.getDate().isAfter(from) && to == null)||
+            (from == null && rTransaciton.getDate().isBefore(to))||
+            (rTransaciton.getDate().isAfter(from) && rTransaciton.getDate().isBefore(to))){
+                output.add((BalanceOperation) rTransaciton);
+            }
+        }
         for(OrderObj order : orders){
-            if(order.getBalanceOperation() !=null)
+            if(order.getBalanceOperation() !=null&&
+            ((from==null && to == null)||
+            (order.getBalanceOperation().getDate().isAfter(from) && to == null)||
+            (from == null && order.getBalanceOperation().getDate().isBefore(to))||
+            (order.getBalanceOperation().getDate().isAfter(from) && order.getBalanceOperation().getDate().isBefore(to))))
             output.add(order.getBalanceOperation());
 
         }
