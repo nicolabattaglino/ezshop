@@ -108,7 +108,9 @@ public class ProductOrderManager {
     
     public List<ProductType> getProductTypesByDescription(String description) {
         final String desc = description == null ? "" : description;
-        return productMap.values().stream().filter(productType -> productType.getProductDescription().equals(desc)).collect(Collectors.toList());
+        return productMap.values().stream()
+                .filter(productType -> productType.getProductDescription().equals(desc))
+                .collect(Collectors.toList());
     }
     
     public boolean updateQuantity(Integer productId, int toBeAdded) throws InvalidProductIdException {

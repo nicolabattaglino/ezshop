@@ -1,6 +1,5 @@
 package it.polito.ezshop.classes;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -13,8 +12,11 @@ import it.polito.ezshop.exceptions.InvalidCustomerIdException;
 import it.polito.ezshop.exceptions.InvalidCustomerNameException;
 import it.polito.ezshop.exceptions.UnauthorizedException;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class CustomerManager {
@@ -33,7 +35,7 @@ public class CustomerManager {
     private Integer customerIdGen = 0;
     private long loyaltyCardIdGen = 1000000000;
     private EZShop shop;
-
+    
     public CustomerManager(EZShop shop) {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<HashMap<String, LoyaltyCardObj>> typeRef = new TypeReference<HashMap<String, LoyaltyCardObj>>() {
@@ -117,7 +119,7 @@ public class CustomerManager {
         }
         return false;
     }
-
+    
     public boolean deleteCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
         if (id < 0) {
             throw new InvalidCustomerIdException();
@@ -131,7 +133,7 @@ public class CustomerManager {
             return true;
         }
     }
-
+    
     public Customer getCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
         if (id < 0) {
             throw new InvalidCustomerIdException();
@@ -142,7 +144,7 @@ public class CustomerManager {
             return customerMap.get(id);
         }
     }
-
+    
     public List<Customer> getAllCustomers() throws UnauthorizedException {
         return (ArrayList<Customer>) customerMap.values();
     }
@@ -159,7 +161,7 @@ public class CustomerManager {
         }
         return l.getCardCode();
     }
-
+    
     public boolean attachCardToCustomer(String customerCard, Integer customerId) throws InvalidCustomerIdException, InvalidCustomerCardException, UnauthorizedException {
         if (customerId <= 0)
             throw new InvalidCustomerIdException();
@@ -204,11 +206,12 @@ public class CustomerManager {
         return true;
 
     }
-
-
+    
+    
     public boolean modifyPointsOnCard(String customerCard, int pointsToBeAdded) throws InvalidCustomerCardException, UnauthorizedException {
         if (customerCard == null || customerCard.trim().equals("") || !customerCard.matches("^([0-9]{10}$)"))
             throw new InvalidCustomerCardException();
+        if (cardMap.get(customerCard) == null || pointsToBeAdded < 0)
         LoyaltyCardObj target = cardMap.get(customerCard);
         if (target == null || target.getPoints() + pointsToBeAdded < 0)
             // false   if there is no card with given code,
@@ -216,11 +219,18 @@ public class CustomerManager {
             //if we cannot reach the db.
             return false;
 
+
             /*for (Map.Entry<Integer, Customer> entry : customerMap.entrySet()) {
                 if(entry.getValue().getCustomerCard().equals(customerCard)){
                     entry.getValue().setPoints(pointsToBeAdded);
                     return true;
                 }*/
+            int points = cardMap.get(customerCard).getPoints();
+            points += pointsToBeAdded;
+            cardMap.get(customerCard).setPoints(points);
+            return true;
+
+
         int points = target.getPoints();
         points += pointsToBeAdded;
         target.setPoints(points);

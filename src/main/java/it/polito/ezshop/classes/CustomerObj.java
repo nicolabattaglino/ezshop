@@ -1,14 +1,5 @@
 package it.polito.ezshop.classes;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import it.polito.ezshop.data.Customer;
 
 import java.io.Serializable;
@@ -17,7 +8,7 @@ import java.util.HashMap;
 
 public class CustomerObj implements Customer {
     
-    private Integer id, points;
+    private Integer id;
     private String name;
    // private String surname;
 
@@ -28,6 +19,7 @@ public class CustomerObj implements Customer {
     public CustomerObj(Integer id, String customerName) {
         this.id = id;
         this.name = customerName;
+        this.loyaltyCard = null;
     }
 
     public String getName() {
@@ -54,10 +46,12 @@ public class CustomerObj implements Customer {
         this.name = customerName;
     }
     
+    @JsonIgnore
     public String getCustomerCard() {
         return loyaltyCard.getCardCode();
     }
     
+    @JsonIgnore
     public void setCustomerCard(String customerCard) {
 
         if (customerCard == null) {
@@ -85,10 +79,12 @@ public class CustomerObj implements Customer {
         this.id = id;
     }
     
+    @JsonIgnore
     public Integer getPoints() {
         return loyaltyCard.getPoints();
     }
     
+    @JsonIgnore
     public void setPoints(Integer points) {
        loyaltyCard.setPoints(points);
     }

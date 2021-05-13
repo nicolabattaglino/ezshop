@@ -242,8 +242,8 @@ public class EZShop implements EZShopInterface {
     @Override
     public Integer startSaleTransaction() throws UnauthorizedException {
         if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString())) {
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
             throw new UnauthorizedException();
         } else {
            return transactionManager.startSaleTransaction();
@@ -253,8 +253,8 @@ public class EZShop implements EZShopInterface {
     @Override
     public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
         if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                !userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString())) {
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
             throw new UnauthorizedException();
         } else {
            return transactionManager.addProductToSale(transactionId, productCode, amount);
@@ -263,51 +263,111 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
-        return false;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+            throw new UnauthorizedException();
+        } else {
+           return transactionManager.deleteProductFromSale(transactionId, productCode, amount);
+        }
     }
 
     @Override
     public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException, UnauthorizedException {
-        return false;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+            throw new UnauthorizedException();
+        } else {
+           return transactionManager.applyDiscountRateToProduct(transactionId, productCode, discountRate);
+        }
     }
 
     @Override
     public boolean applyDiscountRateToSale(Integer transactionId, double discountRate) throws InvalidTransactionIdException, InvalidDiscountRateException, UnauthorizedException {
-        return false;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.applyDiscountRateToSale(transactionId, discountRate);
+        }
     }
 
     @Override
     public int computePointsForSale(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
-        return 0;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.computePointsForSale(transactionId);
+        }
     }
 
     @Override
     public boolean endSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
-        return false;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.endSaleTransaction(transactionId);
+        }
     }
 
     @Override
     public boolean deleteSaleTransaction(Integer saleNumber) throws InvalidTransactionIdException, UnauthorizedException {
-        return false;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.deleteSaleTransaction(saleNumber);
+        }
     }
 
     @Override
     public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
-        return null;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.getSaleTransaction(transactionId);
+        }
     }
 
     @Override
     public Integer startReturnTransaction(Integer saleNumber) throws /*InvalidTicketNumberException,*/InvalidTransactionIdException, UnauthorizedException {
-        return null;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.startReturnTransaction(saleNumber);
+        }
     }
 
     @Override
     public boolean returnProduct(Integer returnId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
-        return false;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.returnProduct(returnId, productCode, amount);
+        }
     }
 
     @Override
     public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, UnauthorizedException {
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+            throw new UnauthorizedException();
+        }
+        else {
         try {
             return transactionManager.endReturnTransaction(returnId, commit);
         } catch (InvalidProductIdException | InvalidProductCodeException e) {
@@ -316,44 +376,80 @@ public class EZShop implements EZShopInterface {
             return false;
         }
     }
+    }
 
     @Override
     public boolean deleteReturnTransaction(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
-        return false;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.deleteReturnTransaction(returnId);
+        }
     }
 
     @Override
     public double receiveCashPayment(Integer ticketNumber, double cash) throws InvalidTransactionIdException, InvalidPaymentException, UnauthorizedException {
-        return 0;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.receiveCashPayment(ticketNumber, cash);
+        }
     }
 
     @Override
     public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
-        return false;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.receiveCreditCardPayment(ticketNumber, creditCard);
+        }
     }
 
     @Override
     public double returnCashPayment(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
-        return 0;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.returnCashPayment(returnId);
+        }
     }
 
     @Override
     public double returnCreditCardPayment(Integer returnId, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
-        return 0;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.returnCreditCardPayment(returnId, creditCard);
+        }
     }
 
     @Override
     public boolean recordBalanceUpdate(double toBeAdded) throws UnauthorizedException {
-        return false;
+        if(!userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+                !userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString())) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.recordBalanceUpdate(toBeAdded);
+        }
     }
 
     @Override
     public List<BalanceOperation> getCreditsAndDebits(LocalDate from, LocalDate to) throws UnauthorizedException {
-        return null;
+        return transactionManager.getCreditsAndDebits(from, to);
     }
 
     @Override
     public double computeBalance() throws UnauthorizedException {
-        return 0;
+        return transactionManager.computeBalance();
     }
 }
