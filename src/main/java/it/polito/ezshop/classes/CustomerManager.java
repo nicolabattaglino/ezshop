@@ -1,5 +1,4 @@
 package it.polito.ezshop.classes;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -26,7 +25,7 @@ public class CustomerManager {
 
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
-    private HashMap<Integer, Customer> customerMap;
+    private HashMap<Integer, CustomerObj> customerMap;
 
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
@@ -55,12 +54,13 @@ public class CustomerManager {
             }
         }
         File customers = new File(CUSTOMER_PATH);
-        TypeReference<HashMap<Integer, Customer>> typeRef1 = new TypeReference<HashMap<Integer, Customer>>() {
+        TypeReference<HashMap<Integer, CustomerObj>> typeRef1 = new TypeReference<HashMap<Integer, CustomerObj>>() {
         };
         try {
             customers.createNewFile();
             customerMap = mapper.readValue(customers, typeRef1);
         } catch (IOException e) {
+            e.printStackTrace();
             customers.delete();
             try {
                 customers.createNewFile();
@@ -69,7 +69,6 @@ public class CustomerManager {
             } finally {
                 customerMap = new HashMap<>();
             }
-
         }
         this.shop = shop;
     }
@@ -79,11 +78,10 @@ public class CustomerManager {
         if (customerName == null || customerName.equals(""))
             throw new InvalidCustomerNameException();
 
-        Integer id = customerIdGen + 1;
-        Customer customer = new CustomerObj(id, customerName);
+        Integer id = ++customerIdGen;
+        CustomerObj customer = new CustomerObj(id, customerName);
         if (customerMap.put(id, customer) != null)
             return -1;
-
         try {
             persistCustomers();
         } catch (IOException e) {
@@ -95,29 +93,37 @@ public class CustomerManager {
 
 
     public boolean modifyCustomer(Integer id, String newCustomerName, String newCustomerCard) throws InvalidCustomerNameException, InvalidCustomerCardException, InvalidCustomerIdException, UnauthorizedException {
-// todo ricontrolla bene ci sono tanti difetti
+
+        // todo ricontrolla bene ci sono tanti difetti
         Customer customer = customerMap.get(id);
-        if (id < 0) {
+        LoyaltyCardObj card = null;
+        if (id < 0)
             throw new InvalidCustomerIdException();
-        } else if (newCustomerName == null || newCustomerName.trim().equals("")) {
+         if (newCustomerName == null || newCustomerName.trim().equals(""))
             throw new InvalidCustomerNameException();
-        } else if (newCustomerCard == null || newCustomerCard.trim().equals("") || !newCustomerCard.matches("^[0-9]{10}$")) {
+         if (!newCustomerCard.matches("^[0-9]{10}$"))
             //todo da rivedere
             throw new InvalidCustomerCardException();
-        } else if (newCustomerCard.equals("")) {
-            //todo da rivedere
-            //cardMap.get(customer.getCustomerCard()).setIsAttached(false);
-            customer.setCustomerCard(null);
-        } else if (cardMap.get(newCustomerCard).getIsAttached()) {
+         if (cardMap.get(newCustomerCard).getIsAttached()) {
             return false;
-        } else if (newCustomerCard == null) {
-
         } else {
-            customer.setCustomerCard(newCustomerCard);
-            customer.setCustomerName(newCustomerName);
 
-        }
-        return false;
+             if (newCustomerCard.trim().equals("")) {
+                 card = cardMap.get(customer.getCustomerCard());
+                 card.setIsAttached(false);
+                 card.setPoints(0);
+             }
+             customer.setCustomerName(newCustomerName);
+             try {
+                 // todo se una delle due persist fallisce?
+                 persistCustomers();
+                 persistCards();
+             } catch (IOException e) {
+                 e.printStackTrace();
+             }
+             return true;
+
+         }
     }
     
     public boolean deleteCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
@@ -127,9 +133,16 @@ public class CustomerManager {
             return false;
         } else {
             String cardId = customerMap.get(id).getCustomerCard();
-            cardMap.get(id).setPoints(0); // la carta la elimino?
-            cardMap.get(id).setIsAttached(false);
+            cardMap.get(cardId).setPoints(0);
+            cardMap.get(cardId).setIsAttached(false);
             customerMap.remove(id);
+            try {
+                // todo se una delle due persist fallisce?
+                persistCustomers();
+                persistCards();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return true;
         }
     }
@@ -146,7 +159,7 @@ public class CustomerManager {
     }
     
     public List<Customer> getAllCustomers() throws UnauthorizedException {
-        return (ArrayList<Customer>) customerMap.values();
+        return  new ArrayList<Customer>(customerMap.values());
     }
 
     public String createCard() {
@@ -209,27 +222,13 @@ public class CustomerManager {
     
     
     public boolean modifyPointsOnCard(String customerCard, int pointsToBeAdded) throws InvalidCustomerCardException, UnauthorizedException {
-        if (customerCard == null || customerCard.trim().equals("") || !customerCard.matches("^([0-9]{10}$)"))
-            throw new InvalidCustomerCardException();
-        if (cardMap.get(customerCard) == null || pointsToBeAdded < 0)
+        //if (customerCard == null || customerCard.trim().equals("") || !customerCard.matches("^([0-9]{10}$)"))
+            if (customerCard == null || !customerCard.matches("^([0-9]{10}$)"))
+                throw new InvalidCustomerCardException();
+
         LoyaltyCardObj target = cardMap.get(customerCard);
         if (target == null || target.getPoints() + pointsToBeAdded < 0)
-            // false   if there is no card with given code,
-            // if pointsToBeAdded is negative and there were not enough points on that card before this operation, ?????
-            //if we cannot reach the db.
             return false;
-
-
-            /*for (Map.Entry<Integer, Customer> entry : customerMap.entrySet()) {
-                if(entry.getValue().getCustomerCard().equals(customerCard)){
-                    entry.getValue().setPoints(pointsToBeAdded);
-                    return true;
-                }*/
-            int points = cardMap.get(customerCard).getPoints();
-            points += pointsToBeAdded;
-            cardMap.get(customerCard).setPoints(points);
-            return true;
-
 
         int points = target.getPoints();
         points += pointsToBeAdded;
@@ -252,7 +251,9 @@ public class CustomerManager {
 
     private void persistCustomers() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(new File(CUSTOMER_PATH), customerMap);
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(new File(CUSTOMER_PATH), customerMap);
+        //mapper.writeValue(new File(CUSTOMER_PATH), customerMap);
     }
 
 }

@@ -1,5 +1,9 @@
 package it.polito.ezshop.classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polito.ezshop.data.Customer;
 
 import java.io.Serializable;
@@ -22,13 +26,13 @@ public class CustomerObj implements Customer {
         this.loyaltyCard = null;
     }
 
-    public String getName() {
+    /*public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
+    }*/
 
     public LoyaltyCardObj getLoyaltyCard() {
         return loyaltyCard;
