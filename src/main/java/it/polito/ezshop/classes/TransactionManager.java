@@ -22,6 +22,9 @@ public class TransactionManager {
     
     public Integer startSaleTransaction() throws UnauthorizedException {
         SaleTransactionObj sale = new SaleTransactionObj(LocalDate.now(), 0.0, "Sale");
+        saleTransactions.put((Integer)sale.getBalanceId(), sale);
+
+
         return sale.getBalanceId();
     }
     
