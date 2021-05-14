@@ -26,11 +26,11 @@ Version:
     to start tests
     >
 
- ### **Class *class_name* - method *name***
+ ### **Class *CustomerObj* - method *getCustomerName***
 
 
 
-**Criteria for method *name*:**
+**Criteria for method *getCustomerName*:**
 	
 
  - 
@@ -40,7 +40,7 @@ Version:
 
 
 
-**Predicates for method *name*:**
+**Predicates for method *getCustomerName*:**
 
 | Criteria | Predicate |
 | -------- | --------- |
