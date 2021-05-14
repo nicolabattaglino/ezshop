@@ -154,6 +154,7 @@ public class CustomerManager {
             return null;
         } else {
             //todo vedi che fare per la copia
+            //CustomerObj c =
             return customerMap.get(id);
         }
     }

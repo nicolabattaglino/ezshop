@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class CustomerObj implements Customer {
     
     private Integer id;
-    private String name;
+    private String customerName;
    // private String surname;
 
     private LoyaltyCardObj loyaltyCard;
@@ -22,7 +22,7 @@ public class CustomerObj implements Customer {
 
     public CustomerObj(Integer id, String customerName) {
         this.id = id;
-        this.name = customerName;
+        this.customerName = customerName;
         this.loyaltyCard = null;
     }
 
@@ -43,11 +43,11 @@ public class CustomerObj implements Customer {
     }
 
     public String getCustomerName() {
-        return name;
+        return customerName;
     }
     
     public void setCustomerName(String customerName) {
-        this.name = customerName;
+        this.customerName = customerName;
     }
     
     @JsonIgnore
