@@ -8,7 +8,7 @@ public class CustomerObjTest {
 
 
 	@Test
-	public void testSet(){
+	public void testSettersAndGetters(){
 		CustomerObj c = new CustomerObj();
 		c.setCustomerName("Antonio");
 		assertEquals("Antonio", c.getCustomerName());
@@ -29,7 +29,7 @@ public class CustomerObjTest {
 	@Test
 	public void testGetCardFromNewCustomer(){
 		CustomerObj cu = new CustomerObj(2, "John");
-		assertNull(cu.getCustomerCard());
+		assertEquals(cu.getCustomerCard(), "");
 
 	}
 

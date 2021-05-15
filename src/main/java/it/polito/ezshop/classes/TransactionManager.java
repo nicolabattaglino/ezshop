@@ -218,6 +218,7 @@ public class TransactionManager {
                         amount = saleEntry.getAmount() - targetEntry.getAmount();
                         // calculate the difference between the sold amount and the amount to be returned
                         saleEntry.setAmount(amount);
+                        //TODO update the list once the getEntries is changed to return a copy
                         toBeUpdated.add(saleEntry);
                         priceReduction += amount * saleEntry.getPricePerUnit();
                         try {

@@ -6,22 +6,22 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReturnTransaction extends BalanceOperationObj implements it.polito.ezshop.data.SaleTransaction {
+public class ReturnTransaction extends BalanceOperationObj {
     private int balanceId;
     private LocalDate date;
     private double money;
     private String type;
     private int returningID;
     private Integer ticketNumber;
-    private double discountRate;
     private List<TicketEntry> entries = new ArrayList<TicketEntry>();
     private double price;
-    private String status = "New";
+    private String status ;
     
     public ReturnTransaction( LocalDate date, double money, String type, int returning) {
         super(date, type);
         this.money = money;
         this.returningID = returning;
+        status = "new";
     }
     
     public String getStatus() {
@@ -52,18 +52,10 @@ public class ReturnTransaction extends BalanceOperationObj implements it.polito.
         entries.add(entry);
     }
     
-    public double getDiscountRate() {
-        return discountRate;
-    }
-    
-    public void setDiscountRate(double discountRate) {
-        this.discountRate = discountRate;
-    }
-    
     public double getPrice() {
         return price;
     }
-    
+
     public void setPrice(double price) {
         this.price = price;
     }

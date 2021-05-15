@@ -52,6 +52,7 @@ public class CustomerObj implements Customer {
     
     @JsonIgnore
     public String getCustomerCard() {
+        if(loyaltyCard== null) return "";
         return loyaltyCard.getCardCode();
     }
     
