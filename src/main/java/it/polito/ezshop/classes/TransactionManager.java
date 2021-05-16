@@ -3,26 +3,125 @@ package it.polito.ezshop.classes;
 import it.polito.ezshop.data.*;
 import it.polito.ezshop.exceptions.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.util.*;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 
 public class TransactionManager {
-    private Double balance = 0.0;
-    //non so se orders mi serve
-    private List<OrderObj> orders = new LinkedList<OrderObj>();
-    private Map<Integer, ReturnTransaction> returnTransactions = new HashMap<Integer, ReturnTransaction>(); // list of all return transactions (they are also included in balanceOperation)
-    private Map<Integer, SaleTransactionObj> saleTransactions = new HashMap<Integer, SaleTransactionObj>(); // list of all sale transactions (they are also included in balanceOperation)
+    public static final String ORDER_PATH = "data/orders.json";
+    public static final String SALE_PATH = "data/sales.json";
+    public static final String RETURN_PATH = "data/returns.json";
+    public static final String CREDITCARD_PATH = "data/creditCards.json";
+    private Double balance ;
+    @JsonSerialize(keyUsing = MapSerializer.class)
+    @JsonDeserialize
+    private Map<Integer, OrderObj> orders;
+    @JsonSerialize(keyUsing = MapSerializer.class)
+    @JsonDeserialize
+    private Map<Integer, ReturnTransaction> returnTransactions; // list of all return transactions (they are also included in balanceOperation)
+    @JsonSerialize(keyUsing = MapSerializer.class)
+    @JsonDeserialize
+    private Map<Integer, SaleTransactionObj> saleTransactions; // list of all sale transactions (they are also included in balanceOperation)
     private EZShop shop;
+    @JsonSerialize(keyUsing = MapSerializer.class)
+    @JsonDeserialize
     private Map<String, CreditCard> cards = new HashMap<String, CreditCard>();
     
     public TransactionManager(EZShop shop) {
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<HashMap<Integer, OrderObj>> typeRef = new TypeReference<HashMap<Integer, OrderObj>>() {
+        };
+        File ordini = new File(ORDER_PATH);
+        try {
+            ordini.createNewFile();
+             orders = mapper.readValue(ordini, typeRef);
+        } catch (IOException e) {
+            ordini.delete();
+            try {
+                ordini.createNewFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } finally {
+                orders = new HashMap<>();
+            }
+        }
+        File sales = new File(SALE_PATH);
+        TypeReference<HashMap<Integer, SaleTransactionObj>> typeRef1 = new TypeReference<HashMap<Integer, SaleTransactionObj>>() {
+        };
+        try {
+            sales.createNewFile();
+            saleTransactions = mapper.readValue(sales, typeRef1);
+        } catch (IOException e) {
+            e.printStackTrace();
+            sales.delete();
+            try {
+                sales.createNewFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } finally {
+                saleTransactions = new HashMap<>();
+            }
+        }
+
+        File returns = new File(RETURN_PATH);
+        TypeReference<HashMap<Integer, ReturnTransaction>> typeRef2 = new TypeReference<HashMap<Integer, ReturnTransaction>>() {
+        };
+        try {
+            returns.createNewFile();
+            returnTransactions = mapper.readValue(returns, typeRef2);
+        } catch (IOException e) {
+            e.printStackTrace();
+            returns.delete();
+            try {
+                returns.createNewFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } finally {
+                returnTransactions = new HashMap<>();
+            }
+        }
+
+        File creditCards = new File(CREDITCARD_PATH);
+        TypeReference<HashMap<String, CreditCard>> typeRef3 = new TypeReference<HashMap<String, CreditCard>>() {
+        };
+        try {
+            creditCards.createNewFile();
+            cards = mapper.readValue(creditCards, typeRef3);
+        } catch (IOException e) {
+            e.printStackTrace();
+            creditCards.delete();
+            try {
+                creditCards.createNewFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } finally {
+                cards = new HashMap<>();
+            }
+        }
+
         this.shop = shop;
+        balance = 0.0;
+
     }
+
+
+
     
     public Integer startSaleTransaction() throws UnauthorizedException {
         SaleTransactionObj sale = new SaleTransactionObj(LocalDate.now(), 0.0, "Sale");
         saleTransactions.put((Integer)sale.getBalanceId(), sale);
+        try {
+            this.persistSales();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         return sale.getBalanceId();
@@ -46,6 +145,12 @@ public class TransactionManager {
         }
         TicketEntryObj ticket = new TicketEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
         sale.addEntry(ticket);
+        try {
+            this.persistSales();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return true;
     }
     
@@ -66,6 +171,12 @@ public class TransactionManager {
         }
         TicketEntryObj ticket = new TicketEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
         sale.deleteEntry(ticket);
+        try {
+            this.persistSales();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return true;
     }
     
@@ -85,6 +196,11 @@ public class TransactionManager {
             }
         }
         sale.setEntries(tickets);
+        try {
+            this.persistSales();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return true;
     }
     
@@ -96,6 +212,11 @@ public class TransactionManager {
         if (sale == null) return false;
         if (sale.getStatus() == "payted") return false;
         sale.setDiscountRate(discountRate);
+        try {
+            this.persistSales();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return true;
     }
     
@@ -113,6 +234,11 @@ public class TransactionManager {
         if(sale == null)return false;
         if(sale.getStatus()!= "new") return false; // the transaction wasn't opern
         sale.setStatus("closed");
+        try {
+            this.persistSales();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return true;
     }
     
@@ -122,7 +248,12 @@ public class TransactionManager {
         if(sale == null)return false;
         if(sale.getStatus()== "payed") return false; // the transaction wasn't opern
         saleTransactions.remove(transactionId);
-        return false;
+        try {
+            this.persistSales();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
     
     public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
@@ -131,10 +262,7 @@ public class TransactionManager {
     }
     
     public List<Order> getAllOrders() throws UnauthorizedException {
-        List <Order> output = new ArrayList <Order>();
-        for(Order ordine: orders){
-            output.add(ordine);
-        }
+        List <Order> output = new ArrayList <Order>( orders.values());
         return output;
     }
     
@@ -150,6 +278,11 @@ public class TransactionManager {
         ReturnTransaction returning = new ReturnTransaction( LocalDate.now(), money, "Return", (int)saleNumber);
         returnTransactions.put(returning.getBalanceId(), returning);
         Integer output = returning.getBalanceId();
+        try {
+            this.persistReturns();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return output;
     }
     
@@ -182,6 +315,11 @@ public class TransactionManager {
         target.addEntry(prodotto);
         target.setPrice(target.getPrice() + prodotto.getPricePerUnit() * amount);
         //the previous line updates the price in the return transactio. The price in the return transaction is the amount of money that will be returned to the customer
+        try {
+            this.persistReturns();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return true;
     }
     
@@ -195,6 +333,11 @@ public class TransactionManager {
             returnTransactions.remove(target.getBalanceId());
         }
         target.setStatus("Closed");
+        try {
+            this.persistReturns();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return true;
         
     }
@@ -218,7 +361,6 @@ public class TransactionManager {
                         amount = saleEntry.getAmount() - targetEntry.getAmount();
                         // calculate the difference between the sold amount and the amount to be returned
                         saleEntry.setAmount(amount);
-                        //TODO update the list once the getEntries is changed to return a copy
                         toBeUpdated.add(saleEntry);
                         priceReduction += amount * saleEntry.getPricePerUnit();
                         try {
@@ -234,14 +376,18 @@ public class TransactionManager {
                         //this line updates the quantity by the amount stored in the return transaction.
                         // it might need to connect to the productOrderManager directly to avoid user problems!
                     }
+                    else toBeUpdated.add(saleEntry);
                 }
             }
             // update the old sale
-            for (TicketEntry toAdd : toBeUpdated) {
-                sale.updateEntry(toAdd);
-            }
+            sale.setEntries(toBeUpdated);
             target.setStatus("Ended");
             
+        }
+        try {
+            this.persistReturns();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         
         return true;
@@ -329,7 +475,7 @@ public class TransactionManager {
                 output.add((BalanceOperation) rTransaciton);
             }
         }
-        for(OrderObj order : orders){
+        for(OrderObj order : orders.values()){
             if(order.getBalanceOperation() !=null&&
             ((from==null && to == null)||
             (order.getBalanceOperation().getDate().isAfter(from) && to == null)||
@@ -387,9 +533,33 @@ public class TransactionManager {
     }
     
     boolean addOrder(OrderObj order) {
-        orders.add(order);
+        orders.put(order.getOrderId(),order);
         return true;
         
+    }
+
+    private void persistCards() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(new File(CREDITCARD_PATH), cards);
+
+    }
+
+    private void persistOrders() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(new File(ORDER_PATH), orders);
+    }
+    private void persistSales() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(new File(SALE_PATH), saleTransactions);
+    }
+
+    private void persistReturns() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(new File(RETURN_PATH), returnTransactions);
     }
 }
 

@@ -5,20 +5,23 @@ import it.polito.ezshop.data.TicketEntry;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SaleTransactionObj extends BalanceOperationObj implements it.polito.ezshop.data.SaleTransaction {
     private List<TicketEntry> entries = new ArrayList<TicketEntry>();
     private double price;
-    private double discount = 0;
+    private double discountRate = 0;
     private int balanceId;
     private LocalDate date;
     private double money;
     private String type;
     private Integer ticketNumber;
-    private List<TicketEntry> tickets = new ArrayList<TicketEntry>();
     private String status;
-    
-    
+
+
     public SaleTransactionObj(LocalDate date, double money, String type) {
         super(date, type);
         this.money = money;
@@ -44,12 +47,12 @@ public class SaleTransactionObj extends BalanceOperationObj implements it.polito
     }
     
     public void deleteEntry(TicketEntry entry) {
-        tickets.remove(entry);
+        entries.remove(entry);
         this.updatePrice();
     }
     
     public void addEntry(TicketEntry entry) {
-        tickets.add(entry);
+        entries.add(entry);
         this.updatePrice();
     }
     
@@ -113,11 +116,11 @@ public class SaleTransactionObj extends BalanceOperationObj implements it.polito
     
     
     public double getDiscountRate() {
-        return discount;
+        return discountRate;
     }
     
     public void setDiscountRate(double discountRate) {
-        this.discount = discountRate;
+        this.discountRate = discountRate;
         this.updatePrice();
         return;
     }
@@ -135,7 +138,7 @@ public class SaleTransactionObj extends BalanceOperationObj implements it.polito
     @Override
     public List<TicketEntry> getEntries() {
         // TODO Auto-generated method stub
-        return entries;
+        return  new ArrayList<TicketEntry>(entries);
     }
     
     @Override

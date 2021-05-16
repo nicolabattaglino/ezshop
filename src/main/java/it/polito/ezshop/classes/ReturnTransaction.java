@@ -5,13 +5,17 @@ import it.polito.ezshop.data.TicketEntry;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ReturnTransaction extends BalanceOperationObj {
     private int balanceId;
     private LocalDate date;
     private double money;
     private String type;
-    private int returningID;
+    private int transactionID;
     private Integer ticketNumber;
     private List<TicketEntry> entries = new ArrayList<TicketEntry>();
     private double price;
@@ -20,7 +24,7 @@ public class ReturnTransaction extends BalanceOperationObj {
     public ReturnTransaction( LocalDate date, double money, String type, int returning) {
         super(date, type);
         this.money = money;
-        this.returningID = returning;
+        this.transactionID = returning;
         status = "new";
     }
     
@@ -62,7 +66,7 @@ public class ReturnTransaction extends BalanceOperationObj {
     
     public int getTransactionID() {
         //this method returns the ID of the sale transaction the return is linked to
-        return returningID;
+        return transactionID;
     }
     
     public int getBalanceId() {
