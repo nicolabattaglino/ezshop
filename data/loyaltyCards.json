@@ -7,6 +7,6 @@
   "1000000002" : {
     "cardCode" : "1000000002",
     "points" : 0,
-    "isAttached" : false
+    "isAttached" : true
   }
 }

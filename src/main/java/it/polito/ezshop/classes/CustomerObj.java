@@ -6,6 +6,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polito.ezshop.data.Customer;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -26,13 +28,6 @@ public class CustomerObj implements Customer {
         this.loyaltyCard = null;
     }
 
-    /*public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }*/
 
     public LoyaltyCardObj getLoyaltyCard() {
         return loyaltyCard;
@@ -52,26 +47,32 @@ public class CustomerObj implements Customer {
     
     @JsonIgnore
     public String getCustomerCard() {
-        return loyaltyCard.getCardCode();
+        if (loyaltyCard != null) {
+            return loyaltyCard.getCardCode();
+        } else {
+            return null;
+        }
     }
     
     @JsonIgnore
     public void setCustomerCard(String customerCard) {
 
-        if (customerCard == null) {
+        if (customerCard == null || customerCard.equals("")) {
             loyaltyCard = null;
-            return;
+               return;
         }
         ObjectMapper mapper = new ObjectMapper();
-        HashMap<String, LoyaltyCardObj> cardMap;
+        HashMap<String, LoyaltyCardObj> cardMap = null;
         TypeReference<HashMap<String, LoyaltyCardObj>> typeRef = new TypeReference<HashMap<String, LoyaltyCardObj>>() {};
+        File cards = new File(CustomerManager.CARD_PATH);
         try {
-            cardMap = mapper.readValue(CustomerManager.CARD_PATH, typeRef );
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return;
+            cards.createNewFile();
+            cardMap = mapper.readValue(cards, typeRef );
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
         }
         loyaltyCard = cardMap.get(customerCard);
+        loyaltyCard.setIsAttached(true);
     }
 
     
@@ -90,7 +91,7 @@ public class CustomerObj implements Customer {
     
     @JsonIgnore
     public void setPoints(Integer points) {
-       loyaltyCard.setPoints(points);
+        loyaltyCard.setPoints(points);
     }
     
 }

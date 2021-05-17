@@ -1,6 +1,7 @@
 package it.polito.ezshop.classes;
 
-import it.polito.ezshop.EZShop;
+//import it.polito.ezshop.EZShop;
+import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.data.Order;
 import it.polito.ezshop.data.ProductType;
 import it.polito.ezshop.exceptions.*;

@@ -47,20 +47,24 @@ public class UserObj implements User {
     }
     
     public void setRole(String role) {
-        
-        switch (UserRole.valueOf(role.toUpperCase())) {
-            case ADMINISTRATOR:
-                this.role = UserRole.ADMINISTRATOR;
-                break;
-            case CASHIER:
-                this.role = UserRole.CASHIER;
-                break;
-            case SHOPMANAGER:
-                this.role = UserRole.SHOPMANAGER;
-                break;
-            default:
-                this.role = null;
-                break;
+
+        try {
+            switch (UserRole.valueOf(role.toUpperCase())) {
+                case ADMINISTRATOR:
+                    this.role = UserRole.ADMINISTRATOR;
+                    break;
+                case CASHIER:
+                    this.role = UserRole.CASHIER;
+                    break;
+                case SHOPMANAGER:
+                    this.role = UserRole.SHOPMANAGER;
+                    break;
+                /*default:
+                    this.role = null;
+                    break;*/
+            }
+        } catch(IllegalArgumentException iae) {
+
         }
         
     }
