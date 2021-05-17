@@ -1,24 +1,51 @@
 package it.polito.ezshop.classes;
 
-import it.polito.ezshop.EZShop;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.MapSerializer;
+import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.data.Order;
 import it.polito.ezshop.data.ProductType;
 import it.polito.ezshop.exceptions.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ProductOrderManager {
     
+    private static final String PRODUCTS_PATH = "data/products.json";
     private final EZShop shop;
-    private final HashMap<String, ProductType> productMap = new HashMap<>();
+    @JsonSerialize(keyUsing = MapSerializer.class)
+    @JsonDeserialize
+    private HashMap<String, ProductTypeObj> productMap;
     private int prouctIdGen; // TODO mettilo di default a 1
     
     public ProductOrderManager(EZShop shop) {
         this.shop = shop;
-        //TODO load map from persistance
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<HashMap<String, ProductTypeObj>> typeRef = new TypeReference<HashMap<String, ProductTypeObj>>() {
+        };
+        File products = new File(PRODUCTS_PATH);
+        try {
+            products.createNewFile();
+            productMap = mapper.readValue(products, typeRef);
+        } catch (IOException e) {
+            products.delete();
+            try {
+                products.createNewFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } finally {
+                productMap = new HashMap<>();
+            }
+        }
     }
     
     private boolean checkBarcode(String barCode) {
@@ -51,6 +78,12 @@ public class ProductOrderManager {
             return -1;
         prouctIdGen++;
         productMap.put(productCode, new ProductTypeObj(0, prouctIdGen, description, productCode, (note == null) ? "" : note, pricePerUnit, 0));
+        try {
+            persistProducts();
+        } catch (IOException e) {
+            productMap.remove(productCode);
+            return -1;
+        }
         return prouctIdGen;
     }
     
@@ -64,14 +97,14 @@ public class ProductOrderManager {
         if (!checkBarcode(newCode))
             throw new InvalidProductCodeException();
         if (productMap.containsKey(newCode)) return false;
-        
-        ProductType candidate = null;
-        
-        for (ProductType productType : productMap.values()) {
+    
+        ProductTypeObj candidate = null;
+    
+        for (ProductTypeObj productType : productMap.values()) {
             if (productType.getId().equals(id)) candidate = productType;
         }
         if (candidate == null) return false;
-        
+        ProductTypeObj old = new ProductTypeObj(candidate);
         //TODO vedi se la remove rimuove anche la chiave
         productMap.remove(candidate.getBarCode());
         candidate.setProductDescription(newDescription);
@@ -79,37 +112,53 @@ public class ProductOrderManager {
         candidate.setPricePerUnit(newPrice);
         candidate.setNote(newNote == null ? "" : newNote);
         productMap.put(newCode, candidate);
+        try {
+            persistProducts();
+        } catch (IOException e) {
+            productMap.remove(candidate.getBarCode());
+            productMap.put(old.getBarCode(), old);
+            return false;
+        }
+    
         return true;
     }
     
     public boolean deleteProductType(Integer id) throws InvalidProductIdException {
         if (id == null || id <= 0) throw new InvalidProductIdException();
-        ProductType candidate = null;
-        
-        for (ProductType productType : productMap.values()) {
+        ProductTypeObj candidate = null;
+    
+        for (ProductTypeObj productType : productMap.values()) {
             if (productType.getId().equals(id)) candidate = productType;
         }
         if (candidate == null) return false;
-        
-        //TODO vedi se la remove rimuove anche la chiave
         productMap.remove(candidate.getBarCode());
+        try {
+            persistProducts();
+        } catch (IOException e) {
+            productMap.put(candidate.getBarCode(), candidate);
+            return false;
+        }
         return true;
     }
     
     public List<ProductType> getAllProductTypes() {
-        //TODO chiedi per quanto riguarda l'aliasing
-        return new ArrayList<>(productMap.values());
+        ArrayList<ProductType> ret = new ArrayList<>(productMap.values().size());
+        for (ProductTypeObj value : productMap.values()) {
+            ret.add(new ProductTypeObj(value));
+        }
+        return ret;
     }
     
     public ProductType getProductTypeByBarCode(String barCode) throws InvalidProductCodeException {
         if (!checkBarcode(barCode)) throw new InvalidProductCodeException();
-        return productMap.get(barCode);
+        return new ProductTypeObj(productMap.get(barCode));
     }
     
     public List<ProductType> getProductTypesByDescription(String description) {
         final String desc = description == null ? "" : description;
         return productMap.values().stream()
                 .filter(productType -> productType.getProductDescription().equals(desc))
+                .map(ProductTypeObj::new)
                 .collect(Collectors.toList());
     }
     
@@ -118,9 +167,16 @@ public class ProductOrderManager {
         ProductType target;
         for (ProductType p : productMap.values()) {
             if (p.getId().equals(productId) && p.getLocation() != null) {
-                int quantity = p.getQuantity() + toBeAdded;
+                final int oldQuantity = p.getQuantity();
+                int quantity = oldQuantity + toBeAdded;
                 if (quantity >= 0) {
                     p.setQuantity(quantity);
+                    try {
+                        persistProducts();
+                    } catch (IOException e) {
+                        p.setQuantity(oldQuantity);
+                        return false;
+                    }
                     return true;
                 } else return false;
             }
@@ -132,13 +188,21 @@ public class ProductOrderManager {
         if (productId == null || productId <= 0) throw new InvalidProductIdException();
         newPos = (newPos == null) ? "" : newPos;
         ProductType target = null;
+        String oldLoc = "";
         for (ProductType p : productMap.values()) {
-            if (p.getLocation().equals(newPos) && !newPos.equals("")) return false;
+            oldLoc = p.getLocation();
+            if (oldLoc.equals(newPos) && !newPos.equals("")) return false;
             if (p.getId().equals(productId))
                 target = p;
         }
         if (target == null) return false;
         target.setLocation(newPos);
+        try {
+            persistProducts();
+        } catch (IOException e) {
+            target.setLocation(oldLoc);
+            return false;
+        }
         return true;
     }
     
@@ -147,9 +211,70 @@ public class ProductOrderManager {
         if (pricePerUnit <= 0) throw new InvalidPricePerUnitException();
         ProductType p = getProductTypeByBarCode(productCode);
         if (p == null) return -1;
-        Order order = new OrderObj(p, pricePerUnit, quantity);
-        //todo aggiungilo da qualche parte
+        OrderObj order = new OrderObj(p, pricePerUnit, quantity);
+        shop.addOrder(order);
         return order.getOrderId();
     }
     
+    public Integer payOrderFor(String productCode, int quantity, double pricePerUnit)
+            throws InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException {
+        if (!checkBarcode(productCode)) throw new InvalidProductCodeException();
+        if (quantity <= 0) throw new InvalidQuantityException();
+        if (pricePerUnit <= 0) throw new InvalidPricePerUnitException();
+        ProductType target = getProductTypeByBarCode(productCode);
+        if (target == null) return -1;
+        OrderObj o = new OrderObj(target, pricePerUnit, quantity);
+        o.setStatus("payed");
+        if (!shop.addOrder(o)) return -1;
+        return o.getOrderId();
+    }
+    
+    public boolean payOrder(Integer orderId) throws InvalidOrderIdException, UnauthorizedException {
+        if (orderId == null || orderId <= 0) throw new InvalidOrderIdException();
+        Optional<Order> target = shop.getAllOrders().stream()
+                .filter(order -> order.getOrderId().equals(orderId))
+                .findFirst();
+        if (!target.isPresent()) return false;
+        switch (OrderStatus.valueOf(target.get().getStatus())) {
+            case ISSUED:
+                return shop.addOrder((OrderObj) target.get());
+            case PAYED:
+                return true;
+            default:
+                return false;
+        }
+    }
+    
+    public boolean recordOrderArrival(Integer orderId) throws InvalidOrderIdException, InvalidLocationException, UnauthorizedException {
+        if (orderId == null || orderId <= 0) throw new InvalidOrderIdException();
+        OrderObj order = shop.getTransactionManager().addCompletedOrder(orderId);
+        if (order == null) return false;
+        String oldStatus = order.getStatus();
+        ProductTypeObj target = productMap.get(order.getProductCode());
+        if (target.getLocation().length() == 0) throw new InvalidLocationException();
+        int quantity = target.getQuantity();
+        target.setQuantity(quantity + order.getQuantity());
+        try {
+            persistProducts();
+        } catch (IOException e) {
+            order.setStatus(oldStatus);
+            target.setQuantity(quantity);
+            shop.addOrder(order);
+        }
+        return true;
+    }
+    
+    
+    private void persistProducts() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(new File(PRODUCTS_PATH), productMap);
+        
+    }
+    
+    public void clear() {
+        productMap.clear();
+        File products = new File(PRODUCTS_PATH);
+        products.delete();
+    }
 }
