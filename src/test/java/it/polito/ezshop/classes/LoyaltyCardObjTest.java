@@ -15,6 +15,8 @@ public class LoyaltyCardObjTest {
 		assertNotNull(l1);
 		l1.setIsAttached(true);
 		assertTrue(l1.getIsAttached());
+		l1.setIsAttached(false);
+		assertFalse(l1.getIsAttached());
 		l1.setPoints(20);
 		assertTrue(l1.getPoints() == 20);
 

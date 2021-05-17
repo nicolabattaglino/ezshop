@@ -136,28 +136,30 @@ public class CustomerManager {
         LoyaltyCardObj card = null;
         if (id < 0)
             throw new InvalidCustomerIdException();
-         if (newCustomerName == null || newCustomerName.trim().equals(""))
+        if (newCustomerName == null || newCustomerName.trim().equals(""))
             throw new InvalidCustomerNameException();
-         if (!newCustomerCard.matches("^$|^[0-9]{10}$"))
+        if (!newCustomerCard.matches("^$|^[0-9]{10}$"))
             //todo da rivedere
             throw new InvalidCustomerCardException();
-         if (!newCustomerCard.equals("")) {
+        if (!newCustomerCard.equals("")) {
 
-             // todo controllo se carta esiste?
-             if (cardMap.get(newCustomerCard) == null || cardMap.get(newCustomerCard).getIsAttached()) {
-                 return false;
-             }
-        } //else {
+            // todo controllo se carta esiste?
+            if (cardMap.get(newCustomerCard) == null || cardMap.get(newCustomerCard).getIsAttached()) {
+                return false;
+            }
+        }
+
+
         if (newCustomerCard.trim().equals("")) {
             card = cardMap.get(customer.getCustomerCard());
             card.setIsAttached(false);
             card.setPoints(0);
             customerMap.get(id).setCustomerCard("");
-        } else {
+        } else if (newCustomerCard != null) {
             customer.setCustomerCard(newCustomerCard);
             cardMap.get(newCustomerCard).setIsAttached(true);
         }
-             customer.setCustomerName(newCustomerName);
+        customer.setCustomerName(newCustomerName);
 
              try {
                  // todo se una delle due persist fallisce?

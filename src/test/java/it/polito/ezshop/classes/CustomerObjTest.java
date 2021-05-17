@@ -36,10 +36,6 @@ public class CustomerObjTest {
 		CustomerObj cu = new CustomerObj(2, "John");
 		assertNull(cu.getCustomerCard());
 		assertNull(cu.getLoyaltyCard());
-		cu.setCustomerCard("");
-		assertNull(cu.getCustomerCard());
-		assertNull(cu.getLoyaltyCard());
-
 		LoyaltyCardObj card = new LoyaltyCardObj("1000000001");
 		cu.setCustomerCard("1000000001");
 		assertEquals(card.getCardCode(), cu.getCustomerCard());

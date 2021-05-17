@@ -16,7 +16,6 @@ public class CustomerObj implements Customer {
     
     private Integer id;
     private String customerName;
-   // private String surname;
 
     private LoyaltyCardObj loyaltyCard;
 
@@ -56,18 +55,17 @@ public class CustomerObj implements Customer {
     
     @JsonIgnore
     public void setCustomerCard(String customerCard) {
-
-        if (customerCard == null || customerCard.equals("")) {
+       /* if (customerCard == null || customerCard.equals("")) {
             loyaltyCard = null;
                return;
-        }
+        }*/
         ObjectMapper mapper = new ObjectMapper();
         HashMap<String, LoyaltyCardObj> cardMap = null;
         TypeReference<HashMap<String, LoyaltyCardObj>> typeRef = new TypeReference<HashMap<String, LoyaltyCardObj>>() {};
         File cards = new File(CustomerManager.CARD_PATH);
         try {
             cards.createNewFile();
-            cardMap = mapper.readValue(cards, typeRef );
+            cardMap = mapper.readValue(cards, typeRef);
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }

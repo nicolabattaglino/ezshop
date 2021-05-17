@@ -48,7 +48,9 @@ public class UserObj implements User {
     
     public void setRole(String role) {
 
-        try {
+        if (role.equalsIgnoreCase("ADMINISTRATOR") ||
+                role.equalsIgnoreCase("CASHIER") ||
+                role.equalsIgnoreCase("SHOPMANAGER")) {
             switch (UserRole.valueOf(role.toUpperCase())) {
                 case ADMINISTRATOR:
                     this.role = UserRole.ADMINISTRATOR;
@@ -59,12 +61,7 @@ public class UserObj implements User {
                 case SHOPMANAGER:
                     this.role = UserRole.SHOPMANAGER;
                     break;
-                /*default:
-                    this.role = null;
-                    break;*/
             }
-        } catch(IllegalArgumentException iae) {
-
         }
         
     }

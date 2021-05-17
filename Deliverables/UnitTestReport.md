@@ -26,15 +26,14 @@ Version:
     to start tests
     >
 
- ### **Class *CustomerObj* - method *getCustomerName***
+ ### **Class *UserObj* - method *setRole***
 
 
 
-**Criteria for method *getCustomerName*:**
+**Criteria for method *setRole*:**
 	
 
- - 
- - 
+ - Validity of the String parameter
 
 
 
@@ -44,10 +43,9 @@ Version:
 
 | Criteria | Predicate |
 | -------- | --------- |
-|          |           |
-|          |           |
-|          |           |
-|          |           |
+|    Validity of the String parameter      |     Valid      |
+|                                          |      NULL     |
+
 
 
 
@@ -57,21 +55,21 @@ Version:
 
 | Criteria | Boundary values |
 | -------- | --------------- |
-|          |                 |
-|          |                 |
+|    Validity of the String parameter      |        "ADMINISTRATOR", "CASHIER", "SHOPMANAGER"        |
+
 
 
 
 **Combination of predicates**:
 
 
-| Criteria 1 | Criteria 2 | ... | Valid / Invalid | Description of the test case | JUnit test case |
-|-------|-------|-------|-------|-------|-------|
-|||||||
-|||||||
-|||||||
-|||||||
-|||||||
+| Validity of the String parameter | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|
+|Valid|Valid|T1("ADMINISTRATOR") -> role set|it.polito.ezshop.classes.UserObjTest,testSettersAndGetters|
+|Valid|Valid|T2("CASHIER") -> role set|testSettersAndGetters()|
+|Valid|Valid|T3("SHOPMANAGER") -> role set|testSettersAndGetters()|
+|Invalid|Invalid|T4("") -> role not set|testSettersAndGetters()|
+|NULL|Invalid|T5(null) -> role not set|testSettersAndGetters()|
 
 
 
