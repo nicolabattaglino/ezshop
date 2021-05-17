@@ -23,4 +23,5 @@ public class TransactionManagerTest {
 		TransactionManager t = new TransactionManager(shop);
 		assertTrue( t.luhn("79927398713"));
 	}
+	//TODO test compute balace
 }

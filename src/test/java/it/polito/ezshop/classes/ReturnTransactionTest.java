@@ -70,8 +70,8 @@ public class ReturnTransactionTest {
 	@Test
 	public void testStatus(){
 		ReturnTransaction r = new ReturnTransaction(LocalDate.now(), 0.0, "Return", 0);
-		r.setStatus("closed");
-		assertEquals("closed", r.getStatus());
+		r.setStatus(ReturnStatus.CLOSED);
+		assertEquals(ReturnStatus.CLOSED, r.getStatus());
 	}
 
 	@Test

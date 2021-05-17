@@ -580,14 +580,15 @@ public class TransactionManager {
         // is not null and in that case add it to the balanceOperations map.
         // if there is not enough balance return false
         // add persistance
-        double tot=order.getPricePerUnit()* order.getQuantity();
-
-        BalanceOperationObj operation = new Credit(LocalDate.now(), "Credit");
-        order.setBalanceOperation((BalanceOperationObj) operation);
-        order.setBalanceId(operation.getBalanceId());
-        orders.put(order.getOrderId(), order);
-        if(order.getStatus().equals(OrderStatus.PAYED)){
-            if(!this.recordBalanceUpdate(tot)) return false;
+        double tot = order.getPricePerUnit() * order.getQuantity();
+        if(order.getStatus().equals(OrderStatus.ISSUED.name())) {
+            BalanceOperationObj operation = new Debit(LocalDate.now(), "Debit");
+            order.setBalanceOperation((BalanceOperationObj) operation);
+            order.setBalanceId(operation.getBalanceId());
+            orders.put(order.getOrderId(), order);
+        }
+        if(order.getStatus().equals(OrderStatus.PAYED.name())){
+            if(!this.recordBalanceUpdate(-1*tot)) return false;
 
         }
         try {

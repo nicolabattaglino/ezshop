@@ -24,7 +24,7 @@ public class SaleTransactionObjTest {
 
 	@Test
 	public void testPrice(){
-		SaleTransactionObj s = new SaleTransactionObj();
+		SaleTransactionObj s = new SaleTransactionObj(LocalDate.now(), 0.0, "Sale");
 		s.setPrice(1);
 		assertTrue(1== s.getPrice());
 	}
