@@ -17,6 +17,14 @@ public abstract class BalanceOperationObj implements BalanceOperation {
         this.type = type;
         balanceId = ++idGen;
     }
+
+    public BalanceOperationObj(int Id,LocalDate date, String type) {
+        //constructor used to create BalanceOperationObj from copy of already existing BalanceOperationObjs
+        super();
+        this.date = date;
+        this.type = type;
+        this.balanceId= Id;
+    }
     
     public int getBalanceId() {
         return balanceId;

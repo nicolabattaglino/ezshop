@@ -12,6 +12,7 @@ public class TicketEntryObj implements TicketEntry {
     private int amount;
     private double pricePerUnit;
     private double discountRate;
+    //TODO costruttore di copia
     
     public TicketEntryObj(int amount, String barcode, String description, double pricePerUnit) {
         this.amount = amount;

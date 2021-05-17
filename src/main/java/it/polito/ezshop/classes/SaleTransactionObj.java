@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class SaleTransactionObj extends BalanceOperationObj implements it.polito.ezshop.data.SaleTransaction {
+public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.SaleTransaction {
     private List<TicketEntry> entries = new ArrayList<TicketEntry>();
     private double price;
     private double discountRate = 0;
@@ -56,18 +56,7 @@ public class SaleTransactionObj extends BalanceOperationObj implements it.polito
         this.updatePrice();
     }
     
-    public boolean updateEntry(TicketEntry entry) {
-        //this method updates a single entry in the entries list
-        //returns true if successfull, false otherwise
-        for (TicketEntry oldEntry : entries) {
-            if (oldEntry.getBarCode() == entry.getBarCode()) {
-                entries.remove(entries.indexOf(oldEntry));
-                entries.add(entry);
-                return true;
-            }
-        }
-        return false;
-    }
+
     
     public int getBalanceId() {
         return balanceId;
@@ -138,7 +127,11 @@ public class SaleTransactionObj extends BalanceOperationObj implements it.polito
     @Override
     public List<TicketEntry> getEntries() {
         // TODO Auto-generated method stub
-        return  new ArrayList<TicketEntry>(entries);
+        List<TicketEntry> output = new ArrayList<TicketEntry>();
+        for(TicketEntry t : entries){
+            output.add(t);
+        }
+        return  output;
     }
     
     @Override

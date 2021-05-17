@@ -17,9 +17,10 @@ public class TransactionManagerTest {
 		assertTrue(t.recordBalanceUpdate(-2.0));
 	}
 
+	@Test
 	public  void testLuhn (){
 		it.polito.ezshop.data.EZShop shop= new it.polito.ezshop.data.EZShop();
 		TransactionManager t = new TransactionManager(shop);
-		assertTrue( t.luhn("79927398710"));
+		assertTrue( t.luhn("79927398713"));
 	}
 }

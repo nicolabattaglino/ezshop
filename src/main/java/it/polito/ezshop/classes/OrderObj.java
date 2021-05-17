@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polito.ezshop.data.Order;
+import it.polito.ezshop.data.BalanceOperation;
 import it.polito.ezshop.data.ProductType;
 
 public class OrderObj implements Order {
@@ -16,7 +17,7 @@ public class OrderObj implements Order {
     private int quantity;
     private String supplier; //TODO vedi che farci
     private OrderStatus status;
-    private BalanceOperationObj balanceOp;
+    private Credit balanceOp;
     
     @JsonCreator
     public OrderObj(@JsonProperty("orderId") Integer orderId,
@@ -25,7 +26,7 @@ public class OrderObj implements Order {
                     @JsonProperty("quantity") int quantity,
                     @JsonProperty("supplier") String supplier,
                     @JsonProperty("status") OrderStatus status,
-                    @JsonProperty("balanceOp") BalanceOperationObj balanceOp) {
+                    @JsonProperty("balanceOp") Credit balanceOp) {
         this.orderId = orderId;
         this.product = product;
         this.pricePerUnit = pricePerUnit;
@@ -46,8 +47,13 @@ public class OrderObj implements Order {
     }
     
     @JsonProperty("balanceOp")
-    public BalanceOperationObj getBalanceOperation() {
-        return (BalanceOperationObj) balanceOp;
+    public BalanceOperation getBalanceOperation() {
+        return (BalanceOperation) balanceOp;
+    }
+    @JsonProperty("balanceOp")
+    public void setBalanceOperation(BalanceOperationObj operation) {
+        this.balanceOp = (Credit) operation;
+
     }
     
     public OrderObj(ProductType product, double pricePerUnit, int quantity) {

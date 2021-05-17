@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import it.polito.ezshop.data.*;
 import it.polito.ezshop.exceptions.*;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -19,7 +20,10 @@ public class TransactionManager {
     public static final String SALE_PATH = "data/sales.json";
     public static final String RETURN_PATH = "data/returns.json";
     public static final String CREDITCARD_PATH = "data/creditCards.json";
-    private Double balance;
+    public static final String BALANCEOPERATION_PATH = "data/balanceOperations.json";
+    @JsonSerialize(keyUsing = MapSerializer.class)
+    @JsonDeserialize
+    private Map<Integer, BalanceOperationObj> balanceOperations;
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
     private Map<Integer, OrderObj> orders;
@@ -47,7 +51,6 @@ public class TransactionManager {
             try {
                 ordini.createNewFile();
             } catch (IOException ioException) {
-                ioException.printStackTrace();
             } finally {
                 orders = new HashMap<>();
             }
@@ -64,7 +67,6 @@ public class TransactionManager {
             try {
                 sales.createNewFile();
             } catch (IOException ioException) {
-                ioException.printStackTrace();
             } finally {
                 saleTransactions = new HashMap<>();
             }
@@ -77,12 +79,10 @@ public class TransactionManager {
             returns.createNewFile();
             returnTransactions = mapper.readValue(returns, typeRef2);
         } catch (IOException e) {
-            e.printStackTrace();
             returns.delete();
             try {
                 returns.createNewFile();
             } catch (IOException ioException) {
-                ioException.printStackTrace();
             } finally {
                 returnTransactions = new HashMap<>();
             }
@@ -100,14 +100,29 @@ public class TransactionManager {
             try {
                 creditCards.createNewFile();
             } catch (IOException ioException) {
-                ioException.printStackTrace();
             } finally {
                 cards = new HashMap<>();
             }
         }
+
+        File balanceOperation = new File(BALANCEOPERATION_PATH);
+        TypeReference<HashMap<Integer, BalanceOperationObj>> typeRef4 = new TypeReference<HashMap<Integer, BalanceOperationObj>>() {
+        };
+        try {
+            balanceOperation.createNewFile();
+            balanceOperations = mapper.readValue(balanceOperation, typeRef4);
+        } catch (IOException e) {
+            e.printStackTrace();
+            balanceOperation.delete();
+            try {
+                balanceOperation.createNewFile();
+            } catch (IOException ioException) {
+            } finally {
+                balanceOperations = new HashMap<>();
+            }
+        }
     
         this.shop = shop;
-        balance = 0.0;
     
     }
 
@@ -153,7 +168,7 @@ public class TransactionManager {
     }
     
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException {
-        if (transactionId <= 0 || transactionId == null) throw new InvalidTransactionIdException();
+        if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         if (amount < 0) throw new InvalidQuantityException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
@@ -179,7 +194,7 @@ public class TransactionManager {
     }
     
     public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException {
-        if (transactionId <= 0 || transactionId == null) throw new InvalidTransactionIdException();
+        if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         if (productCode == null) throw new InvalidProductCodeException();
         if (discountRate < 0.0 || discountRate >= 1.00) throw new InvalidDiscountRateException();
         if (discountRate > 1 || discountRate < 0) return false;
@@ -189,7 +204,7 @@ public class TransactionManager {
         List<TicketEntry> tickets = sale.getEntries();
         int i;
         for (i = 0; i < tickets.size(); i++) {
-            if (tickets.get(i).getBarCode() == productCode) {
+            if (tickets.get(i).getBarCode().equals(productCode)) {
                 tickets.get(i).setDiscountRate(discountRate);
             }
         }
@@ -203,12 +218,12 @@ public class TransactionManager {
     }
     
     public boolean applyDiscountRateToSale(Integer transactionId, double discountRate) throws InvalidTransactionIdException, InvalidDiscountRateException {
-        if (transactionId <= 0 || transactionId == null) throw new InvalidTransactionIdException();
+        if (transactionId ==null || transactionId <= 0) throw new InvalidTransactionIdException();
         if (discountRate < 0.0 || discountRate >= 1.00) throw new InvalidDiscountRateException();
         if (discountRate > 1 || discountRate < 0) return false;
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
-        if (sale.getStatus() == "payted") return false;
+        if (sale.getStatus() == "payed") return false;
         sale.setDiscountRate(discountRate);
         try {
             this.persistSales();
@@ -219,7 +234,7 @@ public class TransactionManager {
     }
     
     public int computePointsForSale(Integer transactionId) throws InvalidTransactionIdException {
-        if (transactionId <= 0 || transactionId == null) throw new InvalidTransactionIdException();
+        if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return -1;
     
@@ -227,7 +242,7 @@ public class TransactionManager {
     }
     
     public boolean endSaleTransaction(Integer transactionId) throws InvalidTransactionIdException {
-        if (transactionId <= 0 || transactionId == null) throw new InvalidTransactionIdException();
+        if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
         if (!sale.getStatus().equals("new")) return false; // the transaction wasn't opern
@@ -241,7 +256,7 @@ public class TransactionManager {
     }
     
     public boolean deleteSaleTransaction(Integer transactionId) throws InvalidTransactionIdException {
-        if (transactionId <= 0 || transactionId == null) throw new InvalidTransactionIdException();
+        if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
         if (sale.getStatus() == "payed") return false; // the transaction wasn't opern
@@ -255,7 +270,7 @@ public class TransactionManager {
     }
     
     public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException {
-        if (transactionId <= 0 || transactionId == null) throw new InvalidTransactionIdException();
+        if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         return saleTransactions.get(transactionId);
     }
     
@@ -265,7 +280,7 @@ public class TransactionManager {
     }
     
     public Integer startReturnTransaction(Integer saleNumber) throws /*InvalidTicketNumberException,*/InvalidTransactionIdException {
-        if (saleNumber <= 0 || saleNumber == null) throw new InvalidTransactionIdException();
+        if (saleNumber == null || saleNumber<= 0 ) throw new InvalidTransactionIdException();
         double money = 0;
         SaleTransaction toBeReturned = this.getSaleTransaction(saleNumber);
         List<TicketEntry> tickets = toBeReturned.getEntries();
@@ -289,7 +304,7 @@ public class TransactionManager {
     }
     
     public boolean returnProduct(Integer returnId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
-        if (returnId <= 0 || returnId == null) throw new InvalidTransactionIdException();
+        if (returnId == null || returnId <= 0 ) throw new InvalidTransactionIdException();
         if (productCode == null) throw new InvalidProductCodeException();
         if (amount < 0) throw new InvalidQuantityException();
         ReturnTransaction target = getReturnTransaction(returnId);
@@ -322,15 +337,15 @@ public class TransactionManager {
     }
     
     public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, InvalidProductIdException, InvalidProductCodeException {
-        if (returnId <= 0 || returnId == null) throw new InvalidTransactionIdException();
+        if (returnId == null || returnId <= 0 ) throw new InvalidTransactionIdException();
         // in the current design the return transaction's informations are created during the return product function, the end return method only closes the return
         ReturnTransaction target = returnTransactions.get(returnId);
         if (target == null) return false;
-        if (target.getStatus() != "New") return false;
+        if (target.getStatus() != ReturnStatus.NEW) return false;
         if (!commit) {
             returnTransactions.remove(target.getBalanceId());
         }
-        target.setStatus("Closed");
+        target.setStatus(ReturnStatus.ENDED);
         try {
             this.persistReturns();
         } catch (IOException e) {
@@ -341,10 +356,10 @@ public class TransactionManager {
     }
     
     public boolean deleteReturnTransaction(Integer returnId) throws InvalidTransactionIdException,UnauthorizedException  {
-        if (returnId <= 0 || returnId == null) throw new InvalidTransactionIdException();
+        if (returnId == null || returnId <= 0 ) throw new InvalidTransactionIdException();
         ReturnTransaction target = returnTransactions.get(returnId);
         if (target == null) return false;
-        if (target.getStatus() != "Closed") return false;
+        if (target.getStatus() != ReturnStatus.CLOSED) return false;
         else {
             int amount = 0;
             SaleTransactionObj sale = this.getSaleTransactionObj(target.getTransactionID());
@@ -355,7 +370,7 @@ public class TransactionManager {
             List<TicketEntry> toBeUpdated = new ArrayList<TicketEntry>();
             for (TicketEntry saleEntry : saleEntries) {
                 for (TicketEntry targetEntry : targetEntries) {
-                    if (saleEntry.getBarCode() == targetEntry.getBarCode()) {
+                    if (saleEntry.getBarCode().equals(targetEntry.getBarCode())) {
                         amount = saleEntry.getAmount() - targetEntry.getAmount();
                         // calculate the difference between the sold amount and the amount to be returned
                         saleEntry.setAmount(amount);
@@ -378,7 +393,7 @@ public class TransactionManager {
             }
             // update the old sale
             sale.setEntries(toBeUpdated);
-            target.setStatus("Ended");
+            target.setStatus(ReturnStatus.ENDED);
             
         }
         try {
@@ -398,7 +413,7 @@ public class TransactionManager {
     }
     
     public double receiveCashPayment(Integer ticketNumber, double cash) throws InvalidTransactionIdException, InvalidPaymentException  {
-        if (ticketNumber <= 0 || ticketNumber == null) throw new InvalidTransactionIdException();
+        if (ticketNumber == null || ticketNumber <= 0 ) throw new InvalidTransactionIdException();
         if (cash <= 0) throw new InvalidParameterException();
     
         SaleTransactionObj transaction = this.getSaleTransactionObj(ticketNumber);
@@ -408,7 +423,7 @@ public class TransactionManager {
     }
     
     public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException {
-        if (ticketNumber <= 0 || ticketNumber == null) throw new InvalidTransactionIdException();
+        if (ticketNumber == null || ticketNumber <= 0 ) throw new InvalidTransactionIdException();
         if (creditCard == "" || creditCard == null) throw new InvalidCreditCardException();
     
         CreditCard carta = cards.get(creditCard);
@@ -423,19 +438,19 @@ public class TransactionManager {
     }
     
     public double returnCashPayment(Integer returnId) throws InvalidTransactionIdException  {
-        if (returnId <= 0 || returnId == null) throw new InvalidTransactionIdException();
+        if (returnId == null || returnId<= 0 ) throw new InvalidTransactionIdException();
     
         ReturnTransaction rTransaction = returnTransactions.get(returnId);
         if (rTransaction == null) return -1;
-        if (rTransaction.getStatus() != "Ended") return -1;
+        if (rTransaction.getStatus() != ReturnStatus.ENDED) return -1;
         double price = returnTransactions.get(rTransaction.getTransactionID()).getPrice(); //this price is the amount of money the customer will riceive
         if (!recordBalanceUpdate(-1 * price)) return -1;
         return price;
     }
     
     public double returnCreditCardPayment(Integer returnId, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException {
-        if (returnId <= 0 || returnId == null) throw new InvalidTransactionIdException();
-        if (creditCard.equals("") || creditCard == null) throw new InvalidCreditCardException();
+        if (returnId  == null || returnId <= 0 ) throw new InvalidTransactionIdException();
+        if (creditCard == null || creditCard.equals("")) throw new InvalidCreditCardException();
         CreditCard carta = cards.get(creditCard);
         if (carta == null) return -1;
         if (!this.luhn(carta.getNumber())) throw new InvalidCreditCardException();
@@ -447,37 +462,53 @@ public class TransactionManager {
     }
     
     public boolean recordBalanceUpdate(double toBeAdded) {
-        this.balance += toBeAdded;
-        if (computeBalance() < 0) {
-            this.balance -= toBeAdded;
-            return false;
-        } else return true;
+        if(toBeAdded>=0){
+            Credit transaction= new Credit(LocalDate.now(), "Credit");
+            transaction.setMoney(toBeAdded);
+            balanceOperations.put(transaction.getBalanceId(),transaction);
+
+        }
+        else {
+            Debit transaction = new Debit(LocalDate.now(), "Debit");
+            transaction.setMoney(toBeAdded);
+            balanceOperations.put(transaction.getBalanceId(),transaction);
+            if(computeBalance()<0){
+                balanceOperations.remove(transaction.getBalanceId());
+                return false;
+            }
+        }
+        try {
+            this.persistBalanceOperations();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
     
     public List<BalanceOperation> getCreditsAndDebits(LocalDate from, LocalDate to)  {
         List<BalanceOperation> output = new LinkedList<BalanceOperation>();
         for (SaleTransactionObj sale : saleTransactions.values()) {
             if ((from == null && to == null) ||
-                    (sale.getDate().isAfter(from) && to == null) ||
-                    (from == null && sale.getDate().isBefore(to)) ||
-                    (sale.getDate().isAfter(from) && sale.getDate().isBefore(to))) {
+                    (from == null  &&sale.getDate().isBefore(to)) ||
+                    (from!=null &&sale.getDate().isAfter(from) && to == null) ||
+                    ((from != null && to != null)&&sale.getDate().isAfter(from) &&  sale.getDate().isBefore(to))) {
                 output.add((BalanceOperation) sale);
             }
         }
         for (ReturnTransaction rTransaciton : returnTransactions.values()) {
             if ((from == null && to == null) ||
-                    (rTransaciton.getDate().isAfter(from) && to == null) ||
-                    (from == null && rTransaciton.getDate().isBefore(to)) ||
-                    (rTransaciton.getDate().isAfter(from) && rTransaciton.getDate().isBefore(to))) {
+                    (from == null  &&rTransaciton.getDate().isBefore(to)) ||
+                    (from!=null &&rTransaciton.getDate().isAfter(from) && to == null) ||
+                    ((from != null && to != null)&&rTransaciton.getDate().isAfter(from) &&  rTransaciton.getDate().isBefore(to))) {
                 output.add((BalanceOperation) rTransaciton);
             }
         }
         for (OrderObj order : orders.values()) {
             if (order.getBalanceOperation() != null &&
                     ((from == null && to == null) ||
-                            (order.getBalanceOperation().getDate().isAfter(from) && to == null) ||
-                            (from == null && order.getBalanceOperation().getDate().isBefore(to)) ||
-                            (order.getBalanceOperation().getDate().isAfter(from) && order.getBalanceOperation().getDate().isBefore(to))))
+                            (from == null  &&order.getBalanceOperation().getDate().isBefore(to)) ||
+                            (from!=null &&order.getBalanceOperation().getDate().isAfter(from) && to == null) ||
+                            ((from != null && to != null)&&order.getBalanceOperation().getDate().isAfter(from) &&  order.getBalanceOperation().getDate().isBefore(to))))
                 output.add(order.getBalanceOperation());
         
         }
@@ -485,6 +516,11 @@ public class TransactionManager {
     }
     
     public double computeBalance()  {
+        double balance;
+        balance = 0;
+        for(BalanceOperationObj operation : balanceOperations.values()){
+            balance += operation.getMoney();
+        }
         return balance;
     }
     
@@ -495,32 +531,27 @@ public class TransactionManager {
         returnTransactions.clear();
         cards.clear();
         orders.clear();
-        balance = 0.0;
     }
     
-    public boolean luhn(String creditCard) {
-        int number = Integer.parseInt(creditCard);
-        //step 1
-        int step1N = 0;
-        int tmp;
-        for (int i = 100; i < Math.pow(10, 17); i *= 100) {
-            tmp = number % i;
-            tmp = tmp * 10 / i;
-            tmp *= 2;
-            if (tmp >= 10) tmp = (tmp % 10) + (tmp / 10);
-            //step 2
-            step1N += tmp;
+    public boolean luhn(String ccNumber)
+    {
+        int sum = 0;
+        boolean alternate = false;
+        for (int i = ccNumber.length() - 1; i >= 0; i--)
+        {
+            int n = Integer.parseInt(ccNumber.substring(i, i + 1));
+            if (alternate)
+            {
+                n *= 2;
+                if (n > 9)
+                {
+                    n = (n % 10) + 1;
+                }
+            }
+            sum += n;
+            alternate = !alternate;
         }
-        //step 3
-        int step3N = 0;
-        for (int i = 10; i < Math.pow(10, 16); i *= 100) {
-            tmp = number % i;
-            tmp = tmp * 10 / i;
-            step3N += tmp;
-        }
-        //step 4
-        if (((step1N + step3N) % 10) == 0) return true;
-        else return false;
+        return (sum % 10 == 0);
     }
     
     public OrderObj addCompletedOrder(Integer orderId) {
@@ -549,7 +580,21 @@ public class TransactionManager {
         // is not null and in that case add it to the balanceOperations map.
         // if there is not enough balance return false
         // add persistance
+        double tot=order.getPricePerUnit()* order.getQuantity();
+
+        BalanceOperationObj operation = new Credit(LocalDate.now(), "Credit");
+        order.setBalanceOperation((BalanceOperationObj) operation);
+        order.setBalanceId(operation.getBalanceId());
         orders.put(order.getOrderId(), order);
+        if(order.getStatus().equals(OrderStatus.PAYED)){
+            if(!this.recordBalanceUpdate(tot)) return false;
+
+        }
+        try {
+            this.persistOrders();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return true;
         
     }
@@ -577,6 +622,12 @@ public class TransactionManager {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(RETURN_PATH), returnTransactions);
+    }
+
+    private void persistBalanceOperations() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(new File(BALANCEOPERATION_PATH), balanceOperations);
     }
 }
 
