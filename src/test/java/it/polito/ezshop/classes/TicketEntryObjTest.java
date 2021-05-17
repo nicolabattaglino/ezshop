@@ -1,14 +1,14 @@
 package it.polito.ezshop.classes;
 
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
+    public class TicketEntryObjTest {
 
-public class TicketEntryObjTest {
-    
-    @Test
-    public void test() {
-        fail("Not yet implemented");
+        @Test
+        public void test() {
+            fail("Not yet implemented");
+        }
+
     }
-    
-}

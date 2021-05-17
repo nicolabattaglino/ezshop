@@ -28,3 +28,31 @@ public class SaleTransactionObjTest {
 		s.setPrice(1);
 		assertTrue(1== s.getPrice());
 	}
+
+	@Test
+	public void testDiscountRate(){
+		SaleTransactionObj s = new SaleTransactionObj();
+		s.setDiscountRate(1.0);
+		assertTrue(1.0== s.getDiscountRate());
+	}
+
+	@Test
+	public void testBalanceId(){
+		SaleTransactionObj s = new SaleTransactionObj();
+		s.setBalanceId(1);
+		assertTrue(1== s.getBalanceId());
+	}
+
+	@Test
+	public void testLocalDate(){
+		SaleTransactionObj s = new SaleTransactionObj();
+		s.setDate(LocalDate.now());
+		assertEquals(LocalDate.now() , s.getDate());
+	}
+
+	@Test
+	public void testMoney(){
+		SaleTransactionObj s = new SaleTransactionObj();
+		s.setMoney(1.0);
+		assertTrue(1.0== s.getMoney());
+	}
