@@ -1,10 +1,6 @@
 package it.polito.ezshop.data;
 
-import it.polito.ezshop.classes.CustomerManager;
-import it.polito.ezshop.classes.ProductOrderManager;
-import it.polito.ezshop.classes.TransactionManager;
-import it.polito.ezshop.classes.UserManager;
-import it.polito.ezshop.classes.UserRole;
+import it.polito.ezshop.classes.*;
 import it.polito.ezshop.exceptions.*;
 
 import java.time.LocalDate;
@@ -12,17 +8,23 @@ import java.util.List;
 
 
 public class EZShop implements EZShopInterface {
-    TransactionManager transactionManager;
-    CustomerManager customerManager;
-    UserManager userManager;
-    ProductOrderManager productOrderManager;
+    private TransactionManager transactionManager;
+    private CustomerManager customerManager;
+    private UserManager userManager;
+    private ProductOrderManager productOrderManager;
 
-    public EZShop(){
-        this.userManager = new UserManager();
-        this.customerManager = new CustomerManager(this);
-        this.productOrderManager = new ProductOrderManager(this);
-        this.transactionManager = new TransactionManager(this);
+    public TransactionManager getTransactionManager() {
+        return transactionManager;
     }
+
+    public CustomerManager getCustomerManager() {
+        return customerManager;
+    }
+
+    public UserManager getUserManager() {
+        return userManager;
+    }
+    public EZShop() {}
 
     @Override
     public void reset() {
@@ -457,5 +459,9 @@ public class EZShop implements EZShopInterface {
     @Override
     public double computeBalance() throws UnauthorizedException {
         return transactionManager.computeBalance();
+    }
+
+    public boolean addOrder(OrderObj order) {
+        return transactionManager.addOrder(order);
     }
 }

@@ -48,7 +48,7 @@ public class Position {
     
     @Override
     public String toString() {
-        if (!empty) return "";
+        if (empty) return "";
         return "" + aisleID + "-" + rackID + "-" + levelId;
     }
 }

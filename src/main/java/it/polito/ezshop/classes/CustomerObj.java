@@ -91,7 +91,7 @@ public class CustomerObj implements Customer {
     
     @JsonIgnore
     public void setPoints(Integer points) {
-        loyaltyCard.setPoints(points);
+       loyaltyCard.setPoints(points);
     }
     
 }

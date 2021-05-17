@@ -8,7 +8,7 @@ public class CustomerObjTest {
 
 
 	@Test
-	public void testSet(){
+	public void testSettersAndGetters(){
 		CustomerObj c = new CustomerObj();
 		c.setCustomerName("Antonio");
 		assertEquals("Antonio", c.getCustomerName());

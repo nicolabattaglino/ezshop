@@ -1,7 +1,11 @@
 package it.polito.ezshop.classes;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CreditCard {
-    String creditCardNumber;
+    String Number;
     double balance;
     
     public double getBalance() {
@@ -13,10 +17,10 @@ public class CreditCard {
     }
     
     public String getNumber() {
-        return creditCardNumber;
+        return Number;
     }
     
     public void setNumber(String creditCardNumber) {
-        this.creditCardNumber = creditCardNumber;
+        this.Number = creditCardNumber;
     }
 }

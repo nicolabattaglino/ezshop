@@ -1,10 +1,14 @@
 package it.polito.ezshop.classes;
 
 import it.polito.ezshop.data.TicketEntry;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TicketEntryObj implements TicketEntry {
     private String barCode;
-    private String description;
+    private String productDescription;
     private int amount;
     private double pricePerUnit;
     private double discountRate;
@@ -12,7 +16,7 @@ public class TicketEntryObj implements TicketEntry {
     public TicketEntryObj(int amount, String barcode, String description, double pricePerUnit) {
         this.amount = amount;
         this.barCode = barcode;
-        this.description = description;
+        this.productDescription = description;
         this.pricePerUnit = pricePerUnit;
     }
     
@@ -25,11 +29,11 @@ public class TicketEntryObj implements TicketEntry {
     }
     
     public String getProductDescription() {
-        return description;
+        return productDescription;
     }
     
     public void setProductDescription(String productDescription) {
-        this.description = productDescription;
+        this.productDescription = productDescription;
     }
     
     public int getAmount() {
