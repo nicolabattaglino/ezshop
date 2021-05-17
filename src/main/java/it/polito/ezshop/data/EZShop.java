@@ -24,7 +24,8 @@ public class EZShop implements EZShopInterface {
     public UserManager getUserManager() {
         return userManager;
     }
-    
+    public EZShop() {}
+
     @Override
     public void reset() {
     

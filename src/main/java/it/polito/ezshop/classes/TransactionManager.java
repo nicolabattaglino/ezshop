@@ -110,9 +110,9 @@ public class TransactionManager {
         balance = 0.0;
     
     }
-    
-    
-    public Integer startSaleTransaction() throws UnauthorizedException {
+
+
+    public Integer startSaleTransaction()  {
         SaleTransactionObj sale = new SaleTransactionObj(LocalDate.now(), 0.0, "Sale");
         saleTransactions.put((Integer) sale.getBalanceId(), sale);
         try {
@@ -125,7 +125,7 @@ public class TransactionManager {
         return sale.getBalanceId();
     }
     
-    public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
+    public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException {
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) {
             throw new InvalidTransactionIdException();
@@ -152,7 +152,7 @@ public class TransactionManager {
         return true;
     }
     
-    public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
+    public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException {
         if (transactionId <= 0 || transactionId == null) throw new InvalidTransactionIdException();
         if (amount < 0) throw new InvalidQuantityException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
@@ -178,7 +178,7 @@ public class TransactionManager {
         return true;
     }
     
-    public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException, UnauthorizedException {
+    public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException {
         if (transactionId <= 0 || transactionId == null) throw new InvalidTransactionIdException();
         if (productCode == null) throw new InvalidProductCodeException();
         if (discountRate < 0.0 || discountRate >= 1.00) throw new InvalidDiscountRateException();
@@ -202,7 +202,7 @@ public class TransactionManager {
         return true;
     }
     
-    public boolean applyDiscountRateToSale(Integer transactionId, double discountRate) throws InvalidTransactionIdException, InvalidDiscountRateException, UnauthorizedException {
+    public boolean applyDiscountRateToSale(Integer transactionId, double discountRate) throws InvalidTransactionIdException, InvalidDiscountRateException {
         if (transactionId <= 0 || transactionId == null) throw new InvalidTransactionIdException();
         if (discountRate < 0.0 || discountRate >= 1.00) throw new InvalidDiscountRateException();
         if (discountRate > 1 || discountRate < 0) return false;
@@ -218,7 +218,7 @@ public class TransactionManager {
         return true;
     }
     
-    public int computePointsForSale(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
+    public int computePointsForSale(Integer transactionId) throws InvalidTransactionIdException {
         if (transactionId <= 0 || transactionId == null) throw new InvalidTransactionIdException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return -1;
@@ -226,7 +226,7 @@ public class TransactionManager {
         return (int) (sale.getPrice() / 10);
     }
     
-    public boolean endSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
+    public boolean endSaleTransaction(Integer transactionId) throws InvalidTransactionIdException {
         if (transactionId <= 0 || transactionId == null) throw new InvalidTransactionIdException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
@@ -240,7 +240,7 @@ public class TransactionManager {
         return true;
     }
     
-    public boolean deleteSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
+    public boolean deleteSaleTransaction(Integer transactionId) throws InvalidTransactionIdException {
         if (transactionId <= 0 || transactionId == null) throw new InvalidTransactionIdException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
@@ -254,17 +254,17 @@ public class TransactionManager {
         return true;
     }
     
-    public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
+    public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException {
         if (transactionId <= 0 || transactionId == null) throw new InvalidTransactionIdException();
         return saleTransactions.get(transactionId);
     }
     
-    public List<Order> getAllOrders() throws UnauthorizedException {
+    public List<Order> getAllOrders()  {
         List<Order> output = new ArrayList<Order>(orders.values());
         return output;
     }
     
-    public Integer startReturnTransaction(Integer saleNumber) throws /*InvalidTicketNumberException,*/InvalidTransactionIdException, UnauthorizedException {
+    public Integer startReturnTransaction(Integer saleNumber) throws /*InvalidTicketNumberException,*/InvalidTransactionIdException {
         if (saleNumber <= 0 || saleNumber == null) throw new InvalidTransactionIdException();
         double money = 0;
         SaleTransaction toBeReturned = this.getSaleTransaction(saleNumber);
@@ -321,7 +321,7 @@ public class TransactionManager {
         return true;
     }
     
-    public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, UnauthorizedException, InvalidProductIdException, InvalidProductCodeException {
+    public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, InvalidProductIdException, InvalidProductCodeException {
         if (returnId <= 0 || returnId == null) throw new InvalidTransactionIdException();
         // in the current design the return transaction's informations are created during the return product function, the end return method only closes the return
         ReturnTransaction target = returnTransactions.get(returnId);
@@ -340,7 +340,7 @@ public class TransactionManager {
         
     }
     
-    public boolean deleteReturnTransaction(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
+    public boolean deleteReturnTransaction(Integer returnId) throws InvalidTransactionIdException,UnauthorizedException  {
         if (returnId <= 0 || returnId == null) throw new InvalidTransactionIdException();
         ReturnTransaction target = returnTransactions.get(returnId);
         if (target == null) return false;
@@ -397,7 +397,7 @@ public class TransactionManager {
         return saleTransactions.get(transactionID);
     }
     
-    public double receiveCashPayment(Integer ticketNumber, double cash) throws InvalidTransactionIdException, InvalidPaymentException, UnauthorizedException {
+    public double receiveCashPayment(Integer ticketNumber, double cash) throws InvalidTransactionIdException, InvalidPaymentException  {
         if (ticketNumber <= 0 || ticketNumber == null) throw new InvalidTransactionIdException();
         if (cash <= 0) throw new InvalidParameterException();
     
@@ -407,7 +407,7 @@ public class TransactionManager {
         return cash - transaction.getPrice();
     }
     
-    public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
+    public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException {
         if (ticketNumber <= 0 || ticketNumber == null) throw new InvalidTransactionIdException();
         if (creditCard == "" || creditCard == null) throw new InvalidCreditCardException();
     
@@ -422,7 +422,7 @@ public class TransactionManager {
         return true;
     }
     
-    public double returnCashPayment(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
+    public double returnCashPayment(Integer returnId) throws InvalidTransactionIdException  {
         if (returnId <= 0 || returnId == null) throw new InvalidTransactionIdException();
     
         ReturnTransaction rTransaction = returnTransactions.get(returnId);
@@ -433,7 +433,7 @@ public class TransactionManager {
         return price;
     }
     
-    public double returnCreditCardPayment(Integer returnId, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
+    public double returnCreditCardPayment(Integer returnId, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException {
         if (returnId <= 0 || returnId == null) throw new InvalidTransactionIdException();
         if (creditCard.equals("") || creditCard == null) throw new InvalidCreditCardException();
         CreditCard carta = cards.get(creditCard);
@@ -446,7 +446,7 @@ public class TransactionManager {
         return output;
     }
     
-    public boolean recordBalanceUpdate(double toBeAdded) throws UnauthorizedException {
+    public boolean recordBalanceUpdate(double toBeAdded) {
         this.balance += toBeAdded;
         if (computeBalance() < 0) {
             this.balance -= toBeAdded;
@@ -454,7 +454,7 @@ public class TransactionManager {
         } else return true;
     }
     
-    public List<BalanceOperation> getCreditsAndDebits(LocalDate from, LocalDate to) throws UnauthorizedException {
+    public List<BalanceOperation> getCreditsAndDebits(LocalDate from, LocalDate to)  {
         List<BalanceOperation> output = new LinkedList<BalanceOperation>();
         for (SaleTransactionObj sale : saleTransactions.values()) {
             if ((from == null && to == null) ||
@@ -484,7 +484,7 @@ public class TransactionManager {
         return output;
     }
     
-    public double computeBalance() throws UnauthorizedException {
+    public double computeBalance()  {
         return balance;
     }
     
@@ -498,7 +498,7 @@ public class TransactionManager {
         balance = 0.0;
     }
     
-    private boolean luhn(String creditCard) {
+    public boolean luhn(String creditCard) {
         int number = Integer.parseInt(creditCard);
         //step 1
         int step1N = 0;
