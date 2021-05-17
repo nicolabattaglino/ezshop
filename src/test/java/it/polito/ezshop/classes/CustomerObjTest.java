@@ -24,12 +24,22 @@ public class CustomerObjTest {
 		assertEquals(null, c.getCustomerName());
 		CustomerObj cu = new CustomerObj(2, "John");
 		assertNotNull(cu);
+		LoyaltyCardObj card1 = new LoyaltyCardObj("1000000001");
+		cu.setCustomerCard("1000000001");
+		cu.setPoints(10);
+		assertTrue(cu.getPoints() == 10);
+
 	}
 
 	@Test
 	public void testGetCardFromNewCustomer(){
 		CustomerObj cu = new CustomerObj(2, "John");
-		assertEquals(cu.getCustomerCard(), "");
+		assertNull(cu.getCustomerCard());
+		assertNull(cu.getLoyaltyCard());
+		LoyaltyCardObj card = new LoyaltyCardObj("1000000001");
+		cu.setCustomerCard("1000000001");
+		assertEquals(card.getCardCode(), cu.getCustomerCard());
+
 
 	}
 

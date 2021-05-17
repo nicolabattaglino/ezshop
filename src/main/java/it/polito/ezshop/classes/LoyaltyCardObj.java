@@ -35,4 +35,6 @@ public class LoyaltyCardObj {
     public void setPoints(Integer points) {
         this.points = points;
     }
+
+
 }

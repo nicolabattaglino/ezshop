@@ -16,11 +16,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class CustomerManager {
     //Todo vedi che fare per le rollback
     public static final String CARD_PATH = "data/loyaltyCards.json";
+    public static final String CARD_ID_PATH = "data/loyaltyCardsIdGen.json";
+    public static final String CUSTOMER_ID_PATH = "data/customersIdGen.json";
     public static final String CUSTOMER_PATH = "data/customers.json";
 
     @JsonSerialize(keyUsing = MapSerializer.class)
@@ -70,8 +73,39 @@ public class CustomerManager {
                 customerMap = new HashMap<>();
             }
         }
+        TypeReference<Integer> typeRef2 = new TypeReference<Integer>() {};
+        File customersId = new File(CUSTOMER_ID_PATH);
+        try {
+            customersId.createNewFile();
+            customerIdGen = mapper.readValue(customersId, typeRef2);
+        } catch (IOException e) {
+            customersId.delete();
+            try {
+                cards.createNewFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } finally {
+                customerIdGen = 0;
+            }
+        }
+        TypeReference<Long> typeRef3 = new TypeReference<Long>() {};
+        File cardsId = new File(CARD_ID_PATH);
+        try {
+            cardsId.createNewFile();
+            loyaltyCardIdGen = mapper.readValue(customersId, typeRef3);
+        } catch (IOException e) {
+            cardsId.delete();
+            try {
+                cardsId.createNewFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } finally {
+                loyaltyCardIdGen = 1000000000;
+            }
+        }
         this.shop = shop;
     }
+
 
 
     public Integer defineCustomer(String customerName) throws InvalidCustomerNameException {
@@ -79,9 +113,12 @@ public class CustomerManager {
             throw new InvalidCustomerNameException();
 
         Integer id = ++customerIdGen;
+        System.out.println(customerIdGen);
         CustomerObj customer = new CustomerObj(id, customerName);
-        if (customerMap.put(id, customer) != null)
+        customerMap.put(id, customer);
+        if (customerMap.get(id) == null){
             return -1;
+        }
         try {
             persistCustomers();
         } catch (IOException e) {
@@ -99,21 +136,31 @@ public class CustomerManager {
         LoyaltyCardObj card = null;
         if (id < 0)
             throw new InvalidCustomerIdException();
-         if (newCustomerName == null || newCustomerName.trim().equals(""))
+        if (newCustomerName == null || newCustomerName.trim().equals(""))
             throw new InvalidCustomerNameException();
-         if (!newCustomerCard.matches("^[0-9]{10}$"))
+        if (!newCustomerCard.matches("^$|^[0-9]{10}$"))
             //todo da rivedere
             throw new InvalidCustomerCardException();
-         if (cardMap.get(newCustomerCard).getIsAttached()) {
-            return false;
-        } else {
+        if (!newCustomerCard.equals("")) {
 
-             if (newCustomerCard.trim().equals("")) {
-                 card = cardMap.get(customer.getCustomerCard());
-                 card.setIsAttached(false);
-                 card.setPoints(0);
-             }
-             customer.setCustomerName(newCustomerName);
+            // todo controllo se carta esiste?
+            if (cardMap.get(newCustomerCard) == null || cardMap.get(newCustomerCard).getIsAttached()) {
+                return false;
+            }
+        }
+
+
+        if (newCustomerCard.trim().equals("")) {
+            card = cardMap.get(customer.getCustomerCard());
+            card.setIsAttached(false);
+            card.setPoints(0);
+            customerMap.get(id).setCustomerCard("");
+        } else if (newCustomerCard != null) {
+            customer.setCustomerCard(newCustomerCard);
+            cardMap.get(newCustomerCard).setIsAttached(true);
+        }
+        customer.setCustomerName(newCustomerName);
+
              try {
                  // todo se una delle due persist fallisce?
                  persistCustomers();
@@ -123,7 +170,7 @@ public class CustomerManager {
              }
              return true;
 
-         }
+         //}
     }
     
     public boolean deleteCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
@@ -132,9 +179,12 @@ public class CustomerManager {
         } else if (customerMap.get(id) == null) {
             return false;
         } else {
-            String cardId = customerMap.get(id).getCustomerCard();
-            cardMap.get(cardId).setPoints(0);
-            cardMap.get(cardId).setIsAttached(false);
+            CustomerObj c = customerMap.get(id);
+            if (c.getLoyaltyCard() != null) {
+                String cardId = c.getCustomerCard();
+                cardMap.get(cardId).setPoints(0);
+                cardMap.get(cardId).setIsAttached(false);
+            }
             customerMap.remove(id);
             try {
                 // todo se una delle due persist fallisce?
@@ -182,60 +232,45 @@ public class CustomerManager {
         if (customerCard == null || customerCard.equals("") || !customerCard.matches("^([0-9]{10}$)"))
             throw new InvalidCustomerCardException();
         LoyaltyCardObj target = cardMap.get(customerCard);
-        Customer customer = customerMap.get(customerId);
+        CustomerObj customer = customerMap.get(customerId);
         if (customer == null || target.getIsAttached())
             return false;
-        target.setIsAttached(true);
+
         customer.setCustomerCard(customerCard);
+        customer.getLoyaltyCard().setIsAttached(true);
+        target.setIsAttached(true);
+
         try {
             persistCards();
             persistCustomers();
         } catch (IOException e) {          //Todo vedi che fare per le rollback
             return false;
         }
-
-        /*try {
-            persistCards();
-        } catch (IOException e) {
-            target.setIsAttached(false);
-            return false;
-        }
-        try {
-            customer.setCustomerCard(customerCard);
-            persistCustomers();
-        } catch (IOException e) {
-            target.setIsAttached(false);
-            customer.setCustomerCard(null);
-            try {
-                persistCards();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-        } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-            return false;
-        } */
-
         return true;
 
     }
     
     
     public boolean modifyPointsOnCard(String customerCard, int pointsToBeAdded) throws InvalidCustomerCardException, UnauthorizedException {
-        //if (customerCard == null || customerCard.trim().equals("") || !customerCard.matches("^([0-9]{10}$)"))
-            if (customerCard == null || !customerCard.matches("^([0-9]{10}$)"))
+        if (customerCard == null || customerCard.trim().equals("") || !customerCard.matches("^([0-9]{10}$)"))
                 throw new InvalidCustomerCardException();
 
         LoyaltyCardObj target = cardMap.get(customerCard);
         if (target == null || target.getPoints() + pointsToBeAdded < 0)
             return false;
-
         int points = target.getPoints();
         points += pointsToBeAdded;
-        target.setPoints(points);
+        for (Map.Entry<Integer,CustomerObj> cu: customerMap.entrySet()
+             ) {
+            CustomerObj c = cu.getValue();
+            if (c.getLoyaltyCard() != null && c.getCustomerCard().equals(customerCard)){
+                c.setPoints(points);
+                target.setPoints(points);
+            }
+        }
         try {
             persistCards();
+            persistCustomers();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -248,13 +283,15 @@ public class CustomerManager {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(CARD_PATH), cardMap);
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(new File(CARD_ID_PATH), loyaltyCardIdGen);
     }
 
     private void persistCustomers() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(CUSTOMER_PATH), customerMap);
-        //mapper.writeValue(new File(CUSTOMER_PATH), customerMap);
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(new File(CUSTOMER_ID_PATH), customerIdGen);
     }
-
 }

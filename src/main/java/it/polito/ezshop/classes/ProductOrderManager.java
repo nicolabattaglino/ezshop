@@ -97,9 +97,9 @@ public class ProductOrderManager {
         if (!checkBarcode(newCode))
             throw new InvalidProductCodeException();
         if (productMap.containsKey(newCode)) return false;
-    
+
         ProductTypeObj candidate = null;
-    
+
         for (ProductTypeObj productType : productMap.values()) {
             if (productType.getId().equals(id)) candidate = productType;
         }
@@ -119,14 +119,14 @@ public class ProductOrderManager {
             productMap.put(old.getBarCode(), old);
             return false;
         }
-    
+
         return true;
     }
     
     public boolean deleteProductType(Integer id) throws InvalidProductIdException {
         if (id == null || id <= 0) throw new InvalidProductIdException();
         ProductTypeObj candidate = null;
-    
+
         for (ProductTypeObj productType : productMap.values()) {
             if (productType.getId().equals(id)) candidate = productType;
         }
@@ -228,7 +228,7 @@ public class ProductOrderManager {
         if (!shop.addOrder(o)) return -1;
         return o.getOrderId();
     }
-    
+
     public boolean payOrder(Integer orderId) throws InvalidOrderIdException, UnauthorizedException {
         if (orderId == null || orderId <= 0) throw new InvalidOrderIdException();
         Optional<Order> target = shop.getAllOrders().stream()
@@ -244,7 +244,7 @@ public class ProductOrderManager {
                 return false;
         }
     }
-    
+
     public boolean recordOrderArrival(Integer orderId) throws InvalidOrderIdException, InvalidLocationException, UnauthorizedException {
         if (orderId == null || orderId <= 0) throw new InvalidOrderIdException();
         OrderObj order = shop.getTransactionManager().addCompletedOrder(orderId);
@@ -263,15 +263,15 @@ public class ProductOrderManager {
         }
         return true;
     }
-    
-    
+
+
     private void persistProducts() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(PRODUCTS_PATH), productMap);
-        
+
     }
-    
+
     public void clear() {
         productMap.clear();
         File products = new File(PRODUCTS_PATH);

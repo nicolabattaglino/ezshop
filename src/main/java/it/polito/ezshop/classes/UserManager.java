@@ -10,24 +10,21 @@ import it.polito.ezshop.exceptions.*;
 
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class UserManager {
 
     public static final String USERS_PATH = "data/users.json";
-
+    //public static final String USERS_ID_PATH = "data/usersId.json";
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
-    private static LinkedList<User> userList;
+    private static LinkedList<UserObj> userList;
     private Integer userIdGen = 0;
     private User loggedUser;
     
     public UserManager() {
         ObjectMapper mapper = new ObjectMapper();
-        TypeReference<LinkedList<User>> typeRef = new TypeReference<LinkedList<User>>() {
+        TypeReference<LinkedList<UserObj>> typeRef = new TypeReference<LinkedList<UserObj>>() {
         };
         File users = new File(USERS_PATH);
         try {
@@ -44,12 +41,33 @@ public class UserManager {
                 userList = new LinkedList<>();
             }
         }
+       /* TypeReference<Integer> typeRef1 = new TypeReference<Integer>() {
+        };
+        File usersId = new File(USERS_ID_PATH);
+        try {
+            usersId.createNewFile();
+            userIdGen = mapper.readValue(usersId, typeRef1);
+        } catch (IOException e) {
+            usersId.delete();
+            try {
+                usersId.createNewFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } finally {
+                userIdGen = 0;
+            }
+        }*/
     }
     
 
     
     public User getUserLogged() {
-        return loggedUser;
+        try {
+            return loggedUser;
+        } catch (NullPointerException e) {
+            System.out.println("No user logged");
+        }
+        return null;
     }
     
     public Integer createUser(String username, String password, String role) throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
@@ -63,7 +81,7 @@ public class UserManager {
         if (role == null || role.equals("") ||
                 (!role.equalsIgnoreCase("ADMINISTRATOR") &&
                         !role.equalsIgnoreCase("CASHIER") &&
-                        !role.equalsIgnoreCase("SHOPMANAGER")))  // manage role enum
+                        !role.equalsIgnoreCase("SHOPMANAGER")))
              throw new InvalidRoleException();
 
         for (User user : userList) {
@@ -115,7 +133,7 @@ public class UserManager {
     }
     
     public List<User> getAllUsers() throws UnauthorizedException {
-        return userList;
+        return new LinkedList<User>(userList);
     }
     
     public User getUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
@@ -166,7 +184,7 @@ public class UserManager {
         if (username == null || username.equals(""))
             throw new InvalidUsernameException();
         if (password == null || password.equals(""))
-            throw new InvalidUsernameException();
+            throw new InvalidPasswordException();
 
         for (i = 0; i < userList.size(); i++) {
             User u = userList.get(i);
@@ -192,82 +210,5 @@ public class UserManager {
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(USERS_PATH), userList);
     }
-/*
-    private static void parseUserObject(JSONObject user) {
-        UserRole r;
 
-        String password = (String) user.get("password");
-        //System.out.println(password);
-
-        String role = (String) user.get("role");
-        //System.out.println(role);
-        Integer id = Integer.valueOf(user.get("id").toString());
-        //System.out.println(id);
-
-        String username = (String) user.get("username");
-        //System.out.println(username);
-        switch (role) {
-            case "ADMINISTRATOR":
-                r = UserRole.ADMINISTRATOR;
-                break;
-            case "CASHIER":
-                r = UserRole.CASHIER;
-                break;
-            case "SHOPMANAGER":
-                r = UserRole.SHOPMANAGER;
-                break;
-            default:
-                r = null;
-                break;
-        }
-        User u = new UserObj(id, username, password, r);
-        userList.add(u);
-
-    }
-
-    private void writeToFile() {
-        int i = 0;
-        JSONArray userListJSON = new JSONArray();
-        for (i = 0; i < userList.size(); i++) {
-            JSONObject userDetails = new JSONObject();
-            userDetails.put("id", userList.get(i).getId());
-            userDetails.put("username", userList.get(i).getUsername());
-            userDetails.put("password", userList.get(i).getPassword());
-            userDetails.put("role", userList.get(i).getRole());
-            userListJSON.add(userDetails);
-        }
-        //Write JSON file
-        try (FileWriter file = new FileWriter("users.json")) {
-            //We can write any JSONArray or JSONObject instance to the file
-            file.write(userListJSON.toJSONString());
-            file.flush();
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    private void readFromFile() {
-        //JSON parser object to parse read file
-        JSONParser jsonParser = new JSONParser();
-        
-        try (FileReader reader = new FileReader("users.json")) {
-            //Read JSON file
-            Object obj = jsonParser.parse(reader);
-            
-            JSONArray employeeList = (JSONArray) obj;
-            //System.out.println(employeeList);
-            
-            //Iterate over employee array
-            employeeList.forEach(usr -> parseUserObject((JSONObject) usr));
-            
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-    */
 }
