@@ -42,8 +42,8 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
         return status;
     }
     
-    public void setStatus(SaleStatus status) {
-        this.status = status;
+    public void setStatus(String string) {
+        this.status = string;
     }
     
     private void updatePrice() {

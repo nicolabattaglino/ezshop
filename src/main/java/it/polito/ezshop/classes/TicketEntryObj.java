@@ -1,8 +1,11 @@
 package it.polito.ezshop.classes;
 
+import java.time.LocalDate;
+
 import it.polito.ezshop.data.TicketEntry;
 
 public class TicketEntryObj implements TicketEntry {
+    public static final String getBarCode = null;
     private String barCode;
     private String productDescription;
     private int amount;
@@ -10,26 +13,35 @@ public class TicketEntryObj implements TicketEntry {
     private double discountRate;
     //TODO costruttore di copia
     
-    public TicketEntryObj(int amount, String barcode, String description, double pricePerUnit) {
+    public TicketEntryObj(int amount, String string, String string2, double d) {
         this.amount = amount;
-        this.barCode = barcode;
-        this.productDescription = description;
-        this.pricePerUnit = pricePerUnit;
+        this.barCode = string;
+        this.productDescription = string2;
+        this.pricePerUnit = d;
     }
     
+    public TicketEntryObj(int amount2, LocalDate now, double d, String string) {
+    }
+
+    public TicketEntryObj(int amount2, LocalDate now, double d, String string) {
+    }
+
+    public TicketEntryObj(int amount2, LocalDate now, double d, String string) {
+    }
+
     public String getBarCode() {
         return barCode;
     }
     
-    public void setBarCode(String barCode) {
-        this.barCode = barCode;
+    public void setBarCode(int i) {
+        this.barCode = i;
     }
     
     public String getProductDescription() {
         return productDescription;
     }
     
-    public void setProductDescription(String productDescription) {
+    public void setProductDescription() {
         this.productDescription = productDescription;
     }
     
@@ -55,6 +67,9 @@ public class TicketEntryObj implements TicketEntry {
     
     public void setDiscountRate(double discountRate) {
         this.discountRate = discountRate;
+    }
+
+    public void setBarCode(int i) {
     }
 }
     
