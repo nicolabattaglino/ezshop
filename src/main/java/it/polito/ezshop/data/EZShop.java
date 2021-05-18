@@ -487,8 +487,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean recordBalanceUpdate(double toBeAdded) throws UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.SHOPMANAGER.toString()))) {
+        if(userManager.getUserLogged() == null || userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
             throw new UnauthorizedException();
         } else {
             return transactionManager.recordBalanceUpdate(toBeAdded);

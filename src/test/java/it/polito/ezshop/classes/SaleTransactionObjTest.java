@@ -10,11 +10,12 @@ import java.util.ArrayList;
 public class SaleTransactionObjTest {
 	@Test
 	public void testEntries() {
+		//TODO fix
 		SaleTransactionObj s = new SaleTransactionObj(0,LocalDate.now(), 0.0, "Sale");
 		List<TicketEntry> lt = new ArrayList<TicketEntry>();
 		s.setEntries(lt);
 		assertEquals(lt, s.getEntries());
-		TicketEntry t = null;
+		TicketEntry t = new TicketEntryObj(5,"barCode","description", 2.0);
 
 		s.addEntry(t);
 		lt.add(t);
