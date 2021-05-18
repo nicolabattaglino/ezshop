@@ -7,8 +7,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import it.polito.ezshop.data.User;
 import it.polito.ezshop.exceptions.*;
-
-
 import java.io.*;
 import java.util.*;
 
@@ -31,7 +29,6 @@ public class UserManager {
         try {
             users.createNewFile();
             userList = mapper.readValue(users, typeRef);
-            //System.out.println(userList.get(0).getUsername());
         } catch (IOException e) {
             users.delete();
             try {
@@ -57,6 +54,7 @@ public class UserManager {
                 userIdGen = 0;
             }
         }
+
     }
 
     
@@ -97,6 +95,7 @@ public class UserManager {
                 return -1;
         try {
             persistUsers();
+            persistUsersId();
         } catch (IOException e) {
             userList.removeLast();
             userIdGen = userList.getLast().getId();
@@ -214,6 +213,11 @@ public class UserManager {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(USERS_PATH), userList);
+
+    }
+
+    private void persistUsersId() throws IOException{
+        ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(USERS_ID_PATH), userIdGen);
     }

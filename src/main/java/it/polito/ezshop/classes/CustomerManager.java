@@ -124,6 +124,7 @@ public class CustomerManager {
         }
         try {
             persistCustomers();
+            persistCustomersId();
         } catch (IOException e) {
             customerMap.remove(id);
             e.printStackTrace();
@@ -243,6 +244,7 @@ public class CustomerManager {
         try {
             // todo rollback
             persistCards();
+            persistCardsId();
         } catch (IOException e) {
             cardMap.remove(l.getCardCode());
             loyaltyCardIdGen = id--;
@@ -342,14 +344,24 @@ public class CustomerManager {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(CARD_PATH), cardMap);
-        mapper.writerWithDefaultPrettyPrinter()
-                .writeValue(new File(CARD_ID_PATH), loyaltyCardIdGen);
+
     }
 
     private void persistCustomers() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(CUSTOMER_PATH), customerMap);
+
+    }
+    private void persistCardsId() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(new File(CARD_ID_PATH), loyaltyCardIdGen);
+    }
+
+
+    private void persistCustomersId() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(CUSTOMER_ID_PATH), customerIdGen);
     }

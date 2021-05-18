@@ -181,7 +181,7 @@ Customer "*"<-- CustomerManager: -customerMap: HashMap<Integer, Customer>
 LoyaltyCard "*"<-- CustomerManager: -cardMap: HashMap<String, LoyaltyCard>
 
 class CustomerManager {
-    -userIdGen: Integer
+    -customerIdGen: Integer
     -loyaltyCardIdGen: long
 
     +defineCustomer(customerName: String): Customer

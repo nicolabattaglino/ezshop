@@ -115,56 +115,6 @@ Version:
 |Invalid|Invalid|T4("t") -> role not set|testSetRole|
 |NULL|Invalid|T5(null) -> role not set|testSetRole|
 
-### **Class *UserManager* - method *login***
-
-
-
-**Criteria for method *login*:**
-
-
-- Validity of the String username parameter
-- Validity of the String password parameter
-- Existence of User object
-
-
-
-
-**Predicates for method *setRole*:**
-
-| Criteria | Predicate |
-| -------- | --------- |
-|    Validity of the String username parameter      |     Valid      |
-|                                          |      Invalid   |
-|                                          |      NULL      |
-|    Validity of the String password parameter      |     Valid      |
-|                                          |      Invalid   |
-|                                          |      NULL      |
-|    Existence of the String username parameter      |     Yes      |
-|                                          |      No   |
-
-
-
-
-
-**Boundaries**:
-
-| Criteria | Boundary values |
-| -------- | --------------- |
-
-
-
-
-**Combination of predicates**:
-
-
-| Validity of the String username parameter |    Validity of the String password parameter   |    Existence of the String username parameter       | Valid / Invalid | Description of the test case | JUnit test case |
-|-------|-------|-------|-------|-------|-------|
-|Valid|Invalid|*|Invalid|login("SimAdmin","") -> InvalidPasswordException|
-|Invalid|Valid|*|||
-|Valid|Valid|||T3("SHOPMANAGER") -> role set|testSetRole|
-|Invalid|Invalid|||T4("t") -> role not set|testSetRole|
-|NULL|Invalid|||T5(null) -> role not set|testSetRole|
-
 
 
 # White Box Unit Tests
