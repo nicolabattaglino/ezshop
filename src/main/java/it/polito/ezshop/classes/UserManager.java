@@ -19,7 +19,7 @@ public class UserManager {
 
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
-    private static LinkedList<UserObj> userList;
+    private  LinkedList<UserObj> userList;
     private Integer userIdGen = 0;
     private User loggedUser;
     
@@ -185,13 +185,8 @@ public class UserManager {
     
     public User login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
         int i = 0;
-        if (username == null || username.equals(""))
-            throw new InvalidUsernameException();
-        if (password == null || password.equals(""))
-            throw new InvalidPasswordException();
 
-        for (i = 0; i < userList.size(); i++) {
-            User u = userList.get(i);
+        for (User u : userList) {
             if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
                 loggedUser = u;
                 return loggedUser;
