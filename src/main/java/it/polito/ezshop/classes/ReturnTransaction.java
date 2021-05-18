@@ -5,10 +5,6 @@ import it.polito.ezshop.data.TicketEntry;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ReturnTransaction extends Credit {
     private int balanceId;
@@ -19,27 +15,28 @@ public class ReturnTransaction extends Credit {
     private Integer ticketNumber;
     private List<TicketEntry> entries = new ArrayList<TicketEntry>();
     private double price;
-    private ReturnStatus status ;
+    private ReturnStatus status;
     
-    public ReturnTransaction( int id, LocalDate date, double money, String type, int returning) {
+    public ReturnTransaction(int id, LocalDate date, double money, String type, int returning) {
         super(id, date, type);
         this.money = money;
         this.transactionID = returning;
-        status = ReturnStatus.NEW ;
+        status = ReturnStatus.NEW;
     }
-    public ReturnTransaction(ReturnTransaction r){
+    
+    public ReturnTransaction(ReturnTransaction r) {
         super(r.balanceId, r.date, r.type);
-        this.money=r.money;
-        this.transactionID=r.transactionID;
-        this.ticketNumber=r.ticketNumber;
-        for( TicketEntry t: r.getEntries() ){
+        this.money = r.money;
+        this.transactionID = r.transactionID;
+        this.ticketNumber = r.ticketNumber;
+        for (TicketEntry t : r.getEntries()) {
             this.entries.add(t);
         }
-
-        this.price =r.price;
-        this.status=r.status ;
+        
+        this.price = r.price;
+        this.status = r.status;
     }
-
+    
     
     public ReturnStatus getStatus() {
         return status;
@@ -59,10 +56,10 @@ public class ReturnTransaction extends Credit {
     
     public List<TicketEntry> getEntries() {
         List<TicketEntry> output = new ArrayList<TicketEntry>();
-        for(TicketEntry t : entries){
+        for (TicketEntry t : entries) {
             output.add(t);
         }
-        return  output;
+        return output;
     }
     
     public void setEntries(List<TicketEntry> entries) {
@@ -76,7 +73,7 @@ public class ReturnTransaction extends Credit {
     public double getPrice() {
         return price;
     }
-
+    
     public void setPrice(double price) {
         this.price = price;
     }

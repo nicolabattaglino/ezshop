@@ -199,7 +199,6 @@ class CustomerManager {
 class ProductOrderManager {
 
     -productIdGen: Integer
-    -orderIdGen: Integer
     
     +checkBarcode(barCode: String): boolean
 

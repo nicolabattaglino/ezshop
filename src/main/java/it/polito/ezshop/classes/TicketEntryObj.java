@@ -1,10 +1,6 @@
 package it.polito.ezshop.classes;
 
 import it.polito.ezshop.data.TicketEntry;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TicketEntryObj implements TicketEntry {
     private String barCode;

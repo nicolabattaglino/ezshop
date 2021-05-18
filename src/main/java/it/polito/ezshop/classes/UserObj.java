@@ -16,8 +16,9 @@ public class UserObj implements User {
         this.role = role;
     }
     
-    public  UserObj() {}
-
+    public UserObj() {
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -47,9 +48,9 @@ public class UserObj implements User {
     }
     
     public void setRole(String role) {
-
-        if(role == null) return;
-
+        
+        if (role == null) return;
+        
         if (role.equalsIgnoreCase("ADMINISTRATOR") ||
                 role.equalsIgnoreCase("CASHIER") ||
                 role.equalsIgnoreCase("SHOPMANAGER")) {

@@ -46,22 +46,23 @@ public class OrderObj implements Order {
         this.balanceOp = orderObj.balanceOp;
     }
     
-    @JsonProperty("balanceOp")
-    public BalanceOperation getBalanceOperation() {
-        return (BalanceOperation) balanceOp;
-    }
-    @JsonProperty("balanceOp")
-    public void setBalanceOperation(BalanceOperationObj operation) {
-        this.balanceOp = (Credit) operation;
-
-    }
-    
     public OrderObj(ProductType product, double pricePerUnit, int quantity) {
         this.orderId = ++OrderIdGen;
         this.product = new ProductTypeObj(product);
         this.pricePerUnit = pricePerUnit;
         this.quantity = quantity;
         status = OrderStatus.ISSUED;
+    }
+    
+    @JsonProperty("balanceOp")
+    public BalanceOperation getBalanceOperation() {
+        return (BalanceOperation) balanceOp;
+    }
+    
+    @JsonProperty("balanceOp")
+    public void setBalanceOperation(BalanceOperationObj operation) {
+        this.balanceOp = (Credit) operation;
+        
     }
     
     public String getProductCode() {

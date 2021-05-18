@@ -14,10 +14,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class UserManager {
-
+    
     public static final String USERS_PATH = "data/users.json";
     public static final String USERS_ID_PATH = "data/userIdGen.json";
-
+    
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
     private LinkedList<UserObj> userList;
@@ -42,7 +42,8 @@ public class UserManager {
                 userList = new LinkedList<>();
             }
         }
-        TypeReference<Integer> typeRef2 = new TypeReference<Integer>() {};
+        TypeReference<Integer> typeRef2 = new TypeReference<Integer>() {
+        };
         File usersId = new File(USERS_ID_PATH);
         try {
             usersId.createNewFile();
@@ -57,13 +58,13 @@ public class UserManager {
                 userIdGen = 0;
             }
         }
-
+        
     }
-
+    
     
     public User getUserLogged() {
         try {
-            return new UserObj(loggedUser.getId(),loggedUser.getUsername(),loggedUser.getPassword(),UserRole.valueOf(loggedUser.getRole()));
+            return new UserObj(loggedUser.getId(), loggedUser.getUsername(), loggedUser.getPassword(), UserRole.valueOf(loggedUser.getRole()));
         } catch (NullPointerException e) {
             System.out.println("No user logged");
         }
@@ -73,16 +74,16 @@ public class UserManager {
     public Integer createUser(String username, String password, String role) throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
         if (username == null || username.equals(""))
             throw new InvalidUsernameException();
-
+        
         if (password == null || password.equals(""))
             throw new InvalidPasswordException();
-
+        
         if (role == null || role.equals("") ||
                 (!role.equalsIgnoreCase("ADMINISTRATOR") &&
                         !role.equalsIgnoreCase("CASHIER") &&
                         !role.equalsIgnoreCase("SHOPMANAGER")))
-             throw new InvalidRoleException();
-
+            throw new InvalidRoleException();
+        
         for (User user : userList) {
             if (user.getUsername().equals(username))
                 return -1;
@@ -93,9 +94,9 @@ public class UserManager {
             userIdGen = userIdGen + 1;
         }
         UserObj u = new UserObj(userIdGen, username, password, UserRole.valueOf(role.toUpperCase()));
-
-        if(!userList.add(u))
-                return -1;
+        
+        if (!userList.add(u))
+            return -1;
         try {
             persistUsers();
             persistUsersId();
@@ -105,7 +106,7 @@ public class UserManager {
             e.printStackTrace();
         }
         return userIdGen;
-
+        
     }
     
     public boolean deleteUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
@@ -116,7 +117,7 @@ public class UserManager {
         for (i = 0; i < userList.size(); i++) {
             u = userList.get(i);
             if (u.getId().equals(id)) {
-                if(u != userList.remove(i)){
+                if (u != userList.remove(i)) {
                     return false;
                 } else {
                     try {
@@ -140,24 +141,24 @@ public class UserManager {
         int i = 0;
         if (id < 0)
             throw new InvalidUserIdException();
-
+        
         for (User u : userList) {
             if (u.getId().equals(id)) {
                 return new UserObj(u.getId(), u.getUsername(), u.getPassword(), UserRole.valueOf(u.getRole()));
             } else u = null;
         }
-
+        
         return null;
     }
     
     public boolean updateUserRights(Integer id, String role) throws InvalidUserIdException, InvalidRoleException, UnauthorizedException {
         int i = 0;
-
+        
         if (id == null || id < 0)
             throw new InvalidUserIdException();
         // todo è giusto cosi?
         if (role == null || role.equals("") ||
-                        (!role.toUpperCase().equals(UserRole.ADMINISTRATOR.toString()) &&
+                (!role.toUpperCase().equals(UserRole.ADMINISTRATOR.toString()) &&
                         !role.toUpperCase().equals(UserRole.CASHIER.toString()) &&
                         !role.toUpperCase().equals(UserRole.SHOPMANAGER.toString())))
             throw new InvalidRoleException();
@@ -180,13 +181,13 @@ public class UserManager {
                 return true;
             }
         }
-
+        
         return false;
     }
     
     public User login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
         int i = 0;
-
+        
         for (User u : userList) {
             if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
                 loggedUser = u;
@@ -199,29 +200,29 @@ public class UserManager {
     public boolean logout() {
         if (loggedUser == null)
             return false;
-
+        
         loggedUser = null;
         return true;
     }
-
-    public void clean(){
+    
+    public void clean() {
         userList.clear();
         File users = new File(USERS_PATH);
         users.delete();
-
+        
     }
-
+    
     private void persistUsers() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(USERS_PATH), userList);
-
+        
     }
-
-    private void persistUsersId() throws IOException{
+    
+    private void persistUsersId() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(USERS_ID_PATH), userIdGen);
     }
-
+    
 }

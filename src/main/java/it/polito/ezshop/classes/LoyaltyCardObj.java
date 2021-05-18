@@ -4,22 +4,24 @@ public class LoyaltyCardObj {
     private String cardCode;
     private Integer points;
     private boolean isAttached;
-
-    public LoyaltyCardObj() {}
-
+    
+    public LoyaltyCardObj() {
+    }
+    
     public LoyaltyCardObj(String cardCode) {
         this.cardCode = cardCode;
         this.points = 0;
         this.isAttached = false;
     }
-
-    public boolean getIsAttached(){
+    
+    public boolean getIsAttached() {
         return isAttached;
     }
-
-    public void setIsAttached(boolean card){
-         isAttached = card;
+    
+    public void setIsAttached(boolean card) {
+        isAttached = card;
     }
+    
     public String getCardCode() {
         return cardCode;
     }
@@ -35,6 +37,6 @@ public class LoyaltyCardObj {
     public void setPoints(Integer points) {
         this.points = points;
     }
-
-
+    
+    
 }

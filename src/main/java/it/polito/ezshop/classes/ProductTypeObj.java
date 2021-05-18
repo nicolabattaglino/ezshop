@@ -61,6 +61,17 @@ public class ProductTypeObj implements ProductType {
         
     }
     
+    public ProductTypeObj(ProductTypeObj product) {
+        this.amount = product.amount;
+        this.id = product.id;
+        this.description = product.description;
+        this.barCode = product.barCode;
+        this.notes = product.notes;
+        this.selPrice = product.selPrice;
+        this.discountRate = product.discountRate;
+        this.position = product.position;
+    }
+    
     public Position getPosition() {
         return position;
     }
@@ -75,17 +86,6 @@ public class ProductTypeObj implements ProductType {
     
     public void setDiscountRate(double discountRate) {
         this.discountRate = discountRate;
-    }
-    
-    public ProductTypeObj(ProductTypeObj product) {
-        this.amount = product.amount;
-        this.id = product.id;
-        this.description = product.description;
-        this.barCode = product.barCode;
-        this.notes = product.notes;
-        this.selPrice = product.selPrice;
-        this.discountRate = product.discountRate;
-        this.position = product.position;
     }
     
     @Override
@@ -107,11 +107,11 @@ public class ProductTypeObj implements ProductType {
     public void setLocation(String location) {
         if (location == null || location.equals("")) this.position = new Position();
         else
-        try {
-            this.position = new Position(location);
-        } catch (InvalidLocationException e) {
-            e.printStackTrace();
-        }
+            try {
+                this.position = new Position(location);
+            } catch (InvalidLocationException e) {
+                e.printStackTrace();
+            }
     }
     
     @Override

@@ -1,14 +1,12 @@
 package it.polito.ezshop.classes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polito.ezshop.data.Customer;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.HashMap;
 
 
@@ -17,30 +15,31 @@ public class CustomerObj implements Customer {
     private Integer id;
     private String customerName;
     private LoyaltyCardObj loyaltyCard;
-
-    public CustomerObj() {}
-
+    
+    public CustomerObj() {
+    }
+    
     public CustomerObj(Integer id, String customerName) {
         this.id = id;
         this.customerName = customerName;
         this.loyaltyCard = null;
     }
-
+    
     public CustomerObj(CustomerObj customerObj) {
         this.id = customerObj.id;
         this.customerName = customerObj.customerName;
         this.loyaltyCard = customerObj.loyaltyCard;
     }
-
-
+    
+    
     public LoyaltyCardObj getLoyaltyCard() {
         return loyaltyCard;
     }
-
+    
     public void setLoyaltyCard(LoyaltyCardObj loyaltyCard) {
         this.loyaltyCard = loyaltyCard;
     }
-
+    
     public String getCustomerName() {
         return customerName;
     }
@@ -62,11 +61,12 @@ public class CustomerObj implements Customer {
     public void setCustomerCard(String customerCard) {
         if (customerCard == null || customerCard.equals("")) {
             loyaltyCard = null;
-               return;
+            return;
         }
         ObjectMapper mapper = new ObjectMapper();
         HashMap<String, LoyaltyCardObj> cardMap = null;
-        TypeReference<HashMap<String, LoyaltyCardObj>> typeRef = new TypeReference<HashMap<String, LoyaltyCardObj>>() {};
+        TypeReference<HashMap<String, LoyaltyCardObj>> typeRef = new TypeReference<HashMap<String, LoyaltyCardObj>>() {
+        };
         File cards = new File(CustomerManager.CARD_PATH);
         try {
             cards.createNewFile();
@@ -77,7 +77,7 @@ public class CustomerObj implements Customer {
         loyaltyCard = cardMap.get(customerCard);
         loyaltyCard.setIsAttached(true);
     }
-
+    
     
     public Integer getId() {
         return this.id;
@@ -94,7 +94,7 @@ public class CustomerObj implements Customer {
     
     @JsonIgnore
     public void setPoints(Integer points) {
-       loyaltyCard.setPoints(points);
+        loyaltyCard.setPoints(points);
     }
     
 }

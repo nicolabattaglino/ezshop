@@ -10,13 +10,12 @@ public abstract class BalanceOperationObj implements BalanceOperation {
     private double money;
     private String type;
     
-
-
-    public BalanceOperationObj(int id,LocalDate date, String type) {
+    
+    public BalanceOperationObj(int id, LocalDate date, String type) {
         super();
         this.date = date;
         this.type = type;
-        this.balanceId= id;
+        this.balanceId = id;
     }
     
     public int getBalanceId() {
