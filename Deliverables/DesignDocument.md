@@ -162,8 +162,7 @@ UserRole <- User : -role: UserRole
 
 class Customer {
     -id: Integer
-    -name: String
-    -surname: String
+    -customerName: String
 }
 
 note right : Persistent
@@ -173,6 +172,7 @@ LoyaltyCard "0..1" <- Customer: -loyaltyCard: LoyaltyCard
 class LoyaltyCard {
     -cardCode: String
     -points: Integer
+    -isAttached: boolean
 }
 note left : Persistent
 

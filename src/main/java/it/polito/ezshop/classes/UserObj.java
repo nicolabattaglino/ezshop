@@ -18,8 +18,6 @@ public class UserObj implements User {
     
     public  UserObj() {}
 
-
-
     public Integer getId() {
         return id;
     }
@@ -49,6 +47,8 @@ public class UserObj implements User {
     }
     
     public void setRole(String role) {
+
+        if(role == null) return;
 
         if (role.equalsIgnoreCase("ADMINISTRATOR") ||
                 role.equalsIgnoreCase("CASHIER") ||

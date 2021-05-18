@@ -33,11 +33,8 @@ public class EZShop implements EZShopInterface {
 
     @Override
     public Integer createUser(String username, String password, String role) throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
-       // if(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString())){
             return userManager.createUser(username,password,role);
-       // } else {
-          //  return null;
-        //}
+
     }
 
     @Override

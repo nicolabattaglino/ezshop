@@ -15,6 +15,8 @@ import java.util.*;
 public class UserManager {
 
     public static final String USERS_PATH = "data/users.json";
+    public static final String USERS_ID_PATH = "data/userIdGen.json";
+
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
     private static LinkedList<UserObj> userList;
@@ -38,6 +40,21 @@ public class UserManager {
                 ioException.printStackTrace();
             } finally {
                 userList = new LinkedList<>();
+            }
+        }
+        TypeReference<Integer> typeRef2 = new TypeReference<Integer>() {};
+        File usersId = new File(USERS_ID_PATH);
+        try {
+            usersId.createNewFile();
+            userIdGen = mapper.readValue(usersId, typeRef2);
+        } catch (IOException e) {
+            usersId.delete();
+            try {
+                usersId.createNewFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } finally {
+                userIdGen = 0;
             }
         }
     }
@@ -69,21 +86,20 @@ public class UserManager {
             if (user.getUsername().equals(username))
                 return -1;
         }
-
-        System.out.println(role);
         if (userList.size() == 0) {
             userIdGen = 0;
         } else {
-            userIdGen = userList.getLast().getId() + 1;
+            userIdGen = userIdGen + 1;
         }
         UserObj u = new UserObj(userIdGen, username, password, UserRole.valueOf(role.toUpperCase()));
-        //System.out.println(u.getRole());
 
         if(!userList.add(u))
                 return -1;
         try {
             persistUsers();
         } catch (IOException e) {
+            userList.removeLast();
+            userIdGen = userList.getLast().getId();
             e.printStackTrace();
         }
         return userIdGen;
@@ -94,9 +110,9 @@ public class UserManager {
         int i = 0;
         if (id == null || id < 0)  // TODO if id == null
             throw new InvalidUserIdException();
-
+        UserObj u;
         for (i = 0; i < userList.size(); i++) {
-            User u = userList.get(i);
+            u = userList.get(i);
             if (u.getId().equals(id)) {
                 if(u != userList.remove(i)){
                     return false;
@@ -104,6 +120,7 @@ public class UserManager {
                     try {
                         persistUsers();
                     } catch (IOException e) {
+                        userList.add(u);
                         e.printStackTrace();
                     }
                     return true;
@@ -143,7 +160,7 @@ public class UserManager {
                         !role.toUpperCase().equals(UserRole.CASHIER.toString()) &&
                         !role.toUpperCase().equals(UserRole.SHOPMANAGER.toString())))
             throw new InvalidRoleException();
-
+        String ur = userList.get(id).getRole();
         for (i = 0; i < userList.size(); i++) {
             if (userList.get(i).getId().equals(id)) {
                 User u = userList.get(i);
@@ -151,6 +168,12 @@ public class UserManager {
                 try {
                     persistUsers();
                 } catch (IOException e) {
+                    for (i = 0; i < userList.size(); i++) {
+                        if (userList.get(i).getId().equals(id)) {
+                            u = userList.get(i);
+                            u.setRole(ur.toUpperCase());
+                        }
+                    }
                     e.printStackTrace();
                 }
                 return true;
@@ -196,6 +219,8 @@ public class UserManager {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(USERS_PATH), userList);
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(new File(USERS_ID_PATH), userIdGen);
     }
 
 }

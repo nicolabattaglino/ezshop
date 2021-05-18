@@ -1,3 +1,10 @@
+.idea
+ezshop.iml
+users.json
+file.db
+loyaltyCards.json
+cardgen.txt
+customer.db
 .metadata
 .DS_Store
 target/

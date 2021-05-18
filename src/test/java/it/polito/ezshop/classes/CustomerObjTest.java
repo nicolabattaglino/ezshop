@@ -24,12 +24,12 @@ public class CustomerObjTest {
 
 	@Test
 	public void testSetCustomerCard(){
-		CustomerObj cu = new CustomerObj(2, "John");
-		LoyaltyCardObj card1 = new LoyaltyCardObj("1000000001");
-		cu.setCustomerCard("1000000001");
-		cu.setPoints(10);
-		assertTrue(cu.getPoints() == 10);
-
+		CustomerManager cm = new CustomerManager(null);
+		cm.createCard();
+		CustomerObj cu = new CustomerObj(1, "John");
+		assertNull(cu.getCustomerCard());
+		cu.setCustomerCard("1000000000");
+		assertTrue(cu.getCustomerCard().equals("1000000000"));
 	}
 
 	@Test
@@ -40,28 +40,20 @@ public class CustomerObjTest {
 	}
 	@Test
 	public void testSetPoints(){
-		CustomerManager cm = new CustomerManager(null);
-		cm.createCard();
 		CustomerObj cu = new CustomerObj(2, "John");
-		cu.setCustomerCard("1000000000");
+		LoyaltyCardObj l = new LoyaltyCardObj();
+		cu.setLoyaltyCard(l);
 		cu.setPoints(10);
 		assertTrue(cu.getPoints() == 10);
 	}
 
-
-
 	@Test
-	public void testGetCardFromNewCustomer(){
+	public void testConstructor(){
 		CustomerObj cu = new CustomerObj(2, "John");
-		assertNull(cu.getCustomerCard());
-		assertNull(cu.getLoyaltyCard());
-		LoyaltyCardObj card = new LoyaltyCardObj("1000000001");
-		cu.setCustomerCard("1000000001");
-		assertEquals(card.getCardCode(), cu.getCustomerCard());
-
-
+		LoyaltyCardObj l = new LoyaltyCardObj();
+		cu.setLoyaltyCard(l);
+		CustomerObj cu1 = new CustomerObj(cu);
+		assertEquals(cu1.getId(), cu.getId());
 	}
-
-
 
 }

@@ -60,10 +60,10 @@ public class CustomerObj implements Customer {
     
     @JsonIgnore
     public void setCustomerCard(String customerCard) {
-       /* if (customerCard == null || customerCard.equals("")) {
+        if (customerCard == null || customerCard.equals("")) {
             loyaltyCard = null;
                return;
-        }*/
+        }
         ObjectMapper mapper = new ObjectMapper();
         HashMap<String, LoyaltyCardObj> cardMap = null;
         TypeReference<HashMap<String, LoyaltyCardObj>> typeRef = new TypeReference<HashMap<String, LoyaltyCardObj>>() {};

@@ -3,29 +3,4 @@
   "username" : "SimAdmin",
   "password" : "12345",
   "role" : "ADMINISTRATOR"
-}, {
-  "id" : 1,
-  "username" : "OliviaJ",
-  "password" : "220011",
-  "role" : "CASHIER"
-}, {
-  "id" : 2,
-  "username" : "Alan",
-  "password" : "4444",
-  "role" : "SHOPMANAGER"
-}, {
-  "id" : 3,
-  "username" : "Rarara",
-  "password" : "2345",
-  "role" : "CASHIER"
-}, {
-  "id" : 4,
-  "username" : "Carl",
-  "password" : "123",
-  "role" : "SHOPMANAGER"
-}, {
-  "id" : 5,
-  "username" : "Mike",
-  "password" : "3333",
-  "role" : "CASHIER"
 } ]
