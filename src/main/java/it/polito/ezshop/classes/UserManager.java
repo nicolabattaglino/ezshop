@@ -15,7 +15,6 @@ import java.util.*;
 public class UserManager {
 
     public static final String USERS_PATH = "data/users.json";
-    //public static final String USERS_ID_PATH = "data/usersId.json";
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
     private static LinkedList<UserObj> userList;
@@ -41,29 +40,12 @@ public class UserManager {
                 userList = new LinkedList<>();
             }
         }
-       /* TypeReference<Integer> typeRef1 = new TypeReference<Integer>() {
-        };
-        File usersId = new File(USERS_ID_PATH);
-        try {
-            usersId.createNewFile();
-            userIdGen = mapper.readValue(usersId, typeRef1);
-        } catch (IOException e) {
-            usersId.delete();
-            try {
-                usersId.createNewFile();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            } finally {
-                userIdGen = 0;
-            }
-        }*/
     }
-    
 
     
     public User getUserLogged() {
         try {
-            return loggedUser;
+            return new UserObj(loggedUser.getId(),loggedUser.getUsername(),loggedUser.getPassword(),UserRole.valueOf(loggedUser.getRole()));
         } catch (NullPointerException e) {
             System.out.println("No user logged");
         }
@@ -71,7 +53,6 @@ public class UserManager {
     }
     
     public Integer createUser(String username, String password, String role) throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
-        UserRole r = null;
         if (username == null || username.equals(""))
             throw new InvalidUsernameException();
 
@@ -144,7 +125,7 @@ public class UserManager {
         for (i = 0; i < userList.size(); i++) {
             User u = userList.get(i);
             if (u.getId().equals(id)) {
-                return u;
+                return new UserObj(u.getId(),u.getUsername(),u.getPassword(),UserRole.valueOf(u.getRole()));
             } else u = null;
         }
 
@@ -204,6 +185,12 @@ public class UserManager {
         return true;
     }
 
+    public void clean(){
+        userList.clear();
+        File users = new File(USERS_PATH);
+        users.delete();
+
+    }
 
     private void persistUsers() throws IOException {
         ObjectMapper mapper = new ObjectMapper();

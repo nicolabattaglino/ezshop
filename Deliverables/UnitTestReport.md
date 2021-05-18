@@ -39,7 +39,7 @@ Version:
 
 
 
-**Predicates for method *getCustomerName*:**
+**Predicates for method *setRole*:**
 
 | Criteria | Predicate |
 | -------- | --------- |

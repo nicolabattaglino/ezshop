@@ -111,9 +111,12 @@ public class CustomerManager {
     public Integer defineCustomer(String customerName) throws InvalidCustomerNameException {
         if (customerName == null || customerName.equals(""))
             throw new InvalidCustomerNameException();
-
-        Integer id = ++customerIdGen;
-        System.out.println(customerIdGen);
+        Integer id;
+        if (customerMap.size() == 0){
+            id = 1000000000;
+        } else {
+            id = ++customerIdGen;
+        }
         CustomerObj customer = new CustomerObj(id, customerName);
         customerMap.put(id, customer);
         if (customerMap.get(id) == null){
@@ -122,6 +125,7 @@ public class CustomerManager {
         try {
             persistCustomers();
         } catch (IOException e) {
+            customerMap.remove(id);
             e.printStackTrace();
         }
         return id;
@@ -196,16 +200,13 @@ public class CustomerManager {
             return true;
         }
     }
-    
     public Customer getCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
         if (id < 0) {
             throw new InvalidCustomerIdException();
         } else if (customerMap.get(id) == null) {
             return null;
         } else {
-            //todo vedi che fare per la copia
-            //CustomerObj c =
-            return customerMap.get(id);
+            return new CustomerObj(customerMap.get(id));
         }
     }
     
@@ -218,6 +219,8 @@ public class CustomerManager {
         LoyaltyCardObj l = new LoyaltyCardObj(String.valueOf(loyaltyCardIdGen));
         cardMap.put(l.getCardCode(), l);
         try {
+            // todo rollback
+
             persistCards();
         } catch (IOException e) {
             //Todo vedi che fare per le rollback
@@ -241,6 +244,8 @@ public class CustomerManager {
         target.setIsAttached(true);
 
         try {
+            // todo rollback
+
             persistCards();
             persistCustomers();
         } catch (IOException e) {          //Todo vedi che fare per le rollback
@@ -269,6 +274,8 @@ public class CustomerManager {
             }
         }
         try {
+            // todo rollback
+
             persistCards();
             persistCustomers();
         } catch (IOException e) {
@@ -277,6 +284,19 @@ public class CustomerManager {
         return true;
 
 
+    }
+
+    public void clear(){
+        customerMap.clear();
+        cardMap.clear();
+        File customers = new File(CUSTOMER_PATH);
+        customers.delete();
+        File cards = new File(CARD_PATH);
+        cards.delete();
+        File cardId = new File(CARD_ID_PATH);
+        cardId.delete();
+        File customerId = new File(CUSTOMER_ID_PATH);
+        customerId.delete();
     }
 
     private void persistCards() throws IOException {

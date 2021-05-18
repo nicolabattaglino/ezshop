@@ -3,39 +3,5 @@
     "id" : 1,
     "customerName" : "John",
     "loyaltyCard" : null
-  },
-  "2" : {
-    "id" : 2,
-    "customerName" : "Paul",
-    "loyaltyCard" : {
-      "cardCode" : "1000000002",
-      "points" : 0,
-      "isAttached" : true
-    }
-  },
-  "3" : {
-    "id" : 3,
-    "customerName" : "Paul",
-    "loyaltyCard" : null
-  },
-  "4" : {
-    "id" : 4,
-    "customerName" : "Paul",
-    "loyaltyCard" : null
-  },
-  "5" : {
-    "id" : 5,
-    "customerName" : "Paul",
-    "loyaltyCard" : null
-  },
-  "6" : {
-    "id" : 6,
-    "customerName" : "Paul",
-    "loyaltyCard" : null
-  },
-  "7" : {
-    "id" : 7,
-    "customerName" : "Paul",
-    "loyaltyCard" : null
   }
 }

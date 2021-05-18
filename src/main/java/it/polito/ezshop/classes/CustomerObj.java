@@ -16,7 +16,6 @@ public class CustomerObj implements Customer {
     
     private Integer id;
     private String customerName;
-
     private LoyaltyCardObj loyaltyCard;
 
     public CustomerObj() {}
@@ -25,6 +24,12 @@ public class CustomerObj implements Customer {
         this.id = id;
         this.customerName = customerName;
         this.loyaltyCard = null;
+    }
+
+    public CustomerObj(CustomerObj customerObj) {
+        this.id = customerObj.id;
+        this.customerName = customerObj.customerName;
+        this.loyaltyCard = customerObj.loyaltyCard;
     }
 
 
