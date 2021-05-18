@@ -3,8 +3,8 @@ package it.polito.ezshop.classes;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import it.polito.ezshop.data.Order;
 import it.polito.ezshop.data.BalanceOperation;
+import it.polito.ezshop.data.Order;
 import it.polito.ezshop.data.ProductType;
 
 public class OrderObj implements Order {
@@ -131,16 +131,4 @@ public class OrderObj implements Order {
         this.supplier = supplier;
     }
     
-    @Override
-    public String toString() {
-        return "OrderObj{" +
-                "orderId=" + orderId +
-                ", product=" + product +
-                ", pricePerUnit=" + pricePerUnit +
-                ", quantity=" + quantity +
-                ", supplier='" + supplier + '\'' +
-                ", status=" + status +
-                ", balanceOp=" + balanceOp +
-                '}';
-    }
 }

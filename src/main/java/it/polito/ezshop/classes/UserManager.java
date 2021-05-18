@@ -8,18 +8,19 @@ import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import it.polito.ezshop.data.User;
 import it.polito.ezshop.exceptions.*;
 
-
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class UserManager {
-
+    
     public static final String USERS_PATH = "data/users.json";
     public static final String USERS_ID_PATH = "data/userIdGen.json";
-
+    
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
-    private  LinkedList<UserObj> userList;
+    private LinkedList<UserObj> userList;
     private Integer userIdGen = 0;
     private User loggedUser;
     
@@ -138,14 +139,13 @@ public class UserManager {
         int i = 0;
         if (id < 0)
             throw new InvalidUserIdException();
-
-        for (i = 0; i < userList.size(); i++) {
-            User u = userList.get(i);
+    
+        for (User u : userList) {
             if (u.getId().equals(id)) {
-                return new UserObj(u.getId(),u.getUsername(),u.getPassword(),UserRole.valueOf(u.getRole()));
+                return new UserObj(u.getId(), u.getUsername(), u.getPassword(), UserRole.valueOf(u.getRole()));
             } else u = null;
         }
-
+    
         return null;
     }
     

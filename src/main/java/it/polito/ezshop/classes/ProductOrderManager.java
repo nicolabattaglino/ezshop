@@ -48,9 +48,9 @@ public class ProductOrderManager {
         }
     }
     
-    private boolean checkBarcode(String barCode) {
+    public boolean checkBarcode(String barCode) {
         if (barCode == null) return false;
-        if (!barCode.matches("^([0-9]{8}|[0-9]{12,14}|[0-9]{17,18})$")) return false;
+        if (!barCode.matches("^([0-9]{8}|[0-9]{12,14}|[0-9]{17,18})")) return false;
         final int length = barCode.length();
         int checkValue = barCode.charAt(length - 1);
         //TODO vedi se va bene

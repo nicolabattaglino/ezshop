@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import it.polito.ezshop.data.*;
 import it.polito.ezshop.exceptions.*;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -327,8 +326,8 @@ public class TransactionManager {
         return output;
     }
     
-    public Integer startReturnTransaction(Integer saleNumber) throws /*InvalidTicketNumberException,*/InvalidTransactionIdException {
-        if (saleNumber == null || saleNumber<= 0 ) throw new InvalidTransactionIdException();
+    public Integer startReturnTransaction(Integer saleNumber) throws InvalidTransactionIdException {
+        if (saleNumber == null || saleNumber <= 0) throw new InvalidTransactionIdException();
         double money = 0;
         SaleTransaction toBeReturned = this.getSaleTransaction(saleNumber);
         List<TicketEntry> tickets = toBeReturned.getEntries();
@@ -336,7 +335,7 @@ public class TransactionManager {
             money += (ticket.getAmount() * ticket.getPricePerUnit() * ticket.getDiscountRate());
         }
     
-        ReturnTransaction returning = new ReturnTransaction(returnGen++,LocalDate.now(), money, "Return", (int) saleNumber);
+        ReturnTransaction returning = new ReturnTransaction(returnGen++, LocalDate.now(), money, "Return", (int) saleNumber);
         returnTransactions.put(returning.getBalanceId(), returning);
         Integer output = returning.getBalanceId();
         try {
