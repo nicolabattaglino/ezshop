@@ -22,11 +22,24 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     private String status;
 
 
-    public SaleTransactionObj(LocalDate date, double money, String type) {
-        super(date, type);
+    public SaleTransactionObj(int id,LocalDate date, double money, String type) {
+        super(id, date, type);
         this.money = money;
         this.price = this.money;
         this.status = "new"; //equal to started, other states are closed and payed
+    }
+
+    public SaleTransactionObj(SaleTransactionObj s){
+        super(s.balanceId, s.date, s.type);
+        this.money=s.money;
+        this.ticketNumber=s.ticketNumber;
+        for( TicketEntry t: s.getEntries() ){
+            this.entries.add(t);
+        }
+
+        this.price =s.price;
+        this.status=s.status ;
+        this.discountRate=s.discountRate;
     }
     
     public String getStatus() {

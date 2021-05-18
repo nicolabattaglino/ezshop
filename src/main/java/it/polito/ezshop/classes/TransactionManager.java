@@ -10,6 +10,8 @@ import it.polito.ezshop.exceptions.*;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
@@ -21,6 +23,7 @@ public class TransactionManager {
     public static final String RETURN_PATH = "data/returns.json";
     public static final String CREDITCARD_PATH = "data/creditCards.json";
     public static final String BALANCEOPERATION_PATH = "data/balanceOperations.json";
+    public static final String GENERATOR_PATH = "data/transactionManagerGenerators.json";
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
     private Map<Integer, BalanceOperationObj> balanceOperations;
@@ -33,10 +36,46 @@ public class TransactionManager {
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
     private Map<Integer, SaleTransactionObj> saleTransactions; // list of all sale transactions (they are also included in balanceOperation)
-    private EZShop shop;
+    private final EZShop shop;
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
     private Map<String, CreditCard> cards = new HashMap<String, CreditCard>();
+    private static int saleGen;
+    private static int returnGen;
+    private static int balanceOperationGen;
+
+
+    {
+        try {
+            File myObj = new File(GENERATOR_PATH);
+            Scanner myReader = new Scanner(myObj);
+            if(myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                saleGen = (int) Integer.parseInt(data);
+            }
+            else saleGen=0;
+            if(myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                returnGen = (int) Integer.parseInt(data);
+            }
+            else returnGen=0;
+            if(myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                balanceOperationGen = (int) Integer.parseInt(data);
+            }
+            else balanceOperationGen=0;
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        try {
+            this.persistGenerators();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     
     public TransactionManager(EZShop shop) {
         ObjectMapper mapper = new ObjectMapper();
@@ -128,15 +167,20 @@ public class TransactionManager {
 
 
     public Integer startSaleTransaction()  {
-        SaleTransactionObj sale = new SaleTransactionObj(LocalDate.now(), 0.0, "Sale");
+        SaleTransactionObj sale = new SaleTransactionObj(saleGen++,LocalDate.now(), 0.0, "Sale");
         saleTransactions.put((Integer) sale.getBalanceId(), sale);
         try {
             this.persistSales();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        
+        try {
+            persistGenerators();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         return sale.getBalanceId();
     }
     
@@ -224,11 +268,13 @@ public class TransactionManager {
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
         if (sale.getStatus() == "payed") return false;
+        double oldD= sale.getDiscountRate();
         sale.setDiscountRate(discountRate);
         try {
             this.persistSales();
         } catch (IOException e) {
-            e.printStackTrace();
+            sale.setDiscountRate(oldD);
+            return false;
         }
         return true;
     }
@@ -250,7 +296,8 @@ public class TransactionManager {
         try {
             this.persistSales();
         } catch (IOException e) {
-            e.printStackTrace();
+            sale.setStatus("new");
+            return  false;
         }
         return true;
     }
@@ -258,13 +305,14 @@ public class TransactionManager {
     public boolean deleteSaleTransaction(Integer transactionId) throws InvalidTransactionIdException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
+        SaleTransactionObj oldS = new SaleTransactionObj(sale);
         if (sale == null) return false;
         if (sale.getStatus() == "payed") return false; // the transaction wasn't opern
         saleTransactions.remove(transactionId);
         try {
             this.persistSales();
         } catch (IOException e) {
-            e.printStackTrace();
+            saleTransactions.put(oldS.getBalanceId(), oldS);
         }
         return true;
     }
@@ -288,13 +336,14 @@ public class TransactionManager {
             money += (ticket.getAmount() * ticket.getPricePerUnit() * ticket.getDiscountRate());
         }
     
-        ReturnTransaction returning = new ReturnTransaction(LocalDate.now(), money, "Return", (int) saleNumber);
+        ReturnTransaction returning = new ReturnTransaction(returnGen++,LocalDate.now(), money, "Return", (int) saleNumber);
         returnTransactions.put(returning.getBalanceId(), returning);
         Integer output = returning.getBalanceId();
         try {
             this.persistReturns();
         } catch (IOException e) {
-            e.printStackTrace();
+            returnTransactions.remove(output);
+            return null;
         }
         return output;
     }
@@ -308,6 +357,7 @@ public class TransactionManager {
         if (productCode == null) throw new InvalidProductCodeException();
         if (amount < 0) throw new InvalidQuantityException();
         ReturnTransaction target = getReturnTransaction(returnId);
+        ReturnTransaction oldR = new ReturnTransaction(target);
         if (target == null) {
             return false;
         }
@@ -327,11 +377,12 @@ public class TransactionManager {
         prodotto.setAmount(amount);
         target.addEntry(prodotto);
         target.setPrice(target.getPrice() + prodotto.getPricePerUnit() * amount);
-        //the previous line updates the price in the return transactio. The price in the return transaction is the amount of money that will be returned to the customer
+        //the previous line updates the price in the return transaction. The price in the return transaction is the amount of money that will be returned to the customer
         try {
             this.persistReturns();
         } catch (IOException e) {
-            e.printStackTrace();
+            returnTransactions.remove(target.getBalanceId());
+            returnTransactions.put(oldR.getBalanceId(), oldR);
         }
         return true;
     }
@@ -345,11 +396,14 @@ public class TransactionManager {
         if (!commit) {
             returnTransactions.remove(target.getBalanceId());
         }
-        target.setStatus(ReturnStatus.ENDED);
+        else {
+            target.setStatus(ReturnStatus.ENDED);
+        }
         try {
             this.persistReturns();
         } catch (IOException e) {
-            e.printStackTrace();
+            if(commit) target.setStatus(ReturnStatus.NEW);
+            else returnTransactions.put(target.getBalanceId(), target);
         }
         return true;
         
@@ -361,8 +415,11 @@ public class TransactionManager {
         if (target == null) return false;
         if (target.getStatus() != ReturnStatus.CLOSED) return false;
         else {
+            ReturnTransaction oldR = new ReturnTransaction(target);
+
             int amount = 0;
             SaleTransactionObj sale = this.getSaleTransactionObj(target.getTransactionID());
+            SaleTransactionObj oldS = new SaleTransactionObj((sale));
             if (sale == null) return false;
             int priceReduction = 0;
             List<TicketEntry> targetEntries = target.getEntries();
@@ -384,8 +441,9 @@ public class TransactionManager {
                         } catch (InvalidProductCodeException e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
+                            return false;
                         }
-    
+
                         //this line updates the quantity by the amount stored in the return transaction.
                         // it might need to connect to the productOrderManager directly to avoid user problems!
                     } else toBeUpdated.add(saleEntry);
@@ -394,12 +452,40 @@ public class TransactionManager {
             // update the old sale
             sale.setEntries(toBeUpdated);
             target.setStatus(ReturnStatus.ENDED);
-            
-        }
-        try {
-            this.persistReturns();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+
+            try {
+                this.persistReturns();
+            } catch (IOException e) {
+                for (TicketEntry saleEntry : saleEntries) {
+                    for (TicketEntry targetEntry : targetEntries) {
+                        if (saleEntry.getBarCode().equals(targetEntry.getBarCode())) {
+                            amount = saleEntry.getAmount() - targetEntry.getAmount();
+                            // calculate the difference between the sold amount and the amount to be returned
+                            saleEntry.setAmount(amount);
+                            toBeUpdated.add(saleEntry);
+                            priceReduction += amount * saleEntry.getPricePerUnit();
+                            try {
+                                shop.getProductOrderManager().updateQuantity(shop.getProductTypeByBarCode(saleEntry.getBarCode()).getId(), -1*targetEntry.getAmount());
+                            } catch (InvalidProductIdException e2) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            } catch (InvalidProductCodeException e2) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                                return false;
+                            }
+
+                            //this line updates the quantity by the amount stored in the return transaction.
+                            // it might need to connect to the productOrderManager directly to avoid user problems!
+                        } else toBeUpdated.add(saleEntry);
+                    }
+                }
+                saleTransactions.remove(sale.getBalanceId());
+                returnTransactions.remove(target.getBalanceId());
+                saleTransactions.put(oldS.getBalanceId(), oldS);
+                returnTransactions.put(oldR.getBalanceId(), oldR);
+            }
         }
         
         return true;
@@ -463,13 +549,13 @@ public class TransactionManager {
     
     public boolean recordBalanceUpdate(double toBeAdded) {
         if(toBeAdded>=0){
-            Credit transaction= new Credit(LocalDate.now(), "Credit");
+            Credit transaction= new Credit(balanceOperationGen++,LocalDate.now(), "Credit");
             transaction.setMoney(toBeAdded);
             balanceOperations.put(transaction.getBalanceId(),transaction);
 
         }
         else {
-            Debit transaction = new Debit(LocalDate.now(), "Debit");
+            Debit transaction = new Debit(balanceOperationGen++,LocalDate.now(), "Debit");
             transaction.setMoney(toBeAdded);
             balanceOperations.put(transaction.getBalanceId(),transaction);
             if(computeBalance()<0){
@@ -479,6 +565,12 @@ public class TransactionManager {
         }
         try {
             this.persistBalanceOperations();
+        } catch (IOException e) {
+            balanceOperations.remove(balanceOperationGen-1);
+            return false;
+        }
+        try {
+            persistGenerators();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -539,7 +631,14 @@ public class TransactionManager {
         boolean alternate = false;
         for (int i = ccNumber.length() - 1; i >= 0; i--)
         {
+            try {
+                int i1 = Integer.parseInt(ccNumber.substring(i, i + 1));
+            } catch(NumberFormatException e){
+                return false;
+        }
             int n = Integer.parseInt(ccNumber.substring(i, i + 1));
+
+            if(n<0)return  false;
             if (alternate)
             {
                 n *= 2;
@@ -551,6 +650,7 @@ public class TransactionManager {
             sum += n;
             alternate = !alternate;
         }
+        if(sum==0) return  false;
         return (sum % 10 == 0);
     }
     
@@ -582,7 +682,7 @@ public class TransactionManager {
         // add persistance
         double tot = order.getPricePerUnit() * order.getQuantity();
         if(order.getStatus().equals(OrderStatus.ISSUED.name())) {
-            BalanceOperationObj operation = new Debit(LocalDate.now(), "Debit");
+            BalanceOperationObj operation = new Debit(balanceOperationGen++,LocalDate.now(), "Debit");
             order.setBalanceOperation((BalanceOperationObj) operation);
             order.setBalanceId(operation.getBalanceId());
             orders.put(order.getOrderId(), order);
@@ -593,6 +693,12 @@ public class TransactionManager {
         }
         try {
             this.persistOrders();
+        } catch (IOException e) {
+            balanceOperations.remove(balanceOperationGen-1);
+            return false;
+        }
+        try {
+            persistGenerators();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -629,6 +735,21 @@ public class TransactionManager {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(BALANCEOPERATION_PATH), balanceOperations);
+    }
+
+    private void persistGenerators() throws IOException {
+        try {
+            File fold = new File(GENERATOR_PATH);
+            fold.delete();
+            FileWriter myWriter = new FileWriter(GENERATOR_PATH);
+            myWriter.write(saleGen+ "\n");
+            myWriter.write(returnGen+ "\n");
+            myWriter.write(balanceOperationGen+ "\n");
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 }
 
