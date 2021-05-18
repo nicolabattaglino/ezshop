@@ -39,9 +39,9 @@ public class TransactionManager {
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
     private Map<String, CreditCard> cards = new HashMap<String, CreditCard>();
-    private static int saleGen;
-    private static int returnGen;
-    private static int balanceOperationGen;
+    private int saleGen;
+    private int returnGen;
+    private int balanceOperationGen;
 
 
 

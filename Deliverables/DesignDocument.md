@@ -226,9 +226,9 @@ class ProductOrderManager {
 ProductOrderManager -->"*" ProductType: -productMap: HashMap<String, ProductType>
 
 class TransactionManager {
-    saleGen: static int
-    returnGen: static int 
-    balanceOperationGen: static int
+    -saleGen:  int
+    -returnGen:int 
+    -balanceOperationGen:  int
     +startSaleTransaction() : Integer
     +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
