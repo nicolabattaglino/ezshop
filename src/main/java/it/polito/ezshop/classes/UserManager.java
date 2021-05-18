@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.MapSerializer;
+import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.data.User;
 import it.polito.ezshop.exceptions.*;
 
@@ -23,8 +24,8 @@ public class UserManager {
     private LinkedList<UserObj> userList;
     private Integer userIdGen = 0;
     private User loggedUser;
-    
-    public UserManager() {
+    private EZShop shop;
+    public UserManager(EZShop shop) {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<LinkedList<UserObj>> typeRef = new TypeReference<LinkedList<UserObj>>() {
         };
@@ -181,7 +182,6 @@ public class UserManager {
                 return true;
             }
         }
-        
         return false;
     }
     

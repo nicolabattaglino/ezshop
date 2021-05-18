@@ -31,11 +31,10 @@ public class EZShop implements EZShopInterface {
     public UserManager getUserManager() {
         return userManager;
     }
-    public EZShop() {}
-
+    
     @Override
     public void reset() {
-
+    
     }
     
     @Override
@@ -216,7 +215,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean modifyCustomer(Integer id, String newCustomerName, String newCustomerCard) throws InvalidCustomerNameException, InvalidCustomerCardException, InvalidCustomerIdException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -227,7 +226,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean deleteCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -238,7 +237,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public Customer getCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -249,7 +248,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public List<Customer> getAllCustomers() throws UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -260,7 +259,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public String createCard() throws UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -271,8 +270,8 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean attachCardToCustomer(String customerCard, Integer customerId) throws InvalidCustomerIdException, InvalidCustomerCardException, UnauthorizedException {
-
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -283,7 +282,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean modifyPointsOnCard(String customerCard, int pointsToBeAdded) throws InvalidCustomerCardException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -294,7 +293,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public Integer startSaleTransaction() throws UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -305,7 +304,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -316,7 +315,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -327,7 +326,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -338,7 +337,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean applyDiscountRateToSale(Integer transactionId, double discountRate) throws InvalidTransactionIdException, InvalidDiscountRateException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -349,7 +348,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public int computePointsForSale(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -360,7 +359,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean endSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -371,7 +370,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean deleteSaleTransaction(Integer saleNumber) throws InvalidTransactionIdException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -382,7 +381,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -393,7 +392,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public Integer startReturnTransaction(Integer saleNumber) throws /*InvalidTicketNumberException,*/InvalidTransactionIdException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -404,7 +403,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean returnProduct(Integer returnId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -415,7 +414,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -432,7 +431,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean deleteReturnTransaction(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -443,7 +442,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public double receiveCashPayment(Integer ticketNumber, double cash) throws InvalidTransactionIdException, InvalidPaymentException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -454,7 +453,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -465,7 +464,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public double returnCashPayment(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -476,7 +475,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public double returnCreditCardPayment(Integer returnId, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException, UnauthorizedException {
-        if(!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
+        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
                 userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
             throw new UnauthorizedException();
@@ -487,7 +486,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean recordBalanceUpdate(double toBeAdded) throws UnauthorizedException {
-        if(userManager.getUserLogged() == null || userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
+        if (userManager.getUserLogged() == null || userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())) {
             throw new UnauthorizedException();
         } else {
             return transactionManager.recordBalanceUpdate(toBeAdded);

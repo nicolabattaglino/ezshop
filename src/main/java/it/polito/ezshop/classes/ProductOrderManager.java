@@ -21,11 +21,13 @@ import java.util.stream.Collectors;
 public class ProductOrderManager {
     
     private static final String PRODUCTS_PATH = "data/products.json";
+    private static final String PRODUCT_GEN_PATH = "data/product_gen.json";
     private final EZShop shop;
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
     private HashMap<String, ProductTypeObj> productMap;
-    private int prouctIdGen; // TODO mettilo di default a 1
+    
+    private int productIdGen;
     
     public ProductOrderManager(EZShop shop) {
         this.shop = shop;
@@ -44,6 +46,21 @@ public class ProductOrderManager {
                 ioException.printStackTrace();
             } finally {
                 productMap = new HashMap<>();
+            }
+        }
+        File productGen = new File(PRODUCT_GEN_PATH);
+        try {
+            productGen.createNewFile();
+            productIdGen = mapper.readValue(productGen, Integer.class);
+        } catch (IOException e) {
+            productGen.delete();
+            try {
+                productGen.createNewFile();
+                mapper.writerWithDefaultPrettyPrinter().writeValue(productGen, 1);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } finally {
+                productIdGen = 1;
             }
         }
     }
@@ -76,15 +93,17 @@ public class ProductOrderManager {
             throw new InvalidPricePerUnitException();
         if (productMap.containsKey(productCode))
             return -1;
-        prouctIdGen++;
-        productMap.put(productCode, new ProductTypeObj(0, prouctIdGen, description, productCode, (note == null) ? "" : note, pricePerUnit, 0));
+        productIdGen++;
+        productMap.put(productCode, new ProductTypeObj(0, productIdGen, description, productCode, (note == null) ? "" : note, pricePerUnit, 0));
         try {
             persistProducts();
+            persistGen();
         } catch (IOException e) {
             productMap.remove(productCode);
+            productIdGen--;
             return -1;
         }
-        return prouctIdGen;
+        return productIdGen;
     }
     
     public boolean updateProduct(Integer id, String newDescription, String newCode, double newPrice, String newNote) throws InvalidProductIdException, InvalidProductDescriptionException, InvalidProductCodeException, InvalidPricePerUnitException {
@@ -269,6 +288,13 @@ public class ProductOrderManager {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(PRODUCTS_PATH), productMap);
+        
+    }
+    
+    private void persistGen() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(new File(PRODUCT_GEN_PATH), productIdGen);
         
     }
     
