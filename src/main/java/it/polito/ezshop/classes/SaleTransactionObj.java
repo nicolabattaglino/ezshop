@@ -19,14 +19,14 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     private double money;
     private String type;
     private Integer ticketNumber;
-    private String status;
+    private SaleStatus status;
 
 
     public SaleTransactionObj(int id,LocalDate date, double money, String type) {
         super(id, date, type);
         this.money = money;
         this.price = this.money;
-        this.status = "new"; //equal to started, other states are closed and payed
+        this.status = SaleStatus.STARTED; //equal to started, other states are closed and payed
     }
 
     public SaleTransactionObj(SaleTransactionObj s){
@@ -42,11 +42,11 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
         this.discountRate=s.discountRate;
     }
     
-    public String getStatus() {
+    public SaleStatus getStatus() {
         return status;
     }
     
-    public void setStatus(String status) {
+    public void setStatus(SaleStatus status) {
         this.status = status;
     }
     

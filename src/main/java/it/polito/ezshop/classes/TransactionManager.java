@@ -267,7 +267,7 @@ public class TransactionManager {
         if (discountRate > 1 || discountRate < 0) return false;
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
-        if (sale.getStatus() == "payed") return false;
+        if (sale.getStatus() == SaleStatus.PAYED) return false;
         double oldD= sale.getDiscountRate();
         sale.setDiscountRate(discountRate);
         try {
@@ -292,11 +292,11 @@ public class TransactionManager {
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
         if (!sale.getStatus().equals("new")) return false; // the transaction wasn't opern
-        sale.setStatus("closed");
+        sale.setStatus(SaleStatus.CLOSED);
         try {
             this.persistSales();
         } catch (IOException e) {
-            sale.setStatus("new");
+            sale.setStatus(SaleStatus.STARTED);
             return  false;
         }
         return true;
@@ -307,7 +307,7 @@ public class TransactionManager {
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         SaleTransactionObj oldS = new SaleTransactionObj(sale);
         if (sale == null) return false;
-        if (sale.getStatus() == "payed") return false; // the transaction wasn't opern
+        if (sale.getStatus() == SaleStatus.PAYED) return false; // the transaction wasn't opern
         saleTransactions.remove(transactionId);
         try {
             this.persistSales();

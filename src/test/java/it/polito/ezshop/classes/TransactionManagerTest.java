@@ -22,9 +22,9 @@ public class TransactionManagerTest {
 		it.polito.ezshop.data.EZShop shop= new it.polito.ezshop.data.EZShop();
 		TransactionManager t = new TransactionManager(shop);
 		assertTrue( t.luhn("79927398713"));
+		assertFalse( t.luhn("-79927398713"));
 		assertFalse(t.luhn("5"));
 		assertFalse(t.luhn(""));
-		assertFalse(t.luhn("-12"));
 		assertFalse(t.luhn("iduhsidh"));
 
 	}
