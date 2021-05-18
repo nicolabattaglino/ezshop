@@ -21,12 +21,25 @@ public class ReturnTransaction extends Credit {
     private double price;
     private ReturnStatus status ;
     
-    public ReturnTransaction( LocalDate date, double money, String type, int returning) {
-        super(date, type);
+    public ReturnTransaction( int id, LocalDate date, double money, String type, int returning) {
+        super(id, date, type);
         this.money = money;
         this.transactionID = returning;
         status = ReturnStatus.NEW ;
     }
+    public ReturnTransaction(ReturnTransaction r){
+        super(r.balanceId, r.date, r.type);
+        this.money=r.money;
+        this.transactionID=r.transactionID;
+        this.ticketNumber=r.ticketNumber;
+        for( TicketEntry t: r.getEntries() ){
+            this.entries.add(t);
+        }
+
+        this.price =r.price;
+        this.status=r.status ;
+    }
+
     
     public ReturnStatus getStatus() {
         return status;

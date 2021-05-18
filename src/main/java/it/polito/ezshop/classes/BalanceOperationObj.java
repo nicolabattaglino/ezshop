@@ -5,25 +5,18 @@ import it.polito.ezshop.data.BalanceOperation;
 import java.time.LocalDate;
 
 public abstract class BalanceOperationObj implements BalanceOperation {
-    private static int idGen = 0;
     private int balanceId;
     private LocalDate date;
     private double money;
     private String type;
     
-    public BalanceOperationObj(LocalDate date, String type) {
-        super();
-        this.date = date;
-        this.type = type;
-        balanceId = ++idGen;
-    }
 
-    public BalanceOperationObj(int Id,LocalDate date, String type) {
-        //constructor used to create BalanceOperationObj from copy of already existing BalanceOperationObjs
+
+    public BalanceOperationObj(int id,LocalDate date, String type) {
         super();
         this.date = date;
         this.type = type;
-        this.balanceId= Id;
+        this.balanceId= id;
     }
     
     public int getBalanceId() {

@@ -8,14 +8,13 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class SaleTransactionObjTest {
-
 	@Test
-	public void testEntries(){
-		SaleTransactionObjTest s = new SaleTransactionObjTest();
-		List<TicketEntry> lt= new ArrayList<TicketEntry>();
+	public void testEntries() {
+		SaleTransactionObj s = new SaleTransactionObj(0,LocalDate.now(), 0.0, "Sale");
+		List<TicketEntry> lt = new ArrayList<TicketEntry>();
 		s.setEntries(lt);
 		assertEquals(lt, s.getEntries());
-		TicketEntry t =null;
+		TicketEntry t = null;
 
 		s.addEntry(t);
 		lt.add(t);
@@ -23,36 +22,39 @@ public class SaleTransactionObjTest {
 	}
 
 	@Test
-	public void testPrice(){
-		SaleTransactionObj s = new SaleTransactionObj();
+	public void testPrice() {
+		SaleTransactionObj s = new SaleTransactionObj(0,LocalDate.now(), 0.0, "Sale");
 		s.setPrice(1);
-		assertTrue(1== s.getPrice());
+		assertTrue(1 == s.getPrice());
 	}
 
 	@Test
-	public void testDiscountRate(){
-		SaleTransactionObj s = new SaleTransactionObj();
+	public void testDiscountRate() {
+		SaleTransactionObj s = new SaleTransactionObj(0,LocalDate.now(), 0.0, "Sale");
 		s.setDiscountRate(1.0);
-		assertTrue(1.0== s.getDiscountRate());
+		assertEquals(1.0, s.getDiscountRate(), 0.0);
 	}
 
 	@Test
-	public void testBalanceId(){
-		SaleTransactionObj s = new SaleTransactionObj();
+	public void testBalanceId() {
+		SaleTransactionObj s = new SaleTransactionObj(0,LocalDate.now(), 0.0, "Sale");
 		s.setBalanceId(1);
-		assertTrue(1== s.getBalanceId());
+		assertEquals(1, s.getBalanceId());
 	}
 
 	@Test
-	public void testLocalDate(){
-		SaleTransactionObj s = new SaleTransactionObj();
+	public void testLocalDate() {
+		SaleTransactionObj s = new SaleTransactionObj(0,LocalDate.now(), 0.0, "Sale");
 		s.setDate(LocalDate.now());
-		assertEquals(LocalDate.now() , s.getDate());
+		assertEquals(LocalDate.now(), s.getDate());
 	}
 
 	@Test
-	public void testMoney(){
-		SaleTransactionObj s = new SaleTransactionObj();
+	public void testMoney() {
+		SaleTransactionObj s = new SaleTransactionObj(0,LocalDate.now(), 0.0, "Sale");
 		s.setMoney(1.0);
-		assertTrue(1.0== s.getMoney());
+		assertEquals(1.0, s.getMoney(), 0.0);
 	}
+
+}
+

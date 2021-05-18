@@ -152,6 +152,12 @@ enum UserRole{
     ADMINISTRATOR
 }
 
+enum ReturnStatus{
+    NEW
+    CLOSED
+    ENDED
+}
+
 UserRole <- User : -role: UserRole
 
 class Customer {
@@ -194,8 +200,8 @@ class ProductOrderManager {
 
     -productIdGen: Integer
     -orderIdGen: Integer
-
-    -checkBarcode(barCode: String): boolean
+    
+    +checkBarcode(barCode: String): boolean
 
     +createProductType(description: String, productCode: String, pricePerUnit: double, note: String): Integer
     +updateProduct(id: Integer, newDescription: String, newCode: String, newPrice: double, newNote: String): boolean
@@ -220,7 +226,6 @@ class ProductOrderManager {
 ProductOrderManager -->"*" ProductType: -productMap: HashMap<String, ProductType>
 
 class TransactionManager {
-    -balance: double
     +startSaleTransaction() : Integer
     +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
@@ -243,11 +248,10 @@ class TransactionManager {
     +computeBalance(): double
     +getAllOrders(): List<Order>
 
-    -luhnAlgorithm (String creditCard): boolean
-    -checkCreditCardBalance (String creditCard): boolean
+    +luhnAlgorithm (String creditCard): boolean
     +clear()
      
-    -getReturnTransaction(transactionId: Integer): ReturnTransaction
+    +getReturnTransaction(transactionId: Integer): ReturnTransaction
     +addCompletedOrder(orderId: Integer): Order
     +addOrder(order: Order): boolean
 }
@@ -273,12 +277,12 @@ Credit --|> BalanceOperation
 Debit --|> BalanceOperation
 
 abstract BalanceOperation {
-    {static} -idGen: int
+    
     -id: int
     -description: String
     -amount: double
     -date: LocalDate
-    {abstract} +compute(): double
+    
 }
 note right : Persistent
 class Order{
@@ -329,20 +333,25 @@ class SaleTransaction {
     -paymentType : String
     -discountRate : double
     -state: boolean
-
+    updatePrice()
+    deleteEntry(entry: TicketEntry)
+    addEntry(entry: TicketEntry)
     addProduct(p: ProductType, quantity : Integer) : boolean
     
 }
 note right: Persistent
 
-SaleTransaction "1" <--> "*" Quantity : -productList : ArrayList<Quantity>
-Quantity -> ProductType: -product : ProductType
+SaleTransaction  --> "*" TicketEntry : -productList : ArrayList<TicketEntry>
+
 
 SaleTransaction -|> Credit
 
-class Quantity {
-    quantity: Integer
-    saleTransaction: SaleTransaction
+class TicketEntry {
+    -  barCode: String
+    -  productDescription : String
+    - amount: int 
+    -  pricePerUnit: double
+    -  discountRate: double
 }
 note right : Persistent
 
@@ -355,6 +364,7 @@ Order "*" -> ProductType: -product: ProductType
 class ReturnTransaction {
   -quantity
 }
+ReturnTransaction --> ReturnStatus: -status: ReturnStatus 
 
 ReturnTransaction "*" <- SaleTransaction : -sale: SaleTransaction
 ReturnTransaction "*" -> ProductType : -product: ProductType

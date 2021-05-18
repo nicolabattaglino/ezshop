@@ -25,6 +25,49 @@ Version:
     <JUnit test classes must be in src/test/java/it/polito/ezshop   You find here, and you can use,  class TestEzShops.java that is executed  
     to start tests
     >
+### **Class *TransactionManager* - method *luhn***
+
+
+
+**Criteria for method *luhn*:**
+
+
+-Sign of number
+-Correctness of String
+-Presence of non-numerical values
+-Emptiness
+
+
+
+
+
+**Predicates for method *luhn*:**
+
+| Criteria | Predicate |
+| -------- | --------- |
+|        Sign of number  |    postive       |
+|          |   negative        |
+|    Correctness of String      |    79927398713       |
+|          |      5     |
+| Presence of non-numerical values | iduhsidh|
+| Emptiness | ""|
+
+
+
+
+
+
+**Combination of predicates**:
+
+
+| Sign of number | Correctness of String | Presence of non-numerical values|Emptiness | Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|-------|-------|-------|
+|Positive|Correct|No|No|valid|luhn("79927398713")-> true| testLuhn|
+|Negative|*|*|*|invalid|luhn("-79927398713")|testLuhn|
+|*|Incorrect|*|*|Invalid|luhn("5")|testLuhn|
+|*|*|Yes|*|Incorrect|luhn("iduhsidh")|testLuhn|
+|*|*|*|Yes|Incorrect|luhn("")|testLuhn|
+
 
  ### **Class *UserObj* - method *setRole***
 
