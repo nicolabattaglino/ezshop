@@ -53,7 +53,7 @@ ez_shop_model_controller .> ez_shop_exception
 ```plantuml
 
 @startuml
-scale 0.55
+scale 0.45
 interface EZShopInterface {
     +reset()
     +createUser(username: String, password: String, role: String) : Integer
@@ -226,6 +226,9 @@ class ProductOrderManager {
 ProductOrderManager -->"*" ProductType: -productMap: HashMap<String, ProductType>
 
 class TransactionManager {
+    -saleGen:  int
+    -returnGen:int 
+    -balanceOperationGen:  int
     +startSaleTransaction() : Integer
     +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean

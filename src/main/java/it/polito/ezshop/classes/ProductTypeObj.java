@@ -164,18 +164,4 @@ public class ProductTypeObj implements ProductType {
         this.id = id;
     }
     
-    
-    @Override
-    public String toString() {
-        return "ProductTypeObj{" +
-                "amount=" + amount +
-                ", id=" + id +
-                ", description='" + description + '\'' +
-                ", barCode='" + barCode + '\'' +
-                ", notes='" + notes + '\'' +
-                ", selPrice=" + selPrice +
-                ", discountRate=" + discountRate +
-                ", position=" + position +
-                '}';
-    }
 }

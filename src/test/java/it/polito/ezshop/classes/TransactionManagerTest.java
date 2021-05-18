@@ -26,6 +26,7 @@ public class TransactionManagerTest {
 		assertFalse(t.luhn("5"));
 		assertFalse(t.luhn(""));
 		assertFalse(t.luhn("iduhsidh"));
+		assertFalse(t.luhn(null));
 
 	}
 

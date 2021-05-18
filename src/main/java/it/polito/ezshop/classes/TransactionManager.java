@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import it.polito.ezshop.data.*;
 import it.polito.ezshop.exceptions.*;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -40,41 +39,12 @@ public class TransactionManager {
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
     private Map<String, CreditCard> cards = new HashMap<String, CreditCard>();
-    private static int saleGen;
-    private static int returnGen;
-    private static int balanceOperationGen;
+    private int saleGen;
+    private int returnGen;
+    private int balanceOperationGen;
 
 
-    {
-        try {
-            File myObj = new File(GENERATOR_PATH);
-            Scanner myReader = new Scanner(myObj);
-            if(myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                saleGen = (int) Integer.parseInt(data);
-            }
-            else saleGen=0;
-            if(myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                returnGen = (int) Integer.parseInt(data);
-            }
-            else returnGen=0;
-            if(myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                balanceOperationGen = (int) Integer.parseInt(data);
-            }
-            else balanceOperationGen=0;
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-        try {
-            this.persistGenerators();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     
     public TransactionManager(EZShop shop) {
@@ -162,6 +132,34 @@ public class TransactionManager {
         }
     
         this.shop = shop;
+        try {
+            File myObj = new File(GENERATOR_PATH);
+            Scanner myReader = new Scanner(myObj);
+            if(myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                saleGen = (int) Integer.parseInt(data);
+            }
+            else saleGen=0;
+            if(myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                returnGen = (int) Integer.parseInt(data);
+            }
+            else returnGen=0;
+            if(myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                balanceOperationGen = (int) Integer.parseInt(data);
+            }
+            else balanceOperationGen=0;
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        try {
+            this.persistGenerators();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     
     }
 
@@ -327,8 +325,8 @@ public class TransactionManager {
         return output;
     }
     
-    public Integer startReturnTransaction(Integer saleNumber) throws /*InvalidTicketNumberException,*/InvalidTransactionIdException {
-        if (saleNumber == null || saleNumber<= 0 ) throw new InvalidTransactionIdException();
+    public Integer startReturnTransaction(Integer saleNumber) throws InvalidTransactionIdException {
+        if (saleNumber == null || saleNumber <= 0) throw new InvalidTransactionIdException();
         double money = 0;
         SaleTransaction toBeReturned = this.getSaleTransaction(saleNumber);
         List<TicketEntry> tickets = toBeReturned.getEntries();
@@ -336,7 +334,7 @@ public class TransactionManager {
             money += (ticket.getAmount() * ticket.getPricePerUnit() * ticket.getDiscountRate());
         }
     
-        ReturnTransaction returning = new ReturnTransaction(returnGen++,LocalDate.now(), money, "Return", (int) saleNumber);
+        ReturnTransaction returning = new ReturnTransaction(returnGen++, LocalDate.now(), money, "Return", (int) saleNumber);
         returnTransactions.put(returning.getBalanceId(), returning);
         Integer output = returning.getBalanceId();
         try {
@@ -623,10 +621,22 @@ public class TransactionManager {
         returnTransactions.clear();
         cards.clear();
         orders.clear();
+        File fold = new File(GENERATOR_PATH);
+        fold.delete();
+        File fold1 = new File(RETURN_PATH);
+        fold1.delete();
+        File fold2 = new File(SALE_PATH);
+        fold2.delete();
+        File fold3 = new File(CREDITCARD_PATH);
+        fold3.delete();
+        File fold4 = new File(ORDER_PATH);
+        fold4.delete();
+
     }
     
     public boolean luhn(String ccNumber)
     {
+        if (ccNumber==null) return false;
         int sum = 0;
         boolean alternate = false;
         for (int i = ccNumber.length() - 1; i >= 0; i--)

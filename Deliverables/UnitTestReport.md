@@ -51,6 +51,7 @@ Version:
 |          |      5     |
 | Presence of non-numerical values | iduhsidh|
 | Emptiness | ""|
+| null | null| 
 
 
 
@@ -60,13 +61,14 @@ Version:
 **Combination of predicates**:
 
 
-| Sign of number | Correctness of String | Presence of non-numerical values|Emptiness | Valid / Invalid | Description of the test case | JUnit test case |
-|-------|-------|-------|-------|-------|-------|-------|
-|Positive|Correct|No|No|valid|luhn("79927398713")-> true| testLuhn|
-|Negative|*|*|*|invalid|luhn("-79927398713")|testLuhn|
-|*|Incorrect|*|*|Invalid|luhn("5")|testLuhn|
-|*|*|Yes|*|Incorrect|luhn("iduhsidh")|testLuhn|
-|*|*|*|Yes|Incorrect|luhn("")|testLuhn|
+| Sign of number | Correctness of String | Presence of non-numerical values|Emptiness |null| Valid / Invalid | Description of the test case | JUnit test case |
+|-------|-------|-------|-------|-------|-------|-------|-------|
+|Positive|Correct|No|No|No|valid|luhn("79927398713")-> true| testLuhn|
+|Negative|*|*|*|*|invalid|luhn("-79927398713")|testLuhn|
+|*|Incorrect|*|*|*|Invalid|luhn("5")|testLuhn|
+|*|*|Yes|*|*|Invalid|luhn("iduhsidh")|testLuhn|
+|*|*|*|Yes|*|Invalid|luhn("")|testLuhn|
+|*|*|*|*|Yes|Invalid|luhn(null)|testLuhn|
 
 
  ### **Class *UserObj* - method *setRole***
