@@ -62,12 +62,12 @@ Version:
 
 | Sign of number | Correctness of String | Presence of non-numerical values|Emptiness |null| Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|-------|-------|-------|-------|
-|Positive|Correct|No|No|No|valid|luhn("79927398713")-> true| testLuhn|
-|Negative|*|*|*|*|invalid|luhn("-79927398713")|testLuhn|
-|*|Incorrect|*|*|*|Invalid|luhn("5")|testLuhn|
-|*|*|Yes|*|*|Invalid|luhn("iduhsidh")|testLuhn|
-|*|*|*|Yes|*|Invalid|luhn("")|testLuhn|
-|*|*|*|*|Yes|Invalid|luhn(null)|testLuhn|
+|Positive|Correct|No|No|No|valid|luhn("79927398713")-> true|it.polito.ezshop.classes.TransactionMangerTest::testLuhn|
+|Negative|*|*|*|*|invalid|luhn("-79927398713")|it.polito.ezshop.classes.TransactionMangerTest::testLuhn|
+|*|Incorrect|*|*|*|Invalid|luhn("5")|it.polito.ezshop.classes.TransactionMangerTest::testLuhn|
+|*|*|Yes|*|*|Invalid|luhn("iduhsidh")|it.polito.ezshop.classes.TransactionMangerTest::testLuhn|
+|*|*|*|Yes|*|Invalid|luhn("")|it.polito.ezshop.classes.TransactionMangerTest::testLuhn|
+|*|*|*|*|Yes|Invalid|luhn(null)|it.polito.ezshop.classes.TransactionMangerTest::testLuhn|
 
 ### **Class *ProductOrderManager* - method *checkBarcode***
 
@@ -140,11 +140,11 @@ Version:
 
 | Validity of the String parameter | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|Valid|Valid|T1("ADMINISTRATOR") -> role set|testSetRole|
-|Valid|Valid|T2("CASHIER") -> role set|testSetRole|
-|Valid|Valid|T3("SHOPMANAGER") -> role set|testSetRole|
-|Invalid|Invalid|T4("t") -> role not set|testSetRole|
-|NULL|Invalid|T5(null) -> role not set|testSetRole|
+|Valid|Valid|T1("ADMINISTRATOR") -> role set|it.polito.ezshop.classes.UserObjTest::testSetRoleShopManager|
+|Valid|Valid|T2("CASHIER") -> role set|it.polito.ezshop.classes.UserObjTest::testSetRoleCashier|
+|Valid|Valid|T3("SHOPMANAGER") -> role set|it.polito.ezshop.classes.UserObjTest::testSetRoleShopManager|
+|Invalid|Valid|T4("t") -> role not set|it.polito.ezshop.classes.UserObjTest::testSetRoleInvalidString|
+|NULL|Valid|T5(null) -> role not set|it.polito.ezshop.classes.UserObjTest::testSetRoleNull|
 
 
 

@@ -107,7 +107,7 @@ public class UserManager {
     
     public boolean deleteUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
         int i = 0;
-        if (id == null || id < 0)  // TODO if id == null
+        if (id == null || id < 0)
             throw new InvalidUserIdException();
         UserObj u;
         for (i = 0; i < userList.size(); i++) {
@@ -143,7 +143,6 @@ public class UserManager {
                 return new UserObj(u.getId(), u.getUsername(), u.getPassword(), UserRole.valueOf(u.getRole()));
             } else u = null;
         }
-        
         return null;
     }
     
@@ -193,7 +192,6 @@ public class UserManager {
     public boolean logout() {
         if (loggedUser == null)
             return false;
-        
         loggedUser = null;
         return true;
     }
