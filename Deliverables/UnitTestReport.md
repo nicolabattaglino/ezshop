@@ -278,7 +278,7 @@ Version:
 |||12|**testCheckBarcodeCheckDigitValid**|
 |||13|**testCheckBarcodeCheckDigitValid**|
 |||0|**testCheckBarcodeNonNum**|
-|src.test.it.polito.ezshop.classes.TransactionManagerTest|636-653|10|**testLuhn**|
+|src.test.it.polito.ezshop.classes.TransactionManagerTest|636-653|11|**testLuhn**|
 |||1|**testLuhn**|
 |||0|**testLuhn**|
 
