@@ -1,15 +1,14 @@
 package it.polito.ezshop.classes;
 
-import static org.junit.Assert.*;
-import java.util.*;
-
 import it.polito.ezshop.data.TicketEntry;
-import java.time.LocalDate;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ReturnTransactionTest {
 
@@ -38,13 +37,6 @@ public class ReturnTransactionTest {
 	public void testReturningId(){
 		ReturnTransaction r = new ReturnTransaction(0,LocalDate.now(), 0.0, "Return", 0);
 		assertTrue(0== r.getTransactionID());
-	}
-
-	@Test
-	public void testTicketNumber(){
-		ReturnTransaction r = new ReturnTransaction(0,LocalDate.now(), 0.0, "Return", 0);
-		r.setTicketNumber(1);
-		assertTrue(1== r.getTicketNumber());
 	}
 
 	@Test
