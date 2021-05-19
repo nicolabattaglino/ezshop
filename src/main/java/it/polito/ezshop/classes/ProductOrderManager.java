@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 
 public class ProductOrderManager {
     
-    private static final String PRODUCTS_PATH = "data/products.json";
-    private static final String PRODUCT_GEN_PATH = "data/product_gen.json";
-    private static final String ORDER_GEN_PATH = "data/order_gen.json";
+    public static final String PRODUCTS_PATH = "data/products.json";
+    public static final String PRODUCT_GEN_PATH = "data/product_gen.json";
+    public static final String ORDER_GEN_PATH = "data/order_gen.json";
     private final EZShop shop;
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize

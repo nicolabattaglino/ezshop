@@ -1,8 +1,8 @@
 package it.polito.ezshop.classes;
 
 public class CreditCard {
-    String Number;
-    double balance;
+    private String number;
+    private double balance;
     
     public double getBalance() {
         return balance;
@@ -13,10 +13,10 @@ public class CreditCard {
     }
     
     public String getNumber() {
-        return Number;
+        return number;
     }
     
     public void setNumber(String creditCardNumber) {
-        this.Number = creditCardNumber;
+        this.number = creditCardNumber;
     }
 }

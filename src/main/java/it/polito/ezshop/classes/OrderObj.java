@@ -9,17 +9,15 @@ import it.polito.ezshop.data.ProductType;
 
 public class OrderObj implements Order {
     
-    private static int OrderIdGen; //TODO aggiungilo al design
     
     private Integer orderId;
     private ProductTypeObj product;
     private double pricePerUnit;
     private int quantity;
-    private String supplier; //TODO vedi che farci
+    private String supplier;
     private OrderStatus status;
-    private Credit balanceOp;
-
-
+    private Debit balanceOp;
+    
     
     @JsonCreator
     public OrderObj(@JsonProperty("orderId") Integer orderId,
@@ -28,7 +26,7 @@ public class OrderObj implements Order {
                     @JsonProperty("quantity") int quantity,
                     @JsonProperty("supplier") String supplier,
                     @JsonProperty("status") OrderStatus status,
-                    @JsonProperty("balanceOp") Credit balanceOp) {
+                    @JsonProperty("balanceOp") Debit balanceOp) {
         this.orderId = orderId;
         this.product = product;
         this.pricePerUnit = pricePerUnit;
@@ -36,7 +34,7 @@ public class OrderObj implements Order {
         this.supplier = supplier;
         this.status = status;
         this.balanceOp = balanceOp;
-
+        
     }
     
     public OrderObj(OrderObj orderObj) {
@@ -65,7 +63,7 @@ public class OrderObj implements Order {
     
     @JsonProperty("balanceOp")
     public void setBalanceOperation(BalanceOperationObj operation) {
-        this.balanceOp = (Credit) operation;
+        this.balanceOp = (Debit) operation;
         
     }
     
