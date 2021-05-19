@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserObjTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ezshop$SaleTransactionObjTest.exec</a> &gt; <a href="index.source.html" class="el_package">it.polito.ezshop.classes</a> &gt; <span class="el_source">UserObjTest.java</span></div><h1>UserObjTest.java</h1><pre class="source lang-java linenums">package it.polito.ezshop.classes;
+
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+<span class="nc" id="L7">public class UserObjTest {</span>
+
+    @Test
+    public void testSetId(){
+<span class="nc" id="L11">        UserObj u1 = new UserObj(0,&quot;MikeBB&quot;,&quot;12345&quot;,UserRole.ADMINISTRATOR);</span>
+<span class="nc" id="L12">        u1.setId(2);</span>
+<span class="nc" id="L13">        assertEquals(2, (int) u1.getId());</span>
+<span class="nc" id="L14">    }</span>
+    @Test
+    public void testSetUsername(){
+<span class="nc" id="L17">        UserObj u1 = new UserObj();</span>
+<span class="nc" id="L18">        u1.setUsername(&quot;Tim&quot;);</span>
+<span class="nc" id="L19">        assertEquals(&quot;Tim&quot;, u1.getUsername());</span>
+<span class="nc" id="L20">    }</span>
+    @Test
+    public void testSetPassword(){
+<span class="nc" id="L23">        UserObj u1 = new UserObj();</span>
+<span class="nc" id="L24">        u1.setPassword(&quot;123123&quot;);</span>
+<span class="nc" id="L25">        assertEquals(&quot;123123&quot;, u1.getPassword());</span>
+<span class="nc" id="L26">    }</span>
+
+
+    @Test
+    public void testSetRoleShopManager(){
+<span class="nc" id="L31">        UserObj u1 = new UserObj();</span>
+<span class="nc" id="L32">        u1.setRole(&quot;shopmanager&quot;);</span>
+<span class="nc" id="L33">        assertEquals(u1.getRole(), UserRole.SHOPMANAGER.toString());</span>
+<span class="nc" id="L34">    }</span>
+
+    @Test
+    public void testSetRoleAdministrator(){
+<span class="nc" id="L38">        UserObj u1 = new UserObj();</span>
+<span class="nc" id="L39">        u1.setRole(&quot;administrator&quot;);</span>
+<span class="nc" id="L40">        assertEquals(u1.getRole(), UserRole.ADMINISTRATOR.toString());</span>
+<span class="nc" id="L41">    }</span>
+    @Test
+    public void testSetRoleCashier(){
+<span class="nc" id="L44">        UserObj u1 = new UserObj();</span>
+<span class="nc" id="L45">        u1.setRole(&quot;cashier&quot;);</span>
+<span class="nc" id="L46">        assertEquals(u1.getRole(), UserRole.CASHIER.toString());</span>
+<span class="nc" id="L47">    }</span>
+    @Test
+    public void testSetRoleInvalidString(){
+<span class="nc" id="L50">        UserObj u1 = new UserObj();</span>
+<span class="nc" id="L51">        u1.setRole(&quot;t&quot;);</span>
+<span class="nc" id="L52">        assertNotEquals(&quot;t&quot;, u1.getRole());</span>
+<span class="nc" id="L53">    }</span>
+    @Test
+    public void testSetRoleNull(){
+<span class="nc" id="L56">        UserObj u1 = new UserObj(0,&quot;MikeBB&quot;,&quot;12345&quot;,UserRole.ADMINISTRATOR);</span>
+<span class="nc" id="L57">        u1.setRole(null);</span>
+<span class="nc" id="L58">        assertNotNull(u1.getRole());</span>
+<span class="nc" id="L59">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

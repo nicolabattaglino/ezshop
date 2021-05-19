@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ezshop$SaleTransactionObjTest.exec</a> &gt; <a href="index.source.html" class="el_package">it.polito.ezshop.classes</a> &gt; <span class="el_source">TransactionManager.java</span></div><h1>TransactionManager.java</h1><pre class="source lang-java linenums">package it.polito.ezshop.classes;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.MapSerializer;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import it.polito.ezshop.data.*;
+import it.polito.ezshop.exceptions.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.security.InvalidParameterException;
+import java.time.LocalDate;
+import java.util.*;
+
+public class TransactionManager {
+    
+    public static final String ORDER_PATH = &quot;data/orders.json&quot;;
+    public static final String SALE_PATH = &quot;data/sales.json&quot;;
+    public static final String RETURN_PATH = &quot;data/returns.json&quot;;
+    public static final String CREDITCARD_PATH = &quot;data/creditCards.json&quot;;
+    public static final String BALANCEOPERATION_PATH = &quot;data/balanceOperations.json&quot;;
+    public static final String GENERATOR_PATH = &quot;data/transactionManagerGenerators.json&quot;;
+    
+    private final EZShop shop;
+    @JsonSerialize(keyUsing = MapSerializer.class)
+    @JsonDeserialize
+    private Map&lt;Integer, BalanceOperationObj&gt; balanceOperations;
+    @JsonSerialize(keyUsing = MapSerializer.class)
+    @JsonDeserialize
+    private Map&lt;Integer, OrderObj&gt; orders;
+    @JsonSerialize(keyUsing = MapSerializer.class)
+    @JsonDeserialize
+    private Map&lt;Integer, ReturnTransaction&gt; returnTransactions; // list of all return transactions (they are also included in balanceOperation)
+    @JsonSerialize(keyUsing = MapSerializer.class)
+    @JsonDeserialize
+    private Map&lt;Integer, SaleTransactionObj&gt; saleTransactions; // list of all sale transactions (they are also included in balanceOperation)
+<span class="nc" id="L42">    @JsonSerialize(keyUsing = MapSerializer.class)</span>
+    @JsonDeserialize
+    private Map&lt;String, CreditCard&gt; cards = new HashMap&lt;String, CreditCard&gt;();
+    private int saleGen;
+    private int returnGen;
+    private int balanceOperationGen;
+    
+    
+<span class="nc" id="L50">    public TransactionManager(EZShop shop) {</span>
+<span class="nc" id="L51">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L52">        TypeReference&lt;HashMap&lt;Integer, OrderObj&gt;&gt; typeRef = new TypeReference&lt;HashMap&lt;Integer, OrderObj&gt;&gt;() {</span>
+        };
+<span class="nc" id="L54">        File ordini = new File(ORDER_PATH);</span>
+        try {
+<span class="nc" id="L56">            ordini.createNewFile();</span>
+<span class="nc" id="L57">            orders = mapper.readValue(ordini, typeRef);</span>
+<span class="nc" id="L58">        } catch (IOException e) {</span>
+<span class="nc" id="L59">            ordini.delete();</span>
+            try {
+<span class="nc" id="L61">                ordini.createNewFile();</span>
+<span class="nc" id="L62">            } catch (IOException ioException) {</span>
+            } finally {
+<span class="nc" id="L64">                orders = new HashMap&lt;&gt;();</span>
+            }
+<span class="nc" id="L66">        }</span>
+<span class="nc" id="L67">        File sales = new File(SALE_PATH);</span>
+<span class="nc" id="L68">        TypeReference&lt;HashMap&lt;Integer, SaleTransactionObj&gt;&gt; typeRef1 = new TypeReference&lt;HashMap&lt;Integer, SaleTransactionObj&gt;&gt;() {</span>
+        };
+        try {
+<span class="nc" id="L71">            sales.createNewFile();</span>
+<span class="nc" id="L72">            saleTransactions = mapper.readValue(sales, typeRef1);</span>
+<span class="nc" id="L73">        } catch (IOException e) {</span>
+<span class="nc" id="L74">            e.printStackTrace();</span>
+<span class="nc" id="L75">            sales.delete();</span>
+            try {
+<span class="nc" id="L77">                sales.createNewFile();</span>
+<span class="nc" id="L78">            } catch (IOException ioException) {</span>
+            } finally {
+<span class="nc" id="L80">                saleTransactions = new HashMap&lt;&gt;();</span>
+            }
+<span class="nc" id="L82">        }</span>
+        
+<span class="nc" id="L84">        File returns = new File(RETURN_PATH);</span>
+<span class="nc" id="L85">        TypeReference&lt;HashMap&lt;Integer, ReturnTransaction&gt;&gt; typeRef2 = new TypeReference&lt;HashMap&lt;Integer, ReturnTransaction&gt;&gt;() {</span>
+        };
+        try {
+<span class="nc" id="L88">            returns.createNewFile();</span>
+<span class="nc" id="L89">            returnTransactions = mapper.readValue(returns, typeRef2);</span>
+<span class="nc" id="L90">        } catch (IOException e) {</span>
+<span class="nc" id="L91">            returns.delete();</span>
+            try {
+<span class="nc" id="L93">                returns.createNewFile();</span>
+<span class="nc" id="L94">            } catch (IOException ioException) {</span>
+            } finally {
+<span class="nc" id="L96">                returnTransactions = new HashMap&lt;&gt;();</span>
+            }
+<span class="nc" id="L98">        }</span>
+        
+<span class="nc" id="L100">        File creditCards = new File(CREDITCARD_PATH);</span>
+<span class="nc" id="L101">        TypeReference&lt;HashMap&lt;String, CreditCard&gt;&gt; typeRef3 = new TypeReference&lt;HashMap&lt;String, CreditCard&gt;&gt;() {</span>
+        };
+        try {
+<span class="nc" id="L104">            creditCards.createNewFile();</span>
+<span class="nc" id="L105">            cards = mapper.readValue(creditCards, typeRef3);</span>
+<span class="nc" id="L106">        } catch (IOException e) {</span>
+<span class="nc" id="L107">            e.printStackTrace();</span>
+<span class="nc" id="L108">            creditCards.delete();</span>
+            try {
+<span class="nc" id="L110">                creditCards.createNewFile();</span>
+<span class="nc" id="L111">            } catch (IOException ioException) {</span>
+            } finally {
+<span class="nc" id="L113">                cards = new HashMap&lt;&gt;();</span>
+            }
+<span class="nc" id="L115">        }</span>
+        
+<span class="nc" id="L117">        File balanceOperation = new File(BALANCEOPERATION_PATH);</span>
+<span class="nc" id="L118">        TypeReference&lt;HashMap&lt;Integer, BalanceOperationObj&gt;&gt; typeRef4 = new TypeReference&lt;HashMap&lt;Integer, BalanceOperationObj&gt;&gt;() {</span>
+        };
+        try {
+<span class="nc" id="L121">            balanceOperation.createNewFile();</span>
+<span class="nc" id="L122">            balanceOperations = mapper.readValue(balanceOperation, typeRef4);</span>
+<span class="nc" id="L123">        } catch (IOException e) {</span>
+<span class="nc" id="L124">            e.printStackTrace();</span>
+<span class="nc" id="L125">            balanceOperation.delete();</span>
+            try {
+<span class="nc" id="L127">                balanceOperation.createNewFile();</span>
+<span class="nc" id="L128">            } catch (IOException ioException) {</span>
+            } finally {
+<span class="nc" id="L130">                balanceOperations = new HashMap&lt;&gt;();</span>
+            }
+<span class="nc" id="L132">        }</span>
+        
+<span class="nc" id="L134">        this.shop = shop;</span>
+        try {
+<span class="nc" id="L136">            File myObj = new File(GENERATOR_PATH);</span>
+<span class="nc" id="L137">            Scanner myReader = new Scanner(myObj);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">            if (myReader.hasNextLine()) {</span>
+<span class="nc" id="L139">                String data = myReader.nextLine();</span>
+<span class="nc" id="L140">                saleGen = (int) Integer.parseInt(data);</span>
+<span class="nc" id="L141">            } else saleGen = 1;</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">            if (myReader.hasNextLine()) {</span>
+<span class="nc" id="L143">                String data = myReader.nextLine();</span>
+<span class="nc" id="L144">                returnGen = (int) Integer.parseInt(data);</span>
+<span class="nc" id="L145">            } else returnGen = 1;</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">            if (myReader.hasNextLine()) {</span>
+<span class="nc" id="L147">                String data = myReader.nextLine();</span>
+<span class="nc" id="L148">                balanceOperationGen = (int) Integer.parseInt(data);</span>
+<span class="nc" id="L149">            } else balanceOperationGen = 1;</span>
+<span class="nc" id="L150">            myReader.close();</span>
+<span class="nc" id="L151">        } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L152">            System.out.println(&quot;An error occurred.&quot;);</span>
+<span class="nc" id="L153">            e.printStackTrace();</span>
+<span class="nc" id="L154">        }</span>
+        try {
+<span class="nc" id="L156">            this.persistGenerators();</span>
+<span class="nc" id="L157">        } catch (IOException e) {</span>
+<span class="nc" id="L158">            e.printStackTrace();</span>
+<span class="nc" id="L159">        }</span>
+        
+<span class="nc" id="L161">    }</span>
+    
+    
+    public Integer startSaleTransaction() {
+<span class="nc" id="L165">        SaleTransactionObj sale = new SaleTransactionObj(saleGen++, LocalDate.now(), 0.0, &quot;Sale&quot;);</span>
+<span class="nc" id="L166">        saleTransactions.put((Integer) sale.getBalanceId(), sale);</span>
+        try {
+<span class="nc" id="L168">            this.persistSales();</span>
+<span class="nc" id="L169">        } catch (IOException e) {</span>
+<span class="nc" id="L170">            e.printStackTrace();</span>
+<span class="nc" id="L171">        }</span>
+        try {
+<span class="nc" id="L173">            persistGenerators();</span>
+<span class="nc" id="L174">        } catch (IOException e) {</span>
+<span class="nc" id="L175">            e.printStackTrace();</span>
+<span class="nc" id="L176">        }</span>
+        
+        
+<span class="nc" id="L179">        return sale.getBalanceId();</span>
+    }
+    
+    public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException {
+<span class="nc" id="L183">        SaleTransactionObj sale = saleTransactions.get(transactionId);</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">        if (sale == null) {</span>
+<span class="nc" id="L185">            throw new InvalidTransactionIdException();</span>
+        }
+<span class="nc" id="L187">        ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">        if (prodotto == null) throw new InvalidProductCodeException();</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">        if (amount &lt; 0) throw new InvalidQuantityException();</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">        if (!sale.getStatus().equals(&quot;new&quot;)) return false;</span>
+        
+        try {
+<span class="nc bnc" id="L193" title="All 2 branches missed.">            if (!shop.getProductOrderManager().updateQuantity(prodotto.getId(), -1 * amount)) return false;</span>
+<span class="nc" id="L194">        } catch (InvalidProductIdException e) {</span>
+            // TODO Auto-generated catch block
+<span class="nc" id="L196">            e.printStackTrace();</span>
+<span class="nc" id="L197">        }</span>
+<span class="nc" id="L198">        TicketEntryObj ticket = new TicketEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());</span>
+<span class="nc" id="L199">        sale.addEntry(ticket);</span>
+        try {
+<span class="nc" id="L201">            this.persistSales();</span>
+<span class="nc" id="L202">        } catch (IOException e) {</span>
+<span class="nc" id="L203">            e.printStackTrace();</span>
+<span class="nc" id="L204">        }</span>
+        
+<span class="nc" id="L206">        return true;</span>
+    }
+    
+    public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException {
+<span class="nc bnc" id="L210" title="All 4 branches missed.">        if (transactionId == null || transactionId &lt;= 0) throw new InvalidTransactionIdException();</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">        if (amount &lt; 0) throw new InvalidQuantityException();</span>
+<span class="nc" id="L212">        SaleTransactionObj sale = saleTransactions.get(transactionId);</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">        if (sale == null) return false;</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">        if (!sale.getStatus().equals(&quot;new&quot;)) return false;</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">        if (productCode == null) throw new InvalidProductCodeException();</span>
+<span class="nc" id="L216">        ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">        if (prodotto == null) return false;</span>
+        try {
+<span class="nc bnc" id="L219" title="All 2 branches missed.">            if (!shop.getProductOrderManager().updateQuantity(prodotto.getId(), amount)) return false;</span>
+<span class="nc" id="L220">        } catch (InvalidProductIdException e) {</span>
+            // TODO Auto-generated catch block
+<span class="nc" id="L222">            e.printStackTrace();</span>
+<span class="nc" id="L223">        }</span>
+<span class="nc" id="L224">        TicketEntryObj ticket = new TicketEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());</span>
+<span class="nc" id="L225">        sale.deleteEntry(ticket);</span>
+        try {
+<span class="nc" id="L227">            this.persistSales();</span>
+<span class="nc" id="L228">        } catch (IOException e) {</span>
+<span class="nc" id="L229">            e.printStackTrace();</span>
+<span class="nc" id="L230">        }</span>
+        
+<span class="nc" id="L232">        return true;</span>
+    }
+    
+    public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException {
+<span class="nc bnc" id="L236" title="All 4 branches missed.">        if (transactionId == null || transactionId &lt;= 0) throw new InvalidTransactionIdException();</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">        if (productCode == null) throw new InvalidProductCodeException();</span>
+<span class="nc bnc" id="L238" title="All 4 branches missed.">        if (discountRate &lt; 0.0 || discountRate &gt;= 1.00) throw new InvalidDiscountRateException();</span>
+<span class="nc bnc" id="L239" title="All 4 branches missed.">        if (discountRate &gt; 1 || discountRate &lt; 0) return false;</span>
+<span class="nc" id="L240">        SaleTransactionObj sale = saleTransactions.get(transactionId);</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">        if (sale == null) return false;</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">        if (!sale.getStatus().equals(SaleStatus.STARTED)) return false;</span>
+<span class="nc" id="L243">        List&lt;TicketEntry&gt; tickets = sale.getEntries();</span>
+        int i;
+<span class="nc bnc" id="L245" title="All 2 branches missed.">        for (i = 0; i &lt; tickets.size(); i++) {</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">            if (tickets.get(i).getBarCode().equals(productCode)) {</span>
+<span class="nc" id="L247">                tickets.get(i).setDiscountRate(discountRate);</span>
+            }
+        }
+<span class="nc" id="L250">        sale.setEntries(tickets);</span>
+        try {
+<span class="nc" id="L252">            this.persistSales();</span>
+<span class="nc" id="L253">        } catch (IOException e) {</span>
+<span class="nc" id="L254">            e.printStackTrace();</span>
+<span class="nc" id="L255">        }</span>
+<span class="nc" id="L256">        return true;</span>
+    }
+    
+    public boolean applyDiscountRateToSale(Integer transactionId, double discountRate) throws InvalidTransactionIdException, InvalidDiscountRateException {
+<span class="nc bnc" id="L260" title="All 4 branches missed.">        if (transactionId == null || transactionId &lt;= 0) throw new InvalidTransactionIdException();</span>
+<span class="nc bnc" id="L261" title="All 4 branches missed.">        if (discountRate &lt; 0.0 || discountRate &gt;= 1.00) throw new InvalidDiscountRateException();</span>
+<span class="nc bnc" id="L262" title="All 4 branches missed.">        if (discountRate &gt; 1 || discountRate &lt; 0) return false;</span>
+<span class="nc" id="L263">        SaleTransactionObj sale = saleTransactions.get(transactionId);</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">        if (sale == null) return false;</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">        if (sale.getStatus() == SaleStatus.PAYED) return false;</span>
+<span class="nc" id="L266">        double oldD = sale.getDiscountRate();</span>
+<span class="nc" id="L267">        sale.setDiscountRate(discountRate);</span>
+        try {
+<span class="nc" id="L269">            this.persistSales();</span>
+<span class="nc" id="L270">        } catch (IOException e) {</span>
+<span class="nc" id="L271">            sale.setDiscountRate(oldD);</span>
+<span class="nc" id="L272">            return false;</span>
+<span class="nc" id="L273">        }</span>
+<span class="nc" id="L274">        return true;</span>
+    }
+    
+    public int computePointsForSale(Integer transactionId) throws InvalidTransactionIdException {
+<span class="nc bnc" id="L278" title="All 4 branches missed.">        if (transactionId == null || transactionId &lt;= 0) throw new InvalidTransactionIdException();</span>
+<span class="nc" id="L279">        SaleTransactionObj sale = saleTransactions.get(transactionId);</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">        if (sale == null) return -1;</span>
+        
+<span class="nc" id="L282">        return (int) (sale.getPrice() / 10);</span>
+    }
+    
+    public boolean endSaleTransaction(Integer transactionId) throws InvalidTransactionIdException {
+<span class="nc bnc" id="L286" title="All 4 branches missed.">        if (transactionId == null || transactionId &lt;= 0) throw new InvalidTransactionIdException();</span>
+<span class="nc" id="L287">        SaleTransactionObj sale = saleTransactions.get(transactionId);</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">        if (sale == null) return false;</span>
+<span class="nc bnc" id="L289" title="All 2 branches missed.">        if (!sale.getStatus().equals(SaleStatus.STARTED)) return false; // the transaction wasn't opern</span>
+<span class="nc" id="L290">        sale.setStatus(SaleStatus.CLOSED);</span>
+        try {
+<span class="nc" id="L292">            this.persistSales();</span>
+<span class="nc" id="L293">        } catch (IOException e) {</span>
+<span class="nc" id="L294">            sale.setStatus(SaleStatus.STARTED);</span>
+<span class="nc" id="L295">            return false;</span>
+<span class="nc" id="L296">        }</span>
+<span class="nc" id="L297">        return true;</span>
+    }
+    
+    public boolean deleteSaleTransaction(Integer transactionId) throws InvalidTransactionIdException {
+<span class="nc bnc" id="L301" title="All 4 branches missed.">        if (transactionId == null || transactionId &lt;= 0) throw new InvalidTransactionIdException();</span>
+<span class="nc" id="L302">        SaleTransactionObj sale = saleTransactions.get(transactionId);</span>
+<span class="nc" id="L303">        SaleTransactionObj oldS = new SaleTransactionObj(sale);</span>
+<span class="nc bnc" id="L304" title="All 2 branches missed.">        if (sale == null) return false;</span>
+<span class="nc bnc" id="L305" title="All 2 branches missed.">        if (sale.getStatus() == SaleStatus.PAYED) return false; // the transaction wasn't opern</span>
+<span class="nc" id="L306">        saleTransactions.remove(transactionId);</span>
+        try {
+<span class="nc" id="L308">            this.persistSales();</span>
+<span class="nc" id="L309">        } catch (IOException e) {</span>
+<span class="nc" id="L310">            saleTransactions.put(oldS.getBalanceId(), oldS);</span>
+<span class="nc" id="L311">        }</span>
+<span class="nc" id="L312">        return true;</span>
+    }
+    
+    public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException {
+<span class="nc bnc" id="L316" title="All 4 branches missed.">        if (transactionId == null || transactionId &lt;= 0) throw new InvalidTransactionIdException();</span>
+<span class="nc" id="L317">        return saleTransactions.get(transactionId);</span>
+    }
+    
+    public List&lt;Order&gt; getAllOrders() {
+<span class="nc" id="L321">        List&lt;Order&gt; output = new ArrayList&lt;Order&gt;(orders.values());</span>
+<span class="nc" id="L322">        return output;</span>
+    }
+    
+    public Integer startReturnTransaction(Integer saleNumber) throws InvalidTransactionIdException {
+<span class="nc bnc" id="L326" title="All 4 branches missed.">        if (saleNumber == null || saleNumber &lt;= 0) throw new InvalidTransactionIdException();</span>
+<span class="nc" id="L327">        double money = 0;</span>
+<span class="nc" id="L328">        SaleTransaction toBeReturned = this.getSaleTransaction(saleNumber);</span>
+<span class="nc" id="L329">        List&lt;TicketEntry&gt; tickets = toBeReturned.getEntries();</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">        for (TicketEntry ticket : tickets) {</span>
+<span class="nc" id="L331">            money += (ticket.getAmount() * ticket.getPricePerUnit() * ticket.getDiscountRate());</span>
+<span class="nc" id="L332">        }</span>
+        
+<span class="nc" id="L334">        ReturnTransaction returning = new ReturnTransaction(returnGen++, LocalDate.now(), money, &quot;Return&quot;, (int) saleNumber);</span>
+<span class="nc" id="L335">        returnTransactions.put(returning.getBalanceId(), returning);</span>
+<span class="nc" id="L336">        Integer output = returning.getBalanceId();</span>
+        try {
+<span class="nc" id="L338">            this.persistReturns();</span>
+<span class="nc" id="L339">        } catch (IOException e) {</span>
+<span class="nc" id="L340">            returnTransactions.remove(output);</span>
+<span class="nc" id="L341">            return null;</span>
+<span class="nc" id="L342">        }</span>
+<span class="nc" id="L343">        return output;</span>
+    }
+    
+    private ReturnTransaction getReturnTransaction(Integer returnId) {
+<span class="nc" id="L347">        return returnTransactions.get(returnId);</span>
+    }
+    
+    public boolean returnProduct(Integer returnId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
+<span class="nc bnc" id="L351" title="All 4 branches missed.">        if (returnId == null || returnId &lt;= 0) throw new InvalidTransactionIdException();</span>
+<span class="nc bnc" id="L352" title="All 2 branches missed.">        if (productCode == null) throw new InvalidProductCodeException();</span>
+<span class="nc bnc" id="L353" title="All 2 branches missed.">        if (amount &lt; 0) throw new InvalidQuantityException();</span>
+<span class="nc" id="L354">        ReturnTransaction target = getReturnTransaction(returnId);</span>
+<span class="nc" id="L355">        ReturnTransaction oldR = new ReturnTransaction(target);</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">        if (target == null) {</span>
+<span class="nc" id="L357">            return false;</span>
+        }
+<span class="nc bnc" id="L359" title="All 2 branches missed.">        if (shop.getProductTypeByBarCode(productCode) == null) return false;</span>
+<span class="nc" id="L360">        int oldID = target.getTransactionID();</span>
+<span class="nc" id="L361">        SaleTransaction oldSale = this.getSaleTransaction(oldID);</span>
+<span class="nc" id="L362">        List&lt;TicketEntry&gt; products = oldSale.getEntries();</span>
+<span class="nc" id="L363">        TicketEntry prodotto = null;</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">        for (TicketEntry product : products) {</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">            if (product.getBarCode() == productCode) {</span>
+<span class="nc" id="L366">                prodotto = product;</span>
+<span class="nc" id="L367">                break;</span>
+            }
+<span class="nc" id="L369">        }</span>
+<span class="nc bnc" id="L370" title="All 2 branches missed.">        if (prodotto == null) return false;</span>
+<span class="nc bnc" id="L371" title="All 2 branches missed.">        if (prodotto.getAmount() &lt; amount) return false;</span>
+<span class="nc" id="L372">        prodotto.setAmount(amount);</span>
+<span class="nc" id="L373">        target.addEntry(prodotto);</span>
+<span class="nc" id="L374">        target.setPrice(target.getPrice() + prodotto.getPricePerUnit() * amount);</span>
+        //the previous line updates the price in the return transaction. The price in the return transaction is the amount of money that will be returned to the customer
+        try {
+<span class="nc" id="L377">            this.persistReturns();</span>
+<span class="nc" id="L378">        } catch (IOException e) {</span>
+<span class="nc" id="L379">            returnTransactions.remove(target.getBalanceId());</span>
+<span class="nc" id="L380">            returnTransactions.put(oldR.getBalanceId(), oldR);</span>
+<span class="nc" id="L381">        }</span>
+<span class="nc" id="L382">        return true;</span>
+    }
+    
+    public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException {
+<span class="nc bnc" id="L386" title="All 4 branches missed.">        if (returnId == null || returnId &lt;= 0) throw new InvalidTransactionIdException();</span>
+        // in the current design the return transaction's informations are created during the return product function, the end return method only closes the return
+<span class="nc" id="L388">        ReturnTransaction target = returnTransactions.get(returnId);</span>
+<span class="nc bnc" id="L389" title="All 2 branches missed.">        if (target == null) return false;</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">        if (target.getStatus() != ReturnStatus.NEW) return false;</span>
+<span class="nc bnc" id="L391" title="All 2 branches missed.">        if (!commit) {</span>
+<span class="nc" id="L392">            returnTransactions.remove(target.getBalanceId());</span>
+        } else {
+<span class="nc" id="L394">            target.setStatus(ReturnStatus.ENDED);</span>
+        }
+        try {
+<span class="nc" id="L397">            this.persistReturns();</span>
+<span class="nc" id="L398">        } catch (IOException e) {</span>
+<span class="nc bnc" id="L399" title="All 2 branches missed.">            if (commit) target.setStatus(ReturnStatus.NEW);</span>
+<span class="nc" id="L400">            else returnTransactions.put(target.getBalanceId(), target);</span>
+<span class="nc" id="L401">        }</span>
+<span class="nc" id="L402">        return true;</span>
+        
+    }
+    
+    public boolean deleteReturnTransaction(Integer returnId) throws InvalidTransactionIdException, UnauthorizedException {
+<span class="nc bnc" id="L407" title="All 4 branches missed.">        if (returnId == null || returnId &lt;= 0) throw new InvalidTransactionIdException();</span>
+<span class="nc" id="L408">        ReturnTransaction target = returnTransactions.get(returnId);</span>
+<span class="nc bnc" id="L409" title="All 2 branches missed.">        if (target == null) return false;</span>
+<span class="nc bnc" id="L410" title="All 2 branches missed.">        if (target.getStatus() != ReturnStatus.CLOSED) return false;</span>
+        else {
+<span class="nc" id="L412">            ReturnTransaction oldR = new ReturnTransaction(target);</span>
+            
+<span class="nc" id="L414">            int amount = 0;</span>
+<span class="nc" id="L415">            SaleTransactionObj sale = this.getSaleTransactionObj(target.getTransactionID());</span>
+<span class="nc" id="L416">            SaleTransactionObj oldS = new SaleTransactionObj((sale));</span>
+<span class="nc bnc" id="L417" title="All 2 branches missed.">            if (sale == null) return false;</span>
+<span class="nc" id="L418">            int priceReduction = 0;</span>
+<span class="nc" id="L419">            List&lt;TicketEntry&gt; targetEntries = target.getEntries();</span>
+<span class="nc" id="L420">            List&lt;TicketEntry&gt; saleEntries = sale.getEntries();</span>
+<span class="nc" id="L421">            List&lt;TicketEntry&gt; toBeUpdated = new ArrayList&lt;TicketEntry&gt;();</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">            for (TicketEntry saleEntry : saleEntries) {</span>
+<span class="nc bnc" id="L423" title="All 2 branches missed.">                for (TicketEntry targetEntry : targetEntries) {</span>
+<span class="nc bnc" id="L424" title="All 2 branches missed.">                    if (saleEntry.getBarCode().equals(targetEntry.getBarCode())) {</span>
+<span class="nc" id="L425">                        amount = saleEntry.getAmount() - targetEntry.getAmount();</span>
+                        // calculate the difference between the sold amount and the amount to be returned
+<span class="nc" id="L427">                        saleEntry.setAmount(amount);</span>
+<span class="nc" id="L428">                        toBeUpdated.add(saleEntry);</span>
+<span class="nc" id="L429">                        priceReduction += amount * saleEntry.getPricePerUnit();</span>
+                        try {
+<span class="nc" id="L431">                            shop.getProductOrderManager().updateQuantity(shop.getProductTypeByBarCode(saleEntry.getBarCode()).getId(), targetEntry.getAmount());</span>
+<span class="nc" id="L432">                        } catch (InvalidProductIdException e) {</span>
+                            // TODO Auto-generated catch block
+<span class="nc" id="L434">                            e.printStackTrace();</span>
+<span class="nc" id="L435">                        } catch (InvalidProductCodeException e) {</span>
+                            // TODO Auto-generated catch block
+<span class="nc" id="L437">                            e.printStackTrace();</span>
+<span class="nc" id="L438">                            return false;</span>
+<span class="nc" id="L439">                        }</span>
+                        
+                        //this line updates the quantity by the amount stored in the return transaction.
+                        // it might need to connect to the productOrderManager directly to avoid user problems!
+<span class="nc" id="L443">                    } else toBeUpdated.add(saleEntry);</span>
+<span class="nc" id="L444">                }</span>
+<span class="nc" id="L445">            }</span>
+            // update the old sale
+<span class="nc" id="L447">            sale.setEntries(toBeUpdated);</span>
+<span class="nc" id="L448">            target.setStatus(ReturnStatus.ENDED);</span>
+            
+            
+            try {
+<span class="nc" id="L452">                this.persistReturns();</span>
+<span class="nc" id="L453">            } catch (IOException e) {</span>
+<span class="nc bnc" id="L454" title="All 2 branches missed.">                for (TicketEntry saleEntry : saleEntries) {</span>
+<span class="nc bnc" id="L455" title="All 2 branches missed.">                    for (TicketEntry targetEntry : targetEntries) {</span>
+<span class="nc bnc" id="L456" title="All 2 branches missed.">                        if (saleEntry.getBarCode().equals(targetEntry.getBarCode())) {</span>
+<span class="nc" id="L457">                            amount = saleEntry.getAmount() - targetEntry.getAmount();</span>
+                            // calculate the difference between the sold amount and the amount to be returned
+<span class="nc" id="L459">                            saleEntry.setAmount(amount);</span>
+<span class="nc" id="L460">                            toBeUpdated.add(saleEntry);</span>
+<span class="nc" id="L461">                            priceReduction += amount * saleEntry.getPricePerUnit();</span>
+                            try {
+<span class="nc" id="L463">                                shop.getProductOrderManager().updateQuantity(shop.getProductTypeByBarCode(saleEntry.getBarCode()).getId(), -1 * targetEntry.getAmount());</span>
+<span class="nc" id="L464">                            } catch (InvalidProductIdException e2) {</span>
+                                // TODO Auto-generated catch block
+<span class="nc" id="L466">                                e.printStackTrace();</span>
+<span class="nc" id="L467">                            } catch (InvalidProductCodeException e2) {</span>
+                                // TODO Auto-generated catch block
+<span class="nc" id="L469">                                e.printStackTrace();</span>
+<span class="nc" id="L470">                                return false;</span>
+<span class="nc" id="L471">                            }</span>
+                            
+                            //this line updates the quantity by the amount stored in the return transaction.
+                            // it might need to connect to the productOrderManager directly to avoid user problems!
+<span class="nc" id="L475">                        } else toBeUpdated.add(saleEntry);</span>
+<span class="nc" id="L476">                    }</span>
+<span class="nc" id="L477">                }</span>
+<span class="nc" id="L478">                saleTransactions.remove(sale.getBalanceId());</span>
+<span class="nc" id="L479">                returnTransactions.remove(target.getBalanceId());</span>
+<span class="nc" id="L480">                saleTransactions.put(oldS.getBalanceId(), oldS);</span>
+<span class="nc" id="L481">                returnTransactions.put(oldR.getBalanceId(), oldR);</span>
+<span class="nc" id="L482">            }</span>
+        }
+        
+<span class="nc" id="L485">        return true;</span>
+        
+    }
+    
+    
+    private SaleTransactionObj getSaleTransactionObj(int transactionID) {
+        
+<span class="nc" id="L492">        return saleTransactions.get(transactionID);</span>
+    }
+    
+    public double receiveCashPayment(Integer ticketNumber, double cash) throws InvalidTransactionIdException, InvalidPaymentException {
+<span class="nc bnc" id="L496" title="All 4 branches missed.">        if (ticketNumber == null || ticketNumber &lt;= 0) throw new InvalidTransactionIdException();</span>
+<span class="nc bnc" id="L497" title="All 2 branches missed.">        if (cash &lt;= 0) throw new InvalidParameterException();</span>
+        
+<span class="nc" id="L499">        SaleTransactionObj transaction = this.getSaleTransactionObj(ticketNumber);</span>
+<span class="nc bnc" id="L500" title="All 2 branches missed.">        if (transaction == null) return -1;</span>
+<span class="nc bnc" id="L501" title="All 2 branches missed.">        if (transaction.getPrice() &gt; cash) return -1;</span>
+<span class="nc" id="L502">        return cash - transaction.getPrice();</span>
+    }
+    
+    public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException {
+<span class="nc bnc" id="L506" title="All 4 branches missed.">        if (ticketNumber == null || ticketNumber &lt;= 0) throw new InvalidTransactionIdException();</span>
+<span class="nc bnc" id="L507" title="All 4 branches missed.">        if (creditCard == &quot;&quot; || creditCard == null) throw new InvalidCreditCardException();</span>
+        
+<span class="nc" id="L509">        CreditCard carta = cards.get(creditCard);</span>
+<span class="nc bnc" id="L510" title="All 2 branches missed.">        if (carta == null) return false;</span>
+<span class="nc bnc" id="L511" title="All 2 branches missed.">        if (!this.luhn(carta.getNumber())) throw new InvalidCreditCardException();</span>
+<span class="nc" id="L512">        SaleTransaction transaction = saleTransactions.get(ticketNumber);</span>
+<span class="nc bnc" id="L513" title="All 2 branches missed.">        if (transaction == null) return false;</span>
+<span class="nc bnc" id="L514" title="All 2 branches missed.">        if (carta.getBalance() &lt; transaction.getPrice()) return false;</span>
+<span class="nc" id="L515">        carta.setBalance(carta.getBalance() - transaction.getPrice());</span>
+<span class="nc" id="L516">        this.recordBalanceUpdate(transaction.getPrice());</span>
+<span class="nc" id="L517">        return true;</span>
+    }
+    
+    public double returnCashPayment(Integer returnId) throws InvalidTransactionIdException {
+<span class="nc bnc" id="L521" title="All 4 branches missed.">        if (returnId == null || returnId &lt;= 0) throw new InvalidTransactionIdException();</span>
+        
+<span class="nc" id="L523">        ReturnTransaction rTransaction = returnTransactions.get(returnId);</span>
+<span class="nc bnc" id="L524" title="All 2 branches missed.">        if (rTransaction == null) return -1;</span>
+<span class="nc bnc" id="L525" title="All 2 branches missed.">        if (rTransaction.getStatus() != ReturnStatus.ENDED) return -1;</span>
+<span class="nc" id="L526">        double price = returnTransactions.get(rTransaction.getTransactionID()).getPrice(); //this price is the amount of money the customer will riceive</span>
+<span class="nc bnc" id="L527" title="All 2 branches missed.">        if (!recordBalanceUpdate(-1 * price)) return -1;</span>
+<span class="nc" id="L528">        return price;</span>
+    }
+    
+    public double returnCreditCardPayment(Integer returnId, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException {
+<span class="nc bnc" id="L532" title="All 4 branches missed.">        if (returnId == null || returnId &lt;= 0) throw new InvalidTransactionIdException();</span>
+<span class="nc bnc" id="L533" title="All 4 branches missed.">        if (creditCard == null || creditCard.equals(&quot;&quot;)) throw new InvalidCreditCardException();</span>
+<span class="nc" id="L534">        CreditCard carta = cards.get(creditCard);</span>
+<span class="nc bnc" id="L535" title="All 2 branches missed.">        if (carta == null) return -1;</span>
+<span class="nc bnc" id="L536" title="All 2 branches missed.">        if (!this.luhn(carta.getNumber())) throw new InvalidCreditCardException();</span>
+<span class="nc" id="L537">        ReturnTransaction rTransaction = returnTransactions.get(returnId);</span>
+<span class="nc bnc" id="L538" title="All 2 branches missed.">        if (rTransaction == null) return -1;</span>
+<span class="nc" id="L539">        double output = rTransaction.getPrice();</span>
+<span class="nc bnc" id="L540" title="All 2 branches missed.">        if (!recordBalanceUpdate(output)) return -1;</span>
+<span class="nc" id="L541">        return output;</span>
+    }
+    
+    public boolean recordBalanceUpdate(double toBeAdded) {
+<span class="nc bnc" id="L545" title="All 2 branches missed.">        if (toBeAdded &gt;= 0) {</span>
+<span class="nc" id="L546">            Credit transaction = new Credit(balanceOperationGen++, LocalDate.now(), &quot;Credit&quot;);</span>
+<span class="nc" id="L547">            transaction.setMoney(toBeAdded);</span>
+<span class="nc" id="L548">            balanceOperations.put(transaction.getBalanceId(), transaction);</span>
+            
+<span class="nc" id="L550">        } else {</span>
+<span class="nc" id="L551">            Debit transaction = new Debit(balanceOperationGen++, LocalDate.now(), &quot;Debit&quot;);</span>
+<span class="nc" id="L552">            transaction.setMoney(toBeAdded);</span>
+<span class="nc" id="L553">            balanceOperations.put(transaction.getBalanceId(), transaction);</span>
+<span class="nc bnc" id="L554" title="All 2 branches missed.">            if (computeBalance() &lt; 0) {</span>
+<span class="nc" id="L555">                balanceOperations.remove(transaction.getBalanceId());</span>
+<span class="nc" id="L556">                return false;</span>
+            }
+        }
+        try {
+<span class="nc" id="L560">            this.persistBalanceOperations();</span>
+<span class="nc" id="L561">        } catch (IOException e) {</span>
+<span class="nc" id="L562">            balanceOperations.remove(balanceOperationGen - 1);</span>
+<span class="nc" id="L563">            return false;</span>
+<span class="nc" id="L564">        }</span>
+        try {
+<span class="nc" id="L566">            persistGenerators();</span>
+<span class="nc" id="L567">        } catch (IOException e) {</span>
+<span class="nc" id="L568">            e.printStackTrace();</span>
+<span class="nc" id="L569">        }</span>
+<span class="nc" id="L570">        return true;</span>
+    }
+    
+    public List&lt;BalanceOperation&gt; getCreditsAndDebits(LocalDate from, LocalDate to) {
+<span class="nc" id="L574">        List&lt;BalanceOperation&gt; output = new LinkedList&lt;BalanceOperation&gt;();</span>
+<span class="nc bnc" id="L575" title="All 2 branches missed.">        for (SaleTransactionObj sale : saleTransactions.values()) {</span>
+<span class="nc bnc" id="L576" title="All 6 branches missed.">            if ((from == null &amp;&amp; to == null) ||</span>
+<span class="nc bnc" id="L577" title="All 4 branches missed.">                    (from == null &amp;&amp; sale.getDate().isBefore(to)) ||</span>
+<span class="nc bnc" id="L578" title="All 8 branches missed.">                    (from != null &amp;&amp; sale.getDate().isAfter(from) &amp;&amp; to == null) ||</span>
+<span class="nc bnc" id="L579" title="All 4 branches missed.">                    ((from != null &amp;&amp; to != null) &amp;&amp; sale.getDate().isAfter(from) &amp;&amp; sale.getDate().isBefore(to))) {</span>
+<span class="nc" id="L580">                output.add((BalanceOperation) sale);</span>
+            }
+<span class="nc" id="L582">        }</span>
+<span class="nc bnc" id="L583" title="All 2 branches missed.">        for (ReturnTransaction rTransaciton : returnTransactions.values()) {</span>
+<span class="nc bnc" id="L584" title="All 6 branches missed.">            if ((from == null &amp;&amp; to == null) ||</span>
+<span class="nc bnc" id="L585" title="All 4 branches missed.">                    (from == null &amp;&amp; rTransaciton.getDate().isBefore(to)) ||</span>
+<span class="nc bnc" id="L586" title="All 8 branches missed.">                    (from != null &amp;&amp; rTransaciton.getDate().isAfter(from) &amp;&amp; to == null) ||</span>
+<span class="nc bnc" id="L587" title="All 4 branches missed.">                    ((from != null &amp;&amp; to != null) &amp;&amp; rTransaciton.getDate().isAfter(from) &amp;&amp; rTransaciton.getDate().isBefore(to))) {</span>
+<span class="nc" id="L588">                output.add((BalanceOperation) rTransaciton);</span>
+            }
+<span class="nc" id="L590">        }</span>
+<span class="nc bnc" id="L591" title="All 2 branches missed.">        for (OrderObj order : orders.values()) {</span>
+<span class="nc bnc" id="L592" title="All 8 branches missed.">            if (order.getBalanceOperation() != null &amp;&amp;</span>
+                    ((from == null &amp;&amp; to == null) ||
+<span class="nc bnc" id="L594" title="All 4 branches missed.">                            (from == null &amp;&amp; order.getBalanceOperation().getDate().isBefore(to)) ||</span>
+<span class="nc bnc" id="L595" title="All 8 branches missed.">                            (from != null &amp;&amp; order.getBalanceOperation().getDate().isAfter(from) &amp;&amp; to == null) ||</span>
+<span class="nc bnc" id="L596" title="All 4 branches missed.">                            ((from != null &amp;&amp; to != null) &amp;&amp; order.getBalanceOperation().getDate().isAfter(from) &amp;&amp; order.getBalanceOperation().getDate().isBefore(to))))</span>
+<span class="nc" id="L597">                output.add(order.getBalanceOperation());</span>
+            
+<span class="nc" id="L599">        }</span>
+<span class="nc" id="L600">        return output;</span>
+    }
+    
+    public double computeBalance() {
+        double balance;
+<span class="nc" id="L605">        balance = 0;</span>
+<span class="nc bnc" id="L606" title="All 2 branches missed.">        for (BalanceOperationObj operation : balanceOperations.values()) {</span>
+<span class="nc" id="L607">            balance += operation.getMoney();</span>
+<span class="nc" id="L608">        }</span>
+<span class="nc" id="L609">        return balance;</span>
+    }
+    
+    public void clear() {
+        //maybe this needs to clear orders too?
+        //yes and also has to clear the files
+<span class="nc" id="L615">        saleTransactions.clear();</span>
+<span class="nc" id="L616">        returnTransactions.clear();</span>
+<span class="nc" id="L617">        cards.clear();</span>
+<span class="nc" id="L618">        orders.clear();</span>
+<span class="nc" id="L619">        File fold = new File(GENERATOR_PATH);</span>
+<span class="nc" id="L620">        fold.delete();</span>
+<span class="nc" id="L621">        File fold1 = new File(RETURN_PATH);</span>
+<span class="nc" id="L622">        fold1.delete();</span>
+<span class="nc" id="L623">        File fold2 = new File(SALE_PATH);</span>
+<span class="nc" id="L624">        fold2.delete();</span>
+<span class="nc" id="L625">        File fold3 = new File(CREDITCARD_PATH);</span>
+<span class="nc" id="L626">        fold3.delete();</span>
+<span class="nc" id="L627">        File fold4 = new File(ORDER_PATH);</span>
+<span class="nc" id="L628">        fold4.delete();</span>
+        
+<span class="nc" id="L630">    }</span>
+    
+    public boolean luhn(String ccNumber) {
+<span class="nc bnc" id="L633" title="All 2 branches missed.">        if (ccNumber == null) return false;</span>
+<span class="nc" id="L634">        int sum = 0;</span>
+<span class="nc" id="L635">        boolean alternate = false;</span>
+<span class="nc bnc" id="L636" title="All 2 branches missed.">        for (int i = ccNumber.length() - 1; i &gt;= 0; i--) {</span>
+            try {
+<span class="nc" id="L638">                int i1 = Integer.parseInt(ccNumber.substring(i, i + 1));</span>
+<span class="nc" id="L639">            } catch (NumberFormatException e) {</span>
+<span class="nc" id="L640">                return false;</span>
+<span class="nc" id="L641">            }</span>
+<span class="nc" id="L642">            int n = Integer.parseInt(ccNumber.substring(i, i + 1));</span>
+            
+<span class="nc bnc" id="L644" title="All 2 branches missed.">            if (n &lt; 0) return false;</span>
+<span class="nc bnc" id="L645" title="All 2 branches missed.">            if (alternate) {</span>
+<span class="nc" id="L646">                n *= 2;</span>
+<span class="nc bnc" id="L647" title="All 2 branches missed.">                if (n &gt; 9) {</span>
+<span class="nc" id="L648">                    n = (n % 10) + 1;</span>
+                }
+            }
+<span class="nc" id="L651">            sum += n;</span>
+<span class="nc bnc" id="L652" title="All 2 branches missed.">            alternate = !alternate;</span>
+        }
+<span class="nc bnc" id="L654" title="All 2 branches missed.">        if (sum == 0) return false;</span>
+<span class="nc bnc" id="L655" title="All 2 branches missed.">        return (sum % 10 == 0);</span>
+    }
+    
+    public OrderObj addCompletedOrder(Integer orderId) {
+<span class="nc" id="L659">        OrderObj target = orders.get(orderId);</span>
+<span class="nc bnc" id="L660" title="All 2 branches missed.">        if (target == null) return null;</span>
+<span class="nc" id="L661">        target = new OrderObj(target);</span>
+<span class="nc bnc" id="L662" title="All 3 branches missed.">        switch (OrderStatus.valueOf(target.getStatus())) {</span>
+            case PAYED:
+<span class="nc" id="L664">                target.setStatus(OrderStatus.COMPLETED.name());</span>
+                try {
+<span class="nc" id="L666">                    persistReturns();</span>
+<span class="nc" id="L667">                } catch (IOException e) {</span>
+<span class="nc" id="L668">                    target.setStatus(OrderStatus.PAYED.name());</span>
+<span class="nc" id="L669">                    return null;</span>
+<span class="nc" id="L670">                }</span>
+<span class="nc" id="L671">                return target;</span>
+            case COMPLETED:
+<span class="nc" id="L673">                return target;</span>
+            default:
+<span class="nc" id="L675">                return null;</span>
+        }
+    }
+    
+    public boolean addOrder(OrderObj order) {
+        // update the balance if the order status is payed check also if the field balanceOperation of the order
+        // is not null and in that case add it to the balanceOperations map.
+        // if there is not enough balance return false
+        // add persistance
+<span class="nc" id="L684">        double tot = order.getPricePerUnit() * order.getQuantity();</span>
+<span class="nc bnc" id="L685" title="All 2 branches missed.">        if (order.getStatus().equals(OrderStatus.ISSUED.name())) {</span>
+<span class="nc" id="L686">            BalanceOperationObj operation = new Debit(balanceOperationGen++, LocalDate.now(), &quot;Debit&quot;);</span>
+<span class="nc" id="L687">            order.setBalanceOperation((BalanceOperationObj) operation);</span>
+<span class="nc" id="L688">            order.setBalanceId(operation.getBalanceId());</span>
+<span class="nc" id="L689">            orders.put(order.getOrderId(), order);</span>
+        }
+<span class="nc bnc" id="L691" title="All 2 branches missed.">        if (order.getStatus().equals(OrderStatus.PAYED.name())) {</span>
+<span class="nc bnc" id="L692" title="All 2 branches missed.">            if (!this.recordBalanceUpdate(-1 * tot)) return false;</span>
+            
+        }
+        try {
+<span class="nc" id="L696">            this.persistOrders();</span>
+<span class="nc" id="L697">        } catch (IOException e) {</span>
+<span class="nc" id="L698">            balanceOperations.remove(balanceOperationGen - 1);</span>
+<span class="nc" id="L699">            return false;</span>
+<span class="nc" id="L700">        }</span>
+        try {
+<span class="nc" id="L702">            persistGenerators();</span>
+<span class="nc" id="L703">        } catch (IOException e) {</span>
+<span class="nc" id="L704">            e.printStackTrace();</span>
+<span class="nc" id="L705">        }</span>
+<span class="nc" id="L706">        return true;</span>
+        
+    }
+    
+    private void persistCards() throws IOException {
+<span class="nc" id="L711">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L712">        mapper.writerWithDefaultPrettyPrinter()</span>
+<span class="nc" id="L713">                .writeValue(new File(CREDITCARD_PATH), cards);</span>
+        
+<span class="nc" id="L715">    }</span>
+    
+    private void persistOrders() throws IOException {
+<span class="nc" id="L718">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L719">        mapper.writerWithDefaultPrettyPrinter()</span>
+<span class="nc" id="L720">                .writeValue(new File(ORDER_PATH), orders);</span>
+<span class="nc" id="L721">    }</span>
+    
+    private void persistSales() throws IOException {
+<span class="nc" id="L724">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L725">        mapper.registerModule(new JavaTimeModule());</span>
+<span class="nc" id="L726">        mapper.writerWithDefaultPrettyPrinter()</span>
+<span class="nc" id="L727">                .writeValue(new File(SALE_PATH), saleTransactions);</span>
+<span class="nc" id="L728">    }</span>
+    
+    private void persistReturns() throws IOException {
+<span class="nc" id="L731">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L732">        mapper.registerModule(new JavaTimeModule());</span>
+<span class="nc" id="L733">        mapper.writerWithDefaultPrettyPrinter()</span>
+<span class="nc" id="L734">                .writeValue(new File(RETURN_PATH), returnTransactions);</span>
+<span class="nc" id="L735">    }</span>
+    
+    private void persistBalanceOperations() throws IOException {
+<span class="nc" id="L738">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L739">        mapper.registerModule(new JavaTimeModule());</span>
+<span class="nc" id="L740">        mapper.writerWithDefaultPrettyPrinter()</span>
+<span class="nc" id="L741">                .writeValue(new File(BALANCEOPERATION_PATH), balanceOperations);</span>
+<span class="nc" id="L742">    }</span>
+    
+    private void persistGenerators() throws IOException {
+        try {
+<span class="nc" id="L746">            File fold = new File(GENERATOR_PATH);</span>
+<span class="nc" id="L747">            fold.delete();</span>
+<span class="nc" id="L748">            FileWriter myWriter = new FileWriter(GENERATOR_PATH);</span>
+<span class="nc" id="L749">            myWriter.write(saleGen + &quot;\n&quot;);</span>
+<span class="nc" id="L750">            myWriter.write(returnGen + &quot;\n&quot;);</span>
+<span class="nc" id="L751">            myWriter.write(balanceOperationGen + &quot;\n&quot;);</span>
+<span class="nc" id="L752">            myWriter.close();</span>
+<span class="nc" id="L753">        } catch (IOException e) {</span>
+<span class="nc" id="L754">            System.out.println(&quot;An error occurred.&quot;);</span>
+<span class="nc" id="L755">            e.printStackTrace();</span>
+<span class="nc" id="L756">        }</span>
+<span class="nc" id="L757">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductTypeObjTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ezshop$SaleTransactionObjTest.exec</a> &gt; <a href="index.source.html" class="el_package">it.polito.ezshop.classes</a> &gt; <span class="el_source">ProductTypeObjTest.java</span></div><h1>ProductTypeObjTest.java</h1><pre class="source lang-java linenums">package it.polito.ezshop.classes;
+
+import it.polito.ezshop.exceptions.InvalidLocationException;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+<span class="nc" id="L9">public class ProductTypeObjTest {</span>
+	
+	@Test
+	public void testSetPosition() {
+<span class="nc" id="L13">		ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L14">		p.setPosition(new Position());</span>
+<span class="nc" id="L15">		assertEquals(new Position(), p.getPosition());</span>
+		try {
+<span class="nc" id="L17">			final Position position = new Position(&quot;10-10-10&quot;);</span>
+<span class="nc" id="L18">			p.setPosition(position);</span>
+<span class="nc" id="L19">			assertEquals(position, p.getPosition());</span>
+<span class="nc" id="L20">		} catch (InvalidLocationException e) {</span>
+<span class="nc" id="L21">			fail(&quot;Invalid position&quot;);</span>
+<span class="nc" id="L22">		}</span>
+<span class="nc" id="L23">	}</span>
+	
+	@Test
+	public void testSetDiscountRate() {
+<span class="nc" id="L27">		ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L28">		p.setDiscountRate(0.5);</span>
+<span class="nc" id="L29">		assertEquals(0.5, p.getDiscountRate(), 0.0);</span>
+<span class="nc" id="L30">	}</span>
+	
+	@Test
+	public void testSetQuantity() {
+<span class="nc" id="L34">		ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L35">		p.setQuantity(25);</span>
+<span class="nc" id="L36">		assertEquals((Integer) 25, p.getQuantity());</span>
+<span class="nc" id="L37">	}</span>
+	
+	@Test
+	public void testSetLocation() {
+<span class="nc" id="L41">		ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L42">		p.setLocation(&quot;&quot;);</span>
+<span class="nc" id="L43">		assertEquals(&quot;&quot;, p.getLocation());</span>
+<span class="nc" id="L44">		p.setLocation(null);</span>
+<span class="nc" id="L45">		p.setLocation(&quot;0-5-05&quot;);</span>
+<span class="nc" id="L46">		assertEquals(&quot;&quot;, p.getLocation());</span>
+<span class="nc" id="L47">		assertEquals(&quot;&quot;, p.getLocation());</span>
+<span class="nc" id="L48">		p.setLocation(&quot;12-13-14&quot;);</span>
+<span class="nc" id="L49">		assertEquals(&quot;12-13-14&quot;, p.getLocation());</span>
+<span class="nc" id="L50">	}</span>
+	
+	@Test
+	public void testSetNote() {
+<span class="nc" id="L54">		ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L55">		p.setNote(&quot;prova&quot;);</span>
+<span class="nc" id="L56">		assertEquals(&quot;prova&quot;, p.getNote());</span>
+<span class="nc" id="L57">	}</span>
+	
+	@Test
+	public void testSetProductDescription() {
+<span class="nc" id="L61">		ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L62">		p.setProductDescription(&quot;prova&quot;);</span>
+<span class="nc" id="L63">		assertEquals(&quot;prova&quot;, p.getProductDescription());</span>
+<span class="nc" id="L64">	}</span>
+	
+	@Test
+	public void testSetBarCode() {
+<span class="nc" id="L68">		ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L69">		p.setBarCode(&quot;2152155151&quot;);</span>
+<span class="nc" id="L70">		assertEquals(&quot;2152155151&quot;, p.getBarCode());</span>
+<span class="nc" id="L71">	}</span>
+	
+	@Test
+	public void testSetPricePerUnit() {
+<span class="nc" id="L75">		ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L76">		p.setPricePerUnit(28.7);</span>
+<span class="nc" id="L77">		assertEquals(28.7, p.getPricePerUnit(), 0.0);</span>
+<span class="nc" id="L78">	}</span>
+	
+	@Test
+	public void testSetId() {
+<span class="nc" id="L82">		ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L83">		p.setId(28);</span>
+<span class="nc" id="L84">		assertEquals((Integer) 28, p.getId());</span>
+<span class="nc" id="L85">	}</span>
+	
+	@Test
+	public void testConstructors() {
+<span class="nc" id="L89">		ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L90">		ProductTypeObj p1 = new ProductTypeObj(p);</span>
+<span class="nc" id="L91">		assertEquals(p, p1);</span>
+<span class="nc" id="L92">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

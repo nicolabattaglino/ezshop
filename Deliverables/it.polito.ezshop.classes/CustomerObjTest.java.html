@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomerObjTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ezshop$SaleTransactionObjTest.exec</a> &gt; <a href="index.source.html" class="el_package">it.polito.ezshop.classes</a> &gt; <span class="el_source">CustomerObjTest.java</span></div><h1>CustomerObjTest.java</h1><pre class="source lang-java linenums">package it.polito.ezshop.classes;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+<span class="nc" id="L7">public class CustomerObjTest {</span>
+
+
+	@Test
+	public void testSetLoyaltyCard(){
+<span class="nc" id="L12">		CustomerObj c = new CustomerObj();</span>
+<span class="nc" id="L13">		LoyaltyCardObj card = new LoyaltyCardObj();</span>
+<span class="nc" id="L14">		c.setLoyaltyCard(card);</span>
+<span class="nc" id="L15">		assertSame(card, c.getLoyaltyCard());</span>
+<span class="nc" id="L16">	}</span>
+
+	@Test
+	public void testSetCustomerName(){
+<span class="nc" id="L20">		CustomerObj c = new CustomerObj();</span>
+<span class="nc" id="L21">		c.setCustomerName(&quot;Antonio&quot;);</span>
+<span class="nc" id="L22">		assertEquals(&quot;Antonio&quot;, c.getCustomerName());</span>
+<span class="nc" id="L23">	}</span>
+
+	@Test
+	public void testSetCustomerCard(){
+<span class="nc" id="L27">		CustomerManager cm = new CustomerManager(null);</span>
+<span class="nc" id="L28">		cm.createCard();</span>
+<span class="nc" id="L29">		CustomerObj cu = new CustomerObj(1, &quot;John&quot;);</span>
+<span class="nc" id="L30">		assertNull(cu.getCustomerCard());</span>
+<span class="nc" id="L31">		cu.setCustomerCard(&quot;1000000000&quot;);</span>
+<span class="nc" id="L32">		assertEquals(&quot;1000000000&quot;, cu.getCustomerCard());</span>
+<span class="nc" id="L33">		cu.setCustomerCard(null);</span>
+<span class="nc" id="L34">		assertNull(cu.getLoyaltyCard());</span>
+<span class="nc" id="L35">		cu.setCustomerCard(&quot;&quot;);</span>
+<span class="nc" id="L36">		assertNull(cu.getLoyaltyCard());</span>
+<span class="nc" id="L37">	}</span>
+
+	@Test
+	public void testSetId(){
+<span class="nc" id="L41">		CustomerObj c = new CustomerObj();</span>
+<span class="nc" id="L42">		c.setId(10);</span>
+<span class="nc" id="L43">		assertEquals(10, (int) c.getId());</span>
+<span class="nc" id="L44">	}</span>
+	@Test
+	public void testSetPoints(){
+<span class="nc" id="L47">		CustomerObj cu = new CustomerObj(2, &quot;John&quot;);</span>
+<span class="nc" id="L48">		LoyaltyCardObj l = new LoyaltyCardObj();</span>
+<span class="nc" id="L49">		cu.setLoyaltyCard(l);</span>
+<span class="nc" id="L50">		cu.setPoints(10);</span>
+<span class="nc" id="L51">		assertEquals(10, (int) cu.getPoints());</span>
+<span class="nc" id="L52">	}</span>
+
+	@Test
+	public void testConstructor(){
+<span class="nc" id="L56">		CustomerObj cu = new CustomerObj(2, &quot;John&quot;);</span>
+<span class="nc" id="L57">		LoyaltyCardObj l = new LoyaltyCardObj();</span>
+<span class="nc" id="L58">		cu.setLoyaltyCard(l);</span>
+<span class="nc" id="L59">		CustomerObj cu1 = new CustomerObj(cu);</span>
+<span class="nc" id="L60">		assertEquals(cu1.getId(), cu.getId());</span>
+<span class="nc" id="L61">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
