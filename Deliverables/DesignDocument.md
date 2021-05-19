@@ -343,7 +343,14 @@ class SaleTransaction {
 }
 note right: Persistent
 
+enum SaleStatus {
+    STARTED,
+    CLOSED,
+    PAYED
+}
+
 SaleTransaction  --> "*" TicketEntry : -productList : ArrayList<TicketEntry>
+SaleTransaction  --> "*" SaleStatus : -status : SaleStatus
 
 
 SaleTransaction -|> Credit

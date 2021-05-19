@@ -381,13 +381,7 @@ public class EZShop implements EZShopInterface {
         if (userManager.getUserLogged() == null) {
             throw new UnauthorizedException();
         } else {
-            try {
-                return transactionManager.endReturnTransaction(returnId, commit);
-            } catch (InvalidProductIdException | InvalidProductCodeException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                return false;
-            }
+            return transactionManager.endReturnTransaction(returnId, commit);
         }
     }
     
