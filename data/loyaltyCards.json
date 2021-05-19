@@ -1,4 +1,9 @@
 {
+  "0" : {
+    "cardCode" : "0",
+    "points" : 0,
+    "isAttached" : false
+  },
   "1000000000" : {
     "cardCode" : "1000000000",
     "points" : 0,

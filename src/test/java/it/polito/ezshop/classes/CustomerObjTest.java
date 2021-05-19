@@ -30,6 +30,10 @@ public class CustomerObjTest {
 		assertNull(cu.getCustomerCard());
 		cu.setCustomerCard("1000000000");
 		assertEquals("1000000000", cu.getCustomerCard());
+		cu.setCustomerCard(null);
+		assertNull(cu.getLoyaltyCard());
+		cu.setCustomerCard("");
+		assertNull(cu.getLoyaltyCard());
 	}
 
 	@Test
