@@ -1,7 +1,5 @@
 package it.polito.ezshop.classes;
 
-import java.time.LocalDate;
-
 import it.polito.ezshop.data.TicketEntry;
 
 public class TicketEntryObj implements TicketEntry {
@@ -20,25 +18,22 @@ public class TicketEntryObj implements TicketEntry {
         this.pricePerUnit = d;
     }
     
-    public TicketEntryObj(int amount2, LocalDate now, double d, String string) {
-    }
-
-    public TicketEntryObj(int amount2, LocalDate now, double d, String string) {
-    }
-
-    public TicketEntryObj(int amount2, LocalDate now, double d, String string) {
-    }
-
+    
     public String getBarCode() {
         return barCode;
     }
     
-    public void setBarCode(int i) {
+    public void setBarCode(String i) {
         this.barCode = i;
     }
     
     public String getProductDescription() {
         return productDescription;
+    }
+    
+    @Override
+    public void setProductDescription(String productDescription) {
+    
     }
     
     public void setProductDescription() {
@@ -68,9 +63,8 @@ public class TicketEntryObj implements TicketEntry {
     public void setDiscountRate(double discountRate) {
         this.discountRate = discountRate;
     }
-
-    public void setBarCode(int i) {
-    }
+    
+    
 }
     
 
