@@ -22,12 +22,14 @@ public class ProductOrderManager {
     
     private static final String PRODUCTS_PATH = "data/products.json";
     private static final String PRODUCT_GEN_PATH = "data/product_gen.json";
+    private static final String ORDER_GEN_PATH = "data/order_gen.json";
     private final EZShop shop;
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
     private HashMap<String, ProductTypeObj> productMap;
     
     private int productIdGen;
+    private int orderIdGen;
     
     public ProductOrderManager(EZShop shop) {
         this.shop = shop;
@@ -61,6 +63,21 @@ public class ProductOrderManager {
                 ioException.printStackTrace();
             } finally {
                 productIdGen = 1;
+            }
+        }
+        File orderGen = new File(ORDER_GEN_PATH);
+        try {
+            orderGen.createNewFile();
+            orderIdGen = mapper.readValue(productGen, Integer.class);
+        } catch (IOException e) {
+            orderGen.delete();
+            try {
+                orderGen.createNewFile();
+                mapper.writerWithDefaultPrettyPrinter().writeValue(orderGen, 1);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } finally {
+                orderIdGen = 1;
             }
         }
     }
@@ -229,7 +246,13 @@ public class ProductOrderManager {
         if (pricePerUnit <= 0) throw new InvalidPricePerUnitException();
         ProductType p = getProductTypeByBarCode(productCode);
         if (p == null) return -1;
-        OrderObj order = new OrderObj(p, pricePerUnit, quantity);
+        OrderObj order = new OrderObj(orderIdGen++, p, pricePerUnit, quantity);
+        try {
+            persistGen();
+        } catch (IOException e) {
+            orderIdGen--;
+            return -1;
+        }
         shop.addOrder(order);
         return order.getOrderId();
     }
@@ -241,7 +264,13 @@ public class ProductOrderManager {
         if (pricePerUnit <= 0) throw new InvalidPricePerUnitException();
         ProductType target = getProductTypeByBarCode(productCode);
         if (target == null) return -1;
-        OrderObj o = new OrderObj(target, pricePerUnit, quantity);
+        OrderObj o = new OrderObj(orderIdGen++, target, pricePerUnit, quantity);
+        try {
+            persistGen();
+        } catch (IOException e) {
+            orderIdGen--;
+            return -1;
+        }
         o.setStatus("payed");
         if (!shop.addOrder(o)) return -1;
         return o.getOrderId();
@@ -294,7 +323,9 @@ public class ProductOrderManager {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(PRODUCT_GEN_PATH), productIdGen);
-        
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(new File(ORDER_GEN_PATH), orderIdGen);
+    
     }
     
     public void clear() {

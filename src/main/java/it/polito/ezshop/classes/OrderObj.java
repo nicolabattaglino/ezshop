@@ -47,11 +47,11 @@ public class OrderObj implements Order {
         this.supplier = orderObj.supplier;
         this.status = orderObj.status;
         this.balanceOp = orderObj.balanceOp;
-
+    
     }
     
-    public OrderObj(ProductType product, double pricePerUnit, int quantity) {
-        this.orderId = ++OrderIdGen;
+    public OrderObj(Integer orderId, ProductType product, double pricePerUnit, int quantity) {
+        this.orderId = orderId;
         this.product = new ProductTypeObj(product);
         this.pricePerUnit = pricePerUnit;
         this.quantity = quantity;

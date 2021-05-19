@@ -31,7 +31,6 @@ Version:
 
 **Criteria for method *luhn*:**
 
-
 -Sign of number
 -Correctness of String
 -Presence of non-numerical values
@@ -146,8 +145,6 @@ Version:
 |Invalid|Valid|T4("t") -> role not set|it.polito.ezshop.classes.UserObjTest::testSetRoleInvalidString|
 |NULL|Valid|T5(null) -> role not set|it.polito.ezshop.classes.UserObjTest::testSetRoleNull|
 
-
-
 # White Box Unit Tests
 
 ### Test cases definition
@@ -156,19 +153,20 @@ Version:
     <Report here all the created JUnit test cases, and the units/classes under test >
     <For traceability write the class and method name that contains the test case>
 
-| Unit name | JUnit test case | |--|--| |src.main.java.it.polito.ezshop.classes.ProductOrderManager |
-src.main.test.it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeNull<br />| ||
-it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeNonNum | ||
-it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeLenghtLessThan12 | ||
-it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeLenghtGreaterThan14 | ||
-it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeCheckDigitNotValid | ||
-it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeCheckDigitValid |
+| Unit name | JUnit test case |
+|-----------|-----------------| 
+|src.main.java.it.polito.ezshop.classes.ProductOrderManager | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**
+testCheckBarcodeNull**|
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeNonNum** |              
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtLessThan12** |    
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtGreaterThan14** | 
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeCheckDigitNotValid** |  
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeCheckDigitValid** |     
 
 ### Code coverage report
 
     <Add here the screenshot report of the statement and branch coverage obtained using
     the Eclemma tool. >
-
 
 ### Loop coverage analysis
 

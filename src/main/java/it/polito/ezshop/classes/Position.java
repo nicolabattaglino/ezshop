@@ -12,8 +12,7 @@ public class Position {
     private final boolean empty;
     
     public Position(String pos) throws InvalidLocationException {
-        //TODO chiedi per le regex, vedi se il controllo va bene qui
-        if (!pos.matches("^[1-9][0-9]*-[1-9][0-9]*-[1-9][0-9]*$"))
+        if (!pos.matches("[1-9][0-9]*-[1-9][0-9]*-[1-9][0-9]*"))
             throw new InvalidLocationException();
         Integer[] tokens = Arrays.stream(pos.split("-"))
                 .map(Integer::parseInt)
@@ -50,5 +49,21 @@ public class Position {
     public String toString() {
         if (empty) return "";
         return "" + aisleID + "-" + rackID + "-" + levelId;
+    }
+    
+    public Integer getAisleID() {
+        return aisleID;
+    }
+    
+    public Integer getRackID() {
+        return rackID;
+    }
+    
+    public Integer getLevelId() {
+        return levelId;
+    }
+    
+    public boolean isEmpty() {
+        return empty;
     }
 }
