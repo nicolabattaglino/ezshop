@@ -230,9 +230,9 @@ Version:
 |  |  src.test.it.polito.ezshop.classes.TicketEntryObjTest::**testPricePerUnit**  |
 |  |  src.test.it.polito.ezshop.classes.TicketEntryObjTest::**testDiscountRate**  |
 |  |  src.test.it.polito.ezshop.classes.TicketEntryObjTest::**testCopyConstructor**  |
-| src.main.java.it.polito.ezshop.classes.TransactionManager |  src.test.it.polito.ezshop.classes.TransactionManager::**testBalanceUpdate**  |
-|  |  src.test.it.polito.ezshop.classes.TransactionManager::**testLuhn**  |
-|  |  src.test.it.polito.ezshop.classes.TransactionManager::**testComputeBalance**  |
+| src.main.java.it.polito.ezshop.classes.TransactionManager |  src.test.it.polito.ezshop.classes.TransactionManagerTest::**testBalanceUpdate**  |
+|  |  src.test.it.polito.ezshop.classes.TransactionManagerTest::**testLuhn**  |
+|  |  src.test.it.polito.ezshop.classes.TransactionManagerTest::**testComputeBalance**  |
 | src.main.java.it.polito.ezshop.classes.UserManager |  src.test.it.polito.ezshop.classes.UserManagerTest::**testLogin**  |
 |  |  src.test.it.polito.ezshop.classes.UserManagerTest::**testLogout**  |
 
@@ -262,11 +262,9 @@ Version:
 
 
 
-
 ### Code coverage report
 
-    <Add here the screenshot report of the statement and branch coverage obtained using
-    the Eclemma tool. >
+![test_coverag3](C:\Users\Mattia.000\IdeaProjects\ezshop\Deliverables\test_coverag3.png)
 
 
 ### Loop coverage analysis
@@ -276,9 +274,13 @@ Version:
 
 |Unit name | Loop rows | Number of iterations | JUnit test case |
 |---|---|---|---|
-|||||
-|||||
-||||||
+|src.test.it.polito.ezshop.classes.ProductOrderManagerTest|88-91|11|**testCheckBarcodeCheckDigitValid**|
+|||12|**testCheckBarcodeCheckDigitValid**|
+|||13|**testCheckBarcodeCheckDigitValid**|
+|||0|**testCheckBarcodeNonNum**|
+|src.test.it.polito.ezshop.classes.TransactionManagerTest|636-653|10|**testLuhn**|
+|||1|**testLuhn**|
+|||0|**testLuhn**|
 
 
 
