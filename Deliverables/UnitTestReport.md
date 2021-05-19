@@ -100,18 +100,12 @@ Version:
 
 | Validity of the string | Presence of non-numerical values | Length of the String parameter | Validity of the String according to the check-digit | Description of the test case                                 | JUnit test case                                              |
 | ---------------------- | -------------------------------- | ------------------------------ | --------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| null                   | *                                | *                              | *                                                   | T1(null; false)                                              | it.polito.ezshop.classes.ProductOrderManagerTest::**
-testCheckBarcodeNull** |
-| yes                    | yes                              | *                              | *                                                   | T2("a2bcde!"; false)                                         | it.polito.ezshop.classes.ProductOrderManagerTest::**
-testCheckBarcodeNonNum** |
-| yes                    | no                               | < 12                           | *                                                   | T3("1234567"; false)                                         | it.polito.ezshop.classes.ProductOrderManagerTest::**
-testCheckBarcodeLenghtLessThan12** |
-| yes                    | no                               | > 14                           | *                                                   | T4("123456789012345"; false)                                 | it.polito.ezshop.classes.ProductOrderManagerTest::**
-testCheckBarcodeLenghtGreaterThan14** |
-| yes                    | no                               | [ 12,14 ]                      | no                                                  | T5("123456789013"; false)<br />T5b("1234567890137"; false)<br />T5c("12345678901377"; false) | it.polito.ezshop.classes.ProductOrderManagerTest::**
-testCheckBarcodeCheckDigitNotValid** |
-| yes                    | no                               | [ 12,14 ]                      | yes                                                 | T6("123456789012"; true)<br />T6b("1234567890128"; true)<br />T6c("12345678901286"; true) | it.polito.ezshop.classes.ProductOrderManagerTest::**
-testCheckBarcodeCheckDigitValid** |
+| null                   | *                                | *                              | *                                                   | T1(null; false)                                              | it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeNull** |
+| yes                    | yes                              | *                              | *                                                   | T2("a2bcde!"; false)                                         | it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeNonNum** |
+| yes                    | no                               | < 12                           | *                                                   | T3("1234567"; false)                                         | it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtLessThan12** |
+| yes                    | no                               | > 14                           | *                                                   | T4("123456789012345"; false)                                 | it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtGreaterThan14** |
+| yes                    | no                               | [ 12,14 ]                      | no                                                  | T5("123456789013"; false)<br />T5b("1234567890137"; false)<br />T5c("12345678901377"; false) | it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeCheckDigitNotValid** |
+| yes                    | no                               | [ 12,14 ]                      | yes                                                 | T6("123456789012"; true)<br />T6b("1234567890128"; true)<br />T6c("12345678901286"; true) | it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeCheckDigitValid** |
 
 ### **Class *UserObj* - method *setRole***
 
