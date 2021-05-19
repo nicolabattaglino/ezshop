@@ -62,12 +62,12 @@ Version:
 
 | Sign of number | Correctness of String | Presence of non-numerical values|Emptiness |null| Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|-------|-------|-------|-------|
-|Positive|Correct|No|No|No|valid|luhn("79927398713")-> true|it.polito.ezshop.classes.TransactionMangerTest::testLuhn|
-|Negative|*|*|*|*|invalid|luhn("-79927398713")|it.polito.ezshop.classes.TransactionMangerTest::testLuhn|
-|*|Incorrect|*|*|*|Invalid|luhn("5")|it.polito.ezshop.classes.TransactionMangerTest::testLuhn|
-|*|*|Yes|*|*|Invalid|luhn("iduhsidh")|it.polito.ezshop.classes.TransactionMangerTest::testLuhn|
-|*|*|*|Yes|*|Invalid|luhn("")|it.polito.ezshop.classes.TransactionMangerTest::testLuhn|
-|*|*|*|*|Yes|Invalid|luhn(null)|it.polito.ezshop.classes.TransactionMangerTest::testLuhn|
+|Positive|Correct|No|No|No|valid|luhn("79927398713")-> true|it.polito.ezshop.classes.TransactionMangerTest::**testLuhn**|
+|Negative|*|*|*|*|invalid|luhn("-79927398713")|it.polito.ezshop.classes.TransactionMangerTest::**testLuhn**|
+|*|Incorrect|*|*|*|Invalid|luhn("5")|it.polito.ezshop.classes.TransactionMangerTest::**testLuhn**|
+|*|*|Yes|*|*|Invalid|luhn("iduhsidh")|it.polito.ezshop.classes.TransactionMangerTest::**testLuhn**|
+|*|*|*|Yes|*|Invalid|luhn("")|it.polito.ezshop.classes.TransactionMangerTest::**testLuhn**|
+|*|*|*|*|Yes|Invalid|luhn(null)|it.polito.ezshop.classes.TransactionMangerTest::**testLuhn**|
 
 ### **Class *ProductOrderManager* - method *checkBarcode***
 
@@ -140,11 +140,11 @@ Version:
 
 | Validity of the String parameter | Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|
-|Valid|Valid|T1("ADMINISTRATOR") -> role set|it.polito.ezshop.classes.UserObjTest::testSetRoleShopManager|
-|Valid|Valid|T2("CASHIER") -> role set|it.polito.ezshop.classes.UserObjTest::testSetRoleCashier|
-|Valid|Valid|T3("SHOPMANAGER") -> role set|it.polito.ezshop.classes.UserObjTest::testSetRoleShopManager|
-|Invalid|Valid|T4("t") -> role not set|it.polito.ezshop.classes.UserObjTest::testSetRoleInvalidString|
-|NULL|Valid|T5(null) -> role not set|it.polito.ezshop.classes.UserObjTest::testSetRoleNull|
+|Valid|Valid|T1("ADMINISTRATOR") -> role set|it.polito.ezshop.classes.UserObjTest::**testSetRoleShopManager**|
+|Valid|Valid|T2("CASHIER") -> role set|it.polito.ezshop.classes.UserObjTest::**testSetRoleCashier**|
+|Valid|Valid|T3("SHOPMANAGER") -> role set|it.polito.ezshop.classes.UserObjTest::**testSetRoleShopManager**|
+|Invalid|Valid|T4("t") -> role not set|it.polito.ezshop.classes.UserObjTest::**testSetRoleInvalidString**|
+|NULL|Valid|T5(null) -> role not set|it.polito.ezshop.classes.UserObjTest::**testSetRoleNull**|
 
 
 
@@ -156,14 +156,31 @@ Version:
     <Report here all the created JUnit test cases, and the units/classes under test >
     <For traceability write the class and method name that contains the test case>
 
-| Unit name | JUnit test case | |--|--| |src.main.java.it.polito.ezshop.classes.ProductOrderManager |
-src.main.test.it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeNull<br />| ||
-it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeNonNum | ||
-it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeLenghtLessThan12 | ||
-it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeLenghtGreaterThan14 | ||
-it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeCheckDigitNotValid | ||
-it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeCheckDigitValid |
-
+| Unit name | JUnit test case |
+|--|--| 
+|src.main.java.it.polito.ezshop.classes.ProductOrderManager | |
+|src.main.test.it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeNull<br />| |
+|it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeNonNum | |
+|it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeLenghtLessThan12 | |
+|it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeLenghtGreaterThan14 | |
+|it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeCheckDigitNotValid | |
+|it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeCheckDigitValid | |
+| src.main.java.it.polito.ezshop.classes.CustomerObj  | src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetLoyaltyCard**|
+|   |  src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetCustomerName**|
+|   |  src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetCustomerCard**|
+|   | src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetId** |
+|   | src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetPoints** |
+| src.main.java.it.polito.ezshop.classes.LoyaltyCardObj | src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetIsAttached** |
+|   | src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetCardCode** |
+|   |  src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetPoints**|
+|  src.main.java.it.polito.ezshop.classes.UserObj | src.test.it.polito.ezshop.classes.UserObjTest::**testSetId**  |
+|   |  src.test.it.polito.ezshop.classes.UserObjTest::**testSetUsername** |
+|   |  src.test.it.polito.ezshop.classes.UserObjTest::**testSetPassword** |
+|   |  src.test.it.polito.ezshop.classes.UserObjTest::**testSetRoleShopManager**  |
+|   | src.test.it.polito.ezshop.classes.UserObjTest::**testSetRoleAdministrator**   |
+|   |  src.test.it.polito.ezshop.classes.UserObjTest::**testSetRoleCashier**   |
+|   | src.test.it.polito.ezshop.classes.UserObjTest::**testSetRoleInvalidString**   |
+|   |  src.test.it.polito.ezshop.classes.UserObjTest::**testSetRoleNull**  |
 ### Code coverage report
 
     <Add here the screenshot report of the statement and branch coverage obtained using

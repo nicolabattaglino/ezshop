@@ -29,14 +29,14 @@ public class CustomerObjTest {
 		CustomerObj cu = new CustomerObj(1, "John");
 		assertNull(cu.getCustomerCard());
 		cu.setCustomerCard("1000000000");
-		assertTrue(cu.getCustomerCard().equals("1000000000"));
+		assertEquals("1000000000", cu.getCustomerCard());
 	}
 
 	@Test
 	public void testSetId(){
 		CustomerObj c = new CustomerObj();
 		c.setId(10);
-		assertTrue(10 == c.getId());
+		assertEquals(10, (int) c.getId());
 	}
 	@Test
 	public void testSetPoints(){
@@ -44,7 +44,7 @@ public class CustomerObjTest {
 		LoyaltyCardObj l = new LoyaltyCardObj();
 		cu.setLoyaltyCard(l);
 		cu.setPoints(10);
-		assertTrue(cu.getPoints() == 10);
+		assertEquals(10, (int) cu.getPoints());
 	}
 
 	@Test

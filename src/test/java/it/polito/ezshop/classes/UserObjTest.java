@@ -10,19 +10,19 @@ public class UserObjTest {
     public void testSetId(){
         UserObj u1 = new UserObj(0,"MikeBB","12345",UserRole.ADMINISTRATOR);
         u1.setId(2);
-        assertTrue(2 == u1.getId());
+        assertEquals(2, (int) u1.getId());
     }
     @Test
     public void testSetUsername(){
         UserObj u1 = new UserObj();
         u1.setUsername("Tim");
-        assertTrue(u1.getUsername().equals("Tim"));
+        assertEquals("Tim", u1.getUsername());
     }
     @Test
     public void testSetPassword(){
         UserObj u1 = new UserObj();
         u1.setPassword("123123");
-        assertTrue(u1.getPassword().equals("123123"));
+        assertEquals("123123", u1.getPassword());
     }
 
 
@@ -30,32 +30,32 @@ public class UserObjTest {
     public void testSetRoleShopManager(){
         UserObj u1 = new UserObj();
         u1.setRole("shopmanager");
-        assertTrue(u1.getRole().equals(UserRole.SHOPMANAGER.toString()));
+        assertEquals(u1.getRole(), UserRole.SHOPMANAGER.toString());
     }
 
     @Test
     public void testSetRoleAdministrator(){
         UserObj u1 = new UserObj();
         u1.setRole("administrator");
-        assertTrue(u1.getRole().equals(UserRole.ADMINISTRATOR.toString()));
+        assertEquals(u1.getRole(), UserRole.ADMINISTRATOR.toString());
     }
     @Test
     public void testSetRoleCashier(){
         UserObj u1 = new UserObj();
         u1.setRole("cashier");
-        assertTrue(u1.getRole().equals(UserRole.CASHIER.toString()));
+        assertEquals(u1.getRole(), UserRole.CASHIER.toString());
     }
     @Test
     public void testSetRoleInvalidString(){
         UserObj u1 = new UserObj();
         u1.setRole("t");
-        assertFalse(u1.getRole().equals("t"));
+        assertNotEquals("t", u1.getRole());
     }
     @Test
     public void testSetRoleNull(){
-        UserObj u1 = new UserObj();
+        UserObj u1 = new UserObj(0,"MikeBB","12345",UserRole.ADMINISTRATOR);
         u1.setRole(null);
-        assertFalse(u1.getRole() == null);
+        assertNotNull(u1.getRole());
     }
 
 }

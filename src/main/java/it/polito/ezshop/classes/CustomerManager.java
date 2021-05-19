@@ -150,11 +150,10 @@ public class CustomerManager {
                 return false;
             }
         }
-        
 
         if (newCustomerCard == null){
             customer.setCustomerName(newCustomerName);
-        } else if (newCustomerCard.trim().equals("")) {
+        } else if (newCustomerCard.equals("")) {
             card = cardMap.get(customer.getCustomerCard());
             card.setIsAttached(false);
             card.setPoints(0);

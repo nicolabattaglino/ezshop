@@ -74,8 +74,11 @@ public class CustomerObj implements Customer {
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-        loyaltyCard = cardMap.get(customerCard);
-        loyaltyCard.setIsAttached(true);
+        if (cardMap != null) {
+            loyaltyCard = cardMap.get(customerCard);
+            loyaltyCard.setIsAttached(true);
+        }
+
     }
     
     
