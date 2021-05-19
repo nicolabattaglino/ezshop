@@ -53,7 +53,7 @@ public class ReturnTransactionTest {
 		List<TicketEntry> lt= new ArrayList<TicketEntry>();
 		r.setEntries(lt);
 		assertEquals(lt, r.getEntries());
-		TicketEntry t =null;
+		TicketEntryObj t =new TicketEntryObj(1, "a", "b", 1.0);
 
 		r.addEntry(t);
 		lt.add(t);
