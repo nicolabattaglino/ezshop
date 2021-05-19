@@ -7,16 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReturnTransaction extends Credit {
-
-    private int transactionID;
-    private Integer ticketNumber;
+    
+    private final int transactionID;
+    
     private List<TicketEntry> entries = new ArrayList<TicketEntry>();
     private double price;
     private ReturnStatus status;
     
     public ReturnTransaction(int id, LocalDate date, double money, String type, int returning) {
         super(id, date, type);
-
+        
         this.transactionID = returning;
         status = ReturnStatus.NEW;
     }
@@ -24,10 +24,7 @@ public class ReturnTransaction extends Credit {
     public ReturnTransaction(ReturnTransaction r) {
         super(r.getBalanceId(), r.getDate(), r.getType());
         this.transactionID = r.transactionID;
-        this.ticketNumber = r.ticketNumber;
-        for (TicketEntry t : r.getEntries()) {
-            this.entries.add(t);
-        }
+        this.entries.addAll(r.getEntries());
         
         this.price = r.price;
         this.status = r.status;
@@ -40,14 +37,6 @@ public class ReturnTransaction extends Credit {
     
     public void setStatus(ReturnStatus status) {
         this.status = status;
-    }
-    
-    public Integer getTicketNumber() {
-        return ticketNumber;
-    }
-    
-    public void setTicketNumber(Integer ticketNumber) {
-        this.ticketNumber = ticketNumber;
     }
     
     public List<TicketEntry> getEntries() {

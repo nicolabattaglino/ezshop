@@ -408,19 +408,17 @@ class TicketEntry {
 }
 note right : Persistent
 
-
-
 SaleTransaction "*" --> "0..1" LoyaltyCard: -loyaltyCard: LoyaltyCard
 
 Order "*" -> ProductType: -product: ProductType
 
 class ReturnTransaction {
-  -quantity
+    -transactionId: int
+    -price: double
 }
-ReturnTransaction --> ReturnStatus: -status: ReturnStatus 
 
-ReturnTransaction "*" <- SaleTransaction : -sale: SaleTransaction
-ReturnTransaction "*" -> ProductType : -product: ProductType
+ReturnTransaction --> ReturnStatus: -status: ReturnStatus 
+ReturnTransaction --> "*" TicketEntry: -entries: List<TicketEntry>
 
 @enduml
 

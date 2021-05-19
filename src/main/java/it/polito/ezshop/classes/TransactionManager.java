@@ -239,7 +239,7 @@ public class TransactionManager {
         if (discountRate > 1 || discountRate < 0) return false;
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
-        if (!sale.getStatus().equals("new")) return false;
+        if (!sale.getStatus().equals(SaleStatus.STARTED)) return false;
         List<TicketEntry> tickets = sale.getEntries();
         int i;
         for (i = 0; i < tickets.size(); i++) {
