@@ -1,9 +1,10 @@
 package it.polito.ezshop.classes;
 
-import java.time.LocalDate;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.time.LocalDate;
+
 import static org.junit.Assert.assertEquals;
 
 public class TicketEntryObjTest {
@@ -11,7 +12,7 @@ public class TicketEntryObjTest {
     @Test
     public void testBarCode(){
         TicketEntryObj te = new TicketEntryObj(0,LocalDate.now(), 0.0, "Sale");
-        te.setBarCode(1);
+        te.setBarCode("1");
         Assert.assertTrue(TicketEntryObj.getBarCode.substring(0), false);
     }
 
@@ -28,7 +29,7 @@ public class TicketEntryObjTest {
 
     @Test
     public void testAmount(){
-        TicketEntryObj te = new TicketEntryObj(0,LocalDate.now(), 0.0, "Sale");
+        TicketEntryObj te = new TicketEntryObj(0, 0.0, "Sale");
         te.setAmount(1);
         Assert.assertTrue(1== te.getAmount());
     }

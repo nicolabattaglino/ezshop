@@ -69,7 +69,7 @@ public class ProductOrderManager {
         if (barCode == null) return false;
         if (!barCode.matches("[0-9]{12,14}")) return false;
         final int length = barCode.length();
-        int checkValue = barCode.charAt(length - 1);
+        int checkValue = barCode.charAt(length - 1) - '0';
         int res = 0;
         for (int i = 0; i < length - 1; i++) {
             int factor = 1;

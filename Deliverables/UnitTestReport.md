@@ -51,7 +51,7 @@ Version:
 |          |      5     |
 | Presence of non-numerical values | iduhsidh|
 | Emptiness | ""|
-| null | null| 
+| null | null|
 
 
 
@@ -79,8 +79,8 @@ Version:
 
 | Criteria                                            | Predicate          |
 | --------------------------------------------------- | ------------------ |
-|    Validity of the string                           |       yes          | 
-|                                                     |       no (null)    | 
+|    Validity of the string                           |       yes          |
+|                                                     |       no (null)    |
 |    Length of the String parameter                   |       < 12         |
 |                                                     |       [ 12,14 ]    |
 |                                                     |       > 14         |
@@ -98,14 +98,14 @@ Version:
 
 **Combination of predicates**:
 
-| Validity of the string | Presence of non-numerical values | Length of the String parameter | Validity of the String according to the check-digit | Description of the test case | JUnit test case |
-|------------------------|----------------------------------|--------------------------------|-----------------------------------------------------|------------------------------|-----------------|
-| null                   | *                                | *                              | *                                                   | T1(null; false)              |                 |
-| yes                    | yes                              | *                              | *                                                   | T2("a2bcde!"; false)         |                 |
-| yes                    | no                               | < 12                           | *                                                   | T3("1234567"; false)         |                 |
-| yes                    | no                               | > 14                           | *                                                   |                              |                 |
-| yes                    | no                               | [ 12,14 ]                      | no                                                  |                              |                 |
-| yes                    | no                               | [ 12,14 ]                      | yes                                                 |                              |                 |
+| Validity of the string | Presence of non-numerical values | Length of the String parameter | Validity of the String according to the check-digit | Description of the test case                                 | JUnit test case                                              |
+| ---------------------- | -------------------------------- | ------------------------------ | --------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| null                   | *                                | *                              | *                                                   | T1(null; false)                                              | it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeNull |
+| yes                    | yes                              | *                              | *                                                   | T2("a2bcde!"; false)                                         | it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeNonNum |
+| yes                    | no                               | < 12                           | *                                                   | T3("1234567"; false)                                         | it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeLenghtLessThan12 |
+| yes                    | no                               | > 14                           | *                                                   | T4("123456789012345"; false)                                 | it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeLenghtGreaterThan14 |
+| yes                    | no                               | [ 12,14 ]                      | no                                                  | T5("123456789013"; false)<br />T5b("1234567890137"; false)<br />T5c("12345678901377"; false) | it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeCheckDigitNotValid |
+| yes                    | no                               | [ 12,14 ]                      | yes                                                 | T6("123456789012"; true)<br />T6b("1234567890128"; true)<br />T6c("12345678901286"; true) | it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeCheckDigitValid |
 
 ### **Class *UserObj* - method *setRole***
 
@@ -151,17 +151,18 @@ Version:
 # White Box Unit Tests
 
 ### Test cases definition
-    
+
     <JUnit test classes must be in src/test/java/it/polito/ezshop>
     <Report here all the created JUnit test cases, and the units/classes under test >
     <For traceability write the class and method name that contains the test case>
 
-
-| Unit name | JUnit test case |
-|--|--|
-|||
-|||
-||||
+| Unit name | JUnit test case | |--|--| |src.main.java.it.polito.ezshop.classes.ProductOrderManager |
+src.main.test.it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeNull<br />| ||
+it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeNonNum | ||
+it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeLenghtLessThan12 | ||
+it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeLenghtGreaterThan14 | ||
+it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeCheckDigitNotValid | ||
+it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeCheckDigitValid |
 
 ### Code coverage report
 
