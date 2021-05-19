@@ -8,8 +8,8 @@ public class TransactionManagerTest {
 
 	@Test
 	public void testBalanceUpdate() {
-		it.polito.ezshop.data.EZShop shop = new it.polito.ezshop.data.EZShop();
-		TransactionManager t = new TransactionManager(shop);
+
+		TransactionManager t = new TransactionManager(null);
 		assertTrue(t.recordBalanceUpdate(5.0));
 		assertFalse(t.recordBalanceUpdate(-20.0));
 		assertTrue(t.recordBalanceUpdate(-2.0));

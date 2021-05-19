@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.MapSerializer;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import it.polito.ezshop.data.*;
 import it.polito.ezshop.exceptions.*;
 
@@ -721,18 +722,21 @@ public class TransactionManager {
     
     private void persistSales() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(SALE_PATH), saleTransactions);
     }
     
     private void persistReturns() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(RETURN_PATH), returnTransactions);
     }
     
     private void persistBalanceOperations() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(BALANCEOPERATION_PATH), balanceOperations);
     }
