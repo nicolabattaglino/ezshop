@@ -8,7 +8,7 @@ public abstract class BalanceOperationObj implements BalanceOperation {
     private int balanceId;
     private LocalDate date;
     private double money;
-    private String type;
+    private String type; //type e' equivalente a description?
     
     
     public BalanceOperationObj(int id, LocalDate date, String type) {

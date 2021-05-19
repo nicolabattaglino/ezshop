@@ -1,11 +1,14 @@
 package it.polito.ezshop.classes;
 
-import static org.junit.Assert.*;
-import java.util.*;
 import it.polito.ezshop.data.TicketEntry;
-import java.time.LocalDate;
 import org.junit.Test;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class SaleTransactionObjTest {
 	@Test
@@ -74,7 +77,7 @@ public class SaleTransactionObjTest {
 	@Test
 	public void testStatus() {
 		SaleTransactionObj s = new SaleTransactionObj(0, LocalDate.now(), 0.0, "Sale");
-		s.setStatus("closed");
+		s.setStatus(SaleStatus.CLOSED);
 		assertEquals("closed", s.getStatus());
 	}
 }

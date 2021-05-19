@@ -17,12 +17,14 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class TransactionManager {
+    
     public static final String ORDER_PATH = "data/orders.json";
     public static final String SALE_PATH = "data/sales.json";
     public static final String RETURN_PATH = "data/returns.json";
     public static final String CREDITCARD_PATH = "data/creditCards.json";
     public static final String BALANCEOPERATION_PATH = "data/balanceOperations.json";
     public static final String GENERATOR_PATH = "data/transactionManagerGenerators.json";
+    
     private final EZShop shop;
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
@@ -283,7 +285,7 @@ public class TransactionManager {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
-        if (!sale.getStatus().equals("new")) return false; // the transaction wasn't opern
+        if (!sale.getStatus().equals(SaleStatus.STARTED)) return false; // the transaction wasn't opern
         sale.setStatus(SaleStatus.CLOSED);
         try {
             this.persistSales();
@@ -379,7 +381,7 @@ public class TransactionManager {
         return true;
     }
     
-    public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, InvalidProductIdException, InvalidProductCodeException {
+    public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException {
         if (returnId == null || returnId <= 0) throw new InvalidTransactionIdException();
         // in the current design the return transaction's informations are created during the return product function, the end return method only closes the return
         ReturnTransaction target = returnTransactions.get(returnId);

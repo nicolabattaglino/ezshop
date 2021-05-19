@@ -21,7 +21,6 @@ import java.util.Map;
 
 
 public class CustomerManager {
-    //Todo vedi che fare per le rollback
     public static final String CARD_PATH = "data/loyaltyCards.json";
     public static final String CARD_ID_PATH = "data/loyaltyCardsIdGen.json";
     public static final String CUSTOMER_ID_PATH = "data/customersIdGen.json";
@@ -35,10 +34,10 @@ public class CustomerManager {
     @JsonDeserialize
     private HashMap<String, LoyaltyCardObj> cardMap;
     
-    private Integer customerIdGen = 0;
-    private long loyaltyCardIdGen = 1000000000;
-    private EZShop shop;
-    
+    private Integer customerIdGen;
+    private long loyaltyCardIdGen;
+    private final EZShop shop;
+
     public CustomerManager(EZShop shop) {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<HashMap<String, LoyaltyCardObj>> typeRef = new TypeReference<HashMap<String, LoyaltyCardObj>>() {
@@ -144,9 +143,9 @@ public class CustomerManager {
             throw new InvalidCustomerIdException();
         if (newCustomerName == null || newCustomerName.trim().equals(""))
             throw new InvalidCustomerNameException();
-        if (!newCustomerCard.matches("^$|^[0-9]{10}$"))
+        if ((newCustomerCard != null) && (!newCustomerCard.matches("^$|^[0-9]{10}$"))) //todo funziona?
             throw new InvalidCustomerCardException();
-        if (!newCustomerCard.equals("")) {
+        if ((newCustomerCard != null) && !newCustomerCard.equals("")) {
             if (cardMap.get(newCustomerCard) == null || cardMap.get(newCustomerCard).getIsAttached()) {
                 return false;
             }
@@ -155,33 +154,25 @@ public class CustomerManager {
         String oldCard = customer.getCustomerCard();
         String oldCustomerName = customer.getCustomerName();
         int oldPoints = customer.getPoints();
-        if (newCustomerCard.trim().equals("")) {
+
+        if (newCustomerCard == null){
+            customer.setCustomerName(newCustomerName);
+        } else if (newCustomerCard.trim().equals("")) {
             card = cardMap.get(customer.getCustomerCard());
             card.setIsAttached(false);
             card.setPoints(0);
             customerMap.get(id).setCustomerCard("");
-        } else if (newCustomerCard != null) {
+            customer.setCustomerName(newCustomerName);
+        } else {
             customer.setCustomerCard(newCustomerCard);
             cardMap.get(newCustomerCard).setIsAttached(true);
+            customer.setCustomerName(newCustomerName);
         }
-        customer.setCustomerName(newCustomerName);
-        
+
         try {
-            // todo se una delle due persist fallisce?
-            
             persistCustomers();
             persistCards();
         } catch (IOException e) {
-            if (newCustomerCard.trim().equals("")) {
-                card = cardMap.get(customer.getCustomerCard());
-                card.setIsAttached(true);
-                card.setPoints(oldPoints);
-                customerMap.get(id).setCustomerCard(oldCard);
-            } else if (newCustomerCard != null) {
-                customer.setCustomerCard(oldCard);
-                cardMap.get(newCustomerCard).setIsAttached(false);
-            }
-            customer.setCustomerName(oldCustomerName);
             e.printStackTrace();
         }
         return true;
@@ -205,7 +196,6 @@ public class CustomerManager {
             }
             customerMap.remove(id);
             try {
-                // todo se una delle due persist fallisce?
                 persistCustomers();
                 persistCards();
             } catch (IOException e) {
@@ -239,18 +229,19 @@ public class CustomerManager {
         if (cardMap.size() == 0) {
             id = 1000000000;
         } else {
-            id = loyaltyCardIdGen + 1;
+            id = loyaltyCardIdGen++;
         }
         LoyaltyCardObj l = new LoyaltyCardObj(String.valueOf(id));
         cardMap.put(l.getCardCode(), l);
-        loyaltyCardIdGen = id++;
+        loyaltyCardIdGen = id;
         try {
             // todo rollback
             persistCards();
             persistCardsId();
         } catch (IOException e) {
-            cardMap.remove(l.getCardCode());
-            loyaltyCardIdGen = id--;
+            e.printStackTrace();
+            //cardMap.remove(l.getCardCode());
+            //loyaltyCardIdGen = id--;
         }
         return l.getCardCode();
     }
@@ -272,8 +263,6 @@ public class CustomerManager {
         target.setIsAttached(true);
         
         try {
-            // todo rollback
-            
             persistCards();
             persistCustomers();
         } catch (IOException e) {
@@ -308,22 +297,10 @@ public class CustomerManager {
             }
         }
         try {
-            // todo rollback
-            
             persistCards();
             persistCustomers();
         } catch (IOException e) {
-            points = target.getPoints();
-            points -= pointsToBeAdded;
-            for (Map.Entry<Integer, CustomerObj> cu : customerMap.entrySet()
-            ) {
-                c = cu.getValue();
-                if (c.getLoyaltyCard() != null && c.getCustomerCard().equals(customerCard)) {
-                    c.setPoints(points);
-                    target.setPoints(points);
-                }
-            }
-            
+            e.printStackTrace();
         }
         return true;
         
