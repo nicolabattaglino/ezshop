@@ -78,6 +78,20 @@ public class SaleTransactionObjTest {
 	public void testStatus() {
 		SaleTransactionObj s = new SaleTransactionObj(0, LocalDate.now(), 0.0, "Sale");
 		s.setStatus(SaleStatus.CLOSED);
-		assertEquals("closed", s.getStatus());
+		assertEquals(SaleStatus.CLOSED, s.getStatus());
+	}
+
+	@Test
+	public void testCopyContructor(){
+		SaleTransactionObj s = new SaleTransactionObj(0,LocalDate.now(), 0.0, "Sale");
+		List<TicketEntry> lt= new ArrayList<TicketEntry>();
+		TicketEntry t1 =new TicketEntryObj(1, "a","b", 1.0);
+		TicketEntry t2 =new TicketEntryObj(2, "a","b", 1.0);
+		lt.add(t1);
+		lt.add(t2);
+		s.setEntries(lt);
+		s.deleteEntry(t1);
+		SaleTransactionObj s2 = new SaleTransactionObj(s);
+		assertEquals(s2.getEntries(), s.getEntries());
 	}
 }

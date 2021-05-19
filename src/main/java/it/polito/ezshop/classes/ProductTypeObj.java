@@ -51,7 +51,6 @@ public class ProductTypeObj implements ProductType {
         this.barCode = product.getBarCode();
         this.notes = product.getNote();
         this.selPrice = product.getPricePerUnit();
-        //TODO manca il discount rate
         try {
             String location = product.getLocation();
             this.position = location.equals("") ? new Position() : new Position(location);

@@ -42,7 +42,8 @@ public class ReturnTransaction extends Credit {
     public List<TicketEntry> getEntries() {
         List<TicketEntry> output = new ArrayList<TicketEntry>();
         for (TicketEntry t : entries) {
-            output.add(t);
+            TicketEntryObj t1 = new TicketEntryObj(t);
+            output.add(t1);
         }
         return output;
     }
