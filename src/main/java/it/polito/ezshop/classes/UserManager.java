@@ -1,5 +1,4 @@
 package it.polito.ezshop.classes;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -8,7 +7,6 @@ import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.data.User;
 import it.polito.ezshop.exceptions.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -25,7 +23,7 @@ public class UserManager {
     private Integer userIdGen = 0;
     private User loggedUser;
     private EZShop shop;
-    
+
     public UserManager(EZShop shop) {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<LinkedList<UserObj>> typeRef = new TypeReference<LinkedList<UserObj>>() {
@@ -154,7 +152,6 @@ public class UserManager {
         
         if (id == null || id < 0)
             throw new InvalidUserIdException();
-        // todo è giusto cosi?
         if (role == null || role.equals("") ||
                 (!role.toUpperCase().equals(UserRole.ADMINISTRATOR.toString()) &&
                         !role.toUpperCase().equals(UserRole.CASHIER.toString()) &&
@@ -184,7 +181,6 @@ public class UserManager {
     
     public User login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
         int i = 0;
-        
         for (User u : userList) {
             if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
                 loggedUser = u;
