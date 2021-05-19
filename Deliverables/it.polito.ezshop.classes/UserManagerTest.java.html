@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserManagerTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ezshop$SaleTransactionObjTest.exec</a> &gt; <a href="index.source.html" class="el_package">it.polito.ezshop.classes</a> &gt; <span class="el_source">UserManagerTest.java</span></div><h1>UserManagerTest.java</h1><pre class="source lang-java linenums">package it.polito.ezshop.classes;
+
+import it.polito.ezshop.data.User;
+import it.polito.ezshop.exceptions.InvalidPasswordException;
+import it.polito.ezshop.exceptions.InvalidRoleException;
+import it.polito.ezshop.exceptions.InvalidUsernameException;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+<span class="nc" id="L11">public class UserManagerTest {</span>
+
+    @Test
+    public void testLogin() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException {
+<span class="nc" id="L15">        UserManager um = new UserManager(null);</span>
+<span class="nc" id="L16">        um.createUser(&quot;SimAdmin&quot;,&quot;12345&quot;,&quot;Administrator&quot;);</span>
+<span class="nc" id="L17">        User userLogged = um.login(&quot;SimAdmin&quot;, &quot;12345&quot;);</span>
+<span class="nc" id="L18">        assertEquals(userLogged.getUsername(),um.getUserLogged().getUsername());</span>
+<span class="nc" id="L19">        um.logout();</span>
+<span class="nc" id="L20">        userLogged = um.login(&quot;ZZZ&quot;, &quot;0000&quot;);</span>
+<span class="nc" id="L21">        assertNull(userLogged);</span>
+
+<span class="nc" id="L23">    }</span>
+
+    @Test
+    public void testLogout() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException {
+<span class="nc" id="L27">        UserManager um = new UserManager(null);</span>
+<span class="nc" id="L28">        assertFalse(um.logout());</span>
+<span class="nc" id="L29">        um.createUser(&quot;SimAdmin&quot;,&quot;12345&quot;,&quot;Administrator&quot;);</span>
+<span class="nc" id="L30">        User userLogged = um.login(&quot;SimAdmin&quot;, &quot;12345&quot;);</span>
+<span class="nc" id="L31">        assertTrue(um.logout());</span>
+<span class="nc" id="L32">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

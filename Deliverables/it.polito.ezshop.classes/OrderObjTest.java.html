@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderObjTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ezshop$SaleTransactionObjTest.exec</a> &gt; <a href="index.source.html" class="el_package">it.polito.ezshop.classes</a> &gt; <span class="el_source">OrderObjTest.java</span></div><h1>OrderObjTest.java</h1><pre class="source lang-java linenums">package it.polito.ezshop.classes;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.junit.Test;
+
+import java.time.LocalDate;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
+<span class="nc" id="L11">public class OrderObjTest {</span>
+
+
+    @Test
+    public void testSetBalanceOperation() {
+<span class="nc" id="L16">        ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L17">        OrderObj o = new OrderObj(25, p, 28.5, 27);</span>
+<span class="nc" id="L18">        final Debit debit = new Debit(21, LocalDate.now(), &quot;debit&quot;);</span>
+<span class="nc" id="L19">        o.setBalanceOperation(debit);</span>
+<span class="nc" id="L20">        assertEquals(debit, o.getBalanceOperation());</span>
+
+<span class="nc" id="L22">    }</span>
+
+    @Test
+    public void testSetProductCode() {
+<span class="nc" id="L26">        ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L27">        OrderObj o = new OrderObj(25, p, 28.5, 27);</span>
+<span class="nc" id="L28">        final String productCode = &quot;1234558783&quot;;</span>
+<span class="nc" id="L29">        o.setProductCode(productCode);</span>
+<span class="nc" id="L30">        assertEquals(productCode, o.getProductCode());</span>
+<span class="nc" id="L31">    }</span>
+
+    @Test
+    public void testSetPricePerUnit() {
+<span class="nc" id="L35">        ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L36">        OrderObj o = new OrderObj(25, p, 28.5, 27);</span>
+<span class="nc" id="L37">        o.setPricePerUnit(352.2);</span>
+<span class="nc" id="L38">        assertEquals(352.2, o.getPricePerUnit(), 0.0);</span>
+<span class="nc" id="L39">    }</span>
+
+    @Test
+    public void testSetQuantity() {
+<span class="nc" id="L43">        ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L44">        OrderObj o = new OrderObj(25, p, 28.5, 27);</span>
+<span class="nc" id="L45">        o.setQuantity(28);</span>
+<span class="nc" id="L46">        assertEquals(28, o.getQuantity());</span>
+<span class="nc" id="L47">    }</span>
+
+    @Test
+    public void testSetStatus() {
+<span class="nc" id="L51">        ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L52">        OrderObj o = new OrderObj(25, p, 28.5, 27);</span>
+<span class="nc" id="L53">        o.setStatus(&quot;ISSUED&quot;);</span>
+<span class="nc" id="L54">        assertEquals(&quot;ISSUED&quot;, o.getStatus());</span>
+<span class="nc" id="L55">        o.setStatus(&quot;PAYED&quot;);</span>
+<span class="nc" id="L56">        assertEquals(&quot;PAYED&quot;, o.getStatus());</span>
+<span class="nc" id="L57">        o.setStatus(&quot;COMPLETED&quot;);</span>
+<span class="nc" id="L58">        assertEquals(&quot;COMPLETED&quot;, o.getStatus());</span>
+<span class="nc" id="L59">        assertThrows(RuntimeException.class, () -&gt; o.setStatus(&quot;abc&quot;));</span>
+<span class="nc" id="L60">    }</span>
+
+    @Test
+    public void testSetOrderId() {
+<span class="nc" id="L64">        ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L65">        OrderObj o = new OrderObj(25, p, 28.5, 27);</span>
+<span class="nc" id="L66">        o.setOrderId(98);</span>
+<span class="nc" id="L67">        assertEquals((Integer) 98, o.getOrderId());</span>
+<span class="nc" id="L68">    }</span>
+
+    @Test
+    public void testSetBalanceId() {
+<span class="nc" id="L72">        ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L73">        OrderObj o = new OrderObj(25, p, 28.5, 27);</span>
+<span class="nc" id="L74">        final Debit debit = new Debit(21, LocalDate.now(), &quot;debit&quot;);</span>
+<span class="nc" id="L75">        o.setBalanceOperation(debit);</span>
+<span class="nc" id="L76">        o.setBalanceId(98);</span>
+<span class="nc" id="L77">        assertEquals((Integer) 98, o.getBalanceId());</span>
+<span class="nc" id="L78">    }</span>
+
+    @Test
+    public void testSetProduct() {
+<span class="nc" id="L82">        ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L83">        OrderObj o = new OrderObj(25, p, 28.5, 27);</span>
+<span class="nc" id="L84">        final ProductTypeObj product = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L85">        o.setProduct(product);</span>
+<span class="nc" id="L86">        assertEquals(product, o.getProduct());</span>
+<span class="nc" id="L87">    }</span>
+
+    @Test
+    public void testSetSupplier() {
+<span class="nc" id="L91">        ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L92">        OrderObj o = new OrderObj(25, p, 28.5, 27);</span>
+<span class="nc" id="L93">        o.setSupplier(&quot;Ferrero&quot;);</span>
+<span class="nc" id="L94">        assertEquals(&quot;Ferrero&quot;, o.getSupplier());</span>
+<span class="nc" id="L95">    }</span>
+
+    @Test
+    public void testConstructors() {
+<span class="nc" id="L99">        ProductTypeObj p = new ProductTypeObj(20, 0, &quot;descr&quot;, &quot;11111111111111&quot;, &quot;notes&quot;, 10.0, 0.25, new Position());</span>
+<span class="nc" id="L100">        final Debit debit = new Debit(21, LocalDate.now(), &quot;debit&quot;);</span>
+<span class="nc" id="L101">        OrderObj o = new</span>
+<span class="nc" id="L102">                OrderObj(1,</span>
+                p,
+                0.5,
+                50,
+                &quot;supplier&quot;,
+                OrderStatus.ISSUED,
+                debit);
+<span class="nc" id="L109">		OrderObj o2 = new OrderObj(o);</span>
+<span class="nc" id="L110">		assertEquals(o.getBalanceId(), o2.getBalanceId());</span>
+<span class="nc" id="L111">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomerManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ezshop$SaleTransactionObjTest.exec</a> &gt; <a href="index.source.html" class="el_package">it.polito.ezshop.classes</a> &gt; <span class="el_source">CustomerManager.java</span></div><h1>CustomerManager.java</h1><pre class="source lang-java linenums">package it.polito.ezshop.classes;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.MapSerializer;
+import it.polito.ezshop.data.Customer;
+import it.polito.ezshop.data.EZShop;
+import it.polito.ezshop.exceptions.InvalidCustomerCardException;
+import it.polito.ezshop.exceptions.InvalidCustomerIdException;
+import it.polito.ezshop.exceptions.InvalidCustomerNameException;
+import it.polito.ezshop.exceptions.UnauthorizedException;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+public class CustomerManager {
+    public static final String CARD_PATH = &quot;data/loyaltyCards.json&quot;;
+    public static final String CARD_ID_PATH = &quot;data/loyaltyCardsIdGen.json&quot;;
+    public static final String CUSTOMER_ID_PATH = &quot;data/customersIdGen.json&quot;;
+    public static final String CUSTOMER_PATH = &quot;data/customers.json&quot;;
+    
+    @JsonSerialize(keyUsing = MapSerializer.class)
+    @JsonDeserialize
+    private Map&lt;Integer, CustomerObj&gt; customerMap;
+    
+    @JsonSerialize(keyUsing = MapSerializer.class)
+    @JsonDeserialize
+    private Map&lt;String, LoyaltyCardObj&gt; cardMap;
+    
+    private Integer customerIdGen;
+    private long loyaltyCardIdGen;
+    private final EZShop shop;
+
+<span class="nc" id="L41">    public CustomerManager(EZShop shop) {</span>
+<span class="nc" id="L42">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L43">        TypeReference&lt;HashMap&lt;String, LoyaltyCardObj&gt;&gt; typeRef = new TypeReference&lt;HashMap&lt;String, LoyaltyCardObj&gt;&gt;() {</span>
+        };
+<span class="nc" id="L45">        File cards = new File(CARD_PATH);</span>
+        try {
+<span class="nc" id="L47">            cards.createNewFile();</span>
+<span class="nc" id="L48">            cardMap = mapper.readValue(cards, typeRef);</span>
+<span class="nc" id="L49">        } catch (IOException e) {</span>
+<span class="nc" id="L50">            cards.delete();</span>
+            try {
+<span class="nc" id="L52">                cards.createNewFile();</span>
+<span class="nc" id="L53">            } catch (IOException ioException) {</span>
+<span class="nc" id="L54">                ioException.printStackTrace();</span>
+            } finally {
+<span class="nc" id="L56">                cardMap = new HashMap&lt;&gt;();</span>
+            }
+<span class="nc" id="L58">        }</span>
+<span class="nc" id="L59">        File customers = new File(CUSTOMER_PATH);</span>
+<span class="nc" id="L60">        TypeReference&lt;HashMap&lt;Integer, CustomerObj&gt;&gt; typeRef1 = new TypeReference&lt;HashMap&lt;Integer, CustomerObj&gt;&gt;() {</span>
+        };
+        try {
+<span class="nc" id="L63">            customers.createNewFile();</span>
+<span class="nc" id="L64">            customerMap = mapper.readValue(customers, typeRef1);</span>
+<span class="nc" id="L65">        } catch (IOException e) {</span>
+<span class="nc" id="L66">            e.printStackTrace();</span>
+<span class="nc" id="L67">            customers.delete();</span>
+            try {
+<span class="nc" id="L69">                customers.createNewFile();</span>
+<span class="nc" id="L70">            } catch (IOException ioException) {</span>
+<span class="nc" id="L71">                ioException.printStackTrace();</span>
+            } finally {
+<span class="nc" id="L73">                customerMap = new HashMap&lt;&gt;();</span>
+            }
+<span class="nc" id="L75">        }</span>
+<span class="nc" id="L76">        TypeReference&lt;Integer&gt; typeRef2 = new TypeReference&lt;Integer&gt;() {</span>
+        };
+<span class="nc" id="L78">        File customersId = new File(CUSTOMER_ID_PATH);</span>
+        try {
+<span class="nc" id="L80">            customersId.createNewFile();</span>
+<span class="nc" id="L81">            customerIdGen = mapper.readValue(customersId, typeRef2);</span>
+<span class="nc" id="L82">        } catch (IOException e) {</span>
+<span class="nc" id="L83">            customersId.delete();</span>
+            try {
+<span class="nc" id="L85">                cards.createNewFile();</span>
+<span class="nc" id="L86">            } catch (IOException ioException) {</span>
+<span class="nc" id="L87">                ioException.printStackTrace();</span>
+            } finally {
+<span class="nc" id="L89">                customerIdGen = 0;</span>
+            }
+<span class="nc" id="L91">        }</span>
+<span class="nc" id="L92">        TypeReference&lt;Long&gt; typeRef3 = new TypeReference&lt;Long&gt;() {</span>
+        };
+<span class="nc" id="L94">        File cardsId = new File(CARD_ID_PATH);</span>
+        try {
+<span class="nc" id="L96">            cardsId.createNewFile();</span>
+<span class="nc" id="L97">            loyaltyCardIdGen = mapper.readValue(customersId, typeRef3);</span>
+<span class="nc" id="L98">        } catch (IOException e) {</span>
+<span class="nc" id="L99">            cardsId.delete();</span>
+            try {
+<span class="nc" id="L101">                cardsId.createNewFile();</span>
+<span class="nc" id="L102">            } catch (IOException ioException) {</span>
+<span class="nc" id="L103">                ioException.printStackTrace();</span>
+            } finally {
+<span class="nc" id="L105">                loyaltyCardIdGen = 1000000000;</span>
+            }
+<span class="nc" id="L107">        }</span>
+<span class="nc" id="L108">        this.shop = shop;</span>
+<span class="nc" id="L109">    }</span>
+    
+    
+    public Integer defineCustomer(String customerName) throws InvalidCustomerNameException {
+<span class="nc bnc" id="L113" title="All 4 branches missed.">        if (customerName == null || customerName.equals(&quot;&quot;))</span>
+<span class="nc" id="L114">            throw new InvalidCustomerNameException();</span>
+        Integer id;
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        if (customerMap.size() == 0) {</span>
+<span class="nc" id="L117">            id = 0;</span>
+        } else {
+<span class="nc" id="L119">            id = ++customerIdGen;</span>
+        }
+<span class="nc" id="L121">        CustomerObj customer = new CustomerObj(id, customerName);</span>
+<span class="nc" id="L122">        customerMap.put(id, customer);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">        if (customerMap.get(id) == null) {</span>
+<span class="nc" id="L124">            return -1;</span>
+        }
+        try {
+<span class="nc" id="L127">            persistCustomers();</span>
+<span class="nc" id="L128">            persistCustomersId();</span>
+<span class="nc" id="L129">        } catch (IOException e) {</span>
+<span class="nc" id="L130">            customerMap.remove(id);</span>
+<span class="nc" id="L131">            e.printStackTrace();</span>
+<span class="nc" id="L132">        }</span>
+<span class="nc" id="L133">        return id;</span>
+        
+    }
+    
+    
+    public boolean modifyCustomer(Integer id, String newCustomerName, String newCustomerCard) throws InvalidCustomerNameException, InvalidCustomerCardException, InvalidCustomerIdException, UnauthorizedException {
+        
+<span class="nc" id="L140">        Customer customer = customerMap.get(id);</span>
+<span class="nc" id="L141">        LoyaltyCardObj card = null;</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        if (id &lt; 0)</span>
+<span class="nc" id="L143">            throw new InvalidCustomerIdException();</span>
+<span class="nc bnc" id="L144" title="All 4 branches missed.">        if (newCustomerName == null || newCustomerName.trim().equals(&quot;&quot;))</span>
+<span class="nc" id="L145">            throw new InvalidCustomerNameException();</span>
+<span class="nc bnc" id="L146" title="All 4 branches missed.">        if ((newCustomerCard != null) &amp;&amp; (!newCustomerCard.matches(&quot;^$|^[0-9]{10}$&quot;)))</span>
+<span class="nc" id="L147">            throw new InvalidCustomerCardException();</span>
+<span class="nc bnc" id="L148" title="All 4 branches missed.">        if ((newCustomerCard != null) &amp;&amp; !newCustomerCard.equals(&quot;&quot;)) {</span>
+<span class="nc bnc" id="L149" title="All 4 branches missed.">            if (cardMap.get(newCustomerCard) == null || cardMap.get(newCustomerCard).getIsAttached()) {</span>
+<span class="nc" id="L150">                return false;</span>
+            }
+        }
+
+<span class="nc bnc" id="L154" title="All 2 branches missed.">        if (newCustomerCard == null){</span>
+<span class="nc" id="L155">            customer.setCustomerName(newCustomerName);</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">        } else if (newCustomerCard.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L157">            card = cardMap.get(customer.getCustomerCard());</span>
+<span class="nc" id="L158">            card.setIsAttached(false);</span>
+<span class="nc" id="L159">            card.setPoints(0);</span>
+<span class="nc" id="L160">            customerMap.get(id).setCustomerCard(&quot;&quot;);</span>
+<span class="nc" id="L161">            customer.setCustomerName(newCustomerName);</span>
+        } else {
+<span class="nc" id="L163">            customer.setCustomerCard(newCustomerCard);</span>
+<span class="nc" id="L164">            cardMap.get(newCustomerCard).setIsAttached(true);</span>
+<span class="nc" id="L165">            customer.setCustomerName(newCustomerName);</span>
+        }
+
+        try {
+<span class="nc" id="L169">            persistCustomers();</span>
+<span class="nc" id="L170">            persistCards();</span>
+<span class="nc" id="L171">        } catch (IOException e) {</span>
+<span class="nc" id="L172">            e.printStackTrace();</span>
+<span class="nc" id="L173">        }</span>
+<span class="nc" id="L174">        return true;</span>
+        
+        //}
+    }
+    
+    public boolean deleteCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
+<span class="nc bnc" id="L180" title="All 2 branches missed.">        if (id &lt; 0) {</span>
+<span class="nc" id="L181">            throw new InvalidCustomerIdException();</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">        } else if (customerMap.get(id) == null) {</span>
+<span class="nc" id="L183">            return false;</span>
+        } else {
+<span class="nc" id="L185">            CustomerObj c = customerMap.get(id);</span>
+<span class="nc" id="L186">            int oldPoints = c.getPoints();</span>
+            
+<span class="nc bnc" id="L188" title="All 2 branches missed.">            if (c.getLoyaltyCard() != null) {</span>
+<span class="nc" id="L189">                String cardId = c.getCustomerCard();</span>
+<span class="nc" id="L190">                cardMap.get(cardId).setPoints(0);</span>
+<span class="nc" id="L191">                cardMap.get(cardId).setIsAttached(false);</span>
+            }
+<span class="nc" id="L193">            customerMap.remove(id);</span>
+            try {
+<span class="nc" id="L195">                persistCustomers();</span>
+<span class="nc" id="L196">                persistCards();</span>
+<span class="nc" id="L197">            } catch (IOException e) {</span>
+<span class="nc" id="L198">                customerMap.put(c.getId(), c);</span>
+<span class="nc" id="L199">                String cardId = c.getCustomerCard();</span>
+<span class="nc" id="L200">                cardMap.get(cardId).setPoints(oldPoints);</span>
+<span class="nc" id="L201">                cardMap.get(cardId).setIsAttached(true);</span>
+<span class="nc" id="L202">                e.printStackTrace();</span>
+<span class="nc" id="L203">            }</span>
+<span class="nc" id="L204">            return true;</span>
+        }
+    }
+    
+    public Customer getCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
+<span class="nc bnc" id="L209" title="All 2 branches missed.">        if (id &lt; 0) {</span>
+<span class="nc" id="L210">            throw new InvalidCustomerIdException();</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">        } else if (customerMap.get(id) == null) {</span>
+<span class="nc" id="L212">            return null;</span>
+        } else {
+<span class="nc" id="L214">            CustomerObj cu = customerMap.get(id);</span>
+<span class="nc" id="L215">            return new CustomerObj(cu);</span>
+        }
+    }
+    
+    public List&lt;Customer&gt; getAllCustomers() throws UnauthorizedException {
+<span class="nc" id="L220">        return new ArrayList&lt;Customer&gt;(customerMap.values());</span>
+    }
+    
+    public String createCard() {
+        long id;
+<span class="nc bnc" id="L225" title="All 2 branches missed.">        if (cardMap.size() == 0) {</span>
+<span class="nc" id="L226">            id = 1000000000;</span>
+        } else {
+<span class="nc" id="L228">            id = loyaltyCardIdGen++;</span>
+        }
+<span class="nc" id="L230">        LoyaltyCardObj l = new LoyaltyCardObj(String.valueOf(id));</span>
+<span class="nc" id="L231">        cardMap.put(l.getCardCode(), l);</span>
+<span class="nc" id="L232">        loyaltyCardIdGen = id;</span>
+        try {
+<span class="nc" id="L234">            persistCards();</span>
+<span class="nc" id="L235">            persistCardsId();</span>
+<span class="nc" id="L236">        } catch (IOException e) {</span>
+<span class="nc" id="L237">            e.printStackTrace();</span>
+            //cardMap.remove(l.getCardCode());
+            //loyaltyCardIdGen = id--;
+<span class="nc" id="L240">        }</span>
+<span class="nc" id="L241">        return l.getCardCode();</span>
+    }
+    
+    public boolean attachCardToCustomer(String customerCard, Integer customerId) throws InvalidCustomerIdException, InvalidCustomerCardException, UnauthorizedException {
+<span class="nc bnc" id="L245" title="All 2 branches missed.">        if (customerId &lt;= 0)</span>
+<span class="nc" id="L246">            throw new InvalidCustomerIdException();</span>
+<span class="nc bnc" id="L247" title="All 6 branches missed.">        if (customerCard == null || customerCard.equals(&quot;&quot;) || !customerCard.matches(&quot;^([0-9]{10}$)&quot;))</span>
+<span class="nc" id="L248">            throw new InvalidCustomerCardException();</span>
+        
+<span class="nc" id="L250">        LoyaltyCardObj target = cardMap.get(customerCard);</span>
+<span class="nc" id="L251">        CustomerObj customer = customerMap.get(customerId);</span>
+        
+<span class="nc bnc" id="L253" title="All 4 branches missed.">        if (customer == null || target.getIsAttached())</span>
+<span class="nc" id="L254">            return false;</span>
+        
+<span class="nc" id="L256">        customer.setCustomerCard(customerCard);</span>
+<span class="nc" id="L257">        customer.getLoyaltyCard().setIsAttached(true);</span>
+<span class="nc" id="L258">        target.setIsAttached(true);</span>
+        
+        try {
+<span class="nc" id="L261">            persistCards();</span>
+<span class="nc" id="L262">            persistCustomers();</span>
+<span class="nc" id="L263">        } catch (IOException e) {</span>
+            try {
+<span class="nc" id="L265">                modifyCustomer(customer.getId(), customer.getCustomerName(), &quot;&quot;);</span>
+<span class="nc" id="L266">            } catch (InvalidCustomerNameException invalidCustomerNameException) {</span>
+<span class="nc" id="L267">                invalidCustomerNameException.printStackTrace();</span>
+<span class="nc" id="L268">            }</span>
+<span class="nc" id="L269">            target.setIsAttached(false);</span>
+<span class="nc" id="L270">            return false;</span>
+<span class="nc" id="L271">        }</span>
+<span class="nc" id="L272">        return true;</span>
+        
+    }
+    
+    
+    public boolean modifyPointsOnCard(String customerCard, int pointsToBeAdded) throws InvalidCustomerCardException, UnauthorizedException {
+<span class="nc bnc" id="L278" title="All 6 branches missed.">        if (customerCard == null || customerCard.trim().equals(&quot;&quot;) || !customerCard.matches(&quot;^([0-9]{10}$)&quot;))</span>
+<span class="nc" id="L279">            throw new InvalidCustomerCardException();</span>
+<span class="nc" id="L280">        CustomerObj c = null;</span>
+<span class="nc" id="L281">        LoyaltyCardObj target = cardMap.get(customerCard);</span>
+<span class="nc bnc" id="L282" title="All 4 branches missed.">        if (target == null || target.getPoints() + pointsToBeAdded &lt; 0)</span>
+<span class="nc" id="L283">            return false;</span>
+<span class="nc" id="L284">        int points = target.getPoints();</span>
+<span class="nc" id="L285">        points += pointsToBeAdded;</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">        for (Map.Entry&lt;Integer, CustomerObj&gt; cu : customerMap.entrySet()</span>
+        ) {
+<span class="nc" id="L288">            c = cu.getValue();</span>
+<span class="nc bnc" id="L289" title="All 4 branches missed.">            if (c.getLoyaltyCard() != null &amp;&amp; c.getCustomerCard().equals(customerCard)) {</span>
+<span class="nc" id="L290">                c.setPoints(points);</span>
+<span class="nc" id="L291">                target.setPoints(points);</span>
+            }
+<span class="nc" id="L293">        }</span>
+        try {
+<span class="nc" id="L295">            persistCards();</span>
+<span class="nc" id="L296">            persistCustomers();</span>
+<span class="nc" id="L297">        } catch (IOException e) {</span>
+<span class="nc" id="L298">            e.printStackTrace();</span>
+<span class="nc" id="L299">        }</span>
+<span class="nc" id="L300">        return true;</span>
+        
+        
+    }
+    
+    public void clear() {
+<span class="nc" id="L306">        customerMap.clear();</span>
+<span class="nc" id="L307">        cardMap.clear();</span>
+<span class="nc" id="L308">        File customers = new File(CUSTOMER_PATH);</span>
+<span class="nc" id="L309">        customers.delete();</span>
+<span class="nc" id="L310">        File cards = new File(CARD_PATH);</span>
+<span class="nc" id="L311">        cards.delete();</span>
+<span class="nc" id="L312">        File cardId = new File(CARD_ID_PATH);</span>
+<span class="nc" id="L313">        cardId.delete();</span>
+<span class="nc" id="L314">        File customerId = new File(CUSTOMER_ID_PATH);</span>
+<span class="nc" id="L315">        customerId.delete();</span>
+<span class="nc" id="L316">    }</span>
+    
+    private void persistCards() throws IOException {
+<span class="nc" id="L319">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L320">        mapper.writerWithDefaultPrettyPrinter()</span>
+<span class="nc" id="L321">                .writeValue(new File(CARD_PATH), cardMap);</span>
+        
+<span class="nc" id="L323">    }</span>
+    
+    private void persistCustomers() throws IOException {
+<span class="nc" id="L326">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L327">        mapper.writerWithDefaultPrettyPrinter()</span>
+<span class="nc" id="L328">                .writeValue(new File(CUSTOMER_PATH), customerMap);</span>
+        
+<span class="nc" id="L330">    }</span>
+    
+    private void persistCardsId() throws IOException {
+<span class="nc" id="L333">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L334">        mapper.writerWithDefaultPrettyPrinter()</span>
+<span class="nc" id="L335">                .writeValue(new File(CARD_ID_PATH), loyaltyCardIdGen);</span>
+<span class="nc" id="L336">    }</span>
+    
+    
+    private void persistCustomersId() throws IOException {
+<span class="nc" id="L340">        ObjectMapper mapper = new ObjectMapper();</span>
+<span class="nc" id="L341">        mapper.writerWithDefaultPrettyPrinter()</span>
+<span class="nc" id="L342">                .writeValue(new File(CUSTOMER_ID_PATH), customerIdGen);</span>
+<span class="nc" id="L343">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
