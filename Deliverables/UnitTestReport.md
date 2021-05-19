@@ -158,21 +158,18 @@ Version:
 
 | Unit name | JUnit test case |
 |-----------|-----------------|
-|src.main.java.it.polito.ezshop.classes.ProductOrderManager | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**
-testCheckBarcodeNull**|
+|src.main.java.it.polito.ezshop.classes.ProductOrderManager | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeNull**|
 | | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeNonNum** |
 | | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtLessThan12** |
 | | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtGreaterThan14** |
 | | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeCheckDigitNotValid** |
 | | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeCheckDigitValid** |
-| src.main.java.it.polito.ezshop.classes.CustomerObj  | src.test.it.polito.ezshop.classes.CustomerObjTest::**
-testSetLoyaltyCard**|
+| src.main.java.it.polito.ezshop.classes.CustomerObj  | src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetLoyaltyCard**|
 |   |  src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetCustomerName**|
 |   |  src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetCustomerCard**|
 |   | src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetId** |
 |   | src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetPoints** |
-| src.main.java.it.polito.ezshop.classes.LoyaltyCardObj | src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**
-testSetIsAttached** |
+| src.main.java.it.polito.ezshop.classes.LoyaltyCardObj | src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetIsAttached** |
 |   | src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetCardCode** |
 |   |  src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetPoints**|
 |  src.main.java.it.polito.ezshop.classes.UserObj | src.test.it.polito.ezshop.classes.UserObjTest::**testSetId**  |
@@ -183,6 +180,89 @@ testSetIsAttached** |
 |   |  src.test.it.polito.ezshop.classes.UserObjTest::**testSetRoleCashier**   |
 |   | src.test.it.polito.ezshop.classes.UserObjTest::**testSetRoleInvalidString**   |
 |   |  src.test.it.polito.ezshop.classes.UserObjTest::**testSetRoleNull**  |
+| src.main.java.it.polito.ezshop.classes.BalanceOperationObj  | src.test.it.polito.ezshop.classes.BalanceOperationObjTest::**testCredit**  |
+|   | src.test.it.polito.ezshop.classes.BalanceOperationObjTest::**testDebit**  |
+|  src.main.java.it.polito.ezshop.classes.CreditCard |  src.test.it.polito.ezshop.classes.CreditCardTest::**testSetBalance**  |
+| src.main.java.it.polito.ezshop.classes.LoyaltyCardObj |  src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetIsAttached**  |
+|  |  src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetCardCode**  |
+|  |  src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetPoints**  |
+| src.main.java.it.polito.ezshop.classes.OrderObj |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetBalanceOperation**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetProductCode**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetPricePerUnit**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetQuantity**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetOrderId**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetBalanceId**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetProduct**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetSupplier**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testConstructors**  |
+| src.main.java.it.polito.ezshop.classes.Position |  src.test.it.polito.ezshop.classes.PositionTest::**testConstructors**  |
+| src.main.java.it.polito.ezshop.classes.ProductTypeObj |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetPosition**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetDiscountRate**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetQuantity**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetLocation**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetNote**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetProductDescription**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetBarCode**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetPricePerUnit**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetId**  |
+| src.main.java.it.polito.ezshop.classes.ReturnTransaction |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testBalanceId**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testLocalDate**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testMoney**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testReturningId**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testEntries**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testPrice**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testStatus**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testType**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testCopyContructor**  |
+| src.main.java.it.polito.ezshop.classes.SaleTransactionObj |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testEntries**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testPrice**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testDiscountRate**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testBalanceId**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testLocalDate**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testMoney**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testType**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testTicketNumber**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testStatus**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testCopyContructor**  |
+| src.main.java.it.polito.ezshop.classes.TicketEntryObj |  src.test.it.polito.ezshop.classes.TicketEntryObjTest::**testBarCode**  |
+|  |  src.test.it.polito.ezshop.classes.TicketEntryObjTest::**testProductDescription**  |
+|  |  src.test.it.polito.ezshop.classes.TicketEntryObjTest::**testAmount**  |
+|  |  src.test.it.polito.ezshop.classes.TicketEntryObjTest::**testPricePerUnit**  |
+|  |  src.test.it.polito.ezshop.classes.TicketEntryObjTest::**testDiscountRate**  |
+|  |  src.test.it.polito.ezshop.classes.TicketEntryObjTest::**testCopyConstructor**  |
+| src.main.java.it.polito.ezshop.classes.TransactionManager |  src.test.it.polito.ezshop.classes.TransactionManager::**testBalanceUpdate**  |
+|  |  src.test.it.polito.ezshop.classes.TransactionManager::**testLuhn**  |
+|  |  src.test.it.polito.ezshop.classes.TransactionManager::**testComputeBalance**  |
+| src.main.java.it.polito.ezshop.classes.UserManager |  src.test.it.polito.ezshop.classes.UserManagerTest::**testLogin**  |
+|  |  src.test.it.polito.ezshop.classes.UserManagerTest::**testLogout**  |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Code coverage report
 
     <Add here the screenshot report of the statement and branch coverage obtained using
