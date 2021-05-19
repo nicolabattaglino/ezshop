@@ -264,7 +264,7 @@ Version:
 
 ### Code coverage report
 
-![test_coverag3](C:\Users\Mattia.000\IdeaProjects\ezshop\Deliverables\test_coverag3.png)
+![test_coverag3](test_coverage.png)
 
 
 ### Loop coverage analysis
