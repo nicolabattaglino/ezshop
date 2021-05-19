@@ -169,9 +169,6 @@ Version:
 |   |  src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetCustomerCard**|
 |   | src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetId** |
 |   | src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetPoints** |
-| src.main.java.it.polito.ezshop.classes.LoyaltyCardObj | src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetIsAttached** |
-|   | src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetCardCode** |
-|   |  src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetPoints**|
 |  src.main.java.it.polito.ezshop.classes.UserObj | src.test.it.polito.ezshop.classes.UserObjTest::**testSetId**  |
 |   |  src.test.it.polito.ezshop.classes.UserObjTest::**testSetUsername** |
 |   |  src.test.it.polito.ezshop.classes.UserObjTest::**testSetPassword** |
@@ -274,11 +271,11 @@ Version:
 
 |Unit name | Loop rows | Number of iterations | JUnit test case |
 |---|---|---|---|
-|src.test.it.polito.ezshop.classes.ProductOrderManagerTest|88-91|11|**testCheckBarcodeCheckDigitValid**|
+|src.main.java.it.polito.ezshop.classes.ProductOrderManager|88-91|11|**testCheckBarcodeCheckDigitValid**|
 |||12|**testCheckBarcodeCheckDigitValid**|
 |||13|**testCheckBarcodeCheckDigitValid**|
 |||0|**testCheckBarcodeNonNum**|
-|src.test.it.polito.ezshop.classes.TransactionManagerTest|636-653|11|**testLuhn**|
+|src.main.java.it.polito.ezshop.classes.TransactionManager|636-653|11|**testLuhn**|
 |||1|**testLuhn**|
 |||0|**testLuhn**|
 
