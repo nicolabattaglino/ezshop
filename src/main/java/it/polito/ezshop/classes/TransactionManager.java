@@ -641,7 +641,7 @@ public class TransactionManager {
             }
             int n = Integer.parseInt(ccNumber.substring(i, i + 1));
             
-            if (n < 0) return false;
+
             if (alternate) {
                 n *= 2;
                 if (n > 9) {
