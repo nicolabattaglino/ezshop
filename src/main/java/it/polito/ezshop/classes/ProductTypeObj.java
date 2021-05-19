@@ -163,4 +163,37 @@ public class ProductTypeObj implements ProductType {
         this.id = id;
     }
     
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProductTypeObj)) return false;
+        
+        ProductTypeObj that = (ProductTypeObj) o;
+        
+        if (Double.compare(that.selPrice, selPrice) != 0) return false;
+        if (Double.compare(that.discountRate, discountRate) != 0) return false;
+        if (!amount.equals(that.amount)) return false;
+        if (!id.equals(that.id)) return false;
+        if (!description.equals(that.description)) return false;
+        if (!barCode.equals(that.barCode)) return false;
+        if (!notes.equals(that.notes)) return false;
+        return position.equals(that.position);
+    }
+    
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = amount.hashCode();
+        result = 31 * result + id.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + barCode.hashCode();
+        result = 31 * result + notes.hashCode();
+        temp = Double.doubleToLongBits(selPrice);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(discountRate);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + position.hashCode();
+        return result;
+    }
 }

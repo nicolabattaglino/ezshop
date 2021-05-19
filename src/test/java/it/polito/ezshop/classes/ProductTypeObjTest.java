@@ -42,6 +42,8 @@ public class ProductTypeObjTest {
 		p.setLocation("");
 		assertEquals("", p.getLocation());
 		p.setLocation(null);
+		p.setLocation("0-5-05");
+		assertEquals("", p.getLocation());
 		assertEquals("", p.getLocation());
 		p.setLocation("12-13-14");
 		assertEquals("12-13-14", p.getLocation());
@@ -80,5 +82,12 @@ public class ProductTypeObjTest {
 		ProductTypeObj p = new ProductTypeObj(20, 0, "descr", "11111111111111", "notes", 10.0, 0.25, new Position());
 		p.setId(28);
 		assertEquals((Integer) 28, p.getId());
+	}
+	
+	@Test
+	public void testConstructors() {
+		ProductTypeObj p = new ProductTypeObj(20, 0, "descr", "11111111111111", "notes", 10.0, 0.25, new Position());
+		ProductTypeObj p1 = new ProductTypeObj(p);
+		assertEquals(p, p1);
 	}
 }
