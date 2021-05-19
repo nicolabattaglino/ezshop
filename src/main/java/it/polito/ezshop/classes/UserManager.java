@@ -63,12 +63,8 @@ public class UserManager {
     
     
     public User getUserLogged() {
-        try {
-            return new UserObj(loggedUser.getId(), loggedUser.getUsername(), loggedUser.getPassword(), UserRole.valueOf(loggedUser.getRole()));
-        } catch (NullPointerException e) {
-            System.out.println("No user logged");
-        }
-        return null;
+        if (loggedUser == null) return null;
+        return new UserObj(loggedUser.getId(), loggedUser.getUsername(), loggedUser.getPassword(), UserRole.valueOf(loggedUser.getRole()));
     }
     
     public Integer createUser(String username, String password, String role) throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
