@@ -283,7 +283,7 @@ public class TransactionManager {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
-        if (!sale.getStatus().equals("new")) return false; // the transaction wasn't opern
+        if (!sale.getStatus().equals(SaleStatus.STARTED)) return false; // the transaction wasn't opern
         sale.setStatus(SaleStatus.CLOSED);
         try {
             this.persistSales();
@@ -379,7 +379,7 @@ public class TransactionManager {
         return true;
     }
     
-    public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, InvalidProductIdException, InvalidProductCodeException {
+    public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException {
         if (returnId == null || returnId <= 0) throw new InvalidTransactionIdException();
         // in the current design the return transaction's informations are created during the return product function, the end return method only closes the return
         ReturnTransaction target = returnTransactions.get(returnId);

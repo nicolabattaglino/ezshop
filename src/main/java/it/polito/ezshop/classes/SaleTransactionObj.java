@@ -10,10 +10,10 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     private List<TicketEntry> entries = new ArrayList<TicketEntry>();
     private double price;
     private double discountRate = 0;
-    private int balanceId;
-    private LocalDate date;
     private double money;
-    private String type;
+    //todo rimettilo al passo con il design
+    
+    //credo sia come per l'order number
     private Integer ticketNumber;
     private SaleStatus status;
     
@@ -26,7 +26,7 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     }
     
     public SaleTransactionObj(SaleTransactionObj s) {
-        super(s.balanceId, s.date, s.type);
+        super(s.getBalanceId(), s.getDate(), s.getType());
         this.money = s.money;
         this.ticketNumber = s.ticketNumber;
         for (TicketEntry t : s.getEntries()) {
@@ -42,7 +42,7 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
         return status;
     }
     
-    public void setStatus(String string) {
+    public void setStatus(SaleStatus string) {
         this.status = string;
     }
     
@@ -66,39 +66,12 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     }
     
     
-    public int getBalanceId() {
-        return balanceId;
-    }
-    
-    public void setBalanceId(int balanceId) {
-        this.balanceId = balanceId;
-        return;
-    }
-    
-    public LocalDate getDate() {
-        return date;
-    }
-    
-    public void setDate(LocalDate date) {
-        this.date = date;
-        return;
-    }
-    
     public double getMoney() {
         return money;
     }
     
     public void setMoney(double money) {
         this.money = money;
-        return;
-    }
-    
-    public String getType() {
-        return type;
-    }
-    
-    public void setType(String type) {
-        this.type = type;
         return;
     }
     
