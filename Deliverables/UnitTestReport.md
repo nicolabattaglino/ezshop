@@ -157,14 +157,14 @@ Version:
     <For traceability write the class and method name that contains the test case>
 
 | Unit name | JUnit test case |
-|--|--| 
-|src.main.java.it.polito.ezshop.classes.ProductOrderManager | |
-|src.main.test.it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeNull<br />| |
-|it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeNonNum | |
-|it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeLenghtLessThan12 | |
-|it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeLenghtGreaterThan14 | |
-|it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeCheckDigitNotValid | |
-|it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeCheckDigitValid | |
+|-----------|-----------------| 
+|src.main.java.it.polito.ezshop.classes.ProductOrderManager | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**
+testCheckBarcodeNull**|
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeNonNum** |              
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtLessThan12** |    
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtGreaterThan14** | 
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeCheckDigitNotValid** |  
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeCheckDigitValid** |
 | src.main.java.it.polito.ezshop.classes.CustomerObj  | src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetLoyaltyCard**|
 |   |  src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetCustomerName**|
 |   |  src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetCustomerCard**|

@@ -137,15 +137,15 @@ public class TransactionManager {
             if (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 saleGen = (int) Integer.parseInt(data);
-            } else saleGen = 0;
+            } else saleGen = 1;
             if (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 returnGen = (int) Integer.parseInt(data);
-            } else returnGen = 0;
+            } else returnGen = 1;
             if (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 balanceOperationGen = (int) Integer.parseInt(data);
-            } else balanceOperationGen = 0;
+            } else balanceOperationGen = 1;
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
