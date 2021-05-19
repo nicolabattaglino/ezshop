@@ -215,9 +215,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean modifyCustomer(Integer id, String newCustomerName, String newCustomerCard) throws InvalidCustomerNameException, InvalidCustomerCardException, InvalidCustomerIdException, UnauthorizedException {
-        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
+        if (userManager.getUserLogged() == null) {
             throw new UnauthorizedException();
         } else {
             return customerManager.modifyCustomer(id, newCustomerName, newCustomerCard);
@@ -226,9 +224,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean deleteCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
-        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
+        if (userManager.getUserLogged() == null) {
             throw new UnauthorizedException();
         } else {
             return customerManager.deleteCustomer(id);
@@ -237,9 +233,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public Customer getCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
-        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
+        if (userManager.getUserLogged() == null) {
             throw new UnauthorizedException();
         } else {
             return customerManager.getCustomer(id);
@@ -248,9 +242,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public List<Customer> getAllCustomers() throws UnauthorizedException {
-        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
+        if (userManager.getUserLogged() == null) {
             throw new UnauthorizedException();
         } else {
             return customerManager.getAllCustomers();
@@ -259,9 +251,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public String createCard() throws UnauthorizedException {
-        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
+        if (userManager.getUserLogged() == null) {
             throw new UnauthorizedException();
         } else {
             return customerManager.createCard();
@@ -271,9 +261,7 @@ public class EZShop implements EZShopInterface {
     @Override
     public boolean attachCardToCustomer(String customerCard, Integer customerId) throws InvalidCustomerIdException, InvalidCustomerCardException, UnauthorizedException {
         
-        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
+        if (userManager.getUserLogged() == null) {
             throw new UnauthorizedException();
         } else {
             return customerManager.attachCardToCustomer(customerCard, customerId);
@@ -282,9 +270,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public boolean modifyPointsOnCard(String customerCard, int pointsToBeAdded) throws InvalidCustomerCardException, UnauthorizedException {
-        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
+        if (userManager.getUserLogged() == null) {
             throw new UnauthorizedException();
         } else {
             return customerManager.modifyPointsOnCard(customerCard, pointsToBeAdded);
@@ -293,9 +279,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public Integer startSaleTransaction() throws UnauthorizedException {
-        if (!(userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()) ||
-                userManager.getUserLogged().getRole().equals(UserRole.ADMINISTRATOR.toString()))) {
+        if (userManager.getUserLogged() == null) {
             throw new UnauthorizedException();
         } else {
             return transactionManager.startSaleTransaction();

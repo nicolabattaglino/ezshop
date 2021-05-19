@@ -12,8 +12,8 @@ public class UserManagerTest {
 
     @Test
     public void testLogin() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException {
-
-        UserManager um = new UserManager();
+        it.polito.ezshop.data.EZShop shop= new it.polito.ezshop.data.EZShop();
+        UserManager um = new UserManager(shop);
         um.createUser("SimAdmin","12345","Administrator");
         User userLogged = um.login("SimAdmin", "12345");
         assertEquals(userLogged.getUsername(),um.getUserLogged().getUsername());
@@ -25,7 +25,8 @@ public class UserManagerTest {
 
     @Test
     public void testLogout() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException {
-        UserManager um = new UserManager();
+        it.polito.ezshop.data.EZShop shop= new it.polito.ezshop.data.EZShop();
+        UserManager um = new UserManager(shop);
         assertFalse(um.logout());
         um.createUser("SimAdmin","12345","Administrator");
         User userLogged = um.login("SimAdmin", "12345");
