@@ -7,10 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReturnTransaction extends Credit {
-    private int balanceId;
-    private LocalDate date;
-    private double money;
-    private String type;
+
     private int transactionID;
     private Integer ticketNumber;
     private List<TicketEntry> entries = new ArrayList<TicketEntry>();
@@ -19,14 +16,13 @@ public class ReturnTransaction extends Credit {
     
     public ReturnTransaction(int id, LocalDate date, double money, String type, int returning) {
         super(id, date, type);
-        this.money = money;
+
         this.transactionID = returning;
         status = ReturnStatus.NEW;
     }
     
     public ReturnTransaction(ReturnTransaction r) {
-        super(r.balanceId, r.date, r.type);
-        this.money = r.money;
+        super(r.getBalanceId(), r.getDate(), r.getType());
         this.transactionID = r.transactionID;
         this.ticketNumber = r.ticketNumber;
         for (TicketEntry t : r.getEntries()) {
@@ -83,40 +79,6 @@ public class ReturnTransaction extends Credit {
         return transactionID;
     }
     
-    public int getBalanceId() {
-        return balanceId;
-    }
-    
-    public void setBalanceId(int balanceId) {
-        this.balanceId = balanceId;
-        return;
-    }
-    
-    public LocalDate getDate() {
-        return date;
-    }
-    
-    public void setDate(LocalDate date) {
-        this.date = date;
-        return;
-    }
-    
-    public double getMoney() {
-        return money;
-    }
-    
-    public void setMoney(double money) {
-        this.money = money;
-        return;
-    }
-    
-    public String getType() {
-        return type;
-    }
-    
-    public void setType(String type) {
-        this.type = type;
-        return;
-    }
+
     
 }

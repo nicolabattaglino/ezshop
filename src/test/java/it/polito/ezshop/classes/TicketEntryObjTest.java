@@ -10,40 +10,38 @@ public class TicketEntryObjTest {
 
     @Test
     public void testBarCode(){
-        TicketEntryObj te = new TicketEntryObj(0,LocalDate.now(), 0.0, "Sale");
-        te.setBarCode(1);
-        Assert.assertTrue(TicketEntryObj.getBarCode.substring(0), false);
+        TicketEntryObj te = new TicketEntryObj(0, "a", "b",0.0);
+        te.setBarCode("1");
+        Assert.assertTrue(te.getBarCode()== "1");
     }
 
     @Test
     public void testProductDescription(){
-        TicketEntryObj te = new TicketEntryObj(0,LocalDate.now(), 0.0, "Sale");
-        te.setProductDescription();
-        assertEquals(LocalDate(), te.getProductDescription());
+        TicketEntryObj te = new TicketEntryObj(0, "a", "b",0.0);
+        te.setProductDescription("description");
+        assertEquals("description", te.getProductDescription());
     }
 
-    private Object LocalDate() {
-        return null;
-    }
+
 
     @Test
     public void testAmount(){
-        TicketEntryObj te = new TicketEntryObj(0,LocalDate.now(), 0.0, "Sale");
+        TicketEntryObj te = new TicketEntryObj(0, "a", "b",0.0);
         te.setAmount(1);
         Assert.assertTrue(1== te.getAmount());
     }
 
     @Test
     public void testPricePerUnit(){
-        TicketEntryObj te = new TicketEntryObj(0,LocalDate.now(), 0.0, "Sale");
-        te.setPricePerUnit(1);
-        Assert.assertTrue(1== te.getPricePerUnit());
+        TicketEntryObj te = new TicketEntryObj(0, "a", "b",0.0);
+        te.setPricePerUnit(1.0);
+        Assert.assertTrue(1.0== te.getPricePerUnit());
     }
 
     @Test
     public void testDiscountRate(){
-        TicketEntryObj te = new TicketEntryObj(0,LocalDate.now(), 0.0, "Sale");
-        te.setDiscountRate(1);
-        Assert.assertTrue(1== te.getDiscountRate());
+        TicketEntryObj te = new TicketEntryObj(0, "a", "b",0.0);
+        te.setDiscountRate(1.0);
+        Assert.assertTrue(1.0== te.getDiscountRate());
     }
 }

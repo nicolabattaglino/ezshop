@@ -18,6 +18,8 @@ public class OrderObj implements Order {
     private String supplier; //TODO vedi che farci
     private OrderStatus status;
     private Credit balanceOp;
+
+
     
     @JsonCreator
     public OrderObj(@JsonProperty("orderId") Integer orderId,
@@ -34,6 +36,7 @@ public class OrderObj implements Order {
         this.supplier = supplier;
         this.status = status;
         this.balanceOp = balanceOp;
+
     }
     
     public OrderObj(OrderObj orderObj) {
@@ -44,6 +47,7 @@ public class OrderObj implements Order {
         this.supplier = orderObj.supplier;
         this.status = orderObj.status;
         this.balanceOp = orderObj.balanceOp;
+
     }
     
     public OrderObj(ProductType product, double pricePerUnit, int quantity) {

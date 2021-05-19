@@ -10,24 +10,19 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     private List<TicketEntry> entries = new ArrayList<TicketEntry>();
     private double price;
     private double discountRate = 0;
-    private int balanceId;
-    private LocalDate date;
-    private double money;
-    private String type;
+
     private Integer ticketNumber;
     private SaleStatus status;
     
     
     public SaleTransactionObj(int id, LocalDate date, double money, String type) {
         super(id, date, type);
-        this.money = money;
-        this.price = this.money;
+        this.price = this.getMoney();
         this.status = SaleStatus.STARTED; //equal to started, other states are closed and payed
     }
     
     public SaleTransactionObj(SaleTransactionObj s) {
-        super(s.balanceId, s.date, s.type);
-        this.money = s.money;
+        super(s.getBalanceId(), s.getDate(), s.getType());
         this.ticketNumber = s.ticketNumber;
         for (TicketEntry t : s.getEntries()) {
             this.entries.add(t);
@@ -41,10 +36,7 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     public SaleStatus getStatus() {
         return status;
     }
-    
-    public void setStatus(String string) {
-        this.status = string;
-    }
+
     
     private void updatePrice() {
         int prezzo = 0;
@@ -52,7 +44,7 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
             prezzo += entry.getAmount() * entry.getPricePerUnit() * entry.getDiscountRate();
         }
         price = prezzo;
-        money = prezzo;
+        this.setMoney(prezzo) ;
     }
     
     public void deleteEntry(TicketEntry entry) {
@@ -66,41 +58,7 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     }
     
     
-    public int getBalanceId() {
-        return balanceId;
-    }
-    
-    public void setBalanceId(int balanceId) {
-        this.balanceId = balanceId;
-        return;
-    }
-    
-    public LocalDate getDate() {
-        return date;
-    }
-    
-    public void setDate(LocalDate date) {
-        this.date = date;
-        return;
-    }
-    
-    public double getMoney() {
-        return money;
-    }
-    
-    public void setMoney(double money) {
-        this.money = money;
-        return;
-    }
-    
-    public String getType() {
-        return type;
-    }
-    
-    public void setType(String type) {
-        this.type = type;
-        return;
-    }
+
     
     public Integer getTicketNumber() {
         return ticketNumber;
