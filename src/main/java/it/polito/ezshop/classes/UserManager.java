@@ -25,6 +25,7 @@ public class UserManager {
     private Integer userIdGen = 0;
     private User loggedUser;
     private EZShop shop;
+    
     public UserManager(EZShop shop) {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<LinkedList<UserObj>> typeRef = new TypeReference<LinkedList<UserObj>>() {
@@ -64,12 +65,8 @@ public class UserManager {
     
     
     public User getUserLogged() {
-        try {
-            return new UserObj(loggedUser.getId(), loggedUser.getUsername(), loggedUser.getPassword(), UserRole.valueOf(loggedUser.getRole()));
-        } catch (NullPointerException e) {
-            System.out.println("No user logged");
-        }
-        return null;
+        if (loggedUser == null) return null;
+        return new UserObj(loggedUser.getId(), loggedUser.getUsername(), loggedUser.getPassword(), UserRole.valueOf(loggedUser.getRole()));
     }
     
     public Integer createUser(String username, String password, String role) throws InvalidUsernameException, InvalidPasswordException, InvalidRoleException {
@@ -205,7 +202,7 @@ public class UserManager {
         return true;
     }
     
-    public void clean() {
+    public void clear() {
         userList.clear();
         File users = new File(USERS_PATH);
         users.delete();
