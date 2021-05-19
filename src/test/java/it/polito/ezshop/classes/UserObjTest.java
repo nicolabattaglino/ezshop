@@ -27,17 +27,33 @@ public class UserObjTest {
 
 
     @Test
-    public void testSetRole(){
-
+    public void testSetRoleShopManager(){
         UserObj u1 = new UserObj();
         u1.setRole("shopmanager");
         assertTrue(u1.getRole().equals(UserRole.SHOPMANAGER.toString()));
+    }
+
+    @Test
+    public void testSetRoleAdministrator(){
+        UserObj u1 = new UserObj();
         u1.setRole("administrator");
         assertTrue(u1.getRole().equals(UserRole.ADMINISTRATOR.toString()));
+    }
+    @Test
+    public void testSetRoleCashier(){
+        UserObj u1 = new UserObj();
         u1.setRole("cashier");
         assertTrue(u1.getRole().equals(UserRole.CASHIER.toString()));
+    }
+    @Test
+    public void testSetRoleInvalidString(){
+        UserObj u1 = new UserObj();
         u1.setRole("t");
         assertFalse(u1.getRole().equals("t"));
+    }
+    @Test
+    public void testSetRoleNull(){
+        UserObj u1 = new UserObj();
         u1.setRole(null);
         assertFalse(u1.getRole() == null);
     }

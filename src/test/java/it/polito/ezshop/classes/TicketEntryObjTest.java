@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TicketEntryObjTest {
 
-    @Test
+    /*@Test
     public void testBarCode(){
         TicketEntryObj te = new TicketEntryObj(0,LocalDate.now(), 0.0, "Sale");
         te.setBarCode(1);
@@ -45,5 +45,5 @@ public class TicketEntryObjTest {
         TicketEntryObj te = new TicketEntryObj(0,LocalDate.now(), 0.0, "Sale");
         te.setDiscountRate(1);
         Assert.assertTrue(1== te.getDiscountRate());
-    }
+    }*/
 }

@@ -143,7 +143,7 @@ public class CustomerManager {
             throw new InvalidCustomerIdException();
         if (newCustomerName == null || newCustomerName.trim().equals(""))
             throw new InvalidCustomerNameException();
-        if ((newCustomerCard != null) && (!newCustomerCard.matches("^$|^[0-9]{10}$"))) //todo funziona?
+        if ((newCustomerCard != null) && (!newCustomerCard.matches("^$|^[0-9]{10}$")))
             throw new InvalidCustomerCardException();
         if ((newCustomerCard != null) && !newCustomerCard.equals("")) {
             if (cardMap.get(newCustomerCard) == null || cardMap.get(newCustomerCard).getIsAttached()) {
@@ -151,9 +151,6 @@ public class CustomerManager {
             }
         }
         
-        String oldCard = customer.getCustomerCard();
-        String oldCustomerName = customer.getCustomerName();
-        int oldPoints = customer.getPoints();
 
         if (newCustomerCard == null){
             customer.setCustomerName(newCustomerName);
@@ -235,7 +232,6 @@ public class CustomerManager {
         cardMap.put(l.getCardCode(), l);
         loyaltyCardIdGen = id;
         try {
-            // todo rollback
             persistCards();
             persistCardsId();
         } catch (IOException e) {
