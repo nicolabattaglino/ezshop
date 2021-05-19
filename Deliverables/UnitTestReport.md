@@ -100,12 +100,18 @@ Version:
 
 | Validity of the string | Presence of non-numerical values | Length of the String parameter | Validity of the String according to the check-digit | Description of the test case                                 | JUnit test case                                              |
 | ---------------------- | -------------------------------- | ------------------------------ | --------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| null                   | *                                | *                              | *                                                   | T1(null; false)                                              | it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeNull |
-| yes                    | yes                              | *                              | *                                                   | T2("a2bcde!"; false)                                         | it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeNonNum |
-| yes                    | no                               | < 12                           | *                                                   | T3("1234567"; false)                                         | it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeLenghtLessThan12 |
-| yes                    | no                               | > 14                           | *                                                   | T4("123456789012345"; false)                                 | it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeLenghtGreaterThan14 |
-| yes                    | no                               | [ 12,14 ]                      | no                                                  | T5("123456789013"; false)<br />T5b("1234567890137"; false)<br />T5c("12345678901377"; false) | it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeCheckDigitNotValid |
-| yes                    | no                               | [ 12,14 ]                      | yes                                                 | T6("123456789012"; true)<br />T6b("1234567890128"; true)<br />T6c("12345678901286"; true) | it.polito.ezshop.classes.ProductOrderManagerTest::testCheckBarcodeCheckDigitValid |
+| null                   | *                                | *                              | *                                                   | T1(null; false)                                              | it.polito.ezshop.classes.ProductOrderManagerTest::**
+testCheckBarcodeNull** |
+| yes                    | yes                              | *                              | *                                                   | T2("a2bcde!"; false)                                         | it.polito.ezshop.classes.ProductOrderManagerTest::**
+testCheckBarcodeNonNum** |
+| yes                    | no                               | < 12                           | *                                                   | T3("1234567"; false)                                         | it.polito.ezshop.classes.ProductOrderManagerTest::**
+testCheckBarcodeLenghtLessThan12** |
+| yes                    | no                               | > 14                           | *                                                   | T4("123456789012345"; false)                                 | it.polito.ezshop.classes.ProductOrderManagerTest::**
+testCheckBarcodeLenghtGreaterThan14** |
+| yes                    | no                               | [ 12,14 ]                      | no                                                  | T5("123456789013"; false)<br />T5b("1234567890137"; false)<br />T5c("12345678901377"; false) | it.polito.ezshop.classes.ProductOrderManagerTest::**
+testCheckBarcodeCheckDigitNotValid** |
+| yes                    | no                               | [ 12,14 ]                      | yes                                                 | T6("123456789012"; true)<br />T6b("1234567890128"; true)<br />T6c("12345678901286"; true) | it.polito.ezshop.classes.ProductOrderManagerTest::**
+testCheckBarcodeCheckDigitValid** |
 
 ### **Class *UserObj* - method *setRole***
 
@@ -157,19 +163,22 @@ Version:
     <For traceability write the class and method name that contains the test case>
 
 | Unit name | JUnit test case |
-|-----------|-----------------| 
-|src.main.java.it.polito.ezshop.classes.ProductOrderManager | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeNull**|
-| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeNonNum** |              
-| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtLessThan12** |    
-| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtGreaterThan14** | 
-| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeCheckDigitNotValid** |  
+|-----------|-----------------|
+|src.main.java.it.polito.ezshop.classes.ProductOrderManager | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**
+testCheckBarcodeNull**|
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeNonNum** |
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtLessThan12** |
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtGreaterThan14** |
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeCheckDigitNotValid** |
 | | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeCheckDigitValid** |
-| src.main.java.it.polito.ezshop.classes.CustomerObj  | src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetLoyaltyCard**|
+| src.main.java.it.polito.ezshop.classes.CustomerObj  | src.test.it.polito.ezshop.classes.CustomerObjTest::**
+testSetLoyaltyCard**|
 |   |  src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetCustomerName**|
 |   |  src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetCustomerCard**|
 |   | src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetId** |
 |   | src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetPoints** |
-| src.main.java.it.polito.ezshop.classes.LoyaltyCardObj | src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetIsAttached** |
+| src.main.java.it.polito.ezshop.classes.LoyaltyCardObj | src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**
+testSetIsAttached** |
 |   | src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetCardCode** |
 |   |  src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetPoints**|
 |  src.main.java.it.polito.ezshop.classes.UserObj | src.test.it.polito.ezshop.classes.UserObjTest::**testSetId**  |
