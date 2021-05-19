@@ -125,6 +125,8 @@ Shop.|>EZShopInterface
 class UserManager{
     -userIdGen: Integer
     -loggedUser: User
+    +{static}USERS_PATH: String
+    +{static}USERS_ID_PATH: String
     
     +createUser(username: String, password: String, role: String) : Integer
     +deleteUser(id: Integer) : Boolean
@@ -133,6 +135,8 @@ class UserManager{
     +updateUserRights(id: Integer, role: String) : Boolean
     +login(username: String, password: String) : User
     +logout() : boolean
+    -persistUsers()
+    -persistUsersId()
     +clear()
 
     +getLoggedUser() : User
@@ -177,13 +181,17 @@ class LoyaltyCard {
 note left : Persistent
 
 UserManager -->"*" User: -userList: ArrayList<User>
-Customer "*"<-- CustomerManager: -customerMap: HashMap<Integer, Customer>
-LoyaltyCard "*"<-- CustomerManager: -cardMap: HashMap<String, LoyaltyCard>
+Customer "*"<-- CustomerManager: -customerMap: Map<Integer, Customer>
+LoyaltyCard "*"<-- CustomerManager: -cardMap: Map<String, LoyaltyCard>
 
 class CustomerManager {
     -customerIdGen: Integer
     -loyaltyCardIdGen: long
-
+    +{static}CARD_PATH: String
+    +{static}CARD_ID_PATH: String
+    +{static}CUSTOMER_ID_PATH: String
+    +{static}CUSTOMER_PATH: String
+    
     +defineCustomer(customerName: String): Customer
     +modifyCustomer(id: Integer, newCustomerName: String, newCustomerCard): boolean
     +deleteCustomer(id: Integer): boolean
@@ -192,13 +200,21 @@ class CustomerManager {
     +createCard(): String
     +attachCardToCustomer(customerCard: String, customerId: String ): boolean
     +modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer): boolean
+    -persistCards()
+    -persistCustomers()
+    -persistCardsId()
+    -persistCustomersId()
     +clear()
 }
 
 
 class ProductOrderManager {
 
-    -productIdGen: Integer
+    -productIdGen: int
+    -orderIdGen: int
+    +{static}PRODUCTS_PATH: String
+    +{static}PRODUCT_GEN_PATH: String
+    +{static}ORDER_GEN_PATH: String
     
     +checkBarcode(barCode: String): boolean
 
@@ -217,17 +233,25 @@ class ProductOrderManager {
     
     +payOrder(Integer orderId): boolean
     +recordOrderArrival(Integer orderId): boolean
-    
+    -persistGen()
+    -persistProducts()
     +clear()
 
 }
 
-ProductOrderManager -->"*" ProductType: -productMap: HashMap<String, ProductType>
+ProductOrderManager -->"*" ProductType: -productMap: Map<String, ProductType>
 
 class TransactionManager {
     -saleGen:  int
     -returnGen:int 
     -balanceOperationGen:  int
+    -{static}ORDER_PATH: String
+    -{static}SALE_PATH: String
+    -{static}RETURN_PATH: String
+    -{static}CREDITCARD_PATH: String
+    -{static}BALANCEOPERATION_PATH: String
+    -{static}GENERATOR_PATH: String
+    
     +startSaleTransaction() : Integer
     +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
     +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
@@ -249,7 +273,13 @@ class TransactionManager {
     +getCreditsAndDebits(from: LocalDate, to: LocalDate): List<BalanceOperation>
     +computeBalance(): double
     +getAllOrders(): List<Order>
-
+    
+    -persistOrders()
+    -persistCards()
+    -persistSales()
+    -persistReturns()
+    -persistBalanceOperations()
+    -persistGenerators()
     +luhnAlgorithm (String creditCard): boolean
     +clear()
      
@@ -259,7 +289,11 @@ class TransactionManager {
 }
 note right : Persistent
 
-TransactionManager --> "*" BalanceOperation: -operationMap: HashMap<Integer, BlanceOperation>
+TransactionManager --> "*" BalanceOperation: -balanceOperations: Map<Integer, BlanceOperation>
+TransactionManager --> "*" CreditCard: -cards: Map<String, CreditCard>
+TransactionManager --> "*" Order: -orders: Map<Integer, Order>
+TransactionManager --> "*" ReturnTransaction: -returnTransactions: Map<Integer, ReturnTransaction>
+TransactionManager --> "*" SaleTransaction: -saleTransactions: Map<Integer, SaleTransaction>
 
 Shop --> UserManager : -userManager:  UserManager
 Shop --> CustomerManager : -customerManager: CustomerManager
@@ -271,6 +305,11 @@ Shop <-- CustomerManager : -shop:  Shop
 Shop <-- ProductOrderManager : -shop:  Shop
 Shop <-- TransactionManager : -shop:  Shop
 
+class CreditCard {
+    -number: String
+    -balance: double
+}
+
 
 class Credit 
 class Debit
@@ -280,9 +319,9 @@ Debit --|> BalanceOperation
 
 abstract BalanceOperation {
     
-    -id: int
-    -description: String
-    -amount: double
+    -balanceId: int
+    -type: String
+    -money: double
     -date: LocalDate
     
 }
@@ -304,7 +343,7 @@ enum OrderStatus{
 
 Order -> OrderStatus : -status: OrderStatus
 
-Order --> Debit
+Order --> Debit: -balanceOp: Debit
 ReturnTransaction --|> Debit
 
 class ProductType {
@@ -324,6 +363,7 @@ class Position {
     -aisleID: Integer
     -rackID: Integer
     -levelID: Integer
+    -empty: boolean
 }
 note right : Persistent
 
@@ -332,13 +372,17 @@ ProductType ->"0..1" Position: -position: Position
 
 
 class SaleTransaction {
+    
+    -ticketNumber: Integer
     -paymentType : String
+    -price: double
     -discountRate : double
-    -state: boolean
-    updatePrice()
-    deleteEntry(entry: TicketEntry)
-    addEntry(entry: TicketEntry)
-    addProduct(p: ProductType, quantity : Integer) : boolean
+   
+    
+    -updatePrice()
+    +deleteEntry(entry: TicketEntry)
+    +addEntry(entry: TicketEntry)
+    +addProduct(p: ProductType, quantity : Integer) : boolean
     
 }
 note right: Persistent
@@ -349,7 +393,7 @@ enum SaleStatus {
     PAYED
 }
 
-SaleTransaction  --> "*" TicketEntry : -productList : ArrayList<TicketEntry>
+SaleTransaction  --> "*" TicketEntry : -entries : ArrayList<TicketEntry>
 SaleTransaction  --> "*" SaleStatus : -status : SaleStatus
 
 
@@ -358,7 +402,7 @@ SaleTransaction -|> Credit
 class TicketEntry {
     -  barCode: String
     -  productDescription : String
-    - amount: int 
+    -  amount: int 
     -  pricePerUnit: double
     -  discountRate: double
 }
