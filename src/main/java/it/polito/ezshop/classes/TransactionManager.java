@@ -676,7 +676,7 @@ public class TransactionManager {
     }
     
     public boolean addOrder(OrderObj order) {
-        //update the balance if the order status is payed check also if the field balanceOperation of the order
+        // update the balance if the order status is payed check also if the field balanceOperation of the order
         // is not null and in that case add it to the balanceOperations map.
         // if there is not enough balance return false
         // add persistance

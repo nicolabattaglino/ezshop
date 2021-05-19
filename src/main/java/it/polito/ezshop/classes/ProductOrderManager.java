@@ -12,10 +12,7 @@ import it.polito.ezshop.exceptions.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProductOrderManager {
@@ -26,7 +23,7 @@ public class ProductOrderManager {
     private final EZShop shop;
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
-    private HashMap<String, ProductTypeObj> productMap;
+    private Map<String, ProductTypeObj> productMap;
     
     private int productIdGen;
     private int orderIdGen;

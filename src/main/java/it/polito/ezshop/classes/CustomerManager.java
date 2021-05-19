@@ -28,11 +28,11 @@ public class CustomerManager {
     
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
-    private HashMap<Integer, CustomerObj> customerMap;
+    private Map<Integer, CustomerObj> customerMap;
     
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
-    private HashMap<String, LoyaltyCardObj> cardMap;
+    private Map<String, LoyaltyCardObj> cardMap;
     
     private Integer customerIdGen;
     private long loyaltyCardIdGen;
