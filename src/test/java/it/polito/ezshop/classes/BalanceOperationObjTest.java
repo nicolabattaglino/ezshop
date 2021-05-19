@@ -15,9 +15,12 @@ public class BalanceOperationObjTest {
 		assertTrue(c.getMoney()==0.0);
 		c.setMoney(-1.0);
 		assertTrue(c.getMoney()==-1.0);
+		c.setDate(LocalDate.now());
+		c.setBalanceId(1);
+		c.setType("Credit");
 		assertEquals(c.getDate(),LocalDate.now());
-		assertEquals(c.getBalanceId(),0);
-		assertEquals(c.getType(),"credit");
+		assertEquals(c.getBalanceId(),1);
+		assertEquals(c.getType(),"Credit");
 	}
 	@Test
 	public void testDebit() {

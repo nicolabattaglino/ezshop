@@ -80,5 +80,17 @@ public class ReturnTransactionTest {
 		r.setType("Sale");
 		assertEquals("Sale", r.getType());
 	}
+	@Test
+	public void testCopyContructor(){
+		ReturnTransaction r = new ReturnTransaction(0,LocalDate.now(), 0.0, "Return", 0);
+		List<TicketEntry> lt= new ArrayList<TicketEntry>();
+		TicketEntry t1 =new TicketEntryObj(1, "a","b", 1.0);
+		TicketEntry t2 =new TicketEntryObj(2, "a","b", 1.0);
+		lt.add(t1);
+		lt.add(t2);
+		r.setEntries(lt);
+		ReturnTransaction r2 = new ReturnTransaction(r);
+		assertEquals(r2.getEntries(), r.getEntries());
+	}
 
 }

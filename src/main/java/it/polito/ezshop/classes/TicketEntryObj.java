@@ -41,10 +41,7 @@ public class TicketEntryObj implements TicketEntry {
     public String getProductDescription() {
         return productDescription;
     }
-    
-    public void setProductDescription() {
-        this.productDescription = productDescription;
-    }
+
     
     public int getAmount() {
         return amount;
@@ -70,8 +67,7 @@ public class TicketEntryObj implements TicketEntry {
         this.discountRate = discountRate;
     }
 
-    public void setBarCode(int i) {
-    }
+
 }
     
 

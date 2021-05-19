@@ -44,4 +44,10 @@ public class TicketEntryObjTest {
         te.setDiscountRate(1.0);
         Assert.assertTrue(1.0== te.getDiscountRate());
     }
+    @Test
+    public void testCopyConstructor(){
+        TicketEntryObj te = new TicketEntryObj(0, "a", "b",0.0);
+        TicketEntryObj te1 = new TicketEntryObj(te);
+        assertEquals( te.getBarCode(), te1.getBarCode());
+    }
 }
