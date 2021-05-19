@@ -60,7 +60,6 @@ Version:
 
 **Combination of predicates**:
 
-
 | Sign of number | Correctness of String | Presence of non-numerical values|Emptiness |null| Valid / Invalid | Description of the test case | JUnit test case |
 |-------|-------|-------|-------|-------|-------|-------|-------|
 |Positive|Correct|No|No|No|valid|luhn("79927398713")-> true| testLuhn|
@@ -70,19 +69,49 @@ Version:
 |*|*|*|Yes|*|Invalid|luhn("")|testLuhn|
 |*|*|*|*|Yes|Invalid|luhn(null)|testLuhn|
 
+### **Class *ProductOrderManager* - method *checkBarcode***
 
- ### **Class *UserObj* - method *setRole***
+**Criteria for method *checkBarcode*:**
 
+-Length of string -Validity of the String
 
+**Predicates for method *checkBarcode*:**
+
+| Criteria                                            | Predicate          |
+| --------------------------------------------------- | ------------------ |
+|    Validity of the string                           |       yes          | 
+|                                                     |       no (null)    | 
+|    Length of the String parameter                   |       < 12         |
+|                                                     |       [ 12,14 ]    |
+|                                                     |       > 14         |
+| Validity of the String according to the check-digit |       yes          |
+|                                                     |       no           |
+|    Presence of non-numerical values                 |       yes          |
+|                                                     |       no           |
+
+**Boundaries**:
+
+| Criteria | Boundary values |
+| -------- | --------------- |
+|    Length of the String parameter      |       12         |
+|                                        |       14         |
+
+**Combination of predicates**:
+
+| Validity of the string | Presence of non-numerical values | Length of the String parameter | Validity of the String according to the check-digit | Description of the test case | JUnit test case |
+|------------------------|----------------------------------|--------------------------------|-----------------------------------------------------|------------------------------|-----------------|
+| null                   | *                                | *                              | *                                                   | T1(null; false)              |                 |
+| yes                    | yes                              | *                              | *                                                   | T2("a2bcde!"; false)         |                 |
+| yes                    | no                               | < 12                           | *                                                   | T3("1234567"; false)         |                 |
+| yes                    | no                               | > 14                           | *                                                   |                              |                 |
+| yes                    | no                               | [ 12,14 ]                      | no                                                  |                              |                 |
+| yes                    | no                               | [ 12,14 ]                      | yes                                                 |                              |                 |
+
+### **Class *UserObj* - method *setRole***
 
 **Criteria for method *setRole*:**
-	
 
- - Validity of the String parameter
-
-
-
-
+- Validity of the String parameter
 
 **Predicates for method *setRole*:**
 
