@@ -51,19 +51,4 @@ public class Position {
         return "" + aisleID + "-" + rackID + "-" + levelId;
     }
     
-    public Integer getAisleID() {
-        return aisleID;
-    }
-    
-    public Integer getRackID() {
-        return rackID;
-    }
-    
-    public Integer getLevelId() {
-        return levelId;
-    }
-    
-    public boolean isEmpty() {
-        return empty;
-    }
 }
