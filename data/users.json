@@ -1,0 +1,6 @@
+[ {
+  "id" : 0,
+  "username" : "SimAdmin",
+  "password" : "12345",
+  "role" : "ADMINISTRATOR"
+} ]
