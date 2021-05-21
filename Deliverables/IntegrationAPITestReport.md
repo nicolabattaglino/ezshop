@@ -28,7 +28,7 @@ Version:
 ```plantuml
 
 @startuml
-scale 0.45
+scale 0.8
 interface EZShopInterface {
     +reset()
     +createUser(username: String, password: String, role: String) : Integer
@@ -385,6 +385,8 @@ class ReturnTransaction {
 ReturnTransaction ..> ReturnStatus
 ReturnTransaction ..> TicketEntry
 
+
+TransactionManager ..> ProductOrderManager
 @enduml
 
 ``` 

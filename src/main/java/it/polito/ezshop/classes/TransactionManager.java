@@ -46,7 +46,8 @@ public class TransactionManager {
     private int returnGen;
     private int balanceOperationGen;
     
-    
+     // todo remove it HOSSAIN PART  
+
     public TransactionManager(EZShop shop) {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<HashMap<Integer, OrderObj>> typeRef = new TypeReference<HashMap<Integer, OrderObj>>() {
@@ -322,6 +323,8 @@ public class TransactionManager {
         return output;
     }
     
+    // todo remove it STEFANO PART  
+
     public Integer startReturnTransaction(Integer saleNumber) throws InvalidTransactionIdException {
         if (saleNumber == null || saleNumber <= 0) throw new InvalidTransactionIdException();
         double money = 0;

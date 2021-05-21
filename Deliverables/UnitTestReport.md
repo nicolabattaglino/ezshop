@@ -1,10 +1,10 @@
 # Unit Testing Documentation
 
-Authors:
+Authors: Stefano, Mattia, Nicola, Hossein
 
-Date:
+Date: 19 May 2021
 
-Version:
+Version: 1.0
 
 # Contents
 
