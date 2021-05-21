@@ -24,7 +24,382 @@ Version:
 # Dependency graph 
 
      <report the here the dependency graph of the classes in EzShop, using plantuml>
+
+```plantuml
+
+@startuml
+scale 0.45
+interface EZShopInterface {
+    +reset()
+    +createUser(username: String, password: String, role: String) : Integer
+    +deleteUser(id: Integer): boolean
+    +getAllUsers(): List<User>
+    +getUser(id: Integer): User
+    +updateUserRights(id: Integer, role: String): Boolean
+
+
+    +login(username: String, password: String): User
+    +logout(): boolean
+
+    +createProductType(description: String, productCode: String, pricePerUnit: double, note: String): Integer
+    +updateProduct(id: Integer, newDescription: String, newCode: String, newPrice: double, newNote: String): boolean
+    +deleteProductType(id: Integer): boolean
+    +getAllProductTypes():  List<ProductType>
+    +getProductTypeByBarCode(barCode: String): ProductType
+    +getProductTypesByDescription(description: String): List<ProductType>
+
+    +updateQuantity(Integer productId, int toBeAdded): boolean
+    +updatePosition(Integer productId, String newPos): boolean
+    +issueOrder(String productCode, int quantity, double pricePerUnit): Integer
+    +payOrderFor(String productCode, int quantity, double pricePerUnit): Integer
+    +payOrder(Integer orderId): boolean
+    +recordOrderArrival(Integer orderId): boolean
+    +getAllOrders(): List<Order> 
+
+    +defineCustomer(customerName: String): Customer
+    +modifyCustomer(id: Integer, newCustomerName: String, newCustomerCard): boolean
+    +deleteCustomer(id: Integer): boolean
+    +getCustomer(id : Integer): Customer
+    +getAllCustomers(): List<Customer>
+
+    +createCard(): String
+    +attachCardToCustomer(customerCard: String, customerId: String ): boolean
+    +modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer): boolean
+
+    +startSaleTransaction() : Integer
+    +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
+    +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
+    +applyDiscountRateToProduct(transactionId: Integer, productCode: String, discountRate: double): boolean
+    +applyDiscountRateToSale(transactionId: Integer, discountRate: double) : boolean
+    +computePointsForSale(transactionId: Integer): int
+    +endSaleTransaction(transactionId: Integer): boolean
+    +deleteSaleTransaction(transactionId: Integer) : boolean
+    +getSaleTransaction(transactionId: Integer): boolean
+    +startReturnTransaction(transactionId: Integer): Integer
+    +returnProduct(returnId : Integer, productCode: String, amount: int): boolean
+    +endReturnTransaction(returnId : Integer, commit: boolean): boolean
+    +deleteReturnTransaction(returnId: Integer): boolean
+    +receiveCashPayment(transactionId: Integer, cash: double): double
+    +receiveCreditCardPayment(transactionId: Integer, creditCard: String): boolean
+    +returnCashPayment(returnId: Integer): double
+    +returnCreditCardPayment(returnId: Integer, creditCard: String): double
+
+    +recordBalanceUpdate(toBeAdded: double): boolean
+    +getCreditsAndDebits(from: LocalDate, to: LocalDate): List<BalanceOperation>
+    +computeBalance(): double
+}
+
+
+
+class Shop {
+    +addOrder(order: Order): boolean
+}
+
+Shop.|>EZShopInterface
+
+class UserManager{
+    -userIdGen: Integer
+    -loggedUser: User
+    +{static}USERS_PATH: String
+    +{static}USERS_ID_PATH: String
+    
+    +createUser(username: String, password: String, role: String) : Integer
+    +deleteUser(id: Integer) : Boolean
+    +getAllUsers() : List<User>
+    +getUser(id: Integer) : User
+    +updateUserRights(id: Integer, role: String) : Boolean
+    +login(username: String, password: String) : User
+    +logout() : boolean
+    -persistUsers()
+    -persistUsersId()
+    +clear()
+
+    +getLoggedUser() : User
+}
+
+class User {
+    
+    -id: Integer
+    -username: String
+    -password: String
+}
+note right : Persistent
+
+enum UserRole{
+    CASHIER
+    SHOP_MANAGER
+    ADMINISTRATOR
+}
+
+enum ReturnStatus{
+    NEW
+    CLOSED
+    ENDED
+}
+
+UserRole <- User : -role: UserRole
+
+class Customer {
+    -id: Integer
+    -customerName: String
+}
+
+note right : Persistent
+
+LoyaltyCard "0..1" <- Customer: -loyaltyCard: LoyaltyCard
+
+class LoyaltyCard {
+    -cardCode: String
+    -points: Integer
+    -isAttached: boolean
+}
+note left : Persistent
+
+UserManager -->"*" User: -userList: ArrayList<User>
+Customer "*"<-- CustomerManager: -customerMap: Map<Integer, Customer>
+LoyaltyCard "*"<-- CustomerManager: -cardMap: Map<String, LoyaltyCard>
+
+class CustomerManager {
+    -customerIdGen: Integer
+    -loyaltyCardIdGen: long
+    +{static}CARD_PATH: String
+    +{static}CARD_ID_PATH: String
+    +{static}CUSTOMER_ID_PATH: String
+    +{static}CUSTOMER_PATH: String
+    
+    +defineCustomer(customerName: String): Customer
+    +modifyCustomer(id: Integer, newCustomerName: String, newCustomerCard): boolean
+    +deleteCustomer(id: Integer): boolean
+    +getCustomer(id : Integer): Customer
+    +getAllCustomers(): List<Customer>
+    +createCard(): String
+    +attachCardToCustomer(customerCard: String, customerId: String ): boolean
+    +modifyPointsOnCard(customerCard: String, pointsToBeAdded: Integer): boolean
+    -persistCards()
+    -persistCustomers()
+    -persistCardsId()
+    -persistCustomersId()
+    +clear()
+}
+
+
+class ProductOrderManager {
+
+    -productIdGen: int
+    -orderIdGen: int
+    +{static}PRODUCTS_PATH: String
+    +{static}PRODUCT_GEN_PATH: String
+    +{static}ORDER_GEN_PATH: String
+    
+    +checkBarcode(barCode: String): boolean
+
+    +createProductType(description: String, productCode: String, pricePerUnit: double, note: String): Integer
+    +updateProduct(id: Integer, newDescription: String, newCode: String, newPrice: double, newNote: String): boolean
+    +deleteProductType(id: Integer): boolean
+    +getAllProductTypes():  List<ProductType>
+    +getProductTypeByBarCode(barCode: String): ProductType
+    +getProductTypesByDescription(description: String): List<ProductType>
+
+    +updateQuantity(Integer productId, int toBeAdded): boolean
+    +updatePosition(Integer productId, String newPos): boolean
+
+    +issueOrder(String productCode, int quantity, double pricePerUnit): Integer
+    +payOrderFor(String productCode, int quantity, double pricePerUnit): Integer
+    
+    +payOrder(Integer orderId): boolean
+    +recordOrderArrival(Integer orderId): boolean
+    -persistGen()
+    -persistProducts()
+    +clear()
+
+}
+
+ProductOrderManager -->"*" ProductType: -productMap: Map<String, ProductType>
+
+class TransactionManager {
+    -saleGen:  int
+    -returnGen:int 
+    -balanceOperationGen:  int
+    -{static}ORDER_PATH: String
+    -{static}SALE_PATH: String
+    -{static}RETURN_PATH: String
+    -{static}CREDITCARD_PATH: String
+    -{static}BALANCEOPERATION_PATH: String
+    -{static}GENERATOR_PATH: String
+    
+    +startSaleTransaction() : Integer
+    +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
+    +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
+    +applyDiscountRateToProduct(transactionId: Integer, productCode: String, discountRate: double): boolean
+    +applyDiscountRateToSale(transactionId: Integer, discountRate: double) : boolean
+    +computePointsForSale(transactionId: Integer): int
+    +endSaleTransaction(transactionId: Integer): boolean
+    +deleteSaleTransaction(transactionId: Integer) : boolean
+    +getSaleTransaction(transactionId: Integer): boolean
+    +startReturnTransaction(transactionId: Integer): Integer
+    +returnProduct(returnId : Integer, productCode: String, amount: int): boolean
+    +endReturnTransaction(returnId : Integer, commit: boolean): boolean
+    +deleteReturnTransaction(returnId: Integer): boolean
+    +receiveCashPayment(transactionId: Integer, cash: double): double
+    +receiveCreditCardPayment(transactionId: Integer, creditCard: String): boolean
+    +returnCashPayment(returnId: Integer): double
+    +returnCreditCardPayment(returnId: Integer, creditCard: String): double
+    +recordBalanceUpdate ( double toBeAdded) : boolean
+    +getCreditsAndDebits(from: LocalDate, to: LocalDate): List<BalanceOperation>
+    +computeBalance(): double
+    +getAllOrders(): List<Order>
+    
+    -persistOrders()
+    -persistCards()
+    -persistSales()
+    -persistReturns()
+    -persistBalanceOperations()
+    -persistGenerators()
+    +luhnAlgorithm (String creditCard): boolean
+    +clear()
      
+    +getReturnTransaction(transactionId: Integer): ReturnTransaction
+    +addCompletedOrder(orderId: Integer): Order
+    +addOrder(order: Order): boolean
+}
+note right : Persistent
+
+TransactionManager --> "*" BalanceOperation: -balanceOperations: Map<Integer, BlanceOperation>
+TransactionManager --> "*" CreditCard: -cards: Map<String, CreditCard>
+TransactionManager --> "*" Order: -orders: Map<Integer, Order>
+TransactionManager --> "*" ReturnTransaction: -returnTransactions: Map<Integer, ReturnTransaction>
+TransactionManager --> "*" SaleTransaction: -saleTransactions: Map<Integer, SaleTransaction>
+
+Shop --> UserManager : -userManager:  UserManager
+Shop --> CustomerManager : -customerManager: CustomerManager
+Shop --> ProductOrderManager : -productOrderManager: ProductOrderManager
+Shop --> TransactionManager : -transactionManager: TransactionManager
+
+Shop <-- UserManager : -shop:  Shop
+Shop <-- CustomerManager : -shop:  Shop
+Shop <-- ProductOrderManager : -shop:  Shop
+Shop <-- TransactionManager : -shop:  Shop
+
+class CreditCard {
+    -number: String
+    -balance: double
+}
+
+
+class Credit 
+class Debit
+
+Credit --|> BalanceOperation
+Debit --|> BalanceOperation
+
+abstract BalanceOperation {
+    
+    -balanceId: int
+    -type: String
+    -money: double
+    -date: LocalDate
+    
+}
+note right : Persistent
+class Order{
+    -orderId: Integer
+    -supplier: String
+    -pricePerUnit: double
+    -quantity: Integer
+}
+note left : Persistent
+
+
+enum OrderStatus{
+    ISSUED
+    PAYED
+    COMPLETED
+}
+
+Order -> OrderStatus : -status: OrderStatus
+
+Order --> Debit: -balanceOp: Debit
+ReturnTransaction --|> Debit
+
+class ProductType {
+    -id: Integer
+    -barCode: String
+
+    -description: String
+    -sellPrice: double
+    -discountRate: double
+    -notes: String
+    -amount: int
+}
+note left : Persistent
+
+
+class Position {
+    -aisleID: Integer
+    -rackID: Integer
+    -levelID: Integer
+    -empty: boolean
+}
+note right : Persistent
+
+
+ProductType ->"0..1" Position: -position: Position
+
+
+class SaleTransaction {
+    
+    -ticketNumber: Integer
+    -paymentType : String
+    -price: double
+    -discountRate : double
+   
+    
+    -updatePrice()
+    +deleteEntry(entry: TicketEntry)
+    +addEntry(entry: TicketEntry)
+    +addProduct(p: ProductType, quantity : Integer) : boolean
+    
+}
+note right: Persistent
+
+enum SaleStatus {
+    STARTED,
+    CLOSED,
+    PAYED
+}
+
+SaleTransaction  --> "*" TicketEntry : -entries : ArrayList<TicketEntry>
+SaleTransaction  --> "*" SaleStatus : -status : SaleStatus
+
+
+SaleTransaction -|> Credit
+
+class TicketEntry {
+    -  barCode: String
+    -  productDescription : String
+    -  amount: int 
+    -  pricePerUnit: double
+    -  discountRate: double
+}
+note right : Persistent
+
+SaleTransaction "*" --> "0..1" LoyaltyCard: -loyaltyCard: LoyaltyCard
+
+Order "*" -> ProductType: -product: ProductType
+
+class ReturnTransaction {
+    -transactionId: int
+    -price: double
+}
+
+ReturnTransaction --> ReturnStatus: -status: ReturnStatus 
+ReturnTransaction --> "*" TicketEntry: -entries: List<TicketEntry>
+
+@enduml
+
+``` 
+
+
 # Integration approach
 
     <Write here the integration sequence you adopted, in general terms (top down, bottom up, mixed) and as sequence
