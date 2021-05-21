@@ -46,5 +46,60 @@ public class ProductOrderManagerTest {
         assertTrue(p.checkBarcode("1234567890128"));
         assertTrue(p.checkBarcode("12345678901286"));
     }
-    
+
+    @Test
+    public void checkBarcode() {
+    }
+
+    @Test
+    public void createProductType() {
+    }
+
+    @Test
+    public void updateProduct() {
+    }
+
+    @Test
+    public void deleteProductType() {
+    }
+
+    @Test
+    public void getAllProductTypes() {
+    }
+
+    @Test
+    public void getProductTypeByBarCode() {
+    }
+
+    @Test
+    public void getProductTypesByDescription() {
+    }
+
+    @Test
+    public void updateQuantity() {
+    }
+
+    @Test
+    public void updatePosition() {
+    }
+
+    @Test
+    public void issueOrder() {
+    }
+
+    @Test
+    public void payOrderFor() {
+    }
+
+    @Test
+    public void payOrder() {
+    }
+
+    @Test
+    public void recordOrderArrival() {
+    }
+
+    @Test
+    public void clear() {
+    }
 }

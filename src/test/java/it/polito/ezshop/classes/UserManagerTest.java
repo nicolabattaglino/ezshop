@@ -30,4 +30,40 @@ public class UserManagerTest {
         User userLogged = um.login("SimAdmin", "12345");
         assertTrue(um.logout());
     }
+
+    @Test
+    public void getUserLogged() {
+    }
+
+    @Test
+    public void createUser() {
+    }
+
+    @Test
+    public void deleteUser() {
+    }
+
+    @Test
+    public void getAllUsers() {
+    }
+
+    @Test
+    public void getUser() {
+    }
+
+    @Test
+    public void updateUserRights() {
+    }
+
+    @Test
+    public void login() {
+    }
+
+    @Test
+    public void logout() {
+    }
+
+    @Test
+    public void clear() {
+    }
 }

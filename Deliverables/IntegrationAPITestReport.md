@@ -41,14 +41,14 @@ Version:
 
 ## Step 1
 | Classes  | JUnit test cases |
-|--|--|
-|||
+|-----|----|
+|   |   |
 
 
 ## Step 2
 | Classes  | JUnit test cases |
-|--|--|
-|||
+|-------|------|
+|   |   |
 
 
 ## Step n 
@@ -56,8 +56,8 @@ Version:
    
 
 | Classes  | JUnit test cases |
-|--|--|
-|||
+|------|------|
+|   |   |
 
 
 
