@@ -123,7 +123,6 @@ class User {
     -username: String
     -password: String
 }
-note right : Persistent
 
 enum UserRole{
     CASHIER
@@ -137,27 +136,26 @@ enum ReturnStatus{
     ENDED
 }
 
-UserRole <- User : -role: UserRole
+UserRole <. User 
 
 class Customer {
     -id: Integer
     -customerName: String
 }
 
-note right : Persistent
 
-LoyaltyCard "0..1" <- Customer: -loyaltyCard: LoyaltyCard
+
+LoyaltyCard  <. Customer
 
 class LoyaltyCard {
     -cardCode: String
     -points: Integer
     -isAttached: boolean
 }
-note left : Persistent
 
-UserManager -->"*" User: -userList: ArrayList<User>
-Customer "*"<-- CustomerManager: -customerMap: Map<Integer, Customer>
-LoyaltyCard "*"<-- CustomerManager: -cardMap: Map<String, LoyaltyCard>
+UserManager ..> User
+Customer <.. CustomerManager
+LoyaltyCard <.. CustomerManager
 
 class CustomerManager {
     -customerIdGen: Integer
@@ -214,7 +212,7 @@ class ProductOrderManager {
 
 }
 
-ProductOrderManager -->"*" ProductType: -productMap: Map<String, ProductType>
+ProductOrderManager ..> ProductType
 
 class TransactionManager {
     -saleGen:  int
@@ -262,23 +260,22 @@ class TransactionManager {
     +addCompletedOrder(orderId: Integer): Order
     +addOrder(order: Order): boolean
 }
-note right : Persistent
 
-TransactionManager --> "*" BalanceOperation: -balanceOperations: Map<Integer, BlanceOperation>
-TransactionManager --> "*" CreditCard: -cards: Map<String, CreditCard>
-TransactionManager --> "*" Order: -orders: Map<Integer, Order>
-TransactionManager --> "*" ReturnTransaction: -returnTransactions: Map<Integer, ReturnTransaction>
-TransactionManager --> "*" SaleTransaction: -saleTransactions: Map<Integer, SaleTransaction>
 
-Shop --> UserManager : -userManager:  UserManager
-Shop --> CustomerManager : -customerManager: CustomerManager
-Shop --> ProductOrderManager : -productOrderManager: ProductOrderManager
-Shop --> TransactionManager : -transactionManager: TransactionManager
+TransactionManager ..> BalanceOperation
+TransactionManager ..> CreditCard
+TransactionManager ..> Order
+TransactionManager ..> SaleTransaction
 
-Shop <-- UserManager : -shop:  Shop
-Shop <-- CustomerManager : -shop:  Shop
-Shop <-- ProductOrderManager : -shop:  Shop
-Shop <-- TransactionManager : -shop:  Shop
+Shop ..> UserManager
+Shop ..> CustomerManager
+Shop ..> ProductOrderManager
+Shop ..> TransactionManager
+
+Shop <.. UserManager
+Shop <.. CustomerManager
+Shop <.. ProductOrderManager
+Shop <.. TransactionManager
 
 class CreditCard {
     -number: String
@@ -300,15 +297,12 @@ abstract BalanceOperation {
     -date: LocalDate
     
 }
-note right : Persistent
 class Order{
     -orderId: Integer
     -supplier: String
     -pricePerUnit: double
     -quantity: Integer
 }
-note left : Persistent
-
 
 enum OrderStatus{
     ISSUED
@@ -316,9 +310,9 @@ enum OrderStatus{
     COMPLETED
 }
 
-Order -> OrderStatus : -status: OrderStatus
+Order .> OrderStatus
 
-Order --> Debit: -balanceOp: Debit
+Order ..> Debit
 ReturnTransaction --|> Debit
 
 class ProductType {
@@ -331,7 +325,6 @@ class ProductType {
     -notes: String
     -amount: int
 }
-note left : Persistent
 
 
 class Position {
@@ -340,10 +333,9 @@ class Position {
     -levelID: Integer
     -empty: boolean
 }
-note right : Persistent
 
 
-ProductType ->"0..1" Position: -position: Position
+ProductType .> Position
 
 
 class SaleTransaction {
@@ -360,7 +352,6 @@ class SaleTransaction {
     +addProduct(p: ProductType, quantity : Integer) : boolean
     
 }
-note right: Persistent
 
 enum SaleStatus {
     STARTED,
@@ -368,8 +359,8 @@ enum SaleStatus {
     PAYED
 }
 
-SaleTransaction  --> "*" TicketEntry : -entries : ArrayList<TicketEntry>
-SaleTransaction  --> "*" SaleStatus : -status : SaleStatus
+SaleTransaction  ..> TicketEntry
+SaleTransaction  ..> SaleStatus 
 
 
 SaleTransaction -|> Credit
@@ -381,19 +372,18 @@ class TicketEntry {
     -  pricePerUnit: double
     -  discountRate: double
 }
-note right : Persistent
 
-SaleTransaction "*" --> "0..1" LoyaltyCard: -loyaltyCard: LoyaltyCard
+SaleTransaction ..> LoyaltyCard
 
-Order "*" -> ProductType: -product: ProductType
+Order .> ProductType
 
 class ReturnTransaction {
     -transactionId: int
     -price: double
 }
 
-ReturnTransaction --> ReturnStatus: -status: ReturnStatus 
-ReturnTransaction --> "*" TicketEntry: -entries: List<TicketEntry>
+ReturnTransaction ..> ReturnStatus
+ReturnTransaction ..> TicketEntry
 
 @enduml
 
