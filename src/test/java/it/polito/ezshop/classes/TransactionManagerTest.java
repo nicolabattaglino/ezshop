@@ -1,5 +1,7 @@
 package it.polito.ezshop.classes;
 
+import it.polito.ezshop.data.EZShop;
+import it.polito.ezshop.exceptions.InvalidTransactionIdException;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -77,6 +79,19 @@ public class TransactionManagerTest {
 
     @Test
     public void startReturnTransaction() {
+        EZShop shop = new EZShop();
+        TransactionManager tManager = shop.getTransactionManager();
+        int saleId= tManager.startSaleTransaction();
+        try {
+            assertTrue(tManager.startReturnTransaction(saleId)>=0);
+        } catch (InvalidTransactionIdException e) {
+            e.printStackTrace();
+        }
+        try {
+            assertTrue(-1== tManager.startReturnTransaction(saleId+1));
+        } catch (InvalidTransactionIdException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -123,9 +138,6 @@ public class TransactionManagerTest {
     public void clear() {
     }
 
-    @Test
-    public void luhn() {
-    }
 
     @Test
     public void addCompletedOrder() {

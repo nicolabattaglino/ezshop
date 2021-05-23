@@ -329,6 +329,7 @@ public class TransactionManager {
         if (saleNumber == null || saleNumber <= 0) throw new InvalidTransactionIdException();
         double money = 0;
         SaleTransaction toBeReturned = this.getSaleTransaction(saleNumber);
+        if(toBeReturned==null) return  -1;
         List<TicketEntry> tickets = toBeReturned.getEntries();
         for (TicketEntry ticket : tickets) {
             money += (ticket.getAmount() * ticket.getPricePerUnit() * ticket.getDiscountRate());
