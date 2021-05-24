@@ -1,9 +1,7 @@
 package it.polito.ezshop.classes;
 
-import it.polito.ezshop.exceptions.InvalidPricePerUnitException;
-import it.polito.ezshop.exceptions.InvalidProductCodeException;
-import it.polito.ezshop.exceptions.InvalidProductDescriptionException;
-import it.polito.ezshop.exceptions.InvalidProductIdException;
+import it.polito.ezshop.data.ProductType;
+import it.polito.ezshop.exceptions.*;
 import org.junit.After;
 import org.junit.Test;
 
@@ -149,12 +147,12 @@ public class ProductOrderManagerTest {
     }
     
     @Test
-    public void getAllProductTypesEmpty() {
+    public void testGetAllProductTypesEmpty() {
         assertTrue(p.getAllProductTypes().isEmpty());
     }
     
     @Test
-    public void getAllProductTypes() {
+    public void testGetAllProductTypes() {
         ArrayList<ProductTypeObj> testSet = new ArrayList<>();
         try {
             Integer id = p.createProductType("test", "123456789012", 22.0, "note");
@@ -170,19 +168,109 @@ public class ProductOrderManagerTest {
     }
     
     @Test
-    public void getProductTypeByBarCode() {
+    public void testGetProductTypeByBarCodeInvalidCode() {
+        assertThrows(InvalidProductCodeException.class, () -> p.getProductTypeByBarCode("12345678911286"));
     }
     
     @Test
-    public void getProductTypesByDescription() {
+    public void testGetProductTypeByBarCodeOk() {
+        Integer id = null;
+        ProductType productType = null;
+        try {
+            id = p.createProductType("test", "123456789012", 22.0, "note");
+            productType = p.getProductTypeByBarCode("123456789012");
+        } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException e) {
+            e.printStackTrace();
+        }
+        assertEquals(
+                new ProductTypeObj(0, id, "test", "123456789012", "note", 22.0, 0, new Position()),
+                productType);
+        try {
+            assertNull(p.getProductTypeByBarCode("1234567890128"));
+        } catch (InvalidProductCodeException e) {
+            e.printStackTrace();
+        }
     }
     
     @Test
-    public void updateQuantity() {
+    public void testGetProductTypesByDescription() {
+        ArrayList<ProductTypeObj> testList = new ArrayList<>();
+        try {
+            Integer id = p.createProductType("hello test", "123456789012", 22.0, "note");
+            testList.add(new ProductTypeObj(0, id, "hello test", "123456789012", "note", 22.0, 0, new Position()));
+            id = p.createProductType("test hello", "1234567890128", 22.0, "note");
+            testList.add(new ProductTypeObj(0, id, "test hello", "1234567890128", "note", 22.0, 0, new Position()));
+            id = p.createProductType("hi test hi", "12345678901286", 22.0, "note");
+            testList.add(new ProductTypeObj(0, id, "hi test hi", "12345678901286", "note", 22.0, 0, new Position()));
+            id = p.createProductType("test", "111111111117", 22.0, "note");
+            testList.add(new ProductTypeObj(0, id, "test", "111111111117", "note", 22.0, 0, new Position()));
+            id = p.createProductType("prova", "1111111111178", 22.0, "note");
+            
+            assertTrue(p.getProductTypesByDescription("test").containsAll(testList));
+        } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException e) {
+            e.printStackTrace();
+        }
     }
     
     @Test
-    public void updatePosition() {
+    public void testGetProductTypesByDescriptionEmpty() {
+        ArrayList<ProductTypeObj> testList = new ArrayList<>();
+        try {
+            Integer id = p.createProductType("hello test", "123456789012", 22.0, "note");
+            testList.add(new ProductTypeObj(0, id, "hello test", "123456789012", "note", 22.0, 0, new Position()));
+            id = p.createProductType("test hello", "1234567890128", 22.0, "note");
+            testList.add(new ProductTypeObj(0, id, "test hello", "1234567890128", "note", 22.0, 0, new Position()));
+            id = p.createProductType("hi test hi", "12345678901286", 22.0, "note");
+            testList.add(new ProductTypeObj(0, id, "hi test hi", "12345678901286", "note", 22.0, 0, new Position()));
+            id = p.createProductType("test", "111111111117", 22.0, "note");
+            testList.add(new ProductTypeObj(0, id, "test", "111111111117", "note", 22.0, 0, new Position()));
+            id = p.createProductType("prova", "1111111111178", 22.0, "note");
+            testList.add(new ProductTypeObj(0, id, "prova", "1111111111178", "note", 22.0, 0, new Position()));
+            
+            assertTrue(p.getProductTypesByDescription("").containsAll(testList));
+            assertTrue(p.getProductTypesByDescription(null).containsAll(testList));
+        } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testUpdateQuantityInvalid() {
+        assertThrows(InvalidProductIdException.class, () -> p.updateQuantity(null, 0));
+        assertThrows(InvalidProductIdException.class, () -> p.updateQuantity(0, 0));
+        assertThrows(InvalidProductIdException.class, () -> p.updateQuantity(-1, 0));
+    }
+    
+    @Test
+    public void testUpdateQuantityOk() {
+        try {
+            Integer id = p.createProductType("hello test", "123456789012", 22.0, "note");
+            assertFalse(p.updateQuantity(id, 10));
+            p.updatePosition(id, "10-10-10");
+            assertTrue(p.updateQuantity(id, 10));
+            assertFalse(p.updateQuantity(id, -20));
+            assertFalse(p.updateQuantity(id + 1, -20));
+        } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductIdException | InvalidLocationException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testUpdatePositionInvalid() {
+        assertThrows(InvalidProductIdException.class, () -> p.updatePosition(null, ""));
+        assertThrows(InvalidProductIdException.class, () -> p.updatePosition(0, ""));
+        assertThrows(InvalidProductIdException.class, () -> p.updatePosition(-1, ""));
+        try {
+            Integer id = p.createProductType("hello test", "123456789012", 22.0, "note");
+            assertThrows(InvalidLocationException.class, () -> p.updatePosition(id, "aa"));
+        } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testUpdatePositionOk() {
+    
     }
     
     @Test

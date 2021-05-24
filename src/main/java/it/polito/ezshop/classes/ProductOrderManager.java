@@ -185,22 +185,23 @@ public class ProductOrderManager {
     
     public ProductType getProductTypeByBarCode(String barCode) throws InvalidProductCodeException {
         if (!checkBarcode(barCode)) throw new InvalidProductCodeException();
-        return new ProductTypeObj(productMap.get(barCode));
+        ProductTypeObj product = productMap.get(barCode);
+        return product == null ? null : new ProductTypeObj(product);
     }
     
     public List<ProductType> getProductTypesByDescription(String description) {
-        final String desc = description == null ? "" : description;
+        final String finalDescription = description == null ? "" : description;
         return productMap.values().stream()
-                .filter(productType -> productType.getProductDescription().equals(desc))
+                .filter(productType -> productType.getProductDescription().matches(".*" + finalDescription + ".*"))
                 .map(ProductTypeObj::new)
                 .collect(Collectors.toList());
     }
     
     public boolean updateQuantity(Integer productId, int toBeAdded) throws InvalidProductIdException {
         if (productId == null || productId <= 0) throw new InvalidProductIdException();
-        ProductType target;
+        ProductType target = null;
         for (ProductType p : productMap.values()) {
-            if (p.getId().equals(productId) && p.getLocation() != null) {
+            if (p.getId().equals(productId) && !p.getLocation().equals("")) {
                 final int oldQuantity = p.getQuantity();
                 int quantity = oldQuantity + toBeAdded;
                 if (quantity >= 0) {
@@ -221,16 +222,16 @@ public class ProductOrderManager {
     public boolean updatePosition(Integer productId, String newPos) throws InvalidProductIdException, InvalidLocationException {
         if (productId == null || productId <= 0) throw new InvalidProductIdException();
         newPos = (newPos == null) ? "" : newPos;
-        ProductType target = null;
+        ProductTypeObj target = null;
         String oldLoc = "";
-        for (ProductType p : productMap.values()) {
+        for (ProductTypeObj p : productMap.values()) {
             oldLoc = p.getLocation();
             if (oldLoc.equals(newPos) && !newPos.equals("")) return false;
             if (p.getId().equals(productId))
                 target = p;
         }
         if (target == null) return false;
-        target.setLocation(newPos);
+        target.setPosition(newPos.length() == 0 ? new Position() : new Position(newPos));
         try {
             persistProducts();
         } catch (IOException e) {
@@ -329,7 +330,7 @@ public class ProductOrderManager {
     
     public void clear() {
         productMap.clear();
-        File products = new File(PRODUCTS_PATH);
-        products.delete();
+        (new File(PRODUCTS_PATH)).delete();
+        (new File(PRODUCT_GEN_PATH)).delete();
     }
 }
