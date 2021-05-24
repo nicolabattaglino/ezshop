@@ -82,15 +82,14 @@ public class UserManager {
         
         for (User user : userList) {
             if (user.getUsername().equals(username))
-                return -1;
-        }
+                return -1; }
         if (userList.size() == 0) {
             userIdGen = 0;
-        } else {
-            userIdGen = userIdGen + 1;
-        }
+        } else { userIdGen = userIdGen + 1; }
+
+
         UserObj u = new UserObj(userIdGen, username, password, UserRole.valueOf(role.toUpperCase()));
-        
+
         if (!userList.add(u))
             return -1;
         try {
@@ -199,7 +198,9 @@ public class UserManager {
     public void clear() {
         userList.clear();
         File users = new File(USERS_PATH);
+        File usersId = new File(USERS_ID_PATH);
         users.delete();
+        usersId.delete();
         
     }
     
