@@ -5,6 +5,7 @@ import it.polito.ezshop.exceptions.InvalidProductCodeException;
 import it.polito.ezshop.exceptions.InvalidProductDescriptionException;
 import it.polito.ezshop.exceptions.InvalidProductIdException;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -13,7 +14,12 @@ import static org.junit.Assert.*;
 
 public class ProductOrderManagerTest {
     
-    ProductOrderManager p = new ProductOrderManager(null);
+    ProductOrderManager p;
+    
+    @Before
+    public void initManager() {
+        p = new ProductOrderManager(null);
+    }
     
     @Test
     public void testCheckBarcodeNull() {
