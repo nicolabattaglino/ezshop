@@ -181,14 +181,15 @@ public class TransactionManager {
     }
     
     public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException {
+        if(productCode == null || Long.parseLong(productCode)<=0) throw new InvalidTransactionIdException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) {
-            throw new InvalidTransactionIdException();
+            return  false;
         }
         ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);
         if (prodotto == null) throw new InvalidProductCodeException();
         if (amount < 0) throw new InvalidQuantityException();
-        if (!sale.getStatus().equals("new")) return false;
+        if (!sale.getStatus().equals(SaleStatus.STARTED)) return false;
         
         try {
             if (!shop.getProductOrderManager().updateQuantity(prodotto.getId(), -1 * amount)) return false;
@@ -356,17 +357,17 @@ public class TransactionManager {
         if (productCode == null) throw new InvalidProductCodeException();
         if (amount < 0) throw new InvalidQuantityException();
         ReturnTransaction target = getReturnTransaction(returnId);
-        ReturnTransaction oldR = new ReturnTransaction(target);
         if (target == null) {
             return false;
         }
-        if (shop.getProductTypeByBarCode(productCode) == null) return false;
+        ReturnTransaction oldR = new ReturnTransaction(target);
+        if (shop.getProductOrderManager().getProductTypeByBarCode(productCode) == null) return false;
         int oldID = target.getTransactionID();
         SaleTransaction oldSale = this.getSaleTransaction(oldID);
         List<TicketEntry> products = oldSale.getEntries();
         TicketEntry prodotto = null;
         for (TicketEntry product : products) {
-            if (product.getBarCode() == productCode) {
+            if (product.getBarCode().equals(productCode)) {
                 prodotto = product;
                 break;
             }

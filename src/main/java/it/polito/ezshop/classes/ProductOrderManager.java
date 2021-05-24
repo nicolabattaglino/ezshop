@@ -183,6 +183,7 @@ public class ProductOrderManager {
     
     public ProductType getProductTypeByBarCode(String barCode) throws InvalidProductCodeException {
         if (!checkBarcode(barCode)) throw new InvalidProductCodeException();
+        if(productMap.get(barCode)==null) return null;
         return new ProductTypeObj(productMap.get(barCode));
     }
     

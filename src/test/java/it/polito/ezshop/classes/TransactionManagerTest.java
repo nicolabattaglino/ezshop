@@ -1,7 +1,8 @@
 package it.polito.ezshop.classes;
 
 import it.polito.ezshop.data.EZShop;
-import it.polito.ezshop.exceptions.InvalidTransactionIdException;
+import it.polito.ezshop.data.ProductType;
+import it.polito.ezshop.exceptions.*;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -95,11 +96,56 @@ public class TransactionManagerTest {
     }
 
     @Test
-    public void returnProduct() {
+    public void returnProduct() throws InvalidQuantityException, InvalidTransactionIdException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, UnauthorizedException, InvalidProductIdException {
+        EZShop shop = new EZShop();
+        TransactionManager tManager = shop.getTransactionManager();
+        int saleId= tManager.startSaleTransaction();
+        ProductOrderManager poManager= shop.getProductOrderManager();
+
+        try {
+             poManager.createProductType("test", "123456789012", 5.0, "note");
+        } catch (InvalidProductCodeException e) {
+            e.printStackTrace();
+        } catch (InvalidProductDescriptionException e) {
+            e.printStackTrace();
+        } catch (InvalidPricePerUnitException e) {
+            e.printStackTrace();
+        }
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
+        tManager.addProductToSale(saleId, "123456789012", 1);
+        int retCode=tManager.startReturnTransaction(saleId);
+        String pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
+        String fakeCode = "12345678901286";
+        poManager.createProductType("test2", "1234567890128", 5.0, "note");
+        assertTrue(tManager.returnProduct(retCode,pBarCode , 1));
+        assertFalse(tManager.returnProduct(retCode,pBarCode , 2));
+        assertFalse(tManager.returnProduct(retCode,fakeCode , 1));
+        assertFalse(tManager.returnProduct(retCode,"1234567890128" , 1));
+        assertFalse(tManager.returnProduct(retCode+1,pBarCode , 1));
+
+
     }
 
     @Test
-    public void endReturnTransaction() {
+    public void endReturnTransaction() throws InvalidTransactionIdException, InvalidQuantityException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, UnauthorizedException {
+        EZShop shop = new EZShop();
+        TransactionManager tManager = shop.getTransactionManager();
+        int saleId= tManager.startSaleTransaction();
+        ProductOrderManager poManager= shop.getProductOrderManager();
+        poManager.createProductType("test", "123456789012", 5.0, "note");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
+        tManager.addProductToSale(saleId, "123456789012", 1);
+        int retCode=tManager.startReturnTransaction(saleId);
+        String pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
+        tManager.returnProduct(retCode,pBarCode , 1);
+        assertTrue(tManager.endReturnTransaction(retCode, false));
+        retCode=tManager.startReturnTransaction(saleId);
+        pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
+        tManager.returnProduct(retCode,pBarCode , 1);
+        assertTrue(tManager.endReturnTransaction(retCode, true));
+
+        assertFalse(tManager.endReturnTransaction(retCode, true));
+        assertFalse(tManager.endReturnTransaction(retCode+1, true));
     }
 
     @Test
@@ -122,17 +168,11 @@ public class TransactionManagerTest {
     public void returnCreditCardPayment() {
     }
 
-    @Test
-    public void recordBalanceUpdate() {
-    }
 
     @Test
     public void getCreditsAndDebits() {
     }
 
-    @Test
-    public void computeBalance() {
-    }
 
     @Test
     public void clear() {
