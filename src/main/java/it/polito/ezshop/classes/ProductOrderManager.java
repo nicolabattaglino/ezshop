@@ -128,16 +128,17 @@ public class ProductOrderManager {
             throw new InvalidProductDescriptionException();
         if (!checkBarcode(newCode))
             throw new InvalidProductCodeException();
-        if (productMap.containsKey(newCode)) return false;
-        
+        ProductTypeObj productTypeObj = productMap.get(newCode);
+        if (productTypeObj != null && !productTypeObj.getId().equals(id))
+            return false;
+    
         ProductTypeObj candidate = null;
-        
+    
         for (ProductTypeObj productType : productMap.values()) {
             if (productType.getId().equals(id)) candidate = productType;
         }
         if (candidate == null) return false;
         ProductTypeObj old = new ProductTypeObj(candidate);
-        //TODO vedi se la remove rimuove anche la chiave
         productMap.remove(candidate.getBarCode());
         candidate.setProductDescription(newDescription);
         candidate.setBarCode(newCode);
@@ -183,7 +184,9 @@ public class ProductOrderManager {
     
     public ProductType getProductTypeByBarCode(String barCode) throws InvalidProductCodeException {
         if (!checkBarcode(barCode)) throw new InvalidProductCodeException();
-        return new ProductTypeObj(productMap.get(barCode));
+        ProductTypeObj ret = productMap.get(barCode);
+        return ret == null ? null : new ProductTypeObj(ret);
+    
     }
     
     public List<ProductType> getProductTypesByDescription(String description) {
@@ -327,7 +330,7 @@ public class ProductOrderManager {
     
     public void clear() {
         productMap.clear();
-        File products = new File(PRODUCTS_PATH);
-        products.delete();
+        (new File(PRODUCTS_PATH)).delete();
+        (new File(PRODUCT_GEN_PATH)).delete();
     }
 }
