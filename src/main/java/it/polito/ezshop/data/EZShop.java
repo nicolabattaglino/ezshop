@@ -198,8 +198,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public List<Order> getAllOrders() throws UnauthorizedException {
-        if (userManager.getUserLogged() == null || userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())
-        )
+        if (userManager.getUserLogged() == null || userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString()))
             throw new UnauthorizedException();
         return transactionManager.getAllOrders();
     }

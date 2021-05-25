@@ -69,6 +69,5 @@ public class ReturnTransaction extends Credit {
         return transactionID;
     }
     
-
     
 }

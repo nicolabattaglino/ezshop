@@ -281,7 +281,7 @@ public class ProductOrderManagerTest {
             assertTrue(p.updatePosition(id, "10-10-10"));
             id = p.createProductType("test", "111111111117", 22.0, "note");
             assertFalse(p.updatePosition(id, "10-10-10"));
-        
+    
         } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductIdException | InvalidLocationException e) {
             fail("Unexpected exception: " + e);
         }

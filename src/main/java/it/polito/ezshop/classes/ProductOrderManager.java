@@ -139,7 +139,6 @@ public class ProductOrderManager {
         }
         if (candidate == null) return false;
         ProductTypeObj old = new ProductTypeObj(candidate);
-        //TODO vedi se la remove rimuove anche la chiave
         productMap.remove(candidate.getBarCode());
         candidate.setProductDescription(newDescription);
         candidate.setBarCode(newCode);
@@ -278,13 +277,15 @@ public class ProductOrderManager {
     
     public boolean payOrder(Integer orderId) throws InvalidOrderIdException, UnauthorizedException {
         if (orderId == null || orderId <= 0) throw new InvalidOrderIdException();
-        Optional<Order> target = shop.getAllOrders().stream()
+        Optional<Order> target = shop.getTransactionManager().getAllOrders().stream()
                 .filter(order -> order.getOrderId().equals(orderId))
                 .findFirst();
         if (!target.isPresent()) return false;
-        switch (OrderStatus.valueOf(target.get().getStatus())) {
+        final Order order = target.get();
+        switch (OrderStatus.valueOf(order.getStatus())) {
             case ISSUED:
-                return shop.addOrder((OrderObj) target.get());
+                order.setStatus("PAYED");
+                return shop.addOrder((OrderObj) order);
             case PAYED:
                 return true;
             default:
@@ -292,7 +293,7 @@ public class ProductOrderManager {
         }
     }
     
-    public boolean recordOrderArrival(Integer orderId) throws InvalidOrderIdException, InvalidLocationException, UnauthorizedException {
+    public boolean recordOrderArrival(Integer orderId) throws InvalidOrderIdException, InvalidLocationException {
         if (orderId == null || orderId <= 0) throw new InvalidOrderIdException();
         OrderObj order = shop.getTransactionManager().addCompletedOrder(orderId);
         if (order == null) return false;
@@ -332,5 +333,6 @@ public class ProductOrderManager {
         productMap.clear();
         (new File(PRODUCTS_PATH)).delete();
         (new File(PRODUCT_GEN_PATH)).delete();
+        (new File(ORDER_GEN_PATH)).delete();
     }
 }

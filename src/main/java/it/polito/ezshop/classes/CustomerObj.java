@@ -78,7 +78,7 @@ public class CustomerObj implements Customer {
             loyaltyCard = cardMap.get(customerCard);
             loyaltyCard.setIsAttached(true);
         }
-
+    
     }
     
     

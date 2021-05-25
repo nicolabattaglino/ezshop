@@ -3,10 +3,10 @@ package it.polito.ezshop.classes;
 public class CreditCard {
     private String number;
     private double balance;
-
-    public CreditCard(String number, double balance){
+    
+    public CreditCard(String number, double balance) {
         this.number = number;
-        this.balance= balance;
+        this.balance = balance;
     }
     
     public double getBalance() {

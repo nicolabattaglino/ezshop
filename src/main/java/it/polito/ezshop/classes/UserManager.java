@@ -1,4 +1,5 @@
 package it.polito.ezshop.classes;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.data.User;
 import it.polito.ezshop.exceptions.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -23,7 +25,7 @@ public class UserManager {
     private Integer userIdGen = 0;
     private User loggedUser;
     private EZShop shop;
-
+    
     public UserManager(EZShop shop) {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<LinkedList<UserObj>> typeRef = new TypeReference<LinkedList<UserObj>>() {
@@ -79,17 +81,20 @@ public class UserManager {
                         !role.equalsIgnoreCase("CASHIER") &&
                         !role.equalsIgnoreCase("SHOPMANAGER")))
             throw new InvalidRoleException();
-        
+    
         for (User user : userList) {
             if (user.getUsername().equals(username))
-                return -1; }
+                return -1;
+        }
         if (userList.size() == 0) {
             userIdGen = 0;
-        } else { userIdGen = userIdGen + 1; }
-
-
+        } else {
+            userIdGen = userIdGen + 1;
+        }
+    
+    
         UserObj u = new UserObj(userIdGen, username, password, UserRole.valueOf(role.toUpperCase()));
-
+    
         if (!userList.add(u))
             return -1;
         try {
