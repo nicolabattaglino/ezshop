@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class ProductOrderManagerTest {
     
-    ProductOrderManager p;
+    static ProductOrderManager p;
     
     @Before
     public void initManager() {
@@ -61,7 +61,7 @@ public class ProductOrderManagerTest {
             code = p.createProductType("test", "123456789012", 25.0, "note");
             assertEquals(-1, (int) code);
         } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException e) {
-            e.printStackTrace();
+            fail("Unexpected exception: " + e);
         }
     }
     
@@ -99,7 +99,7 @@ public class ProductOrderManagerTest {
             Integer id = p.createProductType("test", "123456789012", 25.0, "note");
             assertFalse(p.updateProduct(id + 1, "testa", "123456789012", 22.0, "nota"));
         } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductIdException e) {
-            e.printStackTrace();
+            fail("Unexpected exception: " + e);
         }
     }
     
@@ -108,7 +108,7 @@ public class ProductOrderManagerTest {
         try {
             assertFalse(p.updateProduct(1, "test1", "123456789012", 22.0, "nota"));
         } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductIdException e) {
-            e.printStackTrace();
+            fail("Unexpected exception: " + e);
         }
     }
     
@@ -121,7 +121,7 @@ public class ProductOrderManagerTest {
             assertEquals(new ProductTypeObj(0, id, "test1", "123456789012", "nota", 22.0, 0, new Position()),
                     p.getProductTypeByBarCode("123456789012"));
         } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductIdException e) {
-            e.printStackTrace();
+            fail("Unexpected exception: " + e);
         }
     }
     
@@ -137,7 +137,7 @@ public class ProductOrderManagerTest {
         try {
             assertFalse(p.deleteProductType(1));
         } catch (InvalidProductIdException e) {
-            e.printStackTrace();
+            fail("Unexpected exception: " + e);
         }
     }
     
@@ -148,7 +148,7 @@ public class ProductOrderManagerTest {
             assertTrue(p.deleteProductType(id));
             assertNull(p.getProductTypeByBarCode("123456789012"));
         } catch (InvalidProductCodeException | InvalidProductIdException | InvalidPricePerUnitException | InvalidProductDescriptionException e) {
-            e.printStackTrace();
+            fail("Unexpected exception: " + e);
         }
     }
     
@@ -169,7 +169,7 @@ public class ProductOrderManagerTest {
             testSet.add(new ProductTypeObj(0, id, "test2", "12345678901286", "note", 22.0, 0, new Position()));
             assertTrue(p.getAllProductTypes().containsAll(testSet));
         } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException e) {
-            e.printStackTrace();
+            fail("Unexpected exception: " + e);
         }
     }
     
@@ -185,16 +185,12 @@ public class ProductOrderManagerTest {
         try {
             id = p.createProductType("test", "123456789012", 22.0, "note");
             productType = p.getProductTypeByBarCode("123456789012");
-        } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException e) {
-            e.printStackTrace();
-        }
-        assertEquals(
-                new ProductTypeObj(0, id, "test", "123456789012", "note", 22.0, 0, new Position()),
-                productType);
-        try {
+            assertEquals(
+                    new ProductTypeObj(0, id, "test", "123456789012", "note", 22.0, 0, new Position()),
+                    productType);
             assertNull(p.getProductTypeByBarCode("1234567890128"));
-        } catch (InvalidProductCodeException e) {
-            e.printStackTrace();
+        } catch (InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductCodeException e) {
+            fail("Unexpected exception: " + e);
         }
     }
     
@@ -210,11 +206,11 @@ public class ProductOrderManagerTest {
             testList.add(new ProductTypeObj(0, id, "hi test hi", "12345678901286", "note", 22.0, 0, new Position()));
             id = p.createProductType("test", "111111111117", 22.0, "note");
             testList.add(new ProductTypeObj(0, id, "test", "111111111117", "note", 22.0, 0, new Position()));
-            id = p.createProductType("prova", "1111111111178", 22.0, "note");
+            p.createProductType("prova", "1111111111178", 22.0, "note");
             
             assertTrue(p.getProductTypesByDescription("test").containsAll(testList));
         } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException e) {
-            e.printStackTrace();
+            fail("Unexpected exception: " + e);
         }
     }
     
@@ -236,7 +232,7 @@ public class ProductOrderManagerTest {
             assertTrue(p.getProductTypesByDescription("").containsAll(testList));
             assertTrue(p.getProductTypesByDescription(null).containsAll(testList));
         } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException e) {
-            e.printStackTrace();
+            fail("Unexpected exception: " + e);
         }
     }
     
@@ -253,11 +249,12 @@ public class ProductOrderManagerTest {
             Integer id = p.createProductType("hello test", "123456789012", 22.0, "note");
             assertFalse(p.updateQuantity(id, 10));
             p.updatePosition(id, "10-10-10");
+            assertEquals("10-10-10", p.getProductTypeByBarCode("123456789012").getLocation());
             assertTrue(p.updateQuantity(id, 10));
             assertFalse(p.updateQuantity(id, -20));
             assertFalse(p.updateQuantity(id + 1, -20));
         } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductIdException | InvalidLocationException e) {
-            e.printStackTrace();
+            fail("Unexpected exception: " + e);
         }
     }
     
@@ -270,35 +267,31 @@ public class ProductOrderManagerTest {
             Integer id = p.createProductType("hello test", "123456789012", 22.0, "note");
             assertThrows(InvalidLocationException.class, () -> p.updatePosition(id, "aa"));
         } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException e) {
-            e.printStackTrace();
+            fail("Unexpected exception: " + e);
         }
     }
     
     @Test
     public void testUpdatePositionOk() {
+        try {
+            Integer id = p.createProductType("hello test", "123456789012", 22.0, "note");
+            assertFalse(p.updatePosition(id + 1, ""));
+            assertTrue(p.updatePosition(id, ""));
+            assertTrue(p.updatePosition(id, null));
+            assertTrue(p.updatePosition(id, "10-10-10"));
+            id = p.createProductType("test", "111111111117", 22.0, "note");
+            assertFalse(p.updatePosition(id, "10-10-10"));
+        
+        } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductIdException | InvalidLocationException e) {
+            fail("Unexpected exception: " + e);
+        }
     
     }
     
-    @Test
-    public void issueOrder() {
-    }
-    
-    @Test
-    public void payOrderFor() {
-    }
-    
-    @Test
-    public void payOrder() {
-    }
-    
-    @Test
-    public void recordOrderArrival() {
-    }
     
     @After
     public void clear() {
         p.clear();
     }
-    
     
 }

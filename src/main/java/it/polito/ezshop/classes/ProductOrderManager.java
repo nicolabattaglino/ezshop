@@ -223,7 +223,7 @@ public class ProductOrderManager {
         if (productId == null || productId <= 0) throw new InvalidProductIdException();
         newPos = (newPos == null) ? "" : newPos;
         ProductTypeObj target = null;
-        String oldLoc = "";
+        String oldLoc = null;
         for (ProductTypeObj p : productMap.values()) {
             oldLoc = p.getLocation();
             if (oldLoc.equals(newPos) && !newPos.equals("")) return false;
