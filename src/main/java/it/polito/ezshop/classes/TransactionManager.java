@@ -219,7 +219,7 @@ public class TransactionManager {
         if (amount < 0) throw new InvalidQuantityException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
-        if (!sale.getStatus().equals("new")) return false;
+        if (!sale.getStatus().equals(SaleStatus.STARTED)) return false;
         if (productCode == null) throw new InvalidProductCodeException();
         ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);
         if (prodotto == null) return false;
@@ -308,9 +308,9 @@ public class TransactionManager {
     public boolean deleteSaleTransaction(Integer transactionId) throws InvalidTransactionIdException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
-        SaleTransactionObj oldS = new SaleTransactionObj(sale);
         if (sale == null) return false;
-        if (sale.getStatus() == SaleStatus.PAYED) return false; // the transaction wasn't opern
+        SaleTransactionObj oldS = new SaleTransactionObj(sale);
+        if (sale.getStatus() == SaleStatus.PAYED) return false; // the transaction wasn't open
         saleTransactions.remove(transactionId);
         try {
             this.persistSales();
@@ -358,7 +358,7 @@ public class TransactionManager {
         return returnTransactions.get(returnId);
     }
     
-    public boolean returnProduct(Integer returnId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
+    public boolean returnProduct(Integer returnId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException{
         if (returnId == null || returnId <= 0) throw new InvalidTransactionIdException();
         if (productCode == null|| productCode.equals("")|| !this.shop.getProductOrderManager().checkBarcode(productCode)) throw new InvalidProductCodeException();
         if (amount <=0) throw new InvalidQuantityException();
@@ -420,11 +420,10 @@ public class TransactionManager {
         if (target == null) return false;
         if (target.getStatus() == ReturnStatus.ENDED) return false;
         else {
-            ReturnTransaction oldR = new ReturnTransaction(target);
+
             
             int amount = 0;
             SaleTransactionObj sale = this.getSaleTransactionObj(target.getTransactionID());
-            SaleTransactionObj oldS = new SaleTransactionObj((sale));
             if (sale == null) return false;
             int priceReduction = 0;
             List<TicketEntry> targetEntries = target.getEntries();
@@ -476,7 +475,7 @@ public class TransactionManager {
         return saleTransactions.get(transactionID);
     }
     
-    public double receiveCashPayment(Integer ticketNumber, double cash) throws InvalidTransactionIdException, InvalidPaymentException {
+    public double receiveCashPayment(Integer ticketNumber, double cash) throws InvalidTransactionIdException {
         if (ticketNumber == null || ticketNumber <= 0) throw new InvalidTransactionIdException();
         if (cash <= 0) throw new InvalidParameterException();
         
@@ -488,7 +487,7 @@ public class TransactionManager {
     
     public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException {
         if (ticketNumber == null || ticketNumber <= 0) throw new InvalidTransactionIdException();
-        if (creditCard == "" || creditCard == null|| !this.luhn(creditCard)) throw new InvalidCreditCardException();
+        if (creditCard == null||creditCard.equals("") ||  !this.luhn(creditCard)) throw new InvalidCreditCardException();
         
         CreditCard carta = cards.get(creditCard);
         if (carta == null) return false;
@@ -506,7 +505,7 @@ public class TransactionManager {
         ReturnTransaction rTransaction = returnTransactions.get(returnId);
         if (rTransaction == null) return -1;
         if (rTransaction.getStatus() != ReturnStatus.ENDED) return -1;
-        double price = returnTransactions.get(rTransaction.getTransactionID()).getPrice(); //this price is the amount of money the customer will riceive
+        double price = returnTransactions.get(rTransaction.getTransactionID()).getPrice(); //this price is the amount of money the customer will receive
         if (!recordBalanceUpdate(-1 * price)) return -1;
         return price;
     }
@@ -563,12 +562,12 @@ public class TransactionManager {
                 output.add((BalanceOperation) sale);
             }
         }
-        for (ReturnTransaction rTransaciton : returnTransactions.values()) {
+        for (ReturnTransaction rTransaction : returnTransactions.values()) {
             if ((from == null && to == null) ||
-                    (from == null && rTransaciton.getDate().isBefore(to)) ||
-                    (from != null && rTransaciton.getDate().isAfter(from) && to == null) ||
-                    ((from != null && to != null) && rTransaciton.getDate().isAfter(from) && rTransaciton.getDate().isBefore(to))) {
-                output.add((BalanceOperation) rTransaciton);
+                    (from == null && rTransaction.getDate().isBefore(to)) ||
+                    (from != null && rTransaction.getDate().isAfter(from) && to == null) ||
+                    ((from != null && to != null) && rTransaction.getDate().isAfter(from) && rTransaction.getDate().isBefore(to))) {
+                output.add((BalanceOperation) rTransaction);
             }
         }
         for (OrderObj order : orders.values()) {
@@ -661,7 +660,7 @@ public class TransactionManager {
         // update the balance if the order status is payed check also if the field balanceOperation of the order
         // is not null and in that case add it to the balanceOperations map.
         // if there is not enough balance return false
-        // add persistance
+        // add persistence
         double tot = order.getPricePerUnit() * order.getQuantity();
         if (order.getStatus().equals(OrderStatus.ISSUED.name())) {
             BalanceOperationObj operation = new Debit(balanceOperationGen++, LocalDate.now(), "Debit");
