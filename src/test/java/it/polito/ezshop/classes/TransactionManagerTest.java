@@ -3,39 +3,46 @@ package it.polito.ezshop.classes;
 import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.data.ProductType;
 import it.polito.ezshop.exceptions.*;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class TransactionManagerTest {
+    EZShop shop;
+    TransactionManager tManager;
+    @Before
+    public void initTransactionManagerTests(){
+        shop = new EZShop();
+        tManager = shop.getTransactionManager();
+    }
 
 	@Test
 	public void testBalanceUpdate() {
 
-		TransactionManager t = new TransactionManager(null);
-		assertTrue(t.recordBalanceUpdate(5.0));
-		assertFalse(t.recordBalanceUpdate(-20.0));
-		assertTrue(t.recordBalanceUpdate(-2.0));
+
+		assertTrue(tManager.recordBalanceUpdate(5.0));
+		assertFalse(tManager.recordBalanceUpdate(-20.0));
+		assertTrue(tManager.recordBalanceUpdate(-2.0));
 	}
 	
 	@Test
 	public void testLuhn() {
-		it.polito.ezshop.data.EZShop shop = new it.polito.ezshop.data.EZShop();
-		TransactionManager t = new TransactionManager(shop);
-		assertTrue(t.luhn("79927398713"));
-		assertFalse(t.luhn("-79927398713"));
-		assertFalse(t.luhn("5"));
-		assertFalse(t.luhn(""));
-		assertFalse(t.luhn("iduhsidh"));
-		assertFalse(t.luhn(null));
+
+		assertTrue(tManager.luhn("79927398713"));
+		assertFalse(tManager.luhn("-79927398713"));
+		assertFalse(tManager.luhn("5"));
+		assertFalse(tManager.luhn(""));
+		assertFalse(tManager.luhn("iduhsidh"));
+		assertFalse(tManager.luhn(null));
 		
 	}
 	
 	@Test
 	public void testComputeBalance() {
-		it.polito.ezshop.data.EZShop shop = new it.polito.ezshop.data.EZShop();
-		TransactionManager t = new TransactionManager(shop);
-		assertEquals(0, t.computeBalance(), 0.0);
+
+		assertEquals(0, tManager.computeBalance(), 0.0);
 	}
 
     @Test
@@ -79,9 +86,8 @@ public class TransactionManagerTest {
     }
 
     @Test
-    public void startReturnTransaction() {
-        EZShop shop = new EZShop();
-        TransactionManager tManager = shop.getTransactionManager();
+    public void testStartReturnTransaction() {
+
         int saleId= tManager.startSaleTransaction();
         try {
             assertTrue(tManager.startReturnTransaction(saleId)>=0);
@@ -96,9 +102,8 @@ public class TransactionManagerTest {
     }
 
     @Test
-    public void returnProduct() throws InvalidQuantityException, InvalidTransactionIdException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, UnauthorizedException, InvalidProductIdException {
-        EZShop shop = new EZShop();
-        TransactionManager tManager = shop.getTransactionManager();
+    public void testReturnProduct() throws InvalidQuantityException, InvalidTransactionIdException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, UnauthorizedException, InvalidProductIdException {
+
         int saleId= tManager.startSaleTransaction();
         ProductOrderManager poManager= shop.getProductOrderManager();
 
@@ -127,9 +132,8 @@ public class TransactionManagerTest {
     }
 
     @Test
-    public void endReturnTransaction() throws InvalidTransactionIdException, InvalidQuantityException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, UnauthorizedException {
-        EZShop shop = new EZShop();
-        TransactionManager tManager = shop.getTransactionManager();
+    public void testEndReturnTransaction() throws InvalidTransactionIdException, InvalidQuantityException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, UnauthorizedException {
+
         int saleId= tManager.startSaleTransaction();
         ProductOrderManager poManager= shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
@@ -185,5 +189,9 @@ public class TransactionManagerTest {
 
     @Test
     public void addOrder() {
+    }
+    @After
+    public void clearTransactionManagerTests(){
+        shop.reset();
     }
 }
