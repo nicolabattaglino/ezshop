@@ -34,7 +34,6 @@ public class UserManagerTest {
         //UserManager um = new UserManager(null);
         //um.clear();
         um.createUser("SimAdmin","12345","Administrator");
-
         assertThrows(InvalidUsernameException.class, () -> um.createUser("","1234","Cashier"));
         assertThrows(InvalidUsernameException.class, () -> um.createUser(null,"1234","Cashier"));
         assertThrows(InvalidPasswordException.class, () -> um.createUser("John","","Cashier"));

@@ -22,7 +22,7 @@ public class CustomerManagerTest {
     }
 
     @Test
-    public void defineCustomer() throws InvalidCustomerNameException, InvalidCustomerIdException, UnauthorizedException {
+    public void testDefineCustomer() throws InvalidCustomerNameException, InvalidCustomerIdException, UnauthorizedException {
         //CustomerManager cm = new CustomerManager(null);
         //cm.clear();
         assertThrows(InvalidCustomerNameException.class, () -> cm.defineCustomer(""));
@@ -35,9 +35,16 @@ public class CustomerManagerTest {
     }
 
     @Test
-    public void modifyCustomer() throws InvalidCustomerIdException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerCardException {
+    public void testCheckCardDigits() throws InvalidCustomerNameException {
+        int customerId = cm.defineCustomer("MIkeR");
+        assertThrows(InvalidCustomerCardException.class, () -> cm.modifyCustomer(customerId, "MikeR", "111"));
+    }
+
+    @Test
+    public void testModifyCustomer() throws InvalidCustomerIdException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerCardException {
         //CustomerManager cm = new CustomerManager(null);
         //cm.clear();
+        // detach test?
         cm.createCard();
         cm.createCard();
         cm.createCard();
@@ -53,17 +60,18 @@ public class CustomerManagerTest {
         assertTrue(cm.modifyCustomer(customerId, "BobN", null));
         assertFalse(cm.attachCardToCustomer("1000000003",0));
         cm.attachCardToCustomer("1000000002",0);
+        // detach card from customer
         assertTrue(cm.modifyCustomer(customerId, "BobN", ""));
         assertTrue(cm.modifyCustomer(customerId, "BobN", "1000000000"));
     }
 
     @Test
-    public void deleteCustomer() throws InvalidCustomerNameException, InvalidCustomerIdException, UnauthorizedException, InvalidCustomerCardException {
+    public void testDeleteCustomer() throws InvalidCustomerNameException, InvalidCustomerIdException, UnauthorizedException, InvalidCustomerCardException {
         //CustomerManager cm = new CustomerManager(null);
         //cm.clear();
         assertFalse(cm.deleteCustomer(0));
         int id = cm.defineCustomer("MIkeR");
-        createCard();
+        cm.createCard();
         cm.attachCardToCustomer("1000000000",id);
         int id1 = cm.defineCustomer("Paul");
         assertThrows(InvalidCustomerIdException.class, () -> cm.deleteCustomer(-1));
@@ -72,7 +80,7 @@ public class CustomerManagerTest {
     }
 
     @Test
-    public void getCustomer() throws InvalidCustomerIdException, UnauthorizedException, InvalidCustomerNameException {
+    public void testGetCustomer() throws InvalidCustomerIdException, UnauthorizedException, InvalidCustomerNameException {
         //CustomerManager cm = new CustomerManager(null);
         //cm.clear();
         assertThrows(InvalidCustomerIdException.class, () -> cm.getCustomer(-1));
@@ -83,7 +91,7 @@ public class CustomerManagerTest {
     }
 
     @Test
-    public void getAllCustomers() throws InvalidCustomerNameException, UnauthorizedException {
+    public void testGetAllCustomers() throws InvalidCustomerNameException, UnauthorizedException {
         //CustomerManager cm = new CustomerManager(null);
         //cm.clear();
         int id = cm.defineCustomer("MIkeR");
@@ -91,7 +99,7 @@ public class CustomerManagerTest {
     }
 
     @Test
-    public void createCard() {
+    public void testCreateCard() {
         //CustomerManager cm = new CustomerManager(null);
         //cm.clear();
         assertEquals("1000000000", cm.createCard());
@@ -99,7 +107,7 @@ public class CustomerManagerTest {
     }
 
     @Test
-    public void attachCardToCustomer() throws InvalidCustomerIdException, UnauthorizedException, InvalidCustomerCardException, InvalidCustomerNameException {
+    public void testAttachCardToCustomer() throws InvalidCustomerIdException, UnauthorizedException, InvalidCustomerCardException, InvalidCustomerNameException {
         //CustomerManager cm = new CustomerManager(null);
         //cm.clear();
 
@@ -108,7 +116,6 @@ public class CustomerManagerTest {
         assertThrows(InvalidCustomerCardException.class, () -> cm.attachCardToCustomer("t",0));
         assertThrows(InvalidCustomerCardException.class, () -> cm.attachCardToCustomer(null,0));
         assertFalse(cm.attachCardToCustomer("1000000000",1));
-        // test is attached
         cm.createCard();
         cm.createCard();
         cm.createCard();
@@ -120,7 +127,7 @@ public class CustomerManagerTest {
     }
 
     @Test
-    public void modifyPointsOnCard() throws UnauthorizedException, InvalidCustomerCardException, InvalidCustomerNameException, InvalidCustomerIdException {
+    public void testModifyPointsOnCard() throws UnauthorizedException, InvalidCustomerCardException, InvalidCustomerNameException, InvalidCustomerIdException {
        // CustomerManager cm = new CustomerManager(null);
        // cm.clear();
         assertThrows(InvalidCustomerCardException.class, () -> cm.modifyPointsOnCard("",10));
@@ -133,12 +140,9 @@ public class CustomerManagerTest {
         assertTrue(cm.modifyPointsOnCard("1000000000",10));
     }
 
-    //@Test
-    //public void clear() {
-    //}
 
     @After
-    public void clear(){
+    public void testClear(){
         cm.clear();
     }
 
