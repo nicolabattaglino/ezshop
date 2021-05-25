@@ -60,7 +60,8 @@ public class TransactionManager {
             ordini.delete();
             try {
                 ordini.createNewFile();
-            } catch (IOException ioException) {
+            } catch (IOException ex) {
+                ex.printStackTrace();
             } finally {
                 orders = new HashMap<>();
             }
@@ -72,11 +73,11 @@ public class TransactionManager {
             sales.createNewFile();
             saleTransactions = mapper.readValue(sales, typeRef1);
         } catch (IOException e) {
-            e.printStackTrace();
             sales.delete();
             try {
                 sales.createNewFile();
             } catch (IOException ioException) {
+                ioException.printStackTrace();
             } finally {
                 saleTransactions = new HashMap<>();
             }
@@ -93,6 +94,7 @@ public class TransactionManager {
             try {
                 returns.createNewFile();
             } catch (IOException ioException) {
+                ioException.printStackTrace();
             } finally {
                 returnTransactions = new HashMap<>();
             }
@@ -105,11 +107,11 @@ public class TransactionManager {
             creditCards.createNewFile();
             cards = mapper.readValue(creditCards, typeRef3);
         } catch (IOException e) {
-            e.printStackTrace();
             creditCards.delete();
             try {
                 creditCards.createNewFile();
             } catch (IOException ioException) {
+                ioException.printStackTrace();
             } finally {
                 cards = new HashMap<>();
             }
@@ -122,11 +124,11 @@ public class TransactionManager {
             balanceOperation.createNewFile();
             balanceOperations = mapper.readValue(balanceOperation, typeRef4);
         } catch (IOException e) {
-            e.printStackTrace();
             balanceOperation.delete();
             try {
                 balanceOperation.createNewFile();
             } catch (IOException ioException) {
+                ioException.printStackTrace();
             } finally {
                 balanceOperations = new HashMap<>();
             }
@@ -153,11 +155,11 @@ public class TransactionManager {
             } else balanceOperationGen = 1;
             myReader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            //System.err.println("An error occurred.");
             saleGen=1;
             returnGen=1;
             balanceOperationGen=1;
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         try {
             this.persistGenerators();
@@ -200,7 +202,6 @@ public class TransactionManager {
         try {
             if (!shop.getProductOrderManager().updateQuantity(prodotto.getId(), -1 * amount)) return false;
         } catch (InvalidProductIdException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         TicketEntryObj ticket = new TicketEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
@@ -219,14 +220,13 @@ public class TransactionManager {
         if (amount < 0) throw new InvalidQuantityException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
-        if (!sale.getStatus().equals("new")) return false;
+        if (!sale.getStatus().equals(SaleStatus.STARTED)) return false;
         if (productCode == null) throw new InvalidProductCodeException();
         ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);
         if (prodotto == null) return false;
         try {
             if (!shop.getProductOrderManager().updateQuantity(prodotto.getId(), amount)) return false;
         } catch (InvalidProductIdException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         TicketEntryObj ticket = new TicketEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
@@ -308,8 +308,8 @@ public class TransactionManager {
     public boolean deleteSaleTransaction(Integer transactionId) throws InvalidTransactionIdException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
-        SaleTransactionObj oldS = new SaleTransactionObj(sale);
         if (sale == null) return false;
+        SaleTransactionObj oldS = new SaleTransactionObj(sale);
         if (sale.getStatus() == SaleStatus.PAYED) return false; // the transaction wasn't opern
         saleTransactions.remove(transactionId);
         try {
@@ -326,8 +326,7 @@ public class TransactionManager {
     }
     
     public List<Order> getAllOrders() {
-        List<Order> output = new ArrayList<Order>(orders.values());
-        return output;
+        return new ArrayList<Order>(orders.values());
     }
     
     // todo remove it STEFANO PART  
@@ -424,8 +423,8 @@ public class TransactionManager {
             
             int amount = 0;
             SaleTransactionObj sale = this.getSaleTransactionObj(target.getTransactionID());
-            SaleTransactionObj oldS = new SaleTransactionObj((sale));
             if (sale == null) return false;
+            SaleTransactionObj oldS = new SaleTransactionObj((sale));
             int priceReduction = 0;
             List<TicketEntry> targetEntries = target.getEntries();
             List<TicketEntry> saleEntries = sale.getEntries();
@@ -488,7 +487,8 @@ public class TransactionManager {
     
     public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException {
         if (ticketNumber == null || ticketNumber <= 0) throw new InvalidTransactionIdException();
-        if (creditCard == "" || creditCard == null|| !this.luhn(creditCard)) throw new InvalidCreditCardException();
+        if (creditCard == null || creditCard.equals("") || !this.luhn(creditCard))
+            throw new InvalidCreditCardException();
         
         CreditCard carta = cards.get(creditCard);
         if (carta == null) return false;
@@ -615,14 +615,12 @@ public class TransactionManager {
         int sum = 0;
         boolean alternate = false;
         for (int i = ccNumber.length() - 1; i >= 0; i--) {
+            int n = 0;
             try {
-                int i1 = Integer.parseInt(ccNumber.substring(i, i + 1));
+                n = Integer.parseInt(ccNumber.substring(i, i + 1));
             } catch (NumberFormatException e) {
                 return false;
             }
-            int n = Integer.parseInt(ccNumber.substring(i, i + 1));
-            
-
             if (alternate) {
                 n *= 2;
                 if (n > 9) {
