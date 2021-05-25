@@ -23,6 +23,7 @@ public class TransactionManager {
     public static final String SALE_PATH = "data/sales.json";
     public static final String RETURN_PATH = "data/returns.json";
     public static final String CREDITCARD_PATH = "data/creditCards.json";
+    public static final String CRYPTOCURRENCY_PATH = "data/cryptoCurrency.json";
     public static final String BALANCEOPERATION_PATH = "data/balanceOperations.json";
     public static final String GENERATOR_PATH = "data/transactionManagerGenerators.json";
     
@@ -42,6 +43,8 @@ public class TransactionManager {
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
     private Map<String, CreditCard> cards = new HashMap<String, CreditCard>();
+    private Map<Float, CryptoCurrencyCard> ccc = new HashMap<Float, CryptoCurrencyCard>();
+
     private int saleGen;
     private int returnGen;
     private int balanceOperationGen;
@@ -99,6 +102,23 @@ public class TransactionManager {
                 returnTransactions = new HashMap<>();
             }
         }
+        
+        // File cryptoCurreCards = new File(CRYPTOCURRENCY_PATH);
+        // TypeReference<HashMap<Float, CryptoCurrencyCard>> typeRef6 = new TypeReference<HashMap<Float, CryptoCurrencyCard>>() {
+        // };
+        // try {
+        //     cryptoCurreCards.createNewFile();
+        //     ccc = mapper.readValue(cryptoCurreCards, typeRef6);
+        // } catch (IOException e) {
+        //     cryptoCurreCards.delete();
+        //     try {
+        //         cryptoCurreCards.createNewFile();
+        //     } catch (IOException ioException) {
+        //         ioException.printStackTrace();
+        //     } finally {
+        //         cards = new HashMap<>();
+        //     }
+        // }
         
         File creditCards = new File(CREDITCARD_PATH);
         TypeReference<HashMap<String, CreditCard>> typeRef3 = new TypeReference<HashMap<String, CreditCard>>() {
@@ -264,15 +284,15 @@ public class TransactionManager {
         return true;
     }
     
-    public boolean applyDiscountRateToSale(Integer transactionId, double discountRate) throws InvalidTransactionIdException, InvalidDiscountRateException {
+    public boolean applyDiscountRateToSale(Integer transactionId, String ccNumber) throws InvalidTransactionIdException, InvalidDiscountRateException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
-        if (discountRate < 0.0 || discountRate >= 1.00) throw new InvalidDiscountRateException();
-        if (discountRate > 1 || discountRate < 0) return false;
+        if (ccNumber < 0.0 || ccNumber >= 1.00) throw new InvalidDiscountRateException();
+        if (ccNumber > 1 || ccNumber < 0) return false;
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
         if (sale.getStatus() == SaleStatus.PAYED) return false;
         double oldD = sale.getDiscountRate();
-        sale.setDiscountRate(discountRate);
+        sale.setDiscountRate(ccNumber);
         try {
             this.persistSales();
         } catch (IOException e) {
@@ -482,6 +502,20 @@ public class TransactionManager {
         return cash - transaction.getPrice();
     }
     
+    // public boolean receiveCryptoCurrencyCardPayment(Integer ticketNumber, String cryptoCurrencyCard) throws InvalidTransactionIdException, InvalidCryptoCurrencyCardException {
+    //     if (ticketNumber == null || ticketNumber <= 0) throw new InvalidTransactionIdException();
+    //     if (cryptoCurrencyCard == null || cryptoCurrencyCard.equals("") ||  !this.luhn(cryptoCurrencyCard)) throw new InvalidCryptoCurrencyCardException();
+        
+    //     CryptoCurrencyCard carta = cards.get(cryptoCurrencyCard);
+    //     if (carta == null) return false;
+    //     SaleTransaction transaction = saleTransactions.get(ticketNumber);
+    //     if (transaction == null) return false;
+    //     if (carta.getBalance() < transaction.getPrice()) return false;
+    //     carta.setBalance(carta.getBalance() - transaction.getPrice());
+    //     this.recordBalanceUpdate(transaction.getPrice());
+    //     return true;
+    // }
+
     public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException {
         if (ticketNumber == null || ticketNumber <= 0) throw new InvalidTransactionIdException();
         if (creditCard == null || creditCard.equals("") ||  !this.luhn(creditCard)) throw new InvalidCreditCardException();
@@ -506,7 +540,20 @@ public class TransactionManager {
         if (!recordBalanceUpdate(-1 * price)) return -1;
         return price;
     }
-    
+
+    // public double returnCryptoCurrencyCardPayment(Integer returnId, String cryptoCurrencyCard) throws InvalidTransactionIdException, InvalidCryptoCurrencyCardException {
+    //     if (returnId == null || returnId <= 0) throw new InvalidTransactionIdException();
+    //     if (cryptoCurrencyCard == null || cryptoCurrencyCard.equals("")|| !this.luhn(cryptoCurrencyCard)) throw new InvalidCryptoCurrencyCardException();
+    //     CryptoCurrencyCard carta = ccc.get(cryptoCurrencyCard);
+    //     if (carta == null) return -1;
+    //     ReturnTransaction rTransaction = returnTransactions.get(returnId);
+    //     if (rTransaction == null) return -1;
+    //     if (rTransaction.getStatus() != ReturnStatus.ENDED) return -1;
+    //     double output = rTransaction.getPrice();
+    //     if (!recordBalanceUpdate(output)) return -1;
+    //     return output;
+    // }
+
     public double returnCreditCardPayment(Integer returnId, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException {
         if (returnId == null || returnId <= 0) throw new InvalidTransactionIdException();
         if (creditCard == null || creditCard.equals("")|| !this.luhn(creditCard)) throw new InvalidCreditCardException();
@@ -519,6 +566,26 @@ public class TransactionManager {
         if (!recordBalanceUpdate(output)) return -1;
         return output;
     }
+    
+    // public boolean recordBalanceUpdateCCC(double toBeAdded) {
+    //     if (toBeAdded >= 0) {
+    //         CreditCC transaction = new CreditCC(balanceOperationGen++, LocalDate.now(), "CreditCC");
+    //         transaction.setMoney(toBeAdded);
+    //         balanceOperations.put(transaction.getBalanceId(), transaction);
+    //     }
+    //     try {
+    //         this.persistBalanceOperations();
+    //     } catch (IOException e) {
+    //         balanceOperations.remove(balanceOperationGen - 1);
+    //         return false;
+    //     }
+    //     try {
+    //         persistGenerators();
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //     }
+    //     return true;
+    // }
     
     public boolean recordBalanceUpdate(double toBeAdded) {
         if (toBeAdded >= 0) {
@@ -686,9 +753,14 @@ public class TransactionManager {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(CREDITCARD_PATH), cards);
-        
     }
     
+    // private void persistCCCards() throws IOException {
+    //     ObjectMapper mapper = new ObjectMapper();
+    //     mapper.writerWithDefaultPrettyPrinter()
+    //             .writeValue(new File(CRYPTOCURRENCY_PATH), cards);
+    // }
+
     private void persistOrders() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
@@ -730,6 +802,19 @@ public class TransactionManager {
             e.printStackTrace();
         }
     }
+
+    // public void defineCryptoCurrencyCards(){
+    //     CryptoCurrencyCard cc  = new CryptoCurrencyCard((float) 7.9927398713, 25.3);
+    //     CryptoCurrencyCard cc2  = new CryptoCurrencyCard((float)1.010101010101010101, 12.3);
+    //     ccc.put(cc.getNumberCC(), cc);
+    //     ccc.put(cc2.getNumberCC(), cc2);
+    //     try {
+    //         this.persistCCCards();
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
+
     public void defineCreditCards(){
         CreditCard cc  = new CreditCard("79927398713", 25.3);
         CreditCard cc2  = new CreditCard("1010101010101010101", 12.3);
