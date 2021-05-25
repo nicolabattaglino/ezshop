@@ -46,7 +46,7 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     private void updatePrice() {
         int prezzo = 0;
         for (TicketEntry entry : entries) {
-            prezzo += entry.getAmount() * entry.getPricePerUnit() * entry.getDiscountRate();
+            prezzo += entry.getAmount() * entry.getPricePerUnit() * (1-entry.getDiscountRate());
         }
         price = prezzo;
         this.setMoney(prezzo) ;

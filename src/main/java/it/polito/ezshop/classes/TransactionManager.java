@@ -139,18 +139,24 @@ public class TransactionManager {
             if (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 saleGen = (int) Integer.parseInt(data);
+                saleGen++;
             } else saleGen = 1;
             if (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 returnGen = (int) Integer.parseInt(data);
+                returnGen++;
             } else returnGen = 1;
             if (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 balanceOperationGen = (int) Integer.parseInt(data);
+                balanceOperationGen++;
             } else balanceOperationGen = 1;
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
+            saleGen=1;
+            returnGen=1;
+            balanceOperationGen=1;
             e.printStackTrace();
         }
         try {
@@ -354,8 +360,8 @@ public class TransactionManager {
     
     public boolean returnProduct(Integer returnId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException {
         if (returnId == null || returnId <= 0) throw new InvalidTransactionIdException();
-        if (productCode == null) throw new InvalidProductCodeException();
-        if (amount < 0) throw new InvalidQuantityException();
+        if (productCode == null|| productCode.equals("")|| !this.shop.getProductOrderManager().checkBarcode(productCode)) throw new InvalidProductCodeException();
+        if (amount <=0) throw new InvalidQuantityException();
         ReturnTransaction target = getReturnTransaction(returnId);
         if (target == null) {
             return false;
@@ -412,7 +418,7 @@ public class TransactionManager {
         if (returnId == null || returnId <= 0) throw new InvalidTransactionIdException();
         ReturnTransaction target = returnTransactions.get(returnId);
         if (target == null) return false;
-        if (target.getStatus() != ReturnStatus.CLOSED) return false;
+        if (target.getStatus() == ReturnStatus.ENDED) return false;
         else {
             ReturnTransaction oldR = new ReturnTransaction(target);
             
@@ -433,7 +439,7 @@ public class TransactionManager {
                         toBeUpdated.add(saleEntry);
                         priceReduction += amount * saleEntry.getPricePerUnit();
                         try {
-                            shop.getProductOrderManager().updateQuantity(shop.getProductTypeByBarCode(saleEntry.getBarCode()).getId(), targetEntry.getAmount());
+                            shop.getProductOrderManager().updateQuantity(shop.getProductOrderManager().getProductTypeByBarCode(saleEntry.getBarCode()).getId(), targetEntry.getAmount());
                         } catch (InvalidProductIdException e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
@@ -456,34 +462,7 @@ public class TransactionManager {
             try {
                 this.persistReturns();
             } catch (IOException e) {
-                for (TicketEntry saleEntry : saleEntries) {
-                    for (TicketEntry targetEntry : targetEntries) {
-                        if (saleEntry.getBarCode().equals(targetEntry.getBarCode())) {
-                            amount = saleEntry.getAmount() - targetEntry.getAmount();
-                            // calculate the difference between the sold amount and the amount to be returned
-                            saleEntry.setAmount(amount);
-                            toBeUpdated.add(saleEntry);
-                            priceReduction += amount * saleEntry.getPricePerUnit();
-                            try {
-                                shop.getProductOrderManager().updateQuantity(shop.getProductTypeByBarCode(saleEntry.getBarCode()).getId(), -1 * targetEntry.getAmount());
-                            } catch (InvalidProductIdException e2) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            } catch (InvalidProductCodeException e2) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                                return false;
-                            }
-                            
-                            //this line updates the quantity by the amount stored in the return transaction.
-                            // it might need to connect to the productOrderManager directly to avoid user problems!
-                        } else toBeUpdated.add(saleEntry);
-                    }
-                }
-                saleTransactions.remove(sale.getBalanceId());
-                returnTransactions.remove(target.getBalanceId());
-                saleTransactions.put(oldS.getBalanceId(), oldS);
-                returnTransactions.put(oldR.getBalanceId(), oldR);
+                e.printStackTrace();
             }
         }
         
@@ -509,11 +488,10 @@ public class TransactionManager {
     
     public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException {
         if (ticketNumber == null || ticketNumber <= 0) throw new InvalidTransactionIdException();
-        if (creditCard == "" || creditCard == null) throw new InvalidCreditCardException();
+        if (creditCard == "" || creditCard == null|| !this.luhn(creditCard)) throw new InvalidCreditCardException();
         
         CreditCard carta = cards.get(creditCard);
         if (carta == null) return false;
-        if (!this.luhn(carta.getNumber())) throw new InvalidCreditCardException();
         SaleTransaction transaction = saleTransactions.get(ticketNumber);
         if (transaction == null) return false;
         if (carta.getBalance() < transaction.getPrice()) return false;
@@ -627,8 +605,6 @@ public class TransactionManager {
         fold1.delete();
         File fold2 = new File(SALE_PATH);
         fold2.delete();
-        File fold3 = new File(CREDITCARD_PATH);
-        fold3.delete();
         File fold4 = new File(ORDER_PATH);
         fold4.delete();
         
@@ -757,6 +733,17 @@ public class TransactionManager {
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+    public void defineCreditCards(){
+        CreditCard cc  = new CreditCard("79927398713", 25.3);
+        CreditCard cc2  = new CreditCard("1010101010101010101", 12.3);
+        cards.put(cc.getNumber(), cc);
+        cards.put(cc2.getNumber(), cc2);
+        try {
+            this.persistCards();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
