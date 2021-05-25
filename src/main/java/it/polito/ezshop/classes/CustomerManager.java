@@ -63,7 +63,6 @@ public class CustomerManager {
             customers.createNewFile();
             customerMap = mapper.readValue(customers, typeRef1);
         } catch (IOException e) {
-            e.printStackTrace();
             customers.delete();
             try {
                 customers.createNewFile();
@@ -105,6 +104,7 @@ public class CustomerManager {
                 loyaltyCardIdGen = 1000000000;
             }
         }
+
         this.shop = shop;
     }
     
@@ -314,23 +314,22 @@ public class CustomerManager {
     public void clear() {
         customerMap.clear();
         cardMap.clear();
-        try {
+        /*try {
             persistCardsId();
             persistCards();
             persistCustomers();
             persistCustomersId();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-        //File customers = new File(CUSTOMER_PATH);
-        //customers.delete();
-        //File cards = new File(CARD_PATH);
-        //cards.delete();
-        //File cardId = new File(CARD_ID_PATH);
-        //cardId.delete();
-        //File customerId = new File(CUSTOMER_ID_PATH);
-        //customerId.delete();
+        }*/
+        File customers = new File(CUSTOMER_PATH);
+        customers.delete();
+        File cards = new File(CARD_PATH);
+        cards.delete();
+        File cardId = new File(CARD_ID_PATH);
+        cardId.delete();
+        File customerId = new File(CUSTOMER_ID_PATH);
+        customerId.delete();
     }
     
     private void persistCards() throws IOException {
