@@ -63,7 +63,6 @@ public class CustomerManager {
             customers.createNewFile();
             customerMap = mapper.readValue(customers, typeRef1);
         } catch (IOException e) {
-            e.printStackTrace();
             customers.delete();
             try {
                 customers.createNewFile();
@@ -105,6 +104,7 @@ public class CustomerManager {
                 loyaltyCardIdGen = 1000000000;
             }
         }
+
         this.shop = shop;
     }
     
@@ -314,57 +314,40 @@ public class CustomerManager {
     public void clear() {
         customerMap.clear();
         cardMap.clear();
-        try {
-            persistCardsId();
-            persistCards();
-            persistCustomers();
-            persistCustomersId();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        //File customers = new File(CUSTOMER_PATH);
-        //customers.delete();
-        //File cards = new File(CARD_PATH);
-        //cards.delete();
-        //File cardId = new File(CARD_ID_PATH);
-        //cardId.delete();
-        //File customerId = new File(CUSTOMER_ID_PATH);
-        //customerId.delete();
+        File customers = new File(CUSTOMER_PATH);
+        customers.delete();
+        File cards = new File(CARD_PATH);
+        cards.delete();
+        File cardId = new File(CARD_ID_PATH);
+        cardId.delete();
+        File customerId = new File(CUSTOMER_ID_PATH);
+        customerId.delete();
     }
     
     private void persistCards() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        //File cards = new File(CARD_PATH);
-        //cards.createNewFile();
-        mapper.writerWithDefaultPrettyPrinter()//.writeValue(cards, cardMap);
+        mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(CARD_PATH), cardMap);
         
     }
     
     private void persistCustomers() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        //File customers = new File(CUSTOMER_PATH);
-        //customers.createNewFile();
-        mapper.writerWithDefaultPrettyPrinter()//.writeValue(customers, customerMap);
+        mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(CUSTOMER_PATH), customerMap);
         
     }
     
     private void persistCardsId() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        //File cardId = new File(CARD_ID_PATH);
-        //cardId.createNewFile();
-        mapper.writerWithDefaultPrettyPrinter()//.writeValue(cardId, loyaltyCardIdGen);
+        mapper.writerWithDefaultPrettyPrinter()
         .writeValue(new File(CARD_ID_PATH), loyaltyCardIdGen);
     }
     
     
     private void persistCustomersId() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        //File customerId = new File(CUSTOMER_ID_PATH);
-        //customerId.createNewFile();
-        mapper.writerWithDefaultPrettyPrinter()//.writeValue(customerId, customerIdGen);
+        mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(CUSTOMER_ID_PATH), customerIdGen);
     }
 }

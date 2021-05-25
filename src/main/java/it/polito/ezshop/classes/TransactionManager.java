@@ -660,14 +660,16 @@ public class TransactionManager {
         //yes and also has to clear the files
         saleTransactions.clear();
         returnTransactions.clear();
-        cards.clear();
         orders.clear();
+        balanceOperations.clear();
         File fold = new File(GENERATOR_PATH);
         fold.delete();
         File fold1 = new File(RETURN_PATH);
         fold1.delete();
         File fold2 = new File(SALE_PATH);
         fold2.delete();
+        File fold3 = new File(BALANCEOPERATION_PATH);
+        fold3.delete();
         File fold4 = new File(ORDER_PATH);
         fold4.delete();
         

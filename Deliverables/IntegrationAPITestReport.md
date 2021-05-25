@@ -435,15 +435,24 @@ TransactionManager ..> ProductOrderManager
 <If needed, define here additional scenarios for the application. Scenarios should be named
  referring the UC in the OfficialRequirements that they detail>
 
-## Scenario UCx.y
+## Scenario UC4-5
 
-| Scenario |  name |
+| Scenario |  Delete Customer |
 | ------------- |:-------------:| 
-|  Precondition     |  |
-|  Post condition     |   |
+|  Precondition     | Account U for Customer Cu existing |
+|  Post condition     |  U is deleted from system |
 | Step#        | Description  |
-|  1     |  ... |  
-|  2     |  ... |
+|  1     |  User select customer record U |  
+|  2     |  U deleted from the system |
+
+## Scenario UC4-6
+
+| Scenario |  Search Customer |
+| ------------- |:-------------:| 
+|  Precondition     | Account U for Customer Cu existing |
+|  Post condition     |  |
+| Step#        | Description  |
+|  1     |  User search customer record U |  
 
 
 
@@ -458,10 +467,27 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 
 | Scenario ID | Functional Requirements covered | JUnit  Test(s) | 
 | ----------- | ------------------------------- | ----------- | 
-|  ..         | FRx                             |             |             
-|  ..         | FRy                             |             |             
+|             | FRx                             |             |             
+|             | FRy                             |             |             
+|             |                                 |             |             
+| 2-1         | FR1.1                           |  src.test.it.polito.ezshop.classes.UserManager::**testCreateUser**            |   
+| 2-2         | FR1.2                           |  src.test.it.polito.ezshop.classes.UserManager::**testDeleteUser**           |             
+| 2-3         | FR1.1                           |  src.test.it.polito.ezshop.classes.UserManager::**testUpdateUserRights**            |             
+|             | FR1.3                           |  src.test.it.polito.ezshop.classes.UserManager::**testGetAllUsers**            |             
+|             | FR1.4                           |  src.test.it.polito.ezshop.classes.UserManager::**testGetUser**           |             
 | ...         |                                 |             |             
-| ...         |                                 |             |             
+| 4-1         | FR5.1                           |  src.test.it.polito.ezshop.classes.CustomerManager::**testDefineCustomer**            |             
+| 4-2         | FR5.6                           |  src.test.it.polito.ezshop.classes.CustomerManager::**testAttachCardToCustomer**           |             
+| 4-3         | FR5.1                           |  src.test.it.polito.ezshop.classes.CustomerManager::**testModifyCustomer**           |             
+| 4-4         | FR5.1                           |   src.test.it.polito.ezshop.classes.CustomerManager::**testModifyCustomer**          |  
+| 4-5         | FR5.2                           |   src.test.it.polito.ezshop.classes.CustomerManager::**testDeleteCustomer**          |             
+| 4-6         | FR5.3                           |   src.test.it.polito.ezshop.classes.CustomerManager::**testGetCustomer**          |             
+|             | FR5.4                           |   src.test.it.polito.ezshop.classes.CustomerManager::**testGetAllCustomers**          |             
+|             | FR5.5                           |  src.test.it.polito.ezshop.classes.CustomerManager::**testCreateCard**           |
+|             | FR5.7                           |   src.test.it.polito.ezshop.classes.CustomerManager::**testModifyPointsOnCard**          |
+| 5-1         | FR1.5                           |  src.test.it.polito.ezshop.classes.UserManager::**testLogin**            |             
+| 5-2         | FR1.5                           |  src.test.it.polito.ezshop.classes.UserManager::**testLogout**            |             
+|             |                                 |             |             
 | ...         |                                 |             |             
 | ...         |                                 |             |             
 
@@ -478,5 +504,10 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 | Non Functional Requirement | Test name |
 | -------------------------- | --------- |
 |                            |           |
+|                            |           |
+|                            |           |
+|                            |           |
+|   NFR6                     |  src.test.it.polito.ezshop.classes.UserManager::**testCheckCardDigits**         |
+
 
 
