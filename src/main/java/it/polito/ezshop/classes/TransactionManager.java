@@ -509,12 +509,12 @@ public class TransactionManager {
     
     public double returnCreditCardPayment(Integer returnId, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException {
         if (returnId == null || returnId <= 0) throw new InvalidTransactionIdException();
-        if (creditCard == null || creditCard.equals("")) throw new InvalidCreditCardException();
+        if (creditCard == null || creditCard.equals("")|| !this.luhn(creditCard)) throw new InvalidCreditCardException();
         CreditCard carta = cards.get(creditCard);
         if (carta == null) return -1;
-        if (!this.luhn(carta.getNumber())) throw new InvalidCreditCardException();
         ReturnTransaction rTransaction = returnTransactions.get(returnId);
         if (rTransaction == null) return -1;
+        if (rTransaction.getStatus() != ReturnStatus.ENDED) return -1;
         double output = rTransaction.getPrice();
         if (!recordBalanceUpdate(output)) return -1;
         return output;

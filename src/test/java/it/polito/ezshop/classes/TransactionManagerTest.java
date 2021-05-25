@@ -233,11 +233,62 @@ public class TransactionManagerTest {
     }
 
     @Test
-    public void testReturnCashPayment() {
+    public void testReturnCashPayment() throws InvalidQuantityException, InvalidTransactionIdException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidCreditCardException {
+        int saleId= tManager.startSaleTransaction();
+        ProductOrderManager poManager= shop.getProductOrderManager();
+        poManager.createProductType("test", "123456789012", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
+        poManager.createProductType("test2", "12345678901286", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
+        tManager.addProductToSale(saleId, "12345678901286", 2);
+        tManager.addProductToSale(saleId, "123456789012", 1);
+
+        int retCode=tManager.startReturnTransaction(saleId);
+        String pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
+        tManager.returnProduct(retCode,pBarCode , 1);
+        String ccNumber = "79927398713";
+        tManager.receiveCreditCardPayment(saleId, ccNumber);
+        assertFalse(tManager.returnCashPayment(retCode)>0);// not ended
+        tManager.endReturnTransaction(retCode, true);
+        assertTrue(tManager.returnCashPayment(retCode)>0);
+        assertFalse(tManager.returnCashPayment(retCode+1)>0);
+        assertThrows(InvalidTransactionIdException.class, ()->tManager.returnCashPayment(null));
+        assertThrows(InvalidTransactionIdException.class, ()->tManager.returnCashPayment(0));
+        assertThrows(InvalidTransactionIdException.class, ()->tManager.returnCashPayment(-1));
+
     }
 
     @Test
-    public void testReturnCreditCardPayment() {
+    public void testReturnCreditCardPayment() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
+        int saleId= tManager.startSaleTransaction();
+        ProductOrderManager poManager= shop.getProductOrderManager();
+        poManager.createProductType("test", "123456789012", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
+        poManager.createProductType("test2", "12345678901286", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
+        tManager.addProductToSale(saleId, "12345678901286", 2);
+        tManager.addProductToSale(saleId, "123456789012", 1);
+
+        int retCode=tManager.startReturnTransaction(saleId);
+        String pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
+        tManager.returnProduct(retCode,pBarCode , 1);
+        String ccNumber = "79927398713";
+        tManager.receiveCreditCardPayment(saleId, ccNumber);
+        assertFalse(tManager.returnCreditCardPayment(retCode,ccNumber)>0);// not ended
+        tManager.endReturnTransaction(retCode, true);
+        assertTrue(tManager.returnCreditCardPayment(retCode,ccNumber)>0);
+        assertFalse(tManager.returnCreditCardPayment(retCode+1,ccNumber)>0);
+        assertFalse(tManager.returnCreditCardPayment(retCode,"59")>0);//card doesn't exist
+        assertThrows(InvalidTransactionIdException.class, ()->tManager.returnCreditCardPayment(null,ccNumber));
+        assertThrows(InvalidTransactionIdException.class, ()->tManager.returnCreditCardPayment(0,ccNumber));
+        assertThrows(InvalidTransactionIdException.class, ()->tManager.returnCreditCardPayment(-1,ccNumber));
+        assertThrows(InvalidCreditCardException.class, ()->tManager.returnCreditCardPayment(retCode,"11"));
+        assertThrows(InvalidCreditCardException.class, ()->tManager.returnCreditCardPayment(retCode,""));
+        assertThrows(InvalidCreditCardException.class, ()->tManager.returnCreditCardPayment(retCode,null));
     }
 
 
@@ -245,10 +296,6 @@ public class TransactionManagerTest {
     public void testGetCreditsAndDebits() {
     }
 
-
-    @Test
-    public void testClear() {
-    }
 
 
     @Test
