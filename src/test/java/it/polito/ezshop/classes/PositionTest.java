@@ -26,18 +26,15 @@ public class PositionTest {
             assertEquals((Integer) 10, p.aisleID);
             assertEquals((Integer) 11, p.rackID);
             assertEquals((Integer) 18, p.levelId);
-        
-            p = new Position("010-011-018");
-            assertEquals((Integer) 10, p.aisleID);
-            assertEquals((Integer) 11, p.rackID);
-            assertEquals((Integer) 18, p.levelId);
-        
+    
+            p = new Position("014-021-019");
+            assertEquals((Integer) 14, p.aisleID);
+            assertEquals((Integer) 21, p.rackID);
+            assertEquals((Integer) 19, p.levelId);
+    
         } catch (InvalidLocationException e) {
             fail("Invalid position" + e);
         }
-        assertEquals((Integer) 10, p.aisleID);
-        assertEquals((Integer) 11, p.rackID);
-        assertEquals((Integer) 18, p.levelId);
     }
     
 }
