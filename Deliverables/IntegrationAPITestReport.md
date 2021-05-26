@@ -634,7 +634,7 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 | 3-1 | FR4.3, FR1.5                    | src.test.it.polito.ezshop.classes.EZShopTest::**testIssueOrder** |
 | 3-2 | FR4.5 | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderInvalid**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderNotPresent**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderNotEnoughBalance**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderOk** |
 | 3-2 | FR4.5, FR1.5 | src.test.it.polito.ezshop.classes.EZShopTest::**testPayOrderInvalid**<br />src.test.it.polito.ezshop.classes.EZShopTest::**testPayOrderAdmin**<br />src.test.it.polito.ezshop.classes.EZShopTest::**testPayOrderShopManager** |
-| 3-2 | FR8.1, FR8.2 | src.test.it.polito.ezshop.classes.Transaction::**testBalanceUpdate** |
+| 3-2 | FR8.1, FR8.2 | src.test.it.polito.ezshop.classes.TransactionManagerTest::**testBalanceUpdate** |
 | 3-3 | FR4.6 | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testRecordOrderArrivalInvalidOrderId**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testRecordOrderArrivalInvalidProductLocation**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testRecordOrderArrivalNotFound**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testRecordOrderArrivalOk** |
 | 3-3 | FR4.6, FR1.5 | src.test.it.polito.ezshop.classes.EZShopTest::**recordOrderArrivalInvalid**<br />src.test.it.polito.ezshop.classes.EZShopTest::**recordOrderAdmin**<br />src.test.it.polito.ezshop.classes.EZShopTest::**recordOrderShopManager** |
 | 3-3         | FR4.1                           | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateQuantityInvalid**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateQuantityOk** |
@@ -650,7 +650,6 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 |  -          | FR5.2, FR1.5                             |    src.test.it.polito.ezshop.classes.EZShopTest::**testDeleteCustomer**      |
 |  -          | FR5.3, FR1.5                             |    src.test.it.polito.ezshop.classes.EZShopTest::**testGetCustomer**      |
 |  -          | FR5.4, FR1.5                             |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllCustomers**     |
-|            |                                 |                                                              |
 | 5-1         | FR1.5                           |  src.test.it.polito.ezshop.classes.EZShopTest::**testLogin**        |
 | 5-2         | FR1.5                           |  src.test.it.polito.ezshop.classes.EZShopTest::**testLogout**      |
 | 6-1         | FR6.1 |   src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testStartSaleTransaction**          |
@@ -738,10 +737,38 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 | 7-2 | FR7.2, FR1.5 | src.test.java.it.polito.ezshop.classes.EZShopTest::**testReceiveCreditCardPayment** |
 | 7-3 | FR7.2 | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testReceiveCreditCardPayment** |
 | 7-3 | FR7.2, FR1.5 | src.test.java.it.polito.ezshop.classes.EZShopTest::**testReceiveCreditCardPayment** |
-| 7-1 | - | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testGetSaleTransaction** |
-|  |  |  |
-|  |  |  |
-|  |  |  |
+| 7-3 | - | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testGetSaleTransaction**s |
+| 7-3 | FR7.1 | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testReceiveCashPayment** |
+| 7-4 | FR7.1, FR1.5 | src.test.java.it.polito.ezshop.classes.EZShopTest::**testReceiveCashPayment** |
+| 7-4 | FR8.1, FR8.2 | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testRecordBalanceUpdate** |
+| 8-1  |FR6.12  |src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testStartReturnTransaction**  |
+| 8-1  |FR6.12, FR 1.5  |src.test.java.it.polito.ezshop.classes.EZShopTest::**testStartReturnTransaction**  |
+| 8-1  |FR6.14,   |src.test.java.it.polito.ezshop.classes.TransactionManagertTest::**testEndReturnTransaction**  |
+| 8-1  |FR6.14, FR 1.5  |src.test.java.it.polito.ezshop.classes.EZShopTest::**testEndReturnTransaction**  |
+| 8-1        | FR4.1                           | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateQuantityInvalid**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateQuantityOk** |
+| 8-1        | FR7.4                           |  src.test.it.polito.ezshop.classes.TransactionManagerTest::**testReturnCreditCardPayment**   |
+| 8-1        | FR7.4, FR1.5, FR10.2                          |  src.test.it.polito.ezshop.classes.EZShopTest::**testReturnCreditCardPayment**   |
+| 8-2  |FR6.12  |src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testStartReturnTransaction**  |
+| 8-2  |FR6.12, FR1.5  |src.test.java.it.polito.ezshop.classes.EZShopTest::**testStartReturnTransaction**  |
+| 8-2  |FR6.14,   |src.test.java.it.polito.ezshop.classes.TransactionManagertTest::**testEndReturnTransaction**  |
+| 8-2  |FR6.14, FR1.5  |src.test.java.it.polito.ezshop.classes.EZShopTest::**testEndReturnTransaction**  |
+| 8-2        | FR4.1                           | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateQuantityInvalid**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateQuantityOk** |
+| 8-2        | FR7.4, FR10.2                           |  src.test.it.polito.ezshop.classes.TransactionManagerTest::**testReturnCashPayment**   |
+| 8-2        | FR7.4, FR1.5                    |  src.test.it.polito.ezshop.classes.EZShopTest::**testReturnCashPayment**   |
+| 9-1  |FR8.1,FR8.2,FR8.3  |src.test.it.polito.ezshop.classes.TransactionManagerTest::**testGetCreditsAndDebits**  |
+| 9-1  |FR8.1, FR8.2, FR8.3, FR1.5  |src.test.it.polito.ezshop.classes.EZShopTest::**testGetCreditsAndDebits**  |
+|10-1 | FR7.2,  | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testReceiveCreditCardPayment** |
+|10-1 | FR7.2, FR1.5,  | src.test.java.it.polito.ezshop.classes.EZShopTest::**testReceiveCreditCardPayment** |
+| 10-1 | FR8.1, FR8.2,  | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testRecordBalanceUpdate** |
+| 10-1 | FR8.1, FR8.2,  FR1.5 | src.test.java.it.polito.ezshop.classes.EZShopTest::**testRecordBalanceUpdate** |
+| 10-1 | FR8.1, FR8.4  | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testComputeBalance** |
+| 10-1 | FR8.4, FR8.4, FR1.5 | src.test.java.it.polito.ezshop.classes.EZShopTest::**testComputeBalance** |
+|10-2 | FR7.1,  | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testReceiveCreditCardPayment** |
+|10-2 | FR7.1, FR1.5,  | src.test.java.it.polito.ezshop.classes.EZShopTest::**testReceiveCreditCardPayment** |
+| 10-2 | FR8.1, FR8.2,  | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testRecordBalanceUpdate** |
+| 10-2 | FR8.1, FR8.2,  FR1.5 | src.test.java.it.polito.ezshop.classes.EZShopTest::**testRecordBalanceUpdate** |
+| 10-2 | FR8.1, FR8.4  | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testComputeBalance** |
+| 10-2 | FR8.4, FR8.4, FR1.5 | src.test.java.it.polito.ezshop.classes.EZShopTest::**testComputeBalance** |
 |  |  |  |
 |  |  |  |
 |  |  |  |
