@@ -18,7 +18,6 @@ public class TransactionManagerTest {
     public void initTransactionManagerTests() {
         shop = new EZShop();
         tManager = shop.getTransactionManager();
-        tManager.defineCreditCards();
     }
     
     @Test
