@@ -27,29 +27,29 @@ public class EZShopTest {
     }
     
     @Test
-    public void getTransactionManager() {
+    public void testGetTransactionManager() {
         assertNotNull(shop.getTransactionManager());
     }
     
     @Test
-    public void getCustomerManager() {
+    public void testGetCustomerManager() {
         assertNotNull(shop.getCustomerManager());
     }
     
     @Test
-    public void getUserManager() {
+    public void testGetUserManager() {
         assertNotNull(shop.getUserManager());
     }
     
     @Test
-    public void createUser() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, InvalidUserIdException, UnauthorizedException {
+    public void testCreateUser() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, InvalidUserIdException, UnauthorizedException {
         int id = shop.getUserManager().createUser("JohnB","123321","Cashier");
         shop.getUserManager().login("Mattia", "123");
         assertEquals(id, (int) shop.getUser(id).getId());
     }
     
     @Test
-    public void deleteUser() throws UnauthorizedException, InvalidPasswordException, InvalidRoleException, InvalidUsernameException, InvalidUserIdException {
+    public void testDeleteUser() throws UnauthorizedException, InvalidPasswordException, InvalidRoleException, InvalidUsernameException, InvalidUserIdException {
 
         assertThrows(UnauthorizedException.class, () -> shop.deleteUser(0));
         shop.getUserManager().login("Hossein", "123");
@@ -60,7 +60,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void getAllUsers() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, UnauthorizedException {
+    public void testGetAllUsers() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, UnauthorizedException {
         assertThrows(UnauthorizedException.class, shop::getAllUsers);
         shop.getUserManager().login("Hossein", "123");
         assertThrows(UnauthorizedException.class, shop::getAllUsers);
@@ -69,7 +69,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void getUser() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException, InvalidUserIdException, UnauthorizedException {
+    public void testGetUser() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException, InvalidUserIdException, UnauthorizedException {
         assertThrows(UnauthorizedException.class, () -> shop.getUser(0));
         shop.getUserManager().login("Hossein", "123");
         assertThrows(UnauthorizedException.class, () -> shop.deleteUser(0));
@@ -80,7 +80,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void updateUserRights() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException, InvalidUserIdException, UnauthorizedException {
+    public void testUpdateUserRights() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException, InvalidUserIdException, UnauthorizedException {
         assertThrows(UnauthorizedException.class, () -> shop.updateUserRights(0, "Cashier"));
         shop.getUserManager().login("Hossein", "123");
         assertThrows(UnauthorizedException.class, () -> shop.deleteUser(0));
@@ -91,19 +91,19 @@ public class EZShopTest {
     }
     
     @Test
-    public void login() throws InvalidPasswordException, InvalidUsernameException {
+    public void testLogin() throws InvalidPasswordException, InvalidUsernameException {
         assertNull(shop.login("Mattia","123456"));
         User u = shop.login("Mattia","123");
         assertEquals(shop.getUserManager().getUserLogged().getUsername(),u.getUsername());
     }
     
     @Test
-    public void getProductOrderManager() {
+    public void testGetProductOrderManager() {
         assertNotNull(shop.getProductOrderManager());
     }
     
     @Test
-    public void logout() throws InvalidPasswordException, InvalidUsernameException {
+    public void testLogout() throws InvalidPasswordException, InvalidUsernameException {
         assertFalse(shop.logout());
         shop.getUserManager().login("Mattia", "123");
         assertTrue(shop.logout());
@@ -273,7 +273,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void recordOrderArrivalInvalid() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException {
+    public void testRecordOrderArrivalInvalid() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException {
         shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
         shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
         final int id = shop.getProductOrderManager().payOrderFor("123456789012", 10, 10);
@@ -284,7 +284,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void recordOrderAdmin() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidLocationException, InvalidOrderIdException, InvalidProductIdException {
+    public void testRecordOrderAdmin() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidLocationException, InvalidOrderIdException, InvalidProductIdException {
         Integer prodId = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
         shop.getProductOrderManager().updatePosition(prodId, "10-10-10");
         shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
@@ -295,7 +295,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void recordOrderShopManager() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidLocationException, InvalidOrderIdException, InvalidProductIdException {
+    public void testRecordOrderShopManager() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidLocationException, InvalidOrderIdException, InvalidProductIdException {
         Integer prodId = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
         shop.getProductOrderManager().updatePosition(prodId, "10-10-10");
         shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
@@ -306,7 +306,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void getAllOrdersInvalid() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidPasswordException, InvalidUsernameException {
+    public void testGetAllOrdersInvalid() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidPasswordException, InvalidUsernameException {
         shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
         shop.getProductOrderManager().issueOrder("123456789012", 20, 25.0);
         shop.getUserManager().login("Stefano", "123");
@@ -325,7 +325,7 @@ public class EZShopTest {
     }
 
     @Test
-    public void defineCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException {
+    public void testDefineCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException {
         assertThrows(UnauthorizedException.class, () -> shop.defineCustomer("JohnB"));
         shop.getUserManager().login("Mattia", "123");
         Integer id = shop.defineCustomer("JohnB");
@@ -333,7 +333,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void modifyCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException, InvalidCustomerCardException {
+    public void testModifyCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException, InvalidCustomerCardException {
         assertThrows(UnauthorizedException.class, () -> shop.modifyCustomer(0, "JonhC", "1000000002"));
         shop.getUserManager().login("Mattia", "123");
         Integer id = shop.defineCustomer("JohnB");
@@ -345,7 +345,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void deleteCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException {
+    public void testDeleteCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException {
         assertThrows(UnauthorizedException.class, () -> shop.deleteCustomer(1));
         shop.getUserManager().login("Mattia", "123");
         Integer id = shop.defineCustomer("JohnB");
@@ -354,7 +354,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void getCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException {
+    public void testGetCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException {
         assertThrows(UnauthorizedException.class, () -> shop.getCustomer(1));
         shop.getUserManager().login("Mattia", "123");
         Integer id = shop.defineCustomer("JohnB");
@@ -363,7 +363,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void getAllCustomers() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException {
+    public void testGetAllCustomers() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException {
         assertThrows(UnauthorizedException.class, shop::getAllCustomers);
         shop.getUserManager().login("Mattia", "123");
         Integer id = shop.defineCustomer("JohnB");
@@ -371,7 +371,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void createCard() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException {
+    public void testCreateCard() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException {
         assertThrows(UnauthorizedException.class, shop::createCard);
         shop.getUserManager().login("Mattia", "123");
         String cardID = shop.createCard();
@@ -379,7 +379,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void attachCardToCustomer() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidCustomerNameException, InvalidCustomerIdException, InvalidCustomerCardException {
+    public void testAttachCardToCustomer() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidCustomerNameException, InvalidCustomerIdException, InvalidCustomerCardException {
         assertThrows(UnauthorizedException.class, () -> shop.attachCardToCustomer("1000000003",1));
         shop.login("Mattia","123");
         String cardID = shop.createCard();
@@ -392,7 +392,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void modifyPointsOnCard() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidCustomerNameException, InvalidCustomerIdException, InvalidCustomerCardException {
+    public void testModifyPointsOnCard() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidCustomerNameException, InvalidCustomerIdException, InvalidCustomerCardException {
         assertThrows(UnauthorizedException.class, () -> shop.modifyPointsOnCard("1000000003",1));
         shop.login("Mattia","123");
         String cardID = shop.createCard();
@@ -404,7 +404,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void startSaleTransaction() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException {
+    public void testStartSaleTransaction() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException {
         assertThrows(UnauthorizedException.class,()->shop.startSaleTransaction());
         shop.getUserManager().login("Mattia", "123");
         assertTrue(shop.startSaleTransaction() >= 0);
@@ -416,7 +416,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void addProductToSale() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException {
+    public void testAddProductToSale() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException {
         assertThrows(UnauthorizedException.class,()->shop.addProductToSale(1, "123456789012", 1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -437,7 +437,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void deleteProductFromSale() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidQuantityException, InvalidTransactionIdException {
+    public void testDeleteProductFromSale() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidQuantityException, InvalidTransactionIdException {
         assertThrows(UnauthorizedException.class,()->shop.deleteProductFromSale(1, "123456789012", 1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -458,7 +458,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void applyDiscountRateToProduct() throws InvalidTransactionIdException, UnauthorizedException, InvalidDiscountRateException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException, InvalidQuantityException, InvalidProductIdException, InvalidLocationException, InvalidProductDescriptionException, InvalidPricePerUnitException {
+    public void testApplyDiscountRateToProduct() throws InvalidTransactionIdException, UnauthorizedException, InvalidDiscountRateException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException, InvalidQuantityException, InvalidProductIdException, InvalidLocationException, InvalidProductDescriptionException, InvalidPricePerUnitException {
         assertThrows(UnauthorizedException.class,()->shop.applyDiscountRateToProduct(1, "123456789012", 0.5));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -480,7 +480,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void applyDiscountRateToSale() throws InvalidTransactionIdException, UnauthorizedException, InvalidDiscountRateException, InvalidPasswordException, InvalidUsernameException, InvalidQuantityException, InvalidLocationException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidProductCodeException {
+    public void testApplyDiscountRateToSale() throws InvalidTransactionIdException, UnauthorizedException, InvalidDiscountRateException, InvalidPasswordException, InvalidUsernameException, InvalidQuantityException, InvalidLocationException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidProductCodeException {
         assertThrows(UnauthorizedException.class,()->shop.applyDiscountRateToSale(1, 0.5));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -502,7 +502,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void computePointsForSale() throws InvalidPasswordException, InvalidUsernameException, InvalidTransactionIdException, UnauthorizedException, InvalidQuantityException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidProductDescriptionException, InvalidPricePerUnitException {
+    public void testComputePointsForSale() throws InvalidPasswordException, InvalidUsernameException, InvalidTransactionIdException, UnauthorizedException, InvalidQuantityException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidProductDescriptionException, InvalidPricePerUnitException {
         assertThrows(UnauthorizedException.class,()->shop.computePointsForSale(1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -523,7 +523,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void endSaleTransaction() throws InvalidTransactionIdException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidQuantityException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidProductDescriptionException, InvalidPricePerUnitException {
+    public void testEndSaleTransaction() throws InvalidTransactionIdException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidQuantityException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidProductDescriptionException, InvalidPricePerUnitException {
         assertThrows(UnauthorizedException.class,()->shop.endSaleTransaction(1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -546,7 +546,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void deleteSaleTransaction() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidQuantityException, InvalidTransactionIdException {
+    public void testDeleteSaleTransaction() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidQuantityException, InvalidTransactionIdException {
         assertThrows(UnauthorizedException.class,()->shop.deleteSaleTransaction(1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -573,7 +573,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void getSaleTransaction() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidTransactionIdException {
+    public void testGetSaleTransaction() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidTransactionIdException {
         assertThrows(UnauthorizedException.class,()->shop.getSaleTransaction(1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -586,7 +586,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void startReturnTransaction() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidTransactionIdException {
+    public void testStartReturnTransaction() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidTransactionIdException {
         assertThrows(UnauthorizedException.class,()->shop.startReturnTransaction(1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -599,7 +599,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void returnProduct() throws InvalidPasswordException, InvalidUsernameException, InvalidTransactionIdException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException {
+    public void testReturnProduct() throws InvalidPasswordException, InvalidUsernameException, InvalidTransactionIdException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException {
         assertThrows(UnauthorizedException.class,()->shop.returnProduct(1, "",1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -625,7 +625,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void endReturnTransaction() throws UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidQuantityException, InvalidTransactionIdException, InvalidPasswordException, InvalidUsernameException {
+    public void testEndReturnTransaction() throws UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidQuantityException, InvalidTransactionIdException, InvalidPasswordException, InvalidUsernameException {
         assertThrows(UnauthorizedException.class,()->shop.endReturnTransaction(1, true));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -656,7 +656,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void deleteReturnTransaction() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException {
+    public void testDeleteReturnTransaction() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException {
         assertThrows(UnauthorizedException.class,()->shop.deleteReturnTransaction(1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -681,7 +681,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void receiveCashPayment() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidQuantityException, InvalidTransactionIdException, InvalidPaymentException {
+    public void testReceiveCashPayment() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidQuantityException, InvalidTransactionIdException, InvalidPaymentException {
         assertThrows(UnauthorizedException.class,()->shop.receiveCashPayment(1,1));
         shop.getUserManager().login("Mattia", "123");
         shop.getUserManager().login("Stefano", "123");
@@ -703,7 +703,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void receiveCreditCardPayment() throws InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidLocationException, InvalidProductIdException, InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
+    public void testReceiveCreditCardPayment() throws InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidLocationException, InvalidProductIdException, InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
         assertThrows(UnauthorizedException.class,()->shop.receiveCreditCardPayment(1,""));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -725,7 +725,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void returnCashPayment() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
+    public void testReturnCashPayment() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
         assertThrows(UnauthorizedException.class,()->shop.returnCashPayment(1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -750,7 +750,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void returnCreditCardPayment() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
+    public void testReturnCreditCardPayment() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
         assertThrows(UnauthorizedException.class,()->shop.returnCreditCardPayment(1, ""));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -779,7 +779,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void recordBalanceUpdate()throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException {
+    public void testRecordBalanceUpdate()throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException {
         assertThrows(UnauthorizedException.class,()->shop.recordBalanceUpdate(5.0));
         shop.getUserManager().login("Stefano", "123");
         assertThrows(UnauthorizedException.class,()->shop.recordBalanceUpdate(5.0));
@@ -791,7 +791,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void getCreditsAndDebits() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
+    public void testGetCreditsAndDebits() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
         assertThrows(UnauthorizedException.class,()->shop.getCreditsAndDebits(LocalDate.now().minusDays(1), LocalDate.now().minusDays(-1)));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
@@ -821,14 +821,14 @@ public class EZShopTest {
     }
     
     @Test
-    public void computeBalance() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException {
+    public void testComputeBalance() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException {
         assertThrows(UnauthorizedException.class,()->shop.computeBalance());
         shop.getUserManager().login("Stefano", "123");
         assertTrue(shop.computeBalance()>=0);
     }
 
     @Test
-    public void addOrder() {
+    public void testAddOrder() {
         OrderObj order = new OrderObj(1,
                 new ProductTypeObj(0, 1, "hello test", "123456789012", "note", 22.0, 0, new Position()),
                 25, 2);
