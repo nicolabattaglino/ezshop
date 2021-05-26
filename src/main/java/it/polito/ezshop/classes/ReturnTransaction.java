@@ -1,5 +1,7 @@
 package it.polito.ezshop.classes;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polito.ezshop.data.TicketEntry;
 
 import java.time.LocalDate;
@@ -13,8 +15,8 @@ public class ReturnTransaction extends Credit {
     private List<TicketEntry> entries = new ArrayList<TicketEntry>();
     private double price;
     private ReturnStatus status;
-    
-    public ReturnTransaction(int id, LocalDate date, double money, String type, int returning) {
+    @JsonCreator
+    public ReturnTransaction(@JsonProperty("id")int id, @JsonProperty("date")LocalDate date, @JsonProperty("money")double money,@JsonProperty("type") String type, @JsonProperty("returning")int returning) {
         super(id, date, type);
         
         this.transactionID = returning;

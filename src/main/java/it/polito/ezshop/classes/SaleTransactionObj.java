@@ -1,5 +1,7 @@
 package it.polito.ezshop.classes;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polito.ezshop.data.TicketEntry;
 
 import java.time.LocalDate;
@@ -14,8 +16,8 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     private Integer ticketNumber;
     private SaleStatus status;
     
-    
-    public SaleTransactionObj(int id, LocalDate date, double money, String type) {
+    @JsonCreator
+    public SaleTransactionObj(@JsonProperty("id")int id, @JsonProperty("date")LocalDate date, @JsonProperty("money")double money,@JsonProperty("type") String type) {
         super(id, date, type);
         this.price = this.getMoney();
         this.status = SaleStatus.STARTED; //equal to started, other states are closed and payed
