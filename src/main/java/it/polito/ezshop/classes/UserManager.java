@@ -196,6 +196,7 @@ public class UserManager {
     
     public void clear() {
         userList.clear();
+        loggedUser = null;
         File users = new File(USERS_PATH);
         File usersId = new File(USERS_ID_PATH);
         users.delete();

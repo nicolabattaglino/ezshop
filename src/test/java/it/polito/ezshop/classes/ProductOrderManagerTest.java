@@ -273,20 +273,36 @@ public class ProductOrderManagerTest {
     }
     
     @Test
+    public void testUpdatePositionReset() {
+        try {
+            Integer id = p.createProductType("hello test", "123456789012", 22.0, "note");
+            assertTrue(p.updatePosition(id, "10-10-10"));
+            assertTrue(p.updatePosition(id, ""));
+            assertEquals("", p.getProductTypeByBarCode("123456789012").getLocation());
+            assertTrue(p.updatePosition(id, "10-10-10"));
+            assertTrue(p.updatePosition(id, null));
+            assertEquals("", p.getProductTypeByBarCode("123456789012").getLocation());
+            
+        } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductIdException | InvalidLocationException e) {
+            fail("Unexpected exception: " + e);
+        }
+        
+    }
+    
+    @Test
     public void testUpdatePositionOk() {
         try {
             Integer id = p.createProductType("hello test", "123456789012", 22.0, "note");
             assertFalse(p.updatePosition(id + 1, ""));
-            assertTrue(p.updatePosition(id, ""));
-            assertTrue(p.updatePosition(id, null));
+            assertTrue(p.updatePosition(id, "10-10-10"));
             assertTrue(p.updatePosition(id, "10-10-10"));
             id = p.createProductType("test", "111111111117", 22.0, "note");
             assertFalse(p.updatePosition(id, "10-10-10"));
-    
+            
         } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductIdException | InvalidLocationException e) {
             fail("Unexpected exception: " + e);
         }
-    
+        
     }
     
     
