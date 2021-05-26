@@ -389,7 +389,7 @@ ReturnTransaction ..> TicketEntry
 TransactionManager ..> ProductOrderManager
 @enduml
 
-``` 
+```
 
 
 # Integration approach
@@ -398,7 +398,7 @@ TransactionManager ..> ProductOrderManager
     (ex: step1: class A, step 2: class A+B, step 3: class A+B+C, etc)> 
     <Some steps may  correspond to unit testing (ex step1 in ex above), presented in other document UnitTestReport.md>
     <One step will  correspond to API testing>
-    
+
 
 
 #  Tests
@@ -588,11 +588,11 @@ TransactionManager ..> ProductOrderManager
 ## Scenario UCx.y
 
 | Scenario |  name |
-| ------------- |:-------------:| 
+| ------------- |:-------------:|
 |  Precondition     |  |
 |  Post condition     |   |
 | Step#        | Description  |
-|  1     |  ... |  
+|  1     |  ... |
 |  2     |  ... |
 
 
@@ -606,47 +606,66 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 
 
 
-| Scenario ID | Functional Requirements covered | JUnit  Test(s) | 
-| ----------- | ------------------------------- | ----------- | 
-|             | FRx                             |             |             
-|             | FRy                             |             |             
-|             |                                 |             |             
-| 2-1         | FR1.1                           |  src.test.it.polito.ezshop.classes.UserManagerTest::**testCreateUser**  |   
-| 2-1         | FR1.1, FR1.5                             |  src.test.it.polito.ezshop.classes.EZShopTest::**testCreateUser** |   
-| 2-2         | FR1.2                           |  src.test.it.polito.ezshop.classes.UserManagerTest::**testDeleteUser**           |             
-| 2-2         | FR1.2, FR1.5                            |   src.test.it.polito.ezshop.classes.EZShopTest::**testDeleteUser**          |             
-| 2-3         | FR1.1                           |  src.test.it.polito.ezshop.classes.UserManagerTest::**testUpdateUserRights**            |             
-| 2-3         | FR1.1, FR1.5                             |   src.test.it.polito.ezshop.classes.EZShopTest::**testUpdateUserRights**           |             
-| -           | FR1.3                           |  src.test.it.polito.ezshop.classes.UserManagerTest::**testGetAllUsers**        |             
-| -           | FR1.3, FR1.5                             |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllUsers**          |             
-| -           | FR1.4                           |  src.test.it.polito.ezshop.classes.UserManagerTest::**testGetUser**        |             
-| -           | FR1.4, FR1.5                             |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetUser**        |             
-| ...         |                                 |             |             
-| 4-1         | FR5.1                           |  src.test.it.polito.ezshop.classes.CustomerManagerTest::**testDefineCustomer**            |             
-| 4-1         | FR5.1, FR1.5                             | src.test.it.polito.ezshop.classes.EZShopTest::**testDefineCustomer**          |             
-| 4-2         | FR5.6                           |  src.test.it.polito.ezshop.classes.CustomerManagerTest::**testAttachCardToCustomer**      |             
-| 4-2         | FR5.6, FR1.5                             |  src.test.it.polito.ezshop.classes.EZShopTest::**testAttachCardToCustomer**       |             
-|             | FR5.5                           |src.test.it.polito.ezshop.classes.CustomerManagerTest::**testCreateCard**   |
-|             | FR5.5, FR1.5                             |src.test.it.polito.ezshop.classes.EZShopTest::**testCreateCard** |
-| 4-3         | FR5.1                           |  src.test.it.polito.ezshop.classes.CustomerManagerTest::**testModifyCustomer**        |             
-| 4-3         | FR5.1, FR1.5                             |   src.test.it.polito.ezshop.classes.EZShopTest::**testModifyCustomer**        |             
-| 4-4         | FR5.1                           |   src.test.it.polito.ezshop.classes.CustomerManagerTest::**testModifyCustomer**      |  
-| 4-4         | FR5.1, FR1.5                             |    src.test.it.polito.ezshop.classes.EZShopTest::**testModifyCustomer**       |  
-|  -          | FR5.2                           |   src.test.it.polito.ezshop.classes.CustomerManagerTest::**testDeleteCustomer**     |             
-|  -          | FR5.2, FR1.5                             |    src.test.it.polito.ezshop.classes.EZShopTest::**testDeleteCustomer**      |             
-|  -          | FR5.3                           |   src.test.it.polito.ezshop.classes.CustomerManagerTest::**testGetCustomer**     |             
-|  -          | FR5.3, FR1.5                             |    src.test.it.polito.ezshop.classes.EZShopTest::**testGetCustomer**      |             
-|  -          | FR5.4                           |   src.test.it.polito.ezshop.classes.CustomerManagerTest::**testGetAllCustomers**     |             
-|  -          | FR5.4, FR1.5                             |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllCustomers**     |             
-|  -          | FR5.7                           |   src.test.it.polito.ezshop.classes.CustomerManagerTest::**testModifyPointsOnCard**    |
+| Scenario ID | Functional Requirements covered | JUnit  Test(s) |
+| ----------- | ------------------------------- | ----------- |
+| 1-1         | FR-3.1                          | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCreateProductTypeOk** <br/>src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCreateProductTypeInvalidCode**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCreateProductTypeInvalidDescription** |
+| 1-1         | FR-4.2                         | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdatePositionInvalid**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdatePositionReset**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdatePositionOk** |
+| 1-1         | FR-3.1, FR1.5                 | src.test.it.polito.ezshop.classes.EZShopTest::**testCreateProductType** |
+| 1-1         | FR-4.2, FR1.5                  | src.test.it.polito.ezshop.classes.EZShopTest::**testUpdatePosition** |
+| 1-2         | FR-3.4                          | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testGetProductTypeByBarCodeInvalidCode**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testGetProductTypeByBarCodeOk** |
+| 1-2         | FR-4.2                          | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdatePositionInvalid**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdatePositionReset**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdatePositionOk** |
+| 1-2         | FR-3.4, FR1.5                   | src.test.it.polito.ezshop.classes.EZShopTest::**testGetProductTypeByBarCode** |
+| 1-2         | FR-4.2, FR1.5                   | src.test.it.polito.ezshop.classes.EZShopTest::**testUpdatePosition** |
+| 1-3 | FR-3.4                          | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testGetProductTypeByBarCodeInvalidCode**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testGetProductTypeByBarCodeOk** |
+| 1-3 | FR-3.1 | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateProductInvalidID**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateProductPriceInvalidPrice**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateProductInvalidBarcode**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateProductPriceCodeAlreadyExist**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateProductIdNotPresent**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateProductOK** |
+| 1-3 | FR-3.4, FR1.5 | src.test.it.polito.ezshop.classes.EZShopTest::**testGetProductTypeByBarCode** |
+| 1-3 | FR-3.1, FR1.5 | src.test.it.polito.ezshop.classes.EZShopTest::**testUpdateProduct** |
+| - | FR-3.2 | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testDeleteProductTypeInvalidId**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testDeleteProductTypeNotFound**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testDeleteProductTypeOk** |
+| - | FR-3.2, FR1.5 | src.test.it.polito.ezshop.classes.EZShopTest::**testDeleteProductType** |
+| - | FR-3.3 | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testGetAllProductTypesEmpty**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testGetAllProductTypes** |
+| - | FR-3.3, FR1.5 | src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllProductTypes** |
+| -           | FR-3.4                          | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testGetProductTypesByDescriptionOk**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testGetProductTypesByDescriptionEmpty** |
+| -           | FR-3.4, FR1.5 | src.test.it.polito.ezshop.classes.EZShopTest::**testGetProductTypesByDescription** |
+| 2-1         | FR1.1, FR1.5                    |  src.test.it.polito.ezshop.classes.EZShopTest::**testCreateUser** |
+| 2-2         | FR1.2, FR1.5                    |   src.test.it.polito.ezshop.classes.EZShopTest::**testDeleteUser**          |
+| 2-3         | FR1.1, FR1.5                    |   src.test.it.polito.ezshop.classes.EZShopTest::**testUpdateUserRights**           |
+| -           | FR1.3, FR1.5                    |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllUsers**          |
+| -           | FR1.4, FR1.5                    |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetUser**        |
+| 3-1      | FR4.3 | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testIssueOrderInvalid**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testIssueOrderOk** |
+| 3-1 | FR4.3, FR1.5                    | src.test.it.polito.ezshop.classes.EZShopTest::**testIssueOrder** |
+| 3-2 | FR4.5 | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderInvalid**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderNotPresent**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderNotEnoughBalance**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderOk** |
+| 3-2 | FR4.5, FR1.5 | src.test.it.polito.ezshop.classes.EZShopTest::**testPayOrderInvalid**<br />src.test.it.polito.ezshop.classes.EZShopTest::**testPayOrderAdmin**<br />src.test.it.polito.ezshop.classes.EZShopTest::**testPayOrderShopManager** |
+| 3-2 | FR8.1 | src.test.it.polito.ezshop.classes.Transaction::**testBalanceUpdate** |
+| 3-3 | FR4.6 | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testRecordOrderArrivalInvalidOrderId**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testRecordOrderArrivalInvalidProductLocation**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testRecordOrderArrivalNotFound**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testRecordOrderArrivalOk** |
+| 3-3 | FR4.6, FR1.5 | src.test.it.polito.ezshop.classes.EZShopTest::**recordOrderArrivalInvalid**<br />src.test.it.polito.ezshop.classes.EZShopTest::**recordOrderAdmin**<br />src.test.it.polito.ezshop.classes.EZShopTest::**recordOrderShopManager** |
+| 3-3         | FR4.1                           | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateQuantityInvalid**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateQuantityInvalid** |
+| -           | FR4.4                           | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderForInvalid**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderForNoProduct**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderForNotEnoughBalance**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderForOk** |
+| -           | FR4.4, FR1.5 | src.test.it.polito.ezshop.classes.EZShopTest::**testPayOrderForInvalid**<br />src.test.it.polito.ezshop.classes.EZShopTest::**testPayOrderForAdmin**<br />src.test.it.polito.ezshop.classes.EZShopTest::**testPayOrderForShopManager** |
+| - | FR4.7 | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testGetAllOrders** |
+| - | FR4.7, FR1.5 | src.test.it.polito.ezshop.classes.EZShopTest::**getAllOrdersInvalid**<br />src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllOrdersOk** |
+| 4-1         | FR5.1, FR1.5                             | src.test.it.polito.ezshop.classes.EZShopTest::**testDefineCustomer**          |
+| 4-2         | FR5.6, FR1.5                             |  src.test.it.polito.ezshop.classes.EZShopTest::**testAttachCardToCustomer**       |
+| 4-2 | FR5.5, FR1.5                             |src.test.it.polito.ezshop.classes.EZShopTest::**testCreateCard** |
+| 4-3         | FR5.1, FR1.5                             |   src.test.it.polito.ezshop.classes.EZShopTest::**testModifyCustomer**        |
+| 4-4         | FR5.1, FR1.5                             |    src.test.it.polito.ezshop.classes.EZShopTest::**testModifyCustomer**       |
+|  -          | FR5.2, FR1.5                             |    src.test.it.polito.ezshop.classes.EZShopTest::**testDeleteCustomer**      |
+|  -          | FR5.3, FR1.5                             |    src.test.it.polito.ezshop.classes.EZShopTest::**testGetCustomer**      |
+|  -          | FR5.4, FR1.5                             |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllCustomers**     |
 |  -          | FR5.7, FR1.5                             |    src.test.it.polito.ezshop.classes.EZShopTest::**testModifyPointsOnCard**   |
-| 5-1         | FR1.5                           |  src.test.it.polito.ezshop.classes.UserManagerTest::**testLogin**        |             
-| 5-1         | FR1.5                           |  src.test.it.polito.ezshop.classes.EZShopTest::**testLogin**        |             
-| 5-2         | FR1.5                           |  src.test.it.polito.ezshop.classes.UserManagerTest::**testLogout**    |             
-| 5-2         | FR1.5                           |  src.test.it.polito.ezshop.classes.EZShopTest::**testLogout**      |             
-|             |                                 |             |             
-| ...         |                                 |             |             
-| ...         |                                 |             |             
+| 5-1         | FR1.5                           |  src.test.it.polito.ezshop.classes.EZShopTest::**testLogin**        |
+| 5-2         | FR1.5                           |  src.test.it.polito.ezshop.classes.EZShopTest::**testLogout**      |
+| 6-1         |                                 |   src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testStartSaleTransaction**          |
+| 6-1            | FR1.5                           |    src.test.java.it.polito.ezshop.classes.EZShopTest::**testStartSaleTransaction**                                                          |
+|6-1             |                                 |  src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testAddProductToSale**            |
+|6-1             | FR1.5                           |  src.test.java.it.polito.ezshop.classes.EZShopTest::**testAddProductToSale**            |
+|6-1             |                                 |  src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testGetSaleTransaction**            |
+|6-1         | FR-3.4                          | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testGetProductTypeByBarCodeInvalidCode**|
+|6-1         | FR4.1                           | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateQuantityInvalid**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateQuantityInvalid** |
+|6-1             |                                 |  src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testEndSaleTransaction**            |
+|6-1             |FR1.5                                 |  src.test.java.it.polito.ezshop.classes.EZShopTest::**testEndSaleTransaction**            |
+|6-1             |                                 |  src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testEndSaleTransaction**            |
+|6-1             |                                 |  src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testReceiveCreditCardPayment**            |
+
 
 
 

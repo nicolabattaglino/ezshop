@@ -93,7 +93,7 @@ public class ProductOrderManagerOrderTest {
     }
     
     @Test
-    public void testPayOrderFor() {
+    public void testPayOrderInvalid() {
         assertThrows(InvalidOrderIdException.class, () -> p.payOrder(null));
         assertThrows(InvalidOrderIdException.class, () -> p.payOrder(0));
         assertThrows(InvalidOrderIdException.class, () -> p.payOrder(-1));
@@ -209,7 +209,6 @@ public class ProductOrderManagerOrderTest {
         }
     }
     
-    //TODO VERIFY ALL FILES (PERSISTENCE)
     @After
     public void clear() {
         ezShop.reset();

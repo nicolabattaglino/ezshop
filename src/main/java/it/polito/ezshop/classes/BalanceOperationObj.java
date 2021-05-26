@@ -1,5 +1,7 @@
 package it.polito.ezshop.classes;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polito.ezshop.data.BalanceOperation;
 
 import java.time.LocalDate;
@@ -10,8 +12,8 @@ public abstract class BalanceOperationObj implements BalanceOperation {
     private double money;
     private String type; //type e' equivalente a description?
     
-    
-    public BalanceOperationObj(int id, LocalDate date, String type) {
+    @JsonCreator
+    public BalanceOperationObj(@JsonProperty("id")int id, @JsonProperty("date")LocalDate date,@JsonProperty("type") String type) {
         super();
         this.date = date;
         this.type = type;

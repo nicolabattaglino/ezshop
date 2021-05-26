@@ -510,7 +510,7 @@ public class TransactionManager {
         ReturnTransaction rTransaction = returnTransactions.get(returnId);
         if (rTransaction == null) return -1;
         if (rTransaction.getStatus() != ReturnStatus.ENDED) return -1;
-        double price = returnTransactions.get(rTransaction.getTransactionID()).getPrice(); //this price is the amount of money the customer will receive
+        double price = saleTransactions.get(rTransaction.getTransactionID()).getPrice(); //this price is the amount of money the customer will receive
         if (!recordBalanceUpdate(-1 * price)) return -1;
         return price;
     }
@@ -764,16 +764,7 @@ public class TransactionManager {
         }
     }
     
-    public void defineCreditCards() {
-        CreditCard cc = new CreditCard("79927398713", 25.3);
-        CreditCard cc2 = new CreditCard("1010101010101010101", 12.3);
-        cards.put(cc.getNumber(), cc);
-        cards.put(cc2.getNumber(), cc2);
-        try {
-            this.persistCards();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
+
 }
 

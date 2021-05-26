@@ -295,9 +295,12 @@ public class ProductOrderManager {
         if (order == null) return false;
         String oldStatus = order.getStatus();
         ProductTypeObj target = productMap.get(order.getProductCode());
-        if (target.getLocation().length() == 0) throw new InvalidLocationException();
         int quantity = target.getQuantity();
-        target.setQuantity(quantity + order.getQuantity());
+        try {
+            if (!updateQuantity(target.getId(), order.getQuantity())) throw new InvalidLocationException();
+        } catch (InvalidProductIdException e) {
+            e.printStackTrace();
+        }
         try {
             persistProducts();
         } catch (IOException e) {

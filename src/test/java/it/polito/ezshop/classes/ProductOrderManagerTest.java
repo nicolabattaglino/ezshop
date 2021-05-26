@@ -112,7 +112,6 @@ public class ProductOrderManagerTest {
         }
     }
     
-    
     @Test
     public void testUpdateProductOK() {
         try {
