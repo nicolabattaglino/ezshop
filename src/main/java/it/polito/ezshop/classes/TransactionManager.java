@@ -323,8 +323,6 @@ public class TransactionManager {
     public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         SaleTransactionObj saleTransactionObj = saleTransactions.get(transactionId);
-        if (saleTransactionObj != null && !saleTransactionObj.getStatus().equals(SaleStatus.CLOSED))
-            return null;
         return saleTransactionObj;
     }
     
@@ -483,6 +481,7 @@ public class TransactionManager {
         SaleTransactionObj transaction = this.getSaleTransactionObj(ticketNumber);
         if (transaction == null) return -1;
         if (transaction.getPrice() > cash) return -1;
+        transaction.setStatus(SaleStatus.PAYED);
         return cash - transaction.getPrice();
     }
 
@@ -492,11 +491,12 @@ public class TransactionManager {
             throw new InvalidCreditCardException();
         CreditCard carta = cards.get(creditCard);
         if (carta == null) return false;
-        SaleTransaction transaction = saleTransactions.get(ticketNumber);
+        SaleTransactionObj transaction = saleTransactions.get(ticketNumber);
         if (transaction == null) return false;
         if (carta.getBalance() < transaction.getPrice()) return false;
         carta.setBalance(carta.getBalance() - transaction.getPrice());
         this.recordBalanceUpdate(transaction.getPrice());
+        transaction.setStatus(SaleStatus.PAYED);
         return true;
     }
     

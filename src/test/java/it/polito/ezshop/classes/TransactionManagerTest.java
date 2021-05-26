@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.Assert.*;
 
 public class TransactionManagerTest {
@@ -149,14 +151,22 @@ public class TransactionManagerTest {
         String pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
         tManager.returnProduct(retCode,pBarCode , 1);
         assertTrue(tManager.deleteSaleTransaction(retCode));
-        retCode=tManager.startReturnTransaction(saleId);
-        pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
-        tManager.returnProduct(retCode,pBarCode , 1);
-        assertTrue(tManager.deleteSaleTransaction(retCode));
-        assertFalse(tManager.deleteSaleTransaction(retCode));
-        assertFalse(tManager.deleteSaleTransaction(retCode+1));
+        saleId= tManager.startSaleTransaction();
+        poManager.createProductType("test", "123456789012", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
+        poManager.createProductType("test2", "12345678901286", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
+        tManager.addProductToSale(saleId, "12345678901286", 1);
+        tManager.addProductToSale(saleId, "123456789012", 1);
+        tManager.endSaleTransaction(saleId);
+        tManager.receiveCashPayment(saleId, 100);
+        assertFalse(tManager.deleteSaleTransaction(saleId));
+        assertFalse(tManager.deleteSaleTransaction(saleId+1));
         assertThrows(InvalidTransactionIdException.class, ()-> tManager.deleteSaleTransaction(null));
         assertThrows(InvalidTransactionIdException.class, ()-> tManager.deleteSaleTransaction(0));
+        assertThrows(InvalidTransactionIdException.class, ()-> tManager.deleteSaleTransaction(-1));
     }
     
     @Test
@@ -372,7 +382,29 @@ public class TransactionManagerTest {
     }
     
     @Test
-    public void testGetCreditsAndDebits() {
+    public void testGetCreditsAndDebits() throws InvalidQuantityException, InvalidTransactionIdException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidCreditCardException {
+        int saleId = tManager.startSaleTransaction();
+        ProductOrderManager poManager = shop.getProductOrderManager();
+        poManager.createProductType("test", "123456789012", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
+        poManager.createProductType("test2", "12345678901286", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
+        tManager.addProductToSale(saleId, "12345678901286", 2);
+        tManager.addProductToSale(saleId, "123456789012", 1);
+
+        int retCode = tManager.startReturnTransaction(saleId);
+        String pBarCode = poManager.getProductTypesByDescription("test").get(0).getBarCode();
+        tManager.returnProduct(retCode, pBarCode, 1);
+        String ccNumber = "79927398713";
+        tManager.receiveCreditCardPayment(saleId, ccNumber);
+        tManager.endReturnTransaction(retCode, true);
+        tManager.returnCreditCardPayment(retCode, ccNumber);
+        assertFalse(tManager.getCreditsAndDebits(LocalDate.now().minusDays(1), LocalDate.now().minusDays(-1)).isEmpty()); //list exists
+        assertTrue(tManager.getCreditsAndDebits(LocalDate.now().minusDays(5), LocalDate.now().minusDays(1)).isEmpty()); //list is empty
+
+
     }
     
     @Test
