@@ -328,7 +328,7 @@ public class EZShopTest {
     public void testDefineCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException {
         assertThrows(UnauthorizedException.class, () -> shop.defineCustomer("JohnB"));
         shop.getUserManager().login("Mattia", "123");
-        Integer id = shop.defineCustomer("JohnB");
+        Integer id = shop.getCustomerManager().defineCustomer("JohnB");
         assertEquals(id, shop.getCustomer(id).getId());
     }
     
@@ -336,11 +336,11 @@ public class EZShopTest {
     public void testModifyCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException, InvalidCustomerCardException {
         assertThrows(UnauthorizedException.class, () -> shop.modifyCustomer(0, "JonhC", "1000000002"));
         shop.getUserManager().login("Mattia", "123");
-        Integer id = shop.defineCustomer("JohnB");
-        String cardId = shop.createCard();
-        shop.modifyCustomer(id,"JohnC",cardId);
+        Integer id = shop.getCustomerManager().defineCustomer("JohnB");
+        String cardId = shop.getCustomerManager().createCard();
+        shop.getCustomerManager().modifyCustomer(id,"JohnC",cardId);
         assertEquals("JohnC", shop.getCustomer(id).getCustomerName());
-        Integer id1 = shop.defineCustomer("MikeC");
+        Integer id1 = shop.getCustomerManager().defineCustomer("MikeC");
         assertFalse(shop.modifyCustomer(id1,"MikeC",cardId));
     }
     
@@ -348,7 +348,7 @@ public class EZShopTest {
     public void testDeleteCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException {
         assertThrows(UnauthorizedException.class, () -> shop.deleteCustomer(1));
         shop.getUserManager().login("Mattia", "123");
-        Integer id = shop.defineCustomer("JohnB");
+        Integer id = shop.getCustomerManager().defineCustomer("JohnB");
         assertTrue(shop.deleteCustomer(id));
         assertFalse(shop.deleteCustomer(100));
     }
@@ -357,7 +357,7 @@ public class EZShopTest {
     public void testGetCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException {
         assertThrows(UnauthorizedException.class, () -> shop.getCustomer(1));
         shop.getUserManager().login("Mattia", "123");
-        Integer id = shop.defineCustomer("JohnB");
+        Integer id = shop.getCustomerManager().defineCustomer("JohnB");
         assertEquals(id, shop.getCustomer(id).getId());
         assertNull(shop.getCustomer(100));
     }
@@ -366,7 +366,7 @@ public class EZShopTest {
     public void testGetAllCustomers() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException {
         assertThrows(UnauthorizedException.class, shop::getAllCustomers);
         shop.getUserManager().login("Mattia", "123");
-        Integer id = shop.defineCustomer("JohnB");
+        Integer id = shop.getCustomerManager().defineCustomer("JohnB");
         assertEquals(id, shop.getAllCustomers().get(id).getId());
     }
     
@@ -374,18 +374,18 @@ public class EZShopTest {
     public void testCreateCard() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException {
         assertThrows(UnauthorizedException.class, shop::createCard);
         shop.getUserManager().login("Mattia", "123");
-        String cardID = shop.createCard();
+        String cardID = shop.getCustomerManager().createCard();
         assertNotEquals(cardID, "");
     }
     
     @Test
     public void testAttachCardToCustomer() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidCustomerNameException, InvalidCustomerIdException, InvalidCustomerCardException {
         assertThrows(UnauthorizedException.class, () -> shop.attachCardToCustomer("1000000003",1));
-        shop.login("Mattia","123");
-        String cardID = shop.createCard();
-        String cardID1 = shop.createCard();
-        Integer id = shop.defineCustomer("JohnB");
-        Integer id1 = shop.defineCustomer("Mike");
+        shop.getUserManager().login("Mattia","123");
+        String cardID = shop.getCustomerManager().createCard();
+        String cardID1 = shop.getCustomerManager().createCard();
+        Integer id = shop.getCustomerManager().defineCustomer("JohnB");
+        Integer id1 = shop.getCustomerManager().defineCustomer("Mike");
         assertTrue(shop.attachCardToCustomer(cardID,id));
         assertFalse(shop.attachCardToCustomer(cardID,id1));
         assertFalse(shop.attachCardToCustomer(cardID1,100));
@@ -394,10 +394,10 @@ public class EZShopTest {
     @Test
     public void testModifyPointsOnCard() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidCustomerNameException, InvalidCustomerIdException, InvalidCustomerCardException {
         assertThrows(UnauthorizedException.class, () -> shop.modifyPointsOnCard("1000000003",1));
-        shop.login("Mattia","123");
-        String cardID = shop.createCard();
-        Integer id = shop.defineCustomer("JohnB");
-        shop.attachCardToCustomer(cardID,id);
+        shop.getUserManager().login("Mattia","123");
+        String cardID = shop.getCustomerManager().createCard();
+        Integer id = shop.getCustomerManager().defineCustomer("JohnB");
+        shop.getCustomerManager().attachCardToCustomer(cardID,id);
         assertTrue(shop.modifyPointsOnCard(cardID,10));
         assertFalse(shop.modifyPointsOnCard(cardID,-40));
         assertFalse(shop.modifyPointsOnCard("1000000005",10));
