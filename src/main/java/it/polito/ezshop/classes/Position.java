@@ -12,7 +12,7 @@ public class Position {
     private final boolean empty;
     
     public Position(String pos) throws InvalidLocationException {
-        if (!pos.matches("[1-9][0-9]*-[1-9][0-9]*-[1-9][0-9]*"))
+        if (!pos.matches("[0-9]+-[0-9]+-[0-9]+"))
             throw new InvalidLocationException();
         Integer[] tokens = Arrays.stream(pos.split("-"))
                 .map(Integer::parseInt)

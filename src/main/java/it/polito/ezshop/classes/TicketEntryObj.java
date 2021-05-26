@@ -75,7 +75,7 @@ public class TicketEntryObj implements TicketEntry {
     public void setDiscountRate(double discountRate) {
         this.discountRate = discountRate;
     }
-
+    
 }
     
 

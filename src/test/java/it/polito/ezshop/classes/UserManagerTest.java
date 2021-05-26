@@ -1,12 +1,10 @@
 package it.polito.ezshop.classes;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import it.polito.ezshop.data.User;
 import it.polito.ezshop.exceptions.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.function.ThrowingRunnable;
 
 import java.util.LinkedList;
 
@@ -15,11 +13,12 @@ import static org.junit.Assert.*;
 public class UserManagerTest {
     
     UserManager um;
-
+    
     @Before
-    public void initManager(){
+    public void initManager() {
         um = new UserManager(null);
     }
+    
     @Test
     public void testGetUserLogged() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException {
         um.createUser("SimAdmin", "12345", "Administrator");
@@ -108,13 +107,13 @@ public class UserManagerTest {
 
         assertFalse(um.logout());
         um.createUser("SimAdmin", "12345", "Administrator");
-        User userLogged = um.login("SimAdmin", "12345");
+        um.login("SimAdmin", "12345");
         assertTrue(um.logout());
     }
     
-
+    
     @After
-    public void clear(){
+    public void clear() {
         um.clear();
     }
 }

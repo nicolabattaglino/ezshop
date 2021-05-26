@@ -90,7 +90,6 @@ public class TransactionManagerTest {
     
     @Test
     public void testApplyDiscountRateToProduct() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException, InvalidDiscountRateException {
-        // please check InvalidDiscountRateException
         int saleId = tManager.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
@@ -101,17 +100,17 @@ public class TransactionManagerTest {
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         tManager.addProductToSale(saleId, "12345678901286", 2);
         tManager.addProductToSale(saleId, "123456789012", 1);
-        tManager.endSaleTransaction(saleId);
-        
+    
         assertTrue(tManager.applyDiscountRateToProduct(saleId, "123456789012", 0.5));
         assertTrue(tManager.applyDiscountRateToProduct(saleId, "123456789012", 0));
+        tManager.endSaleTransaction(saleId);
         assertFalse(tManager.applyDiscountRateToProduct(saleId + 1, "123456789012", 0.5));
         assertThrows(InvalidTransactionIdException.class, () -> tManager.applyDiscountRateToProduct(null, "123456789012", 0.5));
         assertThrows(InvalidTransactionIdException.class, () -> tManager.applyDiscountRateToProduct(0, "123456789012", 0.5));
         assertThrows(InvalidTransactionIdException.class, () -> tManager.applyDiscountRateToProduct(-1, "123456789012", 0.5));
-        // assertThrows(InvalidDiscountRateException.class, ()->tManager.applyDiscountRateToProduct(null, "123456789012", 0.5));
-        // assertThrows(InvalidDiscountRateException.class, ()->tManager.applyDiscountRateToProduct(0, "123456789012", 0.5));
-        // assertThrows(InvalidDiscountRateException.class, ()->tManager.applyDiscountRateToProduct(-1, "123456789012", 0.5));
+        assertThrows(InvalidDiscountRateException.class, () -> tManager.applyDiscountRateToProduct(saleId, "123456789012", 1));
+        assertThrows(InvalidDiscountRateException.class, () -> tManager.applyDiscountRateToProduct(saleId, "123456789012", -0.5));
+        assertThrows(InvalidDiscountRateException.class, () -> tManager.applyDiscountRateToProduct(saleId, "123456789012", 25));
     }
     
     @Test

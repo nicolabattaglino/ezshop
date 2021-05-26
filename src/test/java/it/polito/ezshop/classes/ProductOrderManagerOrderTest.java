@@ -10,8 +10,8 @@ import static org.junit.Assert.*;
 
 public class ProductOrderManagerOrderTest {
     
-    private static ProductOrderManager p;
     private static final EZShop ezShop = new EZShop();
+    private static ProductOrderManager p;
     
     @BeforeClass
     public static void initManager() {
