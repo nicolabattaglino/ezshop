@@ -42,8 +42,9 @@ public class ProductTypeObjTest {
         p.setLocation("");
         assertEquals("", p.getLocation());
         p.setLocation(null);
-        p.setLocation("0-5-05");
         assertEquals("", p.getLocation());
+        p.setLocation("8-5-5");
+        p.setLocation("");
         assertEquals("", p.getLocation());
         p.setLocation("12-13-14");
         assertEquals("12-13-14", p.getLocation());
