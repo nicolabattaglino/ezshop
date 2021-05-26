@@ -472,7 +472,7 @@ TransactionManager ..> ProductOrderManager
 |   | src.test.it.polito.ezshop.classes.EZShopTest::**recordOrderArrivalInvalid**  |
 |   | src.test.it.polito.ezshop.classes.EZShopTest::**recordOrderAdmin**  |
 |   | src.test.it.polito.ezshop.classes.EZShopTest::**recordOrderShopManager**  |
-|   | src.test.it.polito.ezshop.classes.EZShopTest::**getAllOrdersInvalid**  |
+|   | src.test.it.polito.ezshop.classes.EZShopTest::**getAllOrdersInvalid** |
 |   | src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllOrdersOk**  |
 |   | src.test.it.polito.ezshop.classes.EZShopTest::**startSaleTransaction**  |
 |   | src.test.it.polito.ezshop.classes.EZShopTest::**addProductToSale**  |
@@ -497,7 +497,6 @@ TransactionManager ..> ProductOrderManager
 |   | src.test.it.polito.ezshop.classes.EZShopTest::**addOrder**  |
 |   |   |
 |   | src.test.it.polito.ezshop.classes.TransactionManagerTest::**testBalanceUpdate**  |
-|   | src.test.it.polito.ezshop.classes.TransactionManagerTest::**testLuhn**  |
 |   | src.test.it.polito.ezshop.classes.TransactionManagerTest::**testComputeBalance**  |
 |   | src.test.it.polito.ezshop.classes.TransactionManagerTest::**testStartSaleTransaction**  |
 |   | src.test.it.polito.ezshop.classes.TransactionManagerTest::**testAddProductToSale**  |
@@ -524,12 +523,12 @@ TransactionManager ..> ProductOrderManager
 |   | src.test.it.polito.ezshop.classes.TransactionManagerTest::**testAddPayedOrderOk**  |
 |   | src.test.it.polito.ezshop.classes.TransactionManagerTest::**testAddCompletedOrderInvalid**  |
 |   |   |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testIssueOrderInvalid**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testIssueOrderOk**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderForInvalid**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderForNoProduct**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderForNotEnoughBalance**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderForOk**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.OrderObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testIssueOrderInvalid**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.OrderObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testIssueOrderOk**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.TransactionManager + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.OrderObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderForInvalid**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.TransactionManager + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.OrderObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderForNoProduct**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.TransactionManager + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.OrderObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderForNotEnoughBalance**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.TransactionManager + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.OrderObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderForOk**  |
 |   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderFor**  |
 |   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderNotPresent**  |
 |   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testPayOrderNotEnoughBalance**  |
@@ -541,34 +540,29 @@ TransactionManager ..> ProductOrderManager
 |   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testRecordOrderArrivalOk**  |
 |   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testRecordOrderArrivalNotFound**  |
 |   |   |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testCheckBarcodeNull**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testCheckBarcodeNonNum**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testCheckBarcodeLenghtLessThan12**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testCheckBarcodeLenghtGreaterThan14**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testCheckBarcodeCheckDigitNotValid**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testCheckBarcodeCheckDigitValid**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testCreateProductTypeOk**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testCreateProductTypeInvalidCode**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testCreateProductTypeInvalidDescription**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdateProductInvalidID**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdateProductPriceInvalidPrice**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdateProductInvalidBarcode**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdateProductPriceCodeAlreadyExist**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdateProductIdNotPresent**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdateProductOK**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testDeleteProductTypeInvalidId**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testDeleteProductTypeNotFound**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testDeleteProductTypeOk**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testGetAllProductTypesEmpty**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testGetAllProductTypes**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testGetProductTypeByBarCodeInvalidCode**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testGetProductTypeByBarCodeOk**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testGetProductTypesByDescriptionOk**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testGetProductTypesByDescriptionEmpty**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdateQuantityOk**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdatePositionInvalid**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdatePositionReset**  |
-|   | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdatePositionOk**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testCreateProductTypeOk**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testCreateProductTypeInvalidCode**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testCreateProductTypeInvalidDescription**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdateProductInvalidID**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdateProductPriceInvalidPrice**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdateProductInvalidBarcode**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdateProductPriceCodeAlreadyExist**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdateProductIdNotPresent**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdateProductOK**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testDeleteProductTypeInvalidId**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testDeleteProductTypeNotFound**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testDeleteProductTypeOk**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testGetAllProductTypesEmpty**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testGetAllProductTypes**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testGetProductTypeByBarCodeInvalidCode**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testGetProductTypeByBarCodeOk**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testGetProductTypesByDescriptionOk**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testGetProductTypesByDescriptionEmpty**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.Position | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdateQuantityInvalid** |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.Position | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdateQuantityOk**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.Position | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdatePositionInvalid**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.Position | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdatePositionReset**  |
+| src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.Position | src.test.it.polito.ezshop.classes.ProductOrderManagerOrderTest::**testUpdatePositionOk**  |
 |   |   |
 |   |   |
 |   |   |
@@ -742,34 +736,6 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 | 7-3 | FR7.1 | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testReceiveCashPayment** |
 | 7-4 | FR7.1, FR1.5 | src.test.java.it.polito.ezshop.classes.EZShopTest::**testReceiveCashPayment** |
 | 7-4 | FR8.1, FR8.2 | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testRecordBalanceUpdate** |
-| 8-1  |FR6.12  |src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testStartReturnTransaction**  |
-| 8-1  |FR6.12, FR 1.5  |src.test.java.it.polito.ezshop.classes.EZShopTest::**testStartReturnTransaction**  |
-| 8-1  |FR6.14,   |src.test.java.it.polito.ezshop.classes.TransactionManagertTest::**testEndReturnTransaction**  |
-| 8-1  |FR6.14, FR 1.5  |src.test.java.it.polito.ezshop.classes.EZShopTest::**testEndReturnTransaction**  |
-| 8-1        | FR4.1                           | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateQuantityInvalid**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateQuantityOk** |
-| 8-1        | FR7.4                           |  src.test.it.polito.ezshop.classes.TransactionManagerTest::**testReturnCreditCardPayment**   |
-| 8-1        | FR7.4, FR1.5, FR10.2                          |  src.test.it.polito.ezshop.classes.EZShopTest::**testReturnCreditCardPayment**   |
-| 8-2  |FR6.12  |src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testStartReturnTransaction**  |
-| 8-2  |FR6.12, FR1.5  |src.test.java.it.polito.ezshop.classes.EZShopTest::**testStartReturnTransaction**  |
-| 8-2  |FR6.14,   |src.test.java.it.polito.ezshop.classes.TransactionManagertTest::**testEndReturnTransaction**  |
-| 8-2  |FR6.14, FR1.5  |src.test.java.it.polito.ezshop.classes.EZShopTest::**testEndReturnTransaction**  |
-| 8-2        | FR4.1                           | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateQuantityInvalid**<br />src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testUpdateQuantityOk** |
-| 8-2        | FR7.4, FR10.2                           |  src.test.it.polito.ezshop.classes.TransactionManagerTest::**testReturnCashPayment**   |
-| 8-2        | FR7.4, FR1.5                    |  src.test.it.polito.ezshop.classes.EZShopTest::**testReturnCashPayment**   |
-| 9-1  |FR8.1,FR8.2,FR8.3  |src.test.it.polito.ezshop.classes.TransactionManagerTest::**testGetCreditsAndDebits**  |
-| 9-1  |FR8.1, FR8.2, FR8.3, FR1.5  |src.test.it.polito.ezshop.classes.EZShopTest::**testGetCreditsAndDebits**  |
-|10-1 | FR7.2,  | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testReceiveCreditCardPayment** |
-|10-1 | FR7.2, FR1.5,  | src.test.java.it.polito.ezshop.classes.EZShopTest::**testReceiveCreditCardPayment** |
-| 10-1 | FR8.1, FR8.2,  | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testRecordBalanceUpdate** |
-| 10-1 | FR8.1, FR8.2,  FR1.5 | src.test.java.it.polito.ezshop.classes.EZShopTest::**testRecordBalanceUpdate** |
-| 10-1 | FR8.1, FR8.4  | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testComputeBalance** |
-| 10-1 | FR8.4, FR8.4, FR1.5 | src.test.java.it.polito.ezshop.classes.EZShopTest::**testComputeBalance** |
-|10-2 | FR7.1,  | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testReceiveCreditCardPayment** |
-|10-2 | FR7.1, FR1.5,  | src.test.java.it.polito.ezshop.classes.EZShopTest::**testReceiveCreditCardPayment** |
-| 10-2 | FR8.1, FR8.2,  | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testRecordBalanceUpdate** |
-| 10-2 | FR8.1, FR8.2,  FR1.5 | src.test.java.it.polito.ezshop.classes.EZShopTest::**testRecordBalanceUpdate** |
-| 10-2 | FR8.1, FR8.4  | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testComputeBalance** |
-| 10-2 | FR8.4, FR8.4, FR1.5 | src.test.java.it.polito.ezshop.classes.EZShopTest::**testComputeBalance** |
 |  |  |  |
 |  |  |  |
 |  |  |  |
