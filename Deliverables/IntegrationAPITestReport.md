@@ -267,8 +267,7 @@ TransactionManager ..> CreditCard
 TransactionManager ..> Order
 TransactionManager ..> SaleTransaction
 
-Shop ..> UserManager
-Shop ..> CustomerManager
+
 Shop ..> ProductOrderManager
 Shop ..> TransactionManager
 
@@ -276,6 +275,9 @@ Shop <.. UserManager
 Shop <.. CustomerManager
 Shop <.. ProductOrderManager
 Shop <.. TransactionManager
+
+TransactionManager <.. ProductOrderManager
+ProductOrderManager <.. TransactionManager
 
 class CreditCard {
     -number: String
@@ -394,10 +396,7 @@ TransactionManager ..> ProductOrderManager
 
 # Integration approach
 
-    <Write here the integration sequence you adopted, in general terms (top down, bottom up, mixed) and as sequence
-    (ex: step1: class A, step 2: class A+B, step 3: class A+B+C, etc)> 
-    <Some steps may  correspond to unit testing (ex step1 in ex above), presented in other document UnitTestReport.md>
-    <One step will  correspond to API testing>
+    Bottom-Up
 
 
 
