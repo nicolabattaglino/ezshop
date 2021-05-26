@@ -83,6 +83,7 @@ public class TransactionManager {
             } finally {
                 saleTransactions = new HashMap<>();
             }
+    
         }
         
         File returns = new File(RETURN_PATH);
@@ -168,7 +169,6 @@ public class TransactionManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
     }
     
     
@@ -598,11 +598,9 @@ public class TransactionManager {
     }
     
     public void clear() {
-        //maybe this needs to clear orders too?
-        //yes and also has to clear the files
+    
         saleTransactions.clear();
         returnTransactions.clear();
-        //cards.clear(); TODO MAYBE IT HAS TO BE REMOVED
         orders.clear();
         balanceOperations.clear();
         File fold = new File(GENERATOR_PATH);

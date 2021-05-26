@@ -1,10 +1,14 @@
 package it.polito.ezshop.classes;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CreditCard {
     private String number;
     private double balance;
     
-    public CreditCard(String number, double balance) {
+    @JsonCreator
+    public CreditCard(@JsonProperty("number") String number, @JsonProperty("balance") double balance) {
         this.number = number;
         this.balance = balance;
     }
