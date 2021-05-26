@@ -510,7 +510,7 @@ public class TransactionManager {
         ReturnTransaction rTransaction = returnTransactions.get(returnId);
         if (rTransaction == null) return -1;
         if (rTransaction.getStatus() != ReturnStatus.ENDED) return -1;
-        double price = returnTransactions.get(rTransaction.getTransactionID()).getPrice(); //this price is the amount of money the customer will receive
+        double price = saleTransactions.get(rTransaction.getTransactionID()).getPrice(); //this price is the amount of money the customer will receive
         if (!recordBalanceUpdate(-1 * price)) return -1;
         return price;
     }

@@ -208,6 +208,9 @@ public class TransactionManagerTest {
         assertThrows(InvalidTransactionIdException.class, () -> tManager.getSaleTransaction(0));
         assertThrows(InvalidTransactionIdException.class, () -> tManager.getSaleTransaction(-1));
         assertNull(tManager.getSaleTransaction(2));
+        int saleId = tManager.startSaleTransaction();
+        tManager.endSaleTransaction(saleId);
+        assertNotNull(tManager.getSaleTransaction(saleId));
         tManager.endSaleTransaction(tManager.startSaleTransaction());
         
     }
