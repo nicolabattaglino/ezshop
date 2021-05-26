@@ -266,15 +266,15 @@ public class TransactionManager {
         return true;
     }
     
-    public boolean applyDiscountRateToSale(Integer transactionId, String string) throws InvalidTransactionIdException, InvalidDiscountRateException {
+    public boolean applyDiscountRateToSale(Integer transactionId, double d) throws InvalidTransactionIdException, InvalidDiscountRateException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
-        if (string < 0.0 || string >= 1.00) throw new InvalidDiscountRateException();
-        if (string > 1 || string < 0) return false;
+        if (d < 0.0 || d >= 1.00) throw new InvalidDiscountRateException();
+        if (d > 1 || d < 0) return false;
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
         if (sale.getStatus() == SaleStatus.PAYED) return false;
         double oldD = sale.getDiscountRate();
-        sale.setDiscountRate(string);
+        sale.setDiscountRate(d);
         try {
             this.persistSales();
         } catch (IOException e) {
