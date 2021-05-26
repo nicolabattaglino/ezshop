@@ -244,7 +244,8 @@ public class TransactionManager {
     
     public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
-        if (productCode == null) throw new InvalidProductCodeException();
+        if (productCode == null || !shop.getProductOrderManager().checkBarcode(productCode))
+            throw new InvalidProductCodeException();
         if (discountRate < 0.0 || discountRate >= 1.00) throw new InvalidDiscountRateException();
         if (discountRate > 1 || discountRate < 0) return false;
         SaleTransactionObj sale = saleTransactions.get(transactionId);
@@ -252,11 +253,15 @@ public class TransactionManager {
         if (!sale.getStatus().equals(SaleStatus.STARTED)) return false;
         List<TicketEntry> tickets = sale.getEntries();
         int i;
+        boolean found = false;
         for (i = 0; i < tickets.size(); i++) {
             if (tickets.get(i).getBarCode().equals(productCode)) {
                 tickets.get(i).setDiscountRate(discountRate);
+                found = true;
+                break;
             }
         }
+        if (!found) return false;
         sale.setEntries(tickets);
         try {
             this.persistSales();
