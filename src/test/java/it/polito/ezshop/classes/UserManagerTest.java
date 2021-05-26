@@ -90,6 +90,7 @@ public class UserManagerTest {
         assertThrows(InvalidRoleException.class, () -> um.updateUserRights(0, null));
         assertThrows(InvalidRoleException.class, () -> um.updateUserRights(0, "t"));
         assertTrue(um.updateUserRights(userId, "ShopManager"));
+        assertFalse(um.updateUserRights(100,"Cashier"));
     }
     
     @Test

@@ -152,7 +152,7 @@ public class UserManager {
     
     public boolean updateUserRights(Integer id, String role) throws InvalidUserIdException, InvalidRoleException, UnauthorizedException {
         int i = 0;
-        
+        String ur = null;
         if (id == null || id < 0)
             throw new InvalidUserIdException();
         if (role == null || role.equals("") ||
@@ -160,7 +160,7 @@ public class UserManager {
                         !role.toUpperCase().equals(UserRole.CASHIER.toString()) &&
                         !role.toUpperCase().equals(UserRole.SHOPMANAGER.toString())))
             throw new InvalidRoleException();
-        String ur = userList.get(id).getRole();
+
         for (i = 0; i < userList.size(); i++) {
             if (userList.get(i).getId().equals(id)) {
                 User u = userList.get(i);
@@ -168,12 +168,6 @@ public class UserManager {
                 try {
                     persistUsers();
                 } catch (IOException e) {
-                    for (i = 0; i < userList.size(); i++) {
-                        if (userList.get(i).getId().equals(id)) {
-                            u = userList.get(i);
-                            u.setRole(ur.toUpperCase());
-                        }
-                    }
                     e.printStackTrace();
                 }
                 return true;

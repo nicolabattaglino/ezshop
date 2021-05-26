@@ -5,10 +5,6 @@ import it.polito.ezshop.exceptions.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import it.polito.ezshop.exceptions.*;
-
-import static org.junit.Assert.*;
-
 import static org.junit.Assert.*;
 
 public class EZShopTest {
@@ -43,39 +39,60 @@ public class EZShopTest {
     }
     
     @Test
-    public void createUser() {
+    public void createUser() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, InvalidUserIdException, UnauthorizedException {
+        int id = shop.getUserManager().createUser("JohnB","123321","Cashier");
+        shop.login("Mattia","123");
+        assertEquals(id, (int) shop.getUser(id).getId());
     }
     
     @Test
     public void deleteUser() throws UnauthorizedException, InvalidPasswordException, InvalidRoleException, InvalidUsernameException, InvalidUserIdException {
-        EZShop s = new EZShop();
-        assertThrows(UnauthorizedException.class, () -> s.deleteUser(0));
-        s.createUser("SimAdmin","12345","ADMINISTRATOR");
-        int id = s.createUser("JohnB","123321","Cashier");
-        s.login("SimAdmin","12345");
-        assertTrue(s.deleteUser(id));
+
+        assertThrows(UnauthorizedException.class, () -> shop.deleteUser(0));
+        shop.login("Hossein","123");
+        assertThrows(UnauthorizedException.class, () -> shop.deleteUser(0));
+        shop.login("Mattia","123");
+        int id = shop.getUserManager().createUser("JohnB","123321","Cashier");
+        assertTrue(shop.deleteUser(id));
     }
     
     @Test
     public void getAllUsers() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, UnauthorizedException {
-        EZShop s = new EZShop();
-        assertThrows(UnauthorizedException.class, () -> s.getAllUsers());
-        s.createUser("SimAdmin","12345","ADMINISTRATOR");
-        int id = s.createUser("JohnB","123321","Cashier");
-        s.login("SimAdmin","12345");
-        assertEquals(id, (int) s.getAllUsers().get(id).getId());
+        assertThrows(UnauthorizedException.class, () -> shop.getAllUsers());
+        shop.login("Hossein","123");
+        assertThrows(UnauthorizedException.class, () -> shop.getAllUsers());
+        shop.login("Mattia","123");
+        assertEquals(0, (int) shop.getAllUsers().get(0).getId());
+        shop.reset();
+        assertTrue(shop.getAllUsers().isEmpty());
     }
     
     @Test
-    public void getUser() {
+    public void getUser() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException, InvalidUserIdException, UnauthorizedException {
+        assertThrows(UnauthorizedException.class, () -> shop.getUser(0));
+        shop.login("Hossein","123");
+        assertThrows(UnauthorizedException.class, () -> shop.deleteUser(0));
+        shop.login("Mattia","123");
+        int id = shop.getUserManager().createUser("JohnB","123321","Cashier");
+        assertEquals("JohnB", shop.getUser(id).getUsername());
+        assertNull(shop.getUser(100));
     }
     
     @Test
-    public void updateUserRights() {
+    public void updateUserRights() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException, InvalidUserIdException, UnauthorizedException {
+        assertThrows(UnauthorizedException.class, () -> shop.updateUserRights(0,"Cashier"));
+        shop.login("Hossein","123");
+        assertThrows(UnauthorizedException.class, () -> shop.deleteUser(0));
+        shop.login("Mattia","123");
+        int id = shop.getUserManager().createUser("JohnB","123321","Cashier");
+        assertTrue(shop.updateUserRights(id,"ShopManager"));
+        assertFalse(shop.updateUserRights(10,"ShopManager"));
     }
     
     @Test
-    public void login() {
+    public void login() throws InvalidPasswordException, InvalidUsernameException {
+        User u = shop.login("Mattia","123");
+        assertEquals("Mattia",u.getUsername());
     }
     
     @Test
@@ -83,7 +100,10 @@ public class EZShopTest {
     }
     
     @Test
-    public void logout() {
+    public void logout() throws InvalidPasswordException, InvalidUsernameException {
+        assertFalse(shop.logout());
+        shop.login("Mattia","123");
+        assertTrue(shop.logout());
     }
     
     @Test
@@ -188,19 +208,34 @@ public class EZShopTest {
     }
     
     @Test
-    public void defineCustomer() {
+    public void defineCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException {
+        assertThrows(UnauthorizedException.class, () -> shop.defineCustomer("JohnB"));
+        shop.login("Mattia","123");
+        Integer id = shop.defineCustomer("JohnB");
+        assertEquals(id, shop.getCustomer(id).getId());
     }
     
     @Test
-    public void modifyCustomer() {
+    public void modifyCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException, InvalidCustomerCardException {
+        assertThrows(UnauthorizedException.class, () -> shop.modifyCustomer(0,"JonhC","1000000002"));
+        shop.login("Mattia","123");
+        Integer id = shop.defineCustomer("JohnB");
+        String cardId = shop.createCard();
+        shop.modifyCustomer(id,"JohnC",cardId);
+        assertEquals("JohnC", shop.getCustomer(id).getCustomerName());
     }
     
     @Test
-    public void deleteCustomer() {
+    public void deleteCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException {
+        assertThrows(UnauthorizedException.class, () -> shop.deleteCustomer(1));
+        shop.login("Mattia","123");
+        Integer id = shop.defineCustomer("JohnB");
     }
     
     @Test
-    public void getCustomer() {
+    public void getCustomer() throws InvalidPasswordException, InvalidUsernameException {
+        assertThrows(UnauthorizedException.class, () -> shop.defineCustomer("JohnB"));
+        shop.login("Mattia","123");
     }
     
     @Test
