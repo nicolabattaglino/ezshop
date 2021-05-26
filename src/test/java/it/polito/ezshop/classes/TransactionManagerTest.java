@@ -98,13 +98,8 @@ public class TransactionManagerTest {
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         tManager.addProductToSale(saleId, "12345678901286", 2);
         tManager.addProductToSale(saleId, "123456789012", 1);
-        int retCode=tManager.startReturnTransaction(saleId);
-        String pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
-        tManager.returnProduct(retCode,pBarCode , 1);
-        assertFalse(tManager.computePointsForSale(retCode)>0);// not ended
-        tManager.endReturnTransaction(retCode, true);
-        assertTrue(tManager.computePointsForSale(retCode)>0);
-        assertFalse(tManager.computePointsForSale(retCode+1)>0);
+        assertTrue(tManager.computePointsForSale(saleId)>0);
+        assertFalse(tManager.computePointsForSale(saleId+1)>0);
         assertThrows(InvalidTransactionIdException.class, ()->tManager.computePointsForSale(null));
         assertThrows(InvalidTransactionIdException.class, ()->tManager.computePointsForSale(0));
         assertThrows(InvalidTransactionIdException.class, ()->tManager.computePointsForSale(-1));
@@ -123,19 +118,16 @@ public class TransactionManagerTest {
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         tManager.addProductToSale(saleId, "12345678901286", 2);
         tManager.addProductToSale(saleId, "123456789012", 1);
-        int retCode=tManager.startReturnTransaction(saleId);
-        String pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
-        tManager.returnProduct(retCode,pBarCode , 1);
-        assertFalse(tManager.endSaleTransaction(retCode));
-        tManager.endReturnTransaction(retCode, true);
-        assertTrue(tManager.endSaleTransaction(retCode));
-        assertFalse(tManager.endSaleTransaction(retCode+1));
+        assertTrue(tManager.endSaleTransaction(saleId));
+        tManager.receiveCashPayment(saleId, 50);
+        assertFalse(tManager.endSaleTransaction(saleId));
+        assertFalse(tManager.endSaleTransaction(saleId+1));
         assertThrows(InvalidTransactionIdException.class, ()->tManager.endSaleTransaction(null));
         assertThrows(InvalidTransactionIdException.class, ()->tManager.endSaleTransaction(-1));
     }
     
     @Test
-    public void testDeleteSaleTransaction() throws InvalidTransactionIdException, InvalidQuantityException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, UnauthorizedException, InvalidLocationException {
+    public void testDeleteSaleTransaction() throws InvalidTransactionIdException, InvalidQuantityException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException {
 
         int saleId= tManager.startSaleTransaction();
         ProductOrderManager poManager= shop.getProductOrderManager();
@@ -314,8 +306,10 @@ public class TransactionManagerTest {
         assertTrue(tManager.receiveCreditCardPayment(saleId, ccNumber));//correct
         assertFalse(tManager.receiveCreditCardPayment(saleId + 1, ccNumber));//wrong sale
         assertFalse(tManager.receiveCreditCardPayment(saleId, "59"));//not registered card
-        tManager.addProductToSale(saleId, "123456789012", 20);
-        assertFalse(tManager.receiveCreditCardPayment(saleId, ccNumber));//not enough money
+        int saleId2= tManager.startSaleTransaction();
+        tManager.addProductToSale(saleId2, "123456789012", 1);
+        tManager.addProductToSale(saleId2, "123456789012", 20);
+        assertFalse(tManager.receiveCreditCardPayment(saleId2, ccNumber));//not enough money
         assertThrows(InvalidTransactionIdException.class, () -> tManager.receiveCreditCardPayment(null, ccNumber));
         assertThrows(InvalidTransactionIdException.class, () -> tManager.receiveCreditCardPayment(0, ccNumber));
         assertThrows(InvalidCreditCardException.class, () -> tManager.receiveCreditCardPayment(saleId, null));
