@@ -777,8 +777,8 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 
 | Non Functional Requirement | Test name                                                    |
 | -------------------------- | ------------------------------------------------------------ |
-|                            |                                                              |
-|                            |                                                              |
+| NFR4                       | src.test.java.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeNull**<br />src.test.java.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeNonNum**<br />src.test.java.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtLessThan12**<br />src.test.java.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtGreaterThan14**<br /> |
+| NFR5                       | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testLuhn** |
 | NFR6                       | src.test.it.polito.ezshop.classes.UserManagerTest::**testCheckCardDigits** |
 
 
