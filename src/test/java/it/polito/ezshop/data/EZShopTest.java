@@ -821,7 +821,10 @@ public class EZShopTest {
     }
     
     @Test
-    public void computeBalance() {
+    public void computeBalance() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException {
+        assertThrows(UnauthorizedException.class,()->shop.computeBalance());
+        shop.getUserManager().login("Stefano", "123");
+        assertTrue(shop.computeBalance()>=0);
     }
 
     @Test
