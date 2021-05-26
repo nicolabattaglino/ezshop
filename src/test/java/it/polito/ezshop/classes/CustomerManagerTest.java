@@ -12,7 +12,6 @@ import static org.junit.Assert.*;
 
 public class CustomerManagerTest {
 
-    //TODO add the test prefix
     
     CustomerManager cm;
 

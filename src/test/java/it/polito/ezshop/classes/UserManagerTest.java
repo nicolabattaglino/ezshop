@@ -116,11 +116,7 @@ public class UserManagerTest {
         assertTrue(um.logout());
     }
     
-    // todo test clear?
-    /*@Test
-    public void clear() {
 
-    }*/
     @After
     public void clear(){
         um.clear();
