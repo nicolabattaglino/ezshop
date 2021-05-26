@@ -300,8 +300,8 @@ Shop --> CustomerManager : -customerManager: CustomerManager
 Shop --> ProductOrderManager : -productOrderManager: ProductOrderManager
 Shop --> TransactionManager : -transactionManager: TransactionManager
 
-Shop <-- UserManager : -shop:  Shop
-Shop <-- CustomerManager : -shop:  Shop
+
+
 Shop <-- ProductOrderManager : -shop:  Shop
 Shop <-- TransactionManager : -shop:  Shop
 
