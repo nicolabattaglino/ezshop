@@ -125,6 +125,7 @@ public class CustomerManager {
         }
         CustomerObj customer = new CustomerObj(id, customerName);
         customerMap.put(id, customer);
+
         if (customerMap.get(id) == null) {
             return -1;
         }
@@ -202,10 +203,7 @@ public class CustomerManager {
                 persistCustomers();
                 persistCards();
             } catch (IOException e) {
-                customerMap.put(c.getId(), c);
-                String cardId = c.getCustomerCard();
-                cardMap.get(cardId).setPoints(oldPoints);
-                cardMap.get(cardId).setIsAttached(true);
+
                 e.printStackTrace();
             }
             return true;
@@ -242,8 +240,7 @@ public class CustomerManager {
             persistCardsId();
         } catch (IOException e) {
             e.printStackTrace();
-            //cardMap.remove(l.getCardCode());
-            //loyaltyCardIdGen = id--;
+
         }
         return l.getCardCode();
     }

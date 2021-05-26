@@ -101,8 +101,6 @@ public class UserManager {
             persistUsers();
             persistUsersId();
         } catch (IOException e) {
-            userList.removeLast();
-            userIdGen = userList.getLast().getId();
             e.printStackTrace();
         }
         return userIdGen;
@@ -123,7 +121,7 @@ public class UserManager {
                     try {
                         persistUsers();
                     } catch (IOException e) {
-                        userList.add(u);
+                       // userList.add(u);
                         e.printStackTrace();
                     }
                     return true;

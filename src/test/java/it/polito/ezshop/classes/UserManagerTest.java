@@ -32,8 +32,8 @@ public class UserManagerTest {
         um.createUser("SimAdmin", "12345", "Administrator");
         
         assertThrows(InvalidUsernameException.class, () -> um.createUser("", "1234", "Cashier"));
-        assertThrows(InvalidUsernameException.class, () -> um.createUser(null, "1234", "Cashier"));
-        assertThrows(InvalidPasswordException.class, () -> um.createUser("John", "", "Cashier"));
+        assertThrows(InvalidUsernameException.class, () -> um.createUser(null, "1234", "Administrator"));
+        assertThrows(InvalidPasswordException.class, () -> um.createUser("John", "", "ShopManager"));
         assertThrows(InvalidPasswordException.class, () -> um.createUser("John", null, "Cashier"));
         assertThrows(InvalidRoleException.class, () -> um.createUser("John", "1234", ""));
         assertThrows(InvalidRoleException.class, () -> um.createUser("John", "1234", null));

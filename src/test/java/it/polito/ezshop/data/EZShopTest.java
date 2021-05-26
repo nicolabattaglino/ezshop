@@ -24,23 +24,22 @@ public class EZShopTest {
     
     @Test
     public void getTransactionManager() {
+        assertNotNull(shop.getTransactionManager());
     }
     
     @Test
     public void getCustomerManager() {
+        assertNotNull(shop.getCustomerManager());
     }
     
     @Test
     public void getUserManager() {
-    }
-    
-    @Test
-    public void reset() {
+        assertNotNull(shop.getUserManager());
     }
     
     @Test
     public void createUser() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, InvalidUserIdException, UnauthorizedException {
-        int id = shop.getUserManager().createUser("JohnB","123321","Cashier");
+        int id = shop.createUser("JohnB","123321","Cashier");
         shop.login("Mattia","123");
         assertEquals(id, (int) shop.getUser(id).getId());
     }
@@ -48,12 +47,13 @@ public class EZShopTest {
     @Test
     public void deleteUser() throws UnauthorizedException, InvalidPasswordException, InvalidRoleException, InvalidUsernameException, InvalidUserIdException {
 
-        assertThrows(UnauthorizedException.class, () -> shop.deleteUser(0));
+        int id = shop.createUser("MikeS","1221","ShopManager");
+        assertThrows(UnauthorizedException.class, () -> shop.deleteUser(id));
         shop.login("Hossein","123");
-        assertThrows(UnauthorizedException.class, () -> shop.deleteUser(0));
+        assertThrows(UnauthorizedException.class, () -> shop.deleteUser(id));
         shop.login("Mattia","123");
-        int id = shop.getUserManager().createUser("JohnB","123321","Cashier");
-        assertTrue(shop.deleteUser(id));
+        int id1 = shop.createUser("JohnB","123321","Cashier");
+        assertTrue(shop.deleteUser(id1));
     }
     
     @Test
@@ -91,11 +91,12 @@ public class EZShopTest {
     public void login() throws InvalidPasswordException, InvalidUsernameException {
         assertNull(shop.login("Mattia","123456"));
         User u = shop.login("Mattia","123");
-        assertEquals("Mattia",u.getUsername());
+        assertEquals(shop.getUserManager().getUserLogged().getUsername(),u.getUsername());
     }
     
     @Test
     public void getProductOrderManager() {
+        assertNotNull(shop.getProductOrderManager());
     }
     
     @Test
@@ -361,11 +362,28 @@ public class EZShopTest {
     }
     
     @Test
-    public void attachCardToCustomer() {
+    public void attachCardToCustomer() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidCustomerNameException, InvalidCustomerIdException, InvalidCustomerCardException {
+        assertThrows(UnauthorizedException.class, () -> shop.attachCardToCustomer("1000000003",1));
+        shop.login("Mattia","123");
+        String cardID = shop.createCard();
+        String cardID1 = shop.createCard();
+        Integer id = shop.defineCustomer("JohnB");
+        Integer id1 = shop.defineCustomer("Mike");
+        assertTrue(shop.attachCardToCustomer(cardID,id));
+        assertFalse(shop.attachCardToCustomer(cardID,id1));
+        assertFalse(shop.attachCardToCustomer(cardID1,100));
     }
     
     @Test
-    public void modifyPointsOnCard() {
+    public void modifyPointsOnCard() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidCustomerNameException, InvalidCustomerIdException, InvalidCustomerCardException {
+        assertThrows(UnauthorizedException.class, () -> shop.modifyPointsOnCard("1000000003",1));
+        shop.login("Mattia","123");
+        String cardID = shop.createCard();
+        Integer id = shop.defineCustomer("JohnB");
+        shop.attachCardToCustomer(cardID,id);
+        assertTrue(shop.modifyPointsOnCard(cardID,10));
+        assertFalse(shop.modifyPointsOnCard(cardID,-40));
+        assertFalse(shop.modifyPointsOnCard("1000000005",10));
     }
     
     @Test
