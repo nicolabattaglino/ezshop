@@ -72,17 +72,17 @@ public class TransactionManagerTest {
         tManager.addProductToSale(saleId, "123456789012", 1);
 
         int retCode=tManager.startReturnTransaction(saleId);
-        String pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
-        tManager.returnProduct(retCode,pBarCode , 1);
+        String pBarCode = poManager.getProductTypesByDescription("test").get(0).getBarCode();
+        tManager.returnProduct(retCode, pBarCode, 1);
         String ccNumber = "79927398713";
         tManager.receiveCreditCardPayment(saleId, ccNumber);
-        assertFalse(tManager.returnCreditCardPayment(retCode,"59")>0);//card doesn't exist
-        assertThrows(InvalidTransactionIdException.class, ()->tManager.applyDiscountRateToSale(null,ccNumber));
-        assertThrows(InvalidTransactionIdException.class, ()->tManager.applyDiscountRateToSale(0,ccNumber));
-        assertThrows(InvalidTransactionIdException.class, ()->tManager.applyDiscountRateToSale(-1,ccNumber));
-        assertThrows(InvalidCreditCardException.class, ()->tManager.applyDiscountRateToSale(retCode,"11"));
-        assertThrows(InvalidCreditCardException.class, ()->tManager.applyDiscountRateToSale(retCode,""));
-        assertThrows(InvalidCreditCardException.class, ()->tManager.applyDiscountRateToSale(retCode,null));
+        assertFalse(tManager.returnCreditCardPayment(retCode, "59") > 0);//card doesn't exist
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.applyDiscountRateToSale(null, ccNumber));
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.applyDiscountRateToSale(0, ccNumber));
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.applyDiscountRateToSale(-1, ccNumber));
+        assertThrows(InvalidCreditCardException.class, () -> tManager.applyDiscountRateToSale(retCode, "11"));
+        assertThrows(InvalidCreditCardException.class, () -> tManager.applyDiscountRateToSale(retCode, ""));
+        assertThrows(InvalidCreditCardException.class, () -> tManager.applyDiscountRateToSale(retCode, null));*/
     }
     
     @Test

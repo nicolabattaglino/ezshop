@@ -185,6 +185,7 @@ public class ProductOrderManagerTest {
         try {
             id = p.createProductType("test", "123456789012", 22.0, "note");
             productType = p.getProductTypeByBarCode("123456789012");
+            assertNotNull(productType);
             assertEquals(
                     new ProductTypeObj(0, id, "test", "123456789012", "note", 22.0, 0, new Position()),
                     productType);
@@ -195,7 +196,7 @@ public class ProductOrderManagerTest {
     }
     
     @Test
-    public void testGetProductTypesByDescription() {
+    public void testGetProductTypesByDescriptionOk() {
         ArrayList<ProductTypeObj> testList = new ArrayList<>();
         try {
             Integer id = p.createProductType("hello test", "123456789012", 22.0, "note");
