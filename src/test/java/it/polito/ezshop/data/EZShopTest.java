@@ -1,6 +1,9 @@
 package it.polito.ezshop.data;
 
 import org.junit.Test;
+import it.polito.ezshop.exceptions.*;
+
+import static org.junit.Assert.*;
 
 public class EZShopTest {
     
@@ -25,11 +28,23 @@ public class EZShopTest {
     }
     
     @Test
-    public void deleteUser() {
+    public void deleteUser() throws UnauthorizedException, InvalidPasswordException, InvalidRoleException, InvalidUsernameException, InvalidUserIdException {
+        EZShop s = new EZShop();
+        assertThrows(UnauthorizedException.class, () -> s.deleteUser(0));
+        s.createUser("SimAdmin","12345","ADMINISTRATOR");
+        int id = s.createUser("JohnB","123321","Cashier");
+        s.login("SimAdmin","12345");
+        assertTrue(s.deleteUser(id));
     }
     
     @Test
-    public void getAllUsers() {
+    public void getAllUsers() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, UnauthorizedException {
+        EZShop s = new EZShop();
+        assertThrows(UnauthorizedException.class, () -> s.getAllUsers());
+        s.createUser("SimAdmin","12345","ADMINISTRATOR");
+        int id = s.createUser("JohnB","123321","Cashier");
+        s.login("SimAdmin","12345");
+        assertEquals(id, (int) s.getAllUsers().get(id).getId());
     }
     
     @Test
