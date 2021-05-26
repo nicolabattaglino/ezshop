@@ -185,8 +185,6 @@ public class TransactionManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        
         return sale.getBalanceId();
     }
     
