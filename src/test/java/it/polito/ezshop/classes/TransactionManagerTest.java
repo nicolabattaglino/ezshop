@@ -82,7 +82,7 @@ public class TransactionManagerTest {
         assertThrows(InvalidTransactionIdException.class, () -> tManager.applyDiscountRateToSale(-1, ccNumber));
         assertThrows(InvalidCreditCardException.class, () -> tManager.applyDiscountRateToSale(retCode, "11"));
         assertThrows(InvalidCreditCardException.class, () -> tManager.applyDiscountRateToSale(retCode, ""));
-        assertThrows(InvalidCreditCardException.class, () -> tManager.applyDiscountRateToSale(retCode, null));*/
+        assertThrows(InvalidCreditCardException.class, () -> tManager.applyDiscountRateToSale(retCode, null));
     }
     
     @Test
