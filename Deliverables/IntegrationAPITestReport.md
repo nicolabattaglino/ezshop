@@ -435,24 +435,15 @@ TransactionManager ..> ProductOrderManager
 <If needed, define here additional scenarios for the application. Scenarios should be named
  referring the UC in the OfficialRequirements that they detail>
 
-## Scenario UC4-5
+## Scenario UCx.y
 
-| Scenario |  Delete Customer |
+| Scenario |  name |
 | ------------- |:-------------:| 
-|  Precondition     | Account U for Customer Cu existing |
-|  Post condition     |  U is deleted from system |
+|  Precondition     |  |
+|  Post condition     |   |
 | Step#        | Description  |
-|  1     |  User select customer record U |  
-|  2     |  U deleted from the system |
-
-## Scenario UC4-6
-
-| Scenario |  Search Customer |
-| ------------- |:-------------:| 
-|  Precondition     | Account U for Customer Cu existing |
-|  Post condition     |  |
-| Step#        | Description  |
-|  1     |  User search customer record U |  
+|  1     |  ... |  
+|  2     |  ... |
 
 
 
@@ -470,23 +461,39 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 |             | FRx                             |             |             
 |             | FRy                             |             |             
 |             |                                 |             |             
-| 2-1         | FR1.1                           |  src.test.it.polito.ezshop.classes.UserManager::**testCreateUser**            |   
-| 2-2         | FR1.2                           |  src.test.it.polito.ezshop.classes.UserManager::**testDeleteUser**           |             
-| 2-3         | FR1.1                           |  src.test.it.polito.ezshop.classes.UserManager::**testUpdateUserRights**            |             
-|             | FR1.3                           |  src.test.it.polito.ezshop.classes.UserManager::**testGetAllUsers**            |             
-|             | FR1.4                           |  src.test.it.polito.ezshop.classes.UserManager::**testGetUser**           |             
+| 2-1         | FR1.1                           |  src.test.it.polito.ezshop.classes.UserManagerTest::**testCreateUser**  |   
+| 2-1         | FR1.1, FR1.5                             |  src.test.it.polito.ezshop.classes.EZShopTest::**testCreateUser** |   
+| 2-2         | FR1.2                           |  src.test.it.polito.ezshop.classes.UserManagerTest::**testDeleteUser**           |             
+| 2-2         | FR1.2, FR1.5                            |   src.test.it.polito.ezshop.classes.EZShopTest::**testDeleteUser**          |             
+| 2-3         | FR1.1                           |  src.test.it.polito.ezshop.classes.UserManagerTest::**testUpdateUserRights**            |             
+| 2-3         | FR1.1, FR1.5                             |   src.test.it.polito.ezshop.classes.EZShopTest::**testUpdateUserRights**           |             
+| -           | FR1.3                           |  src.test.it.polito.ezshop.classes.UserManagerTest::**testGetAllUsers**        |             
+| -           | FR1.3, FR1.5                             |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllUsers**          |             
+| -           | FR1.4                           |  src.test.it.polito.ezshop.classes.UserManagerTest::**testGetUser**        |             
+| -           | FR1.4, FR1.5                             |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetUser**        |             
 | ...         |                                 |             |             
-| 4-1         | FR5.1                           |  src.test.it.polito.ezshop.classes.CustomerManager::**testDefineCustomer**            |             
-| 4-2         | FR5.6                           |  src.test.it.polito.ezshop.classes.CustomerManager::**testAttachCardToCustomer**           |             
-| 4-3         | FR5.1                           |  src.test.it.polito.ezshop.classes.CustomerManager::**testModifyCustomer**           |             
-| 4-4         | FR5.1                           |   src.test.it.polito.ezshop.classes.CustomerManager::**testModifyCustomer**          |  
-| 4-5         | FR5.2                           |   src.test.it.polito.ezshop.classes.CustomerManager::**testDeleteCustomer**          |             
-| 4-6         | FR5.3                           |   src.test.it.polito.ezshop.classes.CustomerManager::**testGetCustomer**          |             
-|             | FR5.4                           |   src.test.it.polito.ezshop.classes.CustomerManager::**testGetAllCustomers**          |             
-|             | FR5.5                           |  src.test.it.polito.ezshop.classes.CustomerManager::**testCreateCard**           |
-|             | FR5.7                           |   src.test.it.polito.ezshop.classes.CustomerManager::**testModifyPointsOnCard**          |
-| 5-1         | FR1.5                           |  src.test.it.polito.ezshop.classes.UserManager::**testLogin**            |             
-| 5-2         | FR1.5                           |  src.test.it.polito.ezshop.classes.UserManager::**testLogout**            |             
+| 4-1         | FR5.1                           |  src.test.it.polito.ezshop.classes.CustomerManagerTest::**testDefineCustomer**            |             
+| 4-1         | FR5.1, FR1.5                             | src.test.it.polito.ezshop.classes.EZShopTest::**testDefineCustomer**          |             
+| 4-2         | FR5.6                           |  src.test.it.polito.ezshop.classes.CustomerManagerTest::**testAttachCardToCustomer**      |             
+| 4-2         | FR5.6, FR1.5                             |  src.test.it.polito.ezshop.classes.EZShopTest::**testAttachCardToCustomer**       |             
+|             | FR5.5                           |src.test.it.polito.ezshop.classes.CustomerManagerTest::**testCreateCard**   |
+|             | FR5.5, FR1.5                             |src.test.it.polito.ezshop.classes.EZShopTest::**testCreateCard** |
+| 4-3         | FR5.1                           |  src.test.it.polito.ezshop.classes.CustomerManagerTest::**testModifyCustomer**        |             
+| 4-3         | FR5.1, FR1.5                             |   src.test.it.polito.ezshop.classes.EZShopTest::**testModifyCustomer**        |             
+| 4-4         | FR5.1                           |   src.test.it.polito.ezshop.classes.CustomerManagerTest::**testModifyCustomer**      |  
+| 4-4         | FR5.1, FR1.5                             |    src.test.it.polito.ezshop.classes.EZShopTest::**testModifyCustomer**       |  
+|  -          | FR5.2                           |   src.test.it.polito.ezshop.classes.CustomerManagerTest::**testDeleteCustomer**     |             
+|  -          | FR5.2, FR1.5                             |    src.test.it.polito.ezshop.classes.EZShopTest::**testDeleteCustomer**      |             
+|  -          | FR5.3                           |   src.test.it.polito.ezshop.classes.CustomerManagerTest::**testGetCustomer**     |             
+|  -          | FR5.3, FR1.5                             |    src.test.it.polito.ezshop.classes.EZShopTest::**testGetCustomer**      |             
+|  -          | FR5.4                           |   src.test.it.polito.ezshop.classes.CustomerManagerTest::**testGetAllCustomers**     |             
+|  -          | FR5.4, FR1.5                             |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllCustomers**     |             
+|  -          | FR5.7                           |   src.test.it.polito.ezshop.classes.CustomerManagerTest::**testModifyPointsOnCard**    |
+|  -          | FR5.7, FR1.5                             |    src.test.it.polito.ezshop.classes.EZShopTest::**testModifyPointsOnCard**   |
+| 5-1         | FR1.5                           |  src.test.it.polito.ezshop.classes.UserManagerTest::**testLogin**        |             
+| 5-1         | FR1.5                           |  src.test.it.polito.ezshop.classes.EZShopTest::**testLogin**        |             
+| 5-2         | FR1.5                           |  src.test.it.polito.ezshop.classes.UserManagerTest::**testLogout**    |             
+| 5-2         | FR1.5                           |  src.test.it.polito.ezshop.classes.EZShopTest::**testLogout**      |             
 |             |                                 |             |             
 | ...         |                                 |             |             
 | ...         |                                 |             |             
