@@ -29,7 +29,6 @@ public class UserManagerTest {
     @Test
     public void testCreateUser() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, UnauthorizedException {
         um.createUser("SimAdmin", "12345", "Administrator");
-        
         assertThrows(InvalidUsernameException.class, () -> um.createUser("", "1234", "Cashier"));
         assertThrows(InvalidUsernameException.class, () -> um.createUser(null, "1234", "Administrator"));
         assertThrows(InvalidPasswordException.class, () -> um.createUser("John", "", "ShopManager"));
@@ -62,7 +61,6 @@ public class UserManagerTest {
     
     @Test
     public void testGetUser() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, InvalidUserIdException, UnauthorizedException {
-
         um.createUser("SimAdmin", "12345", "Administrator");
         int userId = um.createUser("John", "54321", "Cashier");
         assertThrows(InvalidUserIdException.class, () -> um.getUser(-1));
@@ -72,7 +70,6 @@ public class UserManagerTest {
     
     @Test
     public void testUpdateUserRights() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, InvalidUserIdException, UnauthorizedException {
-
         um.createUser("SimAdmin", "12345", "Administrator");
         int userId = um.createUser("John", "54321", "Cashier");
         assertThrows(InvalidUserIdException.class, () -> um.updateUserRights(-1, "Administrator"));
@@ -87,7 +84,6 @@ public class UserManagerTest {
     
     @Test
     public void testLogin() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException {
-
         assertThrows(InvalidUsernameException.class, () -> um.login(null,"12345"));
         assertThrows(InvalidUsernameException.class, () -> um.login("","12345"));
         assertThrows(InvalidPasswordException.class, () -> um.login("JohnB",null));
@@ -104,7 +100,6 @@ public class UserManagerTest {
     
     @Test
     public void testLogout() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException {
-
         assertFalse(um.logout());
         um.createUser("SimAdmin", "12345", "Administrator");
         um.login("SimAdmin", "12345");
