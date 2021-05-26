@@ -11,7 +11,6 @@ import static org.junit.Assert.*;
 public class TransactionManagerTest {
     EZShop shop;
     TransactionManager tManager;
-    
     @Before
     public void initTransactionManagerTests() {
         shop = new EZShop();
@@ -59,19 +58,105 @@ public class TransactionManagerTest {
     }
     
     @Test
-    public void applyDiscountRateToSale() {
+    public void TestApplyDiscountRateToSale() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
+        int saleId= tManager.startSaleTransaction();
+        ProductOrderManager poManager= shop.getProductOrderManager();
+        poManager.createProductType("test", "123456789012", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
+        poManager.createProductType("test2", "12345678901286", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
+        tManager.addProductToSale(saleId, "12345678901286", 2);
+        tManager.addProductToSale(saleId, "123456789012", 1);
+
+        int retCode=tManager.startReturnTransaction(saleId);
+        String pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
+        tManager.returnProduct(retCode,pBarCode , 1);
+        String ccNumber = "79927398713";
+        tManager.receiveCreditCardPayment(saleId, ccNumber);
+        assertFalse(tManager.returnCreditCardPayment(retCode,"59")>0);//card doesn't exist
+        assertThrows(InvalidTransactionIdException.class, ()->tManager.applyDiscountRateToSale(null,ccNumber));
+        assertThrows(InvalidTransactionIdException.class, ()->tManager.applyDiscountRateToSale(0,ccNumber));
+        assertThrows(InvalidTransactionIdException.class, ()->tManager.applyDiscountRateToSale(-1,ccNumber));
+        assertThrows(InvalidCreditCardException.class, ()->tManager.applyDiscountRateToSale(retCode,"11"));
+        assertThrows(InvalidCreditCardException.class, ()->tManager.applyDiscountRateToSale(retCode,""));
+        assertThrows(InvalidCreditCardException.class, ()->tManager.applyDiscountRateToSale(retCode,null));
     }
     
     @Test
-    public void computePointsForSale() {
+    public void TestComputePointsForSale() throws InvalidQuantityException, InvalidTransactionIdException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidCreditCardException {
+        int saleId= tManager.startSaleTransaction();
+        ProductOrderManager poManager= shop.getProductOrderManager();
+        poManager.createProductType("test", "123456789012", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
+        poManager.createProductType("test2", "12345678901286", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
+        tManager.addProductToSale(saleId, "12345678901286", 2);
+        tManager.addProductToSale(saleId, "123456789012", 1);
+        int retCode=tManager.startReturnTransaction(saleId);
+        String pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
+        tManager.returnProduct(retCode,pBarCode , 1);
+        assertFalse(tManager.computePointsForSale(retCode)>0);// not ended
+        tManager.endReturnTransaction(retCode, true);
+        assertTrue(tManager.computePointsForSale(retCode)>0);
+        assertFalse(tManager.computePointsForSale(retCode+1)>0);
+        assertThrows(InvalidTransactionIdException.class, ()->tManager.computePointsForSale(null));
+        assertThrows(InvalidTransactionIdException.class, ()->tManager.computePointsForSale(0));
+        assertThrows(InvalidTransactionIdException.class, ()->tManager.computePointsForSale(-1));
     }
     
     @Test
-    public void endSaleTransaction() {
+    public void testEndSaleTransaction() throws InvalidTransactionIdException, InvalidQuantityException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, UnauthorizedException, InvalidLocationException, InvalidCreditCardException {
+
+        int saleId= tManager.startSaleTransaction();
+        ProductOrderManager poManager= shop.getProductOrderManager();
+        poManager.createProductType("test", "123456789012", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
+        poManager.createProductType("test2", "12345678901286", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
+        tManager.addProductToSale(saleId, "12345678901286", 2);
+        tManager.addProductToSale(saleId, "123456789012", 1);
+        int retCode=tManager.startReturnTransaction(saleId);
+        String pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
+        tManager.returnProduct(retCode,pBarCode , 1);
+        assertFalse(tManager.endSaleTransaction(retCode));
+        tManager.endReturnTransaction(retCode, true);
+        assertTrue(tManager.endSaleTransaction(retCode));
+        assertFalse(tManager.endSaleTransaction(retCode+1));
+        assertThrows(InvalidTransactionIdException.class, ()->tManager.endSaleTransaction(null));
+        assertThrows(InvalidTransactionIdException.class, ()->tManager.endSaleTransaction(-1));
     }
     
     @Test
-    public void deleteSaleTransaction() {
+    public void testDeleteSaleTransaction() throws InvalidTransactionIdException, InvalidQuantityException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, UnauthorizedException, InvalidLocationException {
+
+        int saleId= tManager.startSaleTransaction();
+        ProductOrderManager poManager= shop.getProductOrderManager();
+        poManager.createProductType("test", "123456789012", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
+        poManager.createProductType("test2", "12345678901286", 5.0, "note");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
+        tManager.addProductToSale(saleId, "12345678901286", 1);
+        tManager.addProductToSale(saleId, "123456789012", 1);
+        int retCode=tManager.startReturnTransaction(saleId);
+        String pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
+        tManager.returnProduct(retCode,pBarCode , 1);
+        assertTrue(tManager.deleteSaleTransaction(retCode));
+        retCode=tManager.startReturnTransaction(saleId);
+        pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
+        tManager.returnProduct(retCode,pBarCode , 1);
+        assertTrue(tManager.deleteSaleTransaction(retCode));
+        assertFalse(tManager.deleteSaleTransaction(retCode));
+        assertFalse(tManager.deleteSaleTransaction(retCode+1));
+        assertThrows(InvalidTransactionIdException.class, ()-> tManager.deleteSaleTransaction(null));
+        assertThrows(InvalidTransactionIdException.class, ()-> tManager.deleteSaleTransaction(0));
     }
     
     @Test
@@ -279,11 +364,9 @@ public class TransactionManagerTest {
         assertThrows(InvalidCreditCardException.class, () -> tManager.returnCreditCardPayment(retCode, null));
     }
     
-    
     @Test
     public void testGetCreditsAndDebits() {
     }
-    
     
     @Test
     public void testAddCompletedOrderInvalid() {
@@ -318,8 +401,7 @@ public class TransactionManagerTest {
                 .count());
         
     }
-    
-    
+
     @Test
     public void testAddIssuedOrder() {
         OrderObj order = new OrderObj(1,
