@@ -95,7 +95,7 @@ public class EZShopTest {
     }
     
     @Test
-    public void deleteProductType() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductIdException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException {
+    public void testDeleteProductType() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductIdException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException {
         Integer id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
         Integer finalId = id;
         assertThrows(UnauthorizedException.class, () -> shop.updateProduct(finalId, "test1", "123456789012", 22.0, "nota"));
@@ -109,8 +109,8 @@ public class EZShopTest {
     }
     
     @Test
-    public void getAllProductTypes() throws UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException {
-        Integer id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+    public void testGetAllProductTypes() throws UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException {
+        shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
         assertThrows(UnauthorizedException.class, shop::getAllProductTypes);
         shop.login("Stefano", "123");
         assertFalse(shop.getAllProductTypes().isEmpty());
@@ -121,8 +121,8 @@ public class EZShopTest {
     }
     
     @Test
-    public void getProductTypeByBarCode() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException, UnauthorizedException {
-        Integer id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+    public void testGetProductTypeByBarCode() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException, UnauthorizedException {
+        shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
         assertThrows(UnauthorizedException.class, () -> shop.getProductTypeByBarCode("123456789012"));
         shop.login("Stefano", "123");
         assertThrows(UnauthorizedException.class, () -> shop.getProductTypeByBarCode("123456789012"));
@@ -133,8 +133,8 @@ public class EZShopTest {
     }
     
     @Test
-    public void getProductTypesByDescription() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException {
-        Integer id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+    public void testGetProductTypesByDescription() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException {
+        shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
         assertThrows(UnauthorizedException.class, () -> shop.getProductTypesByDescription("test"));
         shop.login("Stefano", "123");
         assertThrows(UnauthorizedException.class, () -> shop.getProductTypesByDescription("test"));
@@ -145,31 +145,131 @@ public class EZShopTest {
     }
     
     @Test
-    public void updateQuantity() {
+    public void testUpdateQuantity() throws InvalidPasswordException, InvalidUsernameException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, UnauthorizedException, InvalidProductIdException, InvalidLocationException {
+        Integer id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        shop.getProductOrderManager().updatePosition(id, "10-10-10");
+        assertThrows(UnauthorizedException.class, () -> shop.updateQuantity(id, 10));
+        shop.login("Stefano", "123");
+        assertThrows(UnauthorizedException.class, () -> shop.updateQuantity(id, 10));
+        shop.login("Hossain", "123");
+        assertTrue(shop.updateQuantity(id, 10));
+        shop.login("Mattia", "123");
+        assertTrue(shop.updateQuantity(id, 10));
     }
     
     @Test
-    public void updatePosition() {
+    public void testUpdatePosition() throws InvalidPasswordException, InvalidUsernameException, InvalidLocationException, UnauthorizedException, InvalidProductIdException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException {
+        Integer id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        assertThrows(UnauthorizedException.class, () -> shop.updatePosition(id, "10-10-10"));
+        shop.login("Stefano", "123");
+        assertThrows(UnauthorizedException.class, () -> shop.updatePosition(id, "10-10-10"));
+        shop.login("Hossain", "123");
+        assertTrue(shop.updatePosition(id, "10-10-10"));
+        shop.login("Mattia", "123");
+        assertTrue(shop.updatePosition(id, "10-20-10"));
     }
     
     @Test
-    public void issueOrder() {
+    public void testIssueOrder() throws InvalidQuantityException, UnauthorizedException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException, InvalidProductDescriptionException {
+        shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        assertThrows(UnauthorizedException.class, () -> shop.issueOrder("123456789012", 20, 25.0));
+        shop.login("Stefano", "123");
+        assertThrows(UnauthorizedException.class, () -> shop.issueOrder("123456789012", 20, 25.0));
+        shop.login("Hossain", "123");
+        assertNotEquals(-1, (int) shop.issueOrder("123456789012", 20, 25.0));
+        shop.login("Mattia", "123");
+        assertNotEquals(-1, (int) shop.issueOrder("123456789012", 20, 25.0));
     }
     
     @Test
-    public void payOrderFor() {
+    public void testPayOrderForInvalid() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException {
+        shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
+        assertThrows(UnauthorizedException.class, () -> shop.payOrderFor("123456789012", 10, 10));
+        shop.login("Stefano", "123");
+        assertThrows(UnauthorizedException.class, () -> shop.payOrderFor("123456789012", 10, 10));
     }
     
     @Test
-    public void payOrder() {
+    public void testPayOrderForAdmin() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException, InvalidQuantityException, UnauthorizedException {
+        shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        shop.login("Mattia", "123");
+        shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
+        assertNotEquals(-1, (int) shop.payOrderFor("123456789012", 10, 10));
     }
     
     @Test
-    public void recordOrderArrival() {
+    public void testPayOrderForShopManager() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException, InvalidQuantityException, UnauthorizedException {
+        shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        shop.login("Hossain", "123");
+        shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
+        assertNotEquals(-1, (int) shop.payOrderFor("123456789012", 10, 10));
+    }
+    
+    @Test
+    public void testPayOrderInvalid() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException, InvalidQuantityException {
+        shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        Integer id = shop.getProductOrderManager().issueOrder("123456789012", 20, 25.0);
+        shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
+        assertThrows(UnauthorizedException.class, () -> shop.payOrder(id));
+        shop.login("Stefano", "123");
+        assertThrows(UnauthorizedException.class, () -> shop.payOrder(id));
+    }
+    
+    @Test
+    public void testPayOrderAdmin() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException, InvalidQuantityException, UnauthorizedException, InvalidOrderIdException {
+        shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        Integer id = shop.getProductOrderManager().issueOrder("123456789012", 20, 25.0);
+        shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
+        shop.login("Mattia", "123");
+        assertTrue(shop.payOrder(id));
+    }
+    
+    @Test
+    public void testPayOrderShopManager() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException, InvalidQuantityException, UnauthorizedException, InvalidOrderIdException {
+        shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        Integer id = shop.getProductOrderManager().issueOrder("123456789012", 20, 25.0);
+        shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
+        shop.login("Hossain", "123");
+        assertTrue(shop.payOrder(id));
+    }
+    
+    @Test
+    public void recordOrderArrivalInvalid() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException {
+        shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
+        final int id = shop.getProductOrderManager().payOrderFor("123456789012", 10, 10);
+        assertNotEquals(-1, id);
+        assertThrows(UnauthorizedException.class, () -> shop.recordOrderArrival(id));
+        shop.login("Stefano", "123");
+        assertThrows(UnauthorizedException.class, () -> shop.recordOrderArrival(id));
+    }
+    
+    @Test
+    public void recordOrderAdmin() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidLocationException, InvalidOrderIdException, InvalidProductIdException {
+        Integer prodId = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        shop.getProductOrderManager().updatePosition(prodId, "10-10-10");
+        shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
+        final int id = shop.getProductOrderManager().payOrderFor("123456789012", 10, 10);
+        assertNotEquals(-1, id);
+        shop.login("Mattia", "123");
+        assertTrue(shop.recordOrderArrival(id));
+    }
+    
+    @Test
+    public void recordOrderShopManager() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidLocationException, InvalidOrderIdException, InvalidProductIdException {
+        Integer prodId = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        shop.getProductOrderManager().updatePosition(prodId, "10-10-10");
+        shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
+        final int id = shop.getProductOrderManager().payOrderFor("123456789012", 10, 10);
+        assertNotEquals(-1, id);
+        shop.login("Hossain", "123");
+        assertTrue(shop.recordOrderArrival(id));
     }
     
     @Test
     public void getAllOrders() {
+    
     }
     
     @Test
