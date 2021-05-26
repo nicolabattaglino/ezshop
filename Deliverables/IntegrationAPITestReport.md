@@ -814,11 +814,7 @@ Report also for each of the scenarios the (one or more) API JUnit tests that cov
 | 10-2 | FR8.1, FR8.2,  FR1.5 | src.test.java.it.polito.ezshop.classes.EZShopTest::**testRecordBalanceUpdate** |
 | 10-2 | FR8.1, FR8.4  | src.test.java.it.polito.ezshop.classes.TransactionManagerTest::**testComputeBalance** |
 | 10-2 | FR8.4, FR8.4, FR1.5 | src.test.java.it.polito.ezshop.classes.EZShopTest::**testComputeBalance** |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
+
 
 
 
