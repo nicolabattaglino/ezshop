@@ -43,7 +43,7 @@ public class TransactionManager {
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
     private Map<String, CreditCard> cards = new HashMap<String, CreditCard>();
-
+    
     private int saleGen;
     private int returnGen;
     private int balanceOperationGen;
@@ -101,7 +101,7 @@ public class TransactionManager {
                 returnTransactions = new HashMap<>();
             }
         }
-
+    
         File creditCards = new File(CREDITCARD_PATH);
         TypeReference<HashMap<String, CreditCard>> typeRef3 = new TypeReference<HashMap<String, CreditCard>>() {
         };
@@ -170,8 +170,8 @@ public class TransactionManager {
         }
         
     }
-
-
+    
+    
     public Integer startSaleTransaction() {
         SaleTransactionObj sale = new SaleTransactionObj(saleGen++, LocalDate.now(), 0.0, "Sale");
         saleTransactions.put((Integer) sale.getBalanceId(), sale);
@@ -245,7 +245,6 @@ public class TransactionManager {
         if (productCode == null || !shop.getProductOrderManager().checkBarcode(productCode))
             throw new InvalidProductCodeException();
         if (discountRate < 0.0 || discountRate >= 1.00) throw new InvalidDiscountRateException();
-        if (discountRate > 1 || discountRate < 0) return false;
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
         if (!sale.getStatus().equals(SaleStatus.STARTED)) return false;
@@ -490,7 +489,7 @@ public class TransactionManager {
         if (transaction.getPrice() > cash) return -1;
         return cash - transaction.getPrice();
     }
-
+    
     public boolean receiveCreditCardPayment(Integer ticketNumber, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException {
         if (ticketNumber == null || ticketNumber <= 0) throw new InvalidTransactionIdException();
         if (creditCard == null || creditCard.equals("") || !this.luhn(creditCard))
@@ -515,7 +514,7 @@ public class TransactionManager {
         if (!recordBalanceUpdate(-1 * price)) return -1;
         return price;
     }
-
+    
     public double returnCreditCardPayment(Integer returnId, String creditCard) throws InvalidTransactionIdException, InvalidCreditCardException {
         if (returnId == null || returnId <= 0) throw new InvalidTransactionIdException();
         if (creditCard == null || creditCard.equals("") || !this.luhn(creditCard))
@@ -723,7 +722,7 @@ public class TransactionManager {
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(CREDITCARD_PATH), cards);
     }
-
+    
     private void persistOrders() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
@@ -766,8 +765,8 @@ public class TransactionManager {
             e.printStackTrace();
         }
     }
-
-public void defineCreditCards() {
+    
+    public void defineCreditCards() {
         CreditCard cc = new CreditCard("79927398713", 25.3);
         CreditCard cc2 = new CreditCard("1010101010101010101", 12.3);
         cards.put(cc.getNumber(), cc);

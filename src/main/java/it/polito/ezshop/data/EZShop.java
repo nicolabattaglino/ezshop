@@ -1,6 +1,8 @@
 package it.polito.ezshop.data;
+
 import it.polito.ezshop.classes.*;
 import it.polito.ezshop.exceptions.*;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,7 +14,7 @@ public class EZShop implements EZShopInterface {
     
     public EZShop() {
         productOrderManager = new ProductOrderManager(this);
-        customerManager = new CustomerManager(this);
+        customerManager = new CustomerManager();
         userManager = new UserManager(this);
         transactionManager = new TransactionManager(this);
     }

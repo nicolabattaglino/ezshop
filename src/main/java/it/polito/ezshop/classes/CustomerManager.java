@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import it.polito.ezshop.data.Customer;
-import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.exceptions.InvalidCustomerCardException;
 import it.polito.ezshop.exceptions.InvalidCustomerIdException;
 import it.polito.ezshop.exceptions.InvalidCustomerNameException;
@@ -29,16 +28,13 @@ public class CustomerManager {
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
     private Map<Integer, CustomerObj> customerMap;
-    
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
     private Map<String, LoyaltyCardObj> cardMap;
-    
     private Integer customerIdGen;
     private long loyaltyCardIdGen;
-    private final EZShop shop;
-
-    public CustomerManager(EZShop shop) {
+    
+    public CustomerManager() {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<HashMap<String, LoyaltyCardObj>> typeRef = new TypeReference<HashMap<String, LoyaltyCardObj>>() {
         };
@@ -104,8 +100,7 @@ public class CustomerManager {
                 loyaltyCardIdGen = 1000000000;
             }
         }
-
-        this.shop = shop;
+        
     }
     
     
@@ -113,11 +108,11 @@ public class CustomerManager {
         if (customerName == null || customerName.equals(""))
             throw new InvalidCustomerNameException();
         Integer id;
-        for (Map.Entry<Integer,CustomerObj> entry : customerMap.entrySet()){
+        for (Map.Entry<Integer, CustomerObj> entry : customerMap.entrySet()) {
             if (entry.getValue().getCustomerName().equals(customerName))
                 return -1;
         }
-
+    
         if (customerMap.size() == 0) {
             id = 0;
         } else {
@@ -156,8 +151,8 @@ public class CustomerManager {
                 return false;
             }
         }
-
-        if (newCustomerCard == null){
+    
+        if (newCustomerCard == null) {
             customer.setCustomerName(newCustomerName);
         } else if (newCustomerCard.equals("")) {
             card = cardMap.get(customer.getCustomerCard());
@@ -170,7 +165,7 @@ public class CustomerManager {
             cardMap.get(newCustomerCard).setIsAttached(true);
             customer.setCustomerName(newCustomerName);
         }
-
+    
         try {
             persistCustomers();
             persistCards();
@@ -255,7 +250,7 @@ public class CustomerManager {
             throw new InvalidCustomerCardException();
         CustomerObj customer = null;
         LoyaltyCardObj target = null;
-        if(cardMap.get(customerCard) != null && customerMap.get(customerId) != null) {
+        if (cardMap.get(customerCard) != null && customerMap.get(customerId) != null) {
             target = cardMap.get(customerCard);
             customer = customerMap.get(customerId);
         }
@@ -341,7 +336,7 @@ public class CustomerManager {
     private void persistCardsId() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
-        .writeValue(new File(CARD_ID_PATH), loyaltyCardIdGen);
+                .writeValue(new File(CARD_ID_PATH), loyaltyCardIdGen);
     }
     
     

@@ -24,7 +24,7 @@ public class CustomerObjTest {
     
     @Test
     public void testSetCustomerCard() {
-        CustomerManager cm = new CustomerManager(null);
+        CustomerManager cm = new CustomerManager();
         cm.createCard();
         CustomerObj cu = new CustomerObj(1, "John");
         assertNull(cu.getCustomerCard());
