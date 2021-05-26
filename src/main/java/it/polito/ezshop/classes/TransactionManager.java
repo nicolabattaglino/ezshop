@@ -246,7 +246,6 @@ public class TransactionManager {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         if (productCode == null) throw new InvalidProductCodeException();
         if (discountRate < 0.0 || discountRate >= 1.00) throw new InvalidDiscountRateException();
-        if (discountRate > 1 || discountRate < 0) return false;
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
         if (!sale.getStatus().equals(SaleStatus.STARTED)) return false;
@@ -269,7 +268,6 @@ public class TransactionManager {
     public boolean applyDiscountRateToSale(Integer transactionId, double discountRate) throws InvalidTransactionIdException, InvalidDiscountRateException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         if (discountRate < 0.0 || discountRate >= 1.00) throw new InvalidDiscountRateException();
-        if (discountRate > 1 || discountRate < 0) return false;
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
         if (sale.getStatus() == SaleStatus.PAYED) return false;
