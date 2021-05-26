@@ -57,9 +57,9 @@ public class TransactionManagerTest {
     @Test
     public void applyDiscountRateToProduct() {
     }
-    //???? is this test right?
+
     @Test
-    public void TestApplyDiscountRateToSale() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
+    public void TestApplyDiscountRateToSale() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException, InvalidDiscountRateException {
         int saleId= tManager.startSaleTransaction();
         ProductOrderManager poManager= shop.getProductOrderManager();
         poManager.createProductType("test", "123465", 5.0, "note");
@@ -72,14 +72,17 @@ public class TransactionManagerTest {
         tManager.addProductToSale(saleId, "123465", 1);
 
         int retCode=tManager.startReturnTransaction(saleId);
-        String pBarCode= poManager.getProductTypesByDescription("test").get(0).getBarCode();
-        tManager.returnProduct(retCode,pBarCode , 1);
-        String ccNumber = "18971897";
+        String pBarCode = poManager.getProductTypesByDescription("test").get(0).getBarCode();
+        tManager.returnProduct(retCode, pBarCode, 1);
+        String ccNumber = "79927398713";
         tManager.receiveCreditCardPayment(saleId, ccNumber);
-        assertFalse(tManager.returnCreditCardPayment(retCode,"59")>0);//card doesn't exist
-        assertThrows(InvalidTransactionIdException.class, ()->tManager.applyDiscountRateToSale(retCode, 1.0));
-        assertThrows(InvalidTransactionIdException.class, ()->tManager.applyDiscountRateToSale(retCode,0));
-        assertThrows(InvalidTransactionIdException.class, ()->tManager.applyDiscountRateToSale(retCode,-1));
+        assertFalse(tManager.applyDiscountRateToSale(retCode, "59"));
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.applyDiscountRateToSale(null, ccNumber));
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.applyDiscountRateToSale(0, ccNumber));
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.applyDiscountRateToSale(-1, ccNumber));
+        assertThrows(InvalidCreditCardException.class, () -> tManager.applyDiscountRateToSale(retCode, "11"));
+        assertThrows(InvalidCreditCardException.class, () -> tManager.applyDiscountRateToSale(retCode, ""));
+        assertThrows(InvalidCreditCardException.class, () -> tManager.applyDiscountRateToSale(retCode, null));
     }
     
     @Test
