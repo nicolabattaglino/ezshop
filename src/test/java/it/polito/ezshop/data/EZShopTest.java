@@ -1,11 +1,30 @@
 package it.polito.ezshop.data;
 
+import it.polito.ezshop.classes.UserRole;
+import it.polito.ezshop.exceptions.*;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import it.polito.ezshop.exceptions.*;
 
 import static org.junit.Assert.*;
 
+import static org.junit.Assert.*;
+
 public class EZShopTest {
+    
+    private static final EZShop shop = new EZShop();
+    
+    @Before
+    public void addUsers() {
+        try {
+            shop.getUserManager().createUser("Hossain", "123", UserRole.SHOPMANAGER.name());
+            shop.getUserManager().createUser("Mattia", "123", UserRole.ADMINISTRATOR.name());
+            shop.getUserManager().createUser("Stefano", "123", UserRole.CASHIER.name());
+        } catch (InvalidUsernameException | InvalidPasswordException | InvalidRoleException e) {
+            e.printStackTrace();
+        }
+    }
     
     @Test
     public void getTransactionManager() {
@@ -68,27 +87,76 @@ public class EZShopTest {
     }
     
     @Test
-    public void createProductType() {
+    public void testCreateProductType() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException {
+        assertThrows(UnauthorizedException.class, () -> shop.createProductType("test", "123456789012", 25.0, "note"));
+        shop.login("Stefano", "123");
+        assertThrows(UnauthorizedException.class, () -> shop.createProductType("test", "123456789012", 25.0, "note"));
+        shop.login("Hossain", "123");
+        assertNotEquals(-1, (int) shop.createProductType("test", "123456789012", 25.0, "note"));
+        shop.login("Mattia", "123");
+        assertNotEquals(-1, (int) shop.createProductType("test1", "1234567890128", 22.0, "note"));
     }
     
     @Test
-    public void updateProduct() {
+    public void testUpdateProduct() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductIdException {
+        Integer id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        assertThrows(UnauthorizedException.class, () -> shop.updateProduct(id, "test1", "123456789012", 22.0, "nota"));
+        shop.login("Stefano", "123");
+        assertThrows(UnauthorizedException.class, () -> shop.updateProduct(id, "test1", "123456789012", 22.0, "nota"));
+        shop.login("Hossain", "123");
+        assertTrue(shop.updateProduct(id, "test1", "123456789012", 22.0, "nota"));
+        shop.login("Mattia", "123");
+        assertTrue(shop.updateProduct(id, "test1", "123456789012", 24.0, "nota"));
     }
     
     @Test
-    public void deleteProductType() {
+    public void deleteProductType() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductIdException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException {
+        Integer id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        Integer finalId = id;
+        assertThrows(UnauthorizedException.class, () -> shop.updateProduct(finalId, "test1", "123456789012", 22.0, "nota"));
+        shop.login("Stefano", "123");
+        assertThrows(UnauthorizedException.class, () -> shop.updateProduct(finalId, "test1", "123456789012", 22.0, "nota"));
+        shop.login("Hossain", "123");
+        assertTrue(shop.deleteProductType(id));
+        id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        shop.login("Mattia", "123");
+        assertTrue(shop.deleteProductType(id));
     }
     
     @Test
-    public void getAllProductTypes() {
+    public void getAllProductTypes() throws UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException {
+        Integer id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        assertThrows(UnauthorizedException.class, shop::getAllProductTypes);
+        shop.login("Stefano", "123");
+        assertFalse(shop.getAllProductTypes().isEmpty());
+        shop.login("Hossain", "123");
+        assertFalse(shop.getAllProductTypes().isEmpty());
+        shop.login("Mattia", "123");
+        assertFalse(shop.getAllProductTypes().isEmpty());
     }
     
     @Test
-    public void getProductTypeByBarCode() {
+    public void getProductTypeByBarCode() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException, UnauthorizedException {
+        Integer id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        assertThrows(UnauthorizedException.class, () -> shop.getProductTypeByBarCode("123456789012"));
+        shop.login("Stefano", "123");
+        assertThrows(UnauthorizedException.class, () -> shop.getProductTypeByBarCode("123456789012"));
+        shop.login("Hossain", "123");
+        assertNotNull(shop.getProductTypeByBarCode("123456789012"));
+        shop.login("Mattia", "123");
+        assertNotNull(shop.getProductTypeByBarCode("123456789012"));
     }
     
     @Test
-    public void getProductTypesByDescription() {
+    public void getProductTypesByDescription() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException {
+        Integer id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        assertThrows(UnauthorizedException.class, () -> shop.getProductTypesByDescription("test"));
+        shop.login("Stefano", "123");
+        assertThrows(UnauthorizedException.class, () -> shop.getProductTypesByDescription("test"));
+        shop.login("Hossain", "123");
+        assertFalse(shop.getProductTypesByDescription("test").isEmpty());
+        shop.login("Mattia", "123");
+        assertFalse(shop.getProductTypesByDescription("test").isEmpty());
     }
     
     @Test
@@ -233,5 +301,10 @@ public class EZShopTest {
     
     @Test
     public void addOrder() {
+    }
+    
+    @After()
+    public void clear() {
+        shop.reset();
     }
 }
