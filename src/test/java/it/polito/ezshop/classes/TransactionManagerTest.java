@@ -56,7 +56,7 @@ public class TransactionManagerTest {
     @Test
     public void applyDiscountRateToProduct() {
     }
-    
+    //???? is this test right?
     @Test
     public void TestApplyDiscountRateToSale() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
         int saleId= tManager.startSaleTransaction();
