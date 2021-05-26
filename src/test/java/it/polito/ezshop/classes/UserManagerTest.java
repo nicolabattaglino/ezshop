@@ -22,7 +22,6 @@ public class UserManagerTest {
     }
     @Test
     public void testGetUserLogged() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException {
-       // UserManager um = new UserManager(null);
         um.createUser("SimAdmin", "12345", "Administrator");
         User userLogged = um.login("SimAdmin", "12345");
         assertEquals(um.getUserLogged().getUsername(), userLogged.getUsername());
@@ -30,8 +29,6 @@ public class UserManagerTest {
     
     @Test
     public void testCreateUser() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, UnauthorizedException {
-        //UserManager um = new UserManager(null);
-        //um.clear();
         um.createUser("SimAdmin", "12345", "Administrator");
         
         assertThrows(InvalidUsernameException.class, () -> um.createUser("", "1234", "Cashier"));
@@ -47,7 +44,6 @@ public class UserManagerTest {
     
     @Test
     public void testDeleteUser() throws InvalidUserIdException, UnauthorizedException, InvalidPasswordException, InvalidRoleException, InvalidUsernameException {
-        //UserManager um = new UserManager(null);
         um.createUser("SimAdmin", "12345", "Administrator");
         um.createUser("John", "54321", "Cashier");
         assertThrows(InvalidUserIdException.class, () -> um.deleteUser(-2));
@@ -57,8 +53,7 @@ public class UserManagerTest {
     
     @Test
     public void testGetAllUsers() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, UnauthorizedException {
-       // UserManager um = new UserManager(null);
-        //um.clear();
+        assertTrue(um.getAllUsers().isEmpty());
         um.createUser("SimAdmin", "12345", "Administrator");
         um.createUser("John", "54321", "Cashier");
         LinkedList<User> userList;
@@ -68,8 +63,7 @@ public class UserManagerTest {
     
     @Test
     public void testGetUser() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, InvalidUserIdException, UnauthorizedException {
-        //UserManager um = new UserManager(null);
-       // um.clear();
+
         um.createUser("SimAdmin", "12345", "Administrator");
         int userId = um.createUser("John", "54321", "Cashier");
         assertThrows(InvalidUserIdException.class, () -> um.getUser(-1));
@@ -79,8 +73,7 @@ public class UserManagerTest {
     
     @Test
     public void testUpdateUserRights() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, InvalidUserIdException, UnauthorizedException {
-       // UserManager um = new UserManager(null);
-      //  um.clear();
+
         um.createUser("SimAdmin", "12345", "Administrator");
         int userId = um.createUser("John", "54321", "Cashier");
         assertThrows(InvalidUserIdException.class, () -> um.updateUserRights(-1, "Administrator"));
@@ -95,8 +88,12 @@ public class UserManagerTest {
     
     @Test
     public void testLogin() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException {
-       // UserManager um = new UserManager(null);
-       // um.clear();
+
+        assertThrows(InvalidUsernameException.class, () -> um.login(null,"12345"));
+        assertThrows(InvalidUsernameException.class, () -> um.login("","12345"));
+        assertThrows(InvalidPasswordException.class, () -> um.login("JohnB",null));
+        assertThrows(InvalidPasswordException.class, () -> um.login("JohnB",""));
+
         um.createUser("SimAdmin", "12345", "Administrator");
         User userLogged = um.login("SimAdmin", "12345");
         assertEquals(userLogged.getUsername(), um.getUserLogged().getUsername());
@@ -108,8 +105,7 @@ public class UserManagerTest {
     
     @Test
     public void testLogout() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException {
-       // UserManager um = new UserManager(null);
-       // um.clear();
+
         assertFalse(um.logout());
         um.createUser("SimAdmin", "12345", "Administrator");
         User userLogged = um.login("SimAdmin", "12345");

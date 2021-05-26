@@ -58,13 +58,11 @@ public class EZShopTest {
     
     @Test
     public void getAllUsers() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, UnauthorizedException {
-        assertThrows(UnauthorizedException.class, () -> shop.getAllUsers());
+        assertThrows(UnauthorizedException.class, shop::getAllUsers);
         shop.login("Hossein","123");
-        assertThrows(UnauthorizedException.class, () -> shop.getAllUsers());
+        assertThrows(UnauthorizedException.class, shop::getAllUsers);
         shop.login("Mattia","123");
         assertEquals(0, (int) shop.getAllUsers().get(0).getId());
-        shop.reset();
-        assertTrue(shop.getAllUsers().isEmpty());
     }
     
     @Test
@@ -91,6 +89,7 @@ public class EZShopTest {
     
     @Test
     public void login() throws InvalidPasswordException, InvalidUsernameException {
+        assertNull(shop.login("Mattia","123456"));
         User u = shop.login("Mattia","123");
         assertEquals("Mattia",u.getUsername());
     }
@@ -323,27 +322,42 @@ public class EZShopTest {
         String cardId = shop.createCard();
         shop.modifyCustomer(id,"JohnC",cardId);
         assertEquals("JohnC", shop.getCustomer(id).getCustomerName());
+        Integer id1 = shop.defineCustomer("MikeC");
+        assertFalse(shop.modifyCustomer(id1,"MikeC",cardId));
     }
     
     @Test
-    public void deleteCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException {
+    public void deleteCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException {
         assertThrows(UnauthorizedException.class, () -> shop.deleteCustomer(1));
         shop.login("Mattia","123");
         Integer id = shop.defineCustomer("JohnB");
+        assertTrue(shop.deleteCustomer(id));
+        assertFalse(shop.deleteCustomer(100));
     }
     
     @Test
-    public void getCustomer() throws InvalidPasswordException, InvalidUsernameException {
-        assertThrows(UnauthorizedException.class, () -> shop.defineCustomer("JohnB"));
+    public void getCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException {
+        assertThrows(UnauthorizedException.class, () -> shop.getCustomer(1));
         shop.login("Mattia","123");
+        Integer id = shop.defineCustomer("JohnB");
+        assertEquals(id, shop.getCustomer(id).getId());
+        assertNull(shop.getCustomer(100));
     }
     
     @Test
-    public void getAllCustomers() {
+    public void getAllCustomers() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException {
+        assertThrows(UnauthorizedException.class, shop::getAllCustomers);
+        shop.login("Mattia","123");
+        Integer id = shop.defineCustomer("JohnB");
+        assertEquals(id, shop.getAllCustomers().get(id).getId());
     }
     
     @Test
-    public void createCard() {
+    public void createCard() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException {
+        assertThrows(UnauthorizedException.class, shop::createCard);
+        shop.login("Mattia","123");
+        String cardID = shop.createCard();
+        assertNotEquals(cardID, "");
     }
     
     @Test

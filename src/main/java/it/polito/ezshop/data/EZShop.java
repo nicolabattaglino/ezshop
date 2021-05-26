@@ -81,13 +81,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public User login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
-        if (username == null || username.equals("")) {
-            throw new InvalidUsernameException();
-        } else if (password == null || password.equals("")) {
-            throw new InvalidPasswordException();
-        } else {
             return userManager.login(username, password);
-        }
     }
     
     public ProductOrderManager getProductOrderManager() {

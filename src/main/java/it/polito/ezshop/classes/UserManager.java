@@ -177,6 +177,12 @@ public class UserManager {
     }
     
     public User login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
+
+        if (username == null || username.equals("")) {
+            throw new InvalidUsernameException();
+        } else if (password == null || password.equals("")) {
+            throw new InvalidPasswordException();
+        }
         int i = 0;
         for (User u : userList) {
             if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
