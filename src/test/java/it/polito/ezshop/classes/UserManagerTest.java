@@ -16,7 +16,7 @@ public class UserManagerTest {
     
     @Before
     public void initManager() {
-        um = new UserManager(null);
+        um = new UserManager();
     }
     
     @Test

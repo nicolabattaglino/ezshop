@@ -15,7 +15,7 @@ public class EZShop implements EZShopInterface {
     public EZShop() {
         productOrderManager = new ProductOrderManager(this);
         customerManager = new CustomerManager();
-        userManager = new UserManager(this);
+        userManager = new UserManager();
         transactionManager = new TransactionManager(this);
     }
     

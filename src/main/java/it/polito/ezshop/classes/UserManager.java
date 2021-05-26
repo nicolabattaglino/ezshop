@@ -24,9 +24,9 @@ public class UserManager {
     private LinkedList<UserObj> userList;
     private Integer userIdGen = 0;
     private User loggedUser;
-    private EZShop shop;
+
     
-    public UserManager(EZShop shop) {
+    public UserManager() {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<LinkedList<UserObj>> typeRef = new TypeReference<LinkedList<UserObj>>() {
         };
