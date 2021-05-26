@@ -345,7 +345,10 @@ public class TransactionManager {
     
     public SaleTransaction getSaleTransaction(Integer transactionId) throws InvalidTransactionIdException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
-        return saleTransactions.get(transactionId);
+        SaleTransactionObj saleTransactionObj = saleTransactions.get(transactionId);
+        if (saleTransactionObj != null && !saleTransactionObj.getStatus().equals(SaleStatus.CLOSED))
+            return null;
+        return saleTransactionObj;
     }
     
     public List<Order> getAllOrders() {
@@ -374,7 +377,7 @@ public class TransactionManager {
             this.persistReturns();
         } catch (IOException e) {
             returnTransactions.remove(output);
-            return null;
+            return -1;
         }
         return output;
     }

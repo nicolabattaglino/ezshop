@@ -42,7 +42,8 @@ public class TransactionManagerTest {
     }
     
     @Test
-    public void startSaleTransaction() {
+    public void testStartSaleTransaction() {
+        assertTrue(tManager.startSaleTransaction() >= 0);
     }
     
     @Test
@@ -160,11 +161,18 @@ public class TransactionManagerTest {
     }
     
     @Test
-    public void getSaleTransaction() {
+    public void testGetSaleTransaction() throws InvalidTransactionIdException {
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.getSaleTransaction(null));
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.getSaleTransaction(0));
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.getSaleTransaction(-1));
+        assertNull(tManager.getSaleTransaction(2));
+        tManager.endSaleTransaction(tManager.startSaleTransaction());
+        
     }
     
     @Test
-    public void getAllOrders() {
+    public void testGetAllOrders() {
+        assertNotNull(tManager.getAllOrders());
     }
     
     @Test
