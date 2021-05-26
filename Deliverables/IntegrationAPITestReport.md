@@ -408,8 +408,82 @@ TransactionManager ..> ProductOrderManager
 
 ## Step 1
 | Classes  | JUnit test cases |
-|-----|----|
-| UnitTesting  |   |
+|-----------|-----------------|
+|src.main.java.it.polito.ezshop.classes.ProductOrderManager | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeNull**|
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeNonNum** |
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtLessThan12** |
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeLenghtGreaterThan14** |
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeCheckDigitNotValid** |
+| | src.test.it.polito.ezshop.classes.ProductOrderManagerTest::**testCheckBarcodeCheckDigitValid** |
+| src.main.java.it.polito.ezshop.classes.CustomerObj  | src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetLoyaltyCard**|
+|   |  src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetCustomerName**|
+|   |  src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetCustomerCard**|
+|   | src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetId** |
+|   | src.test.it.polito.ezshop.classes.CustomerObjTest::**testSetPoints** |
+|  src.main.java.it.polito.ezshop.classes.UserObj | src.test.it.polito.ezshop.classes.UserObjTest::**testSetId**  |
+|   |  src.test.it.polito.ezshop.classes.UserObjTest::**testSetUsername** |
+|   |  src.test.it.polito.ezshop.classes.UserObjTest::**testSetPassword** |
+|   |  src.test.it.polito.ezshop.classes.UserObjTest::**testSetRoleShopManager**  |
+|   | src.test.it.polito.ezshop.classes.UserObjTest::**testSetRoleAdministrator**   |
+|   |  src.test.it.polito.ezshop.classes.UserObjTest::**testSetRoleCashier**   |
+|   | src.test.it.polito.ezshop.classes.UserObjTest::**testSetRoleInvalidString**   |
+|   |  src.test.it.polito.ezshop.classes.UserObjTest::**testSetRoleNull**  |
+| src.main.java.it.polito.ezshop.classes.BalanceOperationObj  | src.test.it.polito.ezshop.classes.BalanceOperationObjTest::**testCredit**  |
+|   | src.test.it.polito.ezshop.classes.BalanceOperationObjTest::**testDebit**  |
+|  src.main.java.it.polito.ezshop.classes.CreditCard |  src.test.it.polito.ezshop.classes.CreditCardTest::**testSetBalance**  |
+| src.main.java.it.polito.ezshop.classes.LoyaltyCardObj |  src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetIsAttached**  |
+|  |  src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetCardCode**  |
+|  |  src.test.it.polito.ezshop.classes.LoyaltyCardObjTest::**testSetPoints**  |
+| src.main.java.it.polito.ezshop.classes.OrderObj |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetBalanceOperation**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetProductCode**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetPricePerUnit**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetQuantity**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetOrderId**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetBalanceId**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetProduct**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetSupplier**  |
+|   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testConstructors**  |
+| src.main.java.it.polito.ezshop.classes.Position |  src.test.it.polito.ezshop.classes.PositionTest::**testConstructors**  |
+| src.main.java.it.polito.ezshop.classes.ProductTypeObj |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetPosition**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetDiscountRate**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetQuantity**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetLocation**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetNote**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetProductDescription**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetBarCode**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetPricePerUnit**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetId**  |
+| src.main.java.it.polito.ezshop.classes.ReturnTransaction |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testBalanceId**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testLocalDate**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testMoney**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testReturningId**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testEntries**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testPrice**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testStatus**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testType**  |
+|  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testCopyContructor**  |
+| src.main.java.it.polito.ezshop.classes.SaleTransactionObj |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testEntries**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testPrice**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testDiscountRate**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testBalanceId**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testLocalDate**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testMoney**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testType**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testTicketNumber**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testStatus**  |
+|   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testCopyContructor**  |
+| src.main.java.it.polito.ezshop.classes.TicketEntryObj |  src.test.it.polito.ezshop.classes.TicketEntryObjTest::**testBarCode**  |
+|  |  src.test.it.polito.ezshop.classes.TicketEntryObjTest::**testProductDescription**  |
+|  |  src.test.it.polito.ezshop.classes.TicketEntryObjTest::**testAmount**  |
+|  |  src.test.it.polito.ezshop.classes.TicketEntryObjTest::**testPricePerUnit**  |
+|  |  src.test.it.polito.ezshop.classes.TicketEntryObjTest::**testDiscountRate**  |
+|  |  src.test.it.polito.ezshop.classes.TicketEntryObjTest::**testCopyConstructor**  |
+| src.main.java.it.polito.ezshop.classes.TransactionManager |  src.test.it.polito.ezshop.classes.TransactionManagerTest::**testBalanceUpdate**  |
+|  |  src.test.it.polito.ezshop.classes.TransactionManagerTest::**testLuhn**  |
+|  |  src.test.it.polito.ezshop.classes.TransactionManagerTest::**testComputeBalance**  |
+| src.main.java.it.polito.ezshop.classes.UserManager |  src.test.it.polito.ezshop.classes.UserManagerTest::**testLogin**  |
+|  |  src.test.it.polito.ezshop.classes.UserManagerTest::**testLogout**  |
+
 
 
 ## Step 2 
@@ -446,14 +520,14 @@ TransactionManager ..> ProductOrderManager
 |  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**testUpdateUserRights** |
 |  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**testLogin** |
 |  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**testLogout** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj|  src.test.it.polito.ezshop.classes.EZShopTest::**defineCustomer** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj |  src.test.it.polito.ezshop.classes.EZShopTest::**testModifyCustomer** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj |  src.test.it.polito.ezshop.classes.EZShopTest::**testDeleteCustomer** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetCustomer** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllCustomers** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj |  src.test.it.polito.ezshop.classes.EZShopTest::**testCreateCard** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj  |  src.test.it.polito.ezshop.classes.EZShopTest::**testAttachCardToCustomer** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj  |  src.test.it.polito.ezshop.classes.EZShopTest::**testModifyPointsOnCard** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj|  src.test.it.polito.ezshop.classes.EZShopTest::**defineCustomer** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj |  src.test.it.polito.ezshop.classes.EZShopTest::**testModifyCustomer** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj |  src.test.it.polito.ezshop.classes.EZShopTest::**testDeleteCustomer** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetCustomer** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllCustomers** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj |  src.test.it.polito.ezshop.classes.EZShopTest::**testCreateCard** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj  |  src.test.it.polito.ezshop.classes.EZShopTest::**testAttachCardToCustomer** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj  |  src.test.it.polito.ezshop.classes.EZShopTest::**testModifyPointsOnCard** |
 |  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.EZShopTest::**testCreateProductType**  |
 |  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj  | src.test.it.polito.ezshop.classes.EZShopTest::**testUpdateProduct**  |
 |  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj  | src.test.it.polito.ezshop.classes.EZShopTest::**testDeleteProductType**  |
@@ -474,20 +548,20 @@ TransactionManager ..> ProductOrderManager
 |  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.TransactionManager + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.OrderObj + src.main.java.it.polito.ezshop.classes.BalanceOperationObj + src.main.java.it.polito.ezshop.classes.Position | src.test.it.polito.ezshop.classes.EZShopTest::**recordOrderShopManager**  |
 |  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.OrderObj | src.test.it.polito.ezshop.classes.EZShopTest::**getAllOrdersInvalid**  |
 |  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.OrderObj | src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllOrdersOk**  |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.SaleTransactionObj | src.test.it.polito.ezshop.classes.EZShopTest::**startSaleTransaction**  |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.Position + src.main.java.it.polito.ezshop.classes.Position + | src.test.it.polito.ezshop.classes.EZShopTest::**addProductToSale**  |
-|   | src.test.it.polito.ezshop.classes.EZShopTest::**deleteProductFromSale**  |
-|   | src.test.it.polito.ezshop.classes.EZShopTest::**applyDiscountRateToProduct**  |
-|   | src.test.it.polito.ezshop.classes.EZShopTest::**applyDiscountRateToSale**  |
-|   | src.test.it.polito.ezshop.classes.EZShopTest::**computePointsForSale**  |
-|   | src.test.it.polito.ezshop.classes.EZShopTest::**endSaleTransaction**  |
-|  src.main.java.it.polito.ezshop.classes.EZShop+ src.main.java.it.polito.ezshop.classes.TransactionManager+ src.main.java.it.polito.ezshop.classes.ProductOrderManager +  src.main.java.it.polito.ezshop.classes.ProductTypeObj  + src.main.java.it.polito.ezshop.classes.SaleTransactionObj + src.main.java.it.polito.ezshop.classes.CreditCard | src.test.it.polito.ezshop.classes.EZShopTest::**deleteSaleTransaction**  | 
-|  src.main.java.it.polito.ezshop.classes.EZShop+ src.main.java.it.polito.ezshop.classes.TransactionManager + src.main.java.it.polito.ezshop.classes.SaleTransactionObj  | src.test.it.polito.ezshop.classes.EZShopTest::**getSaleTransaction**  |
-|  src.main.java.it.polito.ezshop.classes.EZShop+ src.main.java.it.polito.ezshop.classes.TransactionManager+ src.main.java.it.polito.ezshop.classes.ReturnTransaction  + src.main.java.it.polito.ezshop.classes.SaleTransactionObj  | src.test.it.polito.ezshop.classes.EZShopTest::**startReturnTransaction**  |
-|  src.main.java.it.polito.ezshop.classes.EZShop+ src.main.java.it.polito.ezshop.classes.TransactionManager+ src.main.java.it.polito.ezshop.classes.ProductOrderManager +  src.main.java.it.polito.ezshop.classes.ProductTypeObj+ src.main.java.it.polito.ezshop.classes.ReturnTransaction  + src.main.java.it.polito.ezshop.classes.SaleTransactionObj  | src.test.it.polito.ezshop.classes.EZShopTest::**returnProduct**  |
-|  src.main.java.it.polito.ezshop.classes.EZShop+ src.main.java.it.polito.ezshop.classes.TransactionManager+ src.main.java.it.polito.ezshop.classes.ProductOrderManager +  src.main.java.it.polito.ezshop.classes.ProductTypeObj+ src.main.java.it.polito.ezshop.classes.ReturnTransaction  + src.main.java.it.polito.ezshop.classes.SaleTransactionObj    | src.test.it.polito.ezshop.classes.EZShopTest::**endReturnTransaction**  |
-|  src.main.java.it.polito.ezshop.classes.EZShop+ src.main.java.it.polito.ezshop.classes.TransactionManager+ src.main.java.it.polito.ezshop.classes.ProductOrderManager +  src.main.java.it.polito.ezshop.classes.ProductTypeObj+ src.main.java.it.polito.ezshop.classes.ReturnTransaction  + src.main.java.it.polito.ezshop.classes.SaleTransactionObj    | src.test.it.polito.ezshop.classes.EZShopTest::**deleteReturnTransaction**  |
-|  src.main.java.it.polito.ezshop.classes.EZShop+ src.main.java.it.polito.ezshop.classes.TransactionManager+ src.main.java.it.polito.ezshop.classes.ProductOrderManager +  src.main.java.it.polito.ezshop.classes.ProductTypeObj+  src.main.java.it.polito.ezshop.classes.SaleTransactionObj  + src.main.java.it.polito.ezshop.classes.Credit  | src.test.it.polito.ezshop.classes.EZShopTest::**receiveCashPayment**  | 
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.SaleTransactionObj + src.main.java.it.polito.ezshop.classes.BalanceOperationObj | src.test.it.polito.ezshop.classes.EZShopTest::**startSaleTransaction**  |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.Position + src.main.java.it.polito.ezshop.classes.SaleTransactionObj +  src.main.java.it.polito.ezshop.classes.TicketEntryObj | src.test.it.polito.ezshop.classes.EZShopTest::**addProductToSale**  |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.SaleTransactionObj +  src.main.java.it.polito.ezshop.classes.TicketEntryObj | src.test.it.polito.ezshop.classes.EZShopTest::**deleteProductFromSale**  |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.SaleTransactionObj +  src.main.java.it.polito.ezshop.classes.TicketEntryObj | src.test.it.polito.ezshop.classes.EZShopTest::**applyDiscountRateToProduct**  |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.SaleTransactionObj +  src.main.java.it.polito.ezshop.classes.TicketEntryObj | src.test.it.polito.ezshop.classes.EZShopTest::**applyDiscountRateToSale**  |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj + src.main.java.it.polito.ezshop.classes.SaleTransactionObj +  src.main.java.it.polito.ezshop.classes.TicketEntryObj | src.test.it.polito.ezshop.classes.EZShopTest::**computePointsForSale**  |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.SaleTransactionObj + src.main.java.it.polito.ezshop.classes.ReturnStatus | src.test.it.polito.ezshop.classes.EZShopTest::**endSaleTransaction**  |
+|   | src.test.it.polito.ezshop.classes.EZShopTest::**deleteSaleTransaction**  | 
+|   | src.test.it.polito.ezshop.classes.EZShopTest::**getSaleTransaction**  |
+|   | src.test.it.polito.ezshop.classes.EZShopTest::**startReturnTransaction**  |
+|   | src.test.it.polito.ezshop.classes.EZShopTest::**returnProduct**  |
+|   | src.test.it.polito.ezshop.classes.EZShopTest::**endReturnTransaction**  |
+|   | src.test.it.polito.ezshop.classes.EZShopTest::**deleteReturnTransaction**  |
+|   | src.test.it.polito.ezshop.classes.EZShopTest::**receiveCashPayment**  | 
 |   | src.test.it.polito.ezshop.classes.EZShopTest::**receiveCreditCardPayment**  |
 |   | src.test.it.polito.ezshop.classes.EZShopTest::**returnCashPayment**  |
 |   | src.test.it.polito.ezshop.classes.EZShopTest::**returnCreditCardPayment**  |
