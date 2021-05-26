@@ -225,7 +225,7 @@ public class ProductOrderManager {
         String oldLoc = null;
         for (ProductTypeObj p : productMap.values()) {
             oldLoc = p.getLocation();
-            if (oldLoc.equals(newPos) && !newPos.equals("")) return false;
+            if (oldLoc.equals(newPos) && !newPos.equals("") && !p.getId().equals(productId)) return false;
             if (p.getId().equals(productId))
                 target = p;
         }
@@ -282,15 +282,11 @@ public class ProductOrderManager {
                 .findFirst();
         if (!target.isPresent()) return false;
         final Order order = target.get();
-        switch (OrderStatus.valueOf(order.getStatus())) {
-            case ISSUED:
-                order.setStatus("PAYED");
-                return shop.addOrder((OrderObj) order);
-            case PAYED:
-                return true;
-            default:
-                return false;
+        if (OrderStatus.valueOf(order.getStatus()) == OrderStatus.ISSUED) {
+            order.setStatus("PAYED");
+            return shop.addOrder((OrderObj) order);
         }
+        return false;
     }
     
     public boolean recordOrderArrival(Integer orderId) throws InvalidOrderIdException, InvalidLocationException {

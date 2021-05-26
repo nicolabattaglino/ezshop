@@ -677,7 +677,9 @@ public class TransactionManager {
             if (!orders.containsKey(order.getOrderId())) {
                 order = new OrderObj(order);
                 orders.put(order.getOrderId(), order);
-                order.setBalanceOperation(new Debit(balanceOperationGen++, LocalDate.now(), "Debit"));
+                final Debit debit = new Debit(balanceOperationGen++, LocalDate.now(), "Debit");
+                debit.setMoney(-tot);
+                order.setBalanceOperation(debit);
             }
             order = orders.get(order.getOrderId());
             order.setStatus("PAYED");
