@@ -297,7 +297,7 @@ public class EZShopTest {
     @Test
     public void testRecordOrderShopManager() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidLocationException, InvalidOrderIdException, InvalidProductIdException {
         Integer prodId = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
-        shop.getProductOrderManager().updatePosition(prodId, "10-10-10");
+        shop.getProductOrderManager().updatePosition(prodId, "10-A-10");
         shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
         final int id = shop.getProductOrderManager().payOrderFor("123456789012", 10, 10);
         assertNotEquals(-1, id);
@@ -814,10 +814,8 @@ public class EZShopTest {
         shop.endReturnTransaction(retCode, true);
         shop.returnCreditCardPayment(retCode, ccNumber);
         assertFalse(shop.getCreditsAndDebits(LocalDate.now().minusDays(1), LocalDate.now().minusDays(-1)).isEmpty()); //list exists
-        shop.getUserManager().login("Hossein", "123");
-        assertFalse(shop.getCreditsAndDebits(LocalDate.now().minusDays(1), LocalDate.now().minusDays(-1)).isEmpty()); //list exists
-        shop.getUserManager().login("Stefano", "123");
-        assertFalse(shop.getCreditsAndDebits(LocalDate.now().minusDays(1), LocalDate.now().minusDays(-1)).isEmpty()); //list exists
+
+
     }
     
     @Test
