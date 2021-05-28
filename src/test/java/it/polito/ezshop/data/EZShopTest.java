@@ -17,9 +17,9 @@ public class EZShopTest {
     @Before
     public void addUsers() {
         try {
-            shop.getUserManager().createUser("Hossain", "123", UserRole.SHOPMANAGER.name());
-            shop.getUserManager().createUser("Mattia", "123", UserRole.ADMINISTRATOR.name());
-            shop.getUserManager().createUser("Stefano", "123", UserRole.CASHIER.name());
+            shop.getUserManager().createUser("Hossain", "123", UserRole.ShopManager.name());
+            shop.getUserManager().createUser("Mattia", "123", UserRole.Administrator.name());
+            shop.getUserManager().createUser("Stefano", "123", UserRole.Cashier.name());
 
         } catch (InvalidUsernameException | InvalidPasswordException | InvalidRoleException e) {
             e.printStackTrace();
@@ -65,7 +65,7 @@ public class EZShopTest {
         shop.getUserManager().login("Hossein", "123");
         assertThrows(UnauthorizedException.class, shop::getAllUsers);
         shop.getUserManager().login("Mattia", "123");
-        assertEquals(0, (int) shop.getAllUsers().get(0).getId());
+        assertEquals(2, (int) shop.getAllUsers().get(1).getId());
     }
     
     @Test
@@ -367,7 +367,7 @@ public class EZShopTest {
         assertThrows(UnauthorizedException.class, shop::getAllCustomers);
         shop.getUserManager().login("Mattia", "123");
         Integer id = shop.getCustomerManager().defineCustomer("JohnB");
-        assertEquals(id, shop.getAllCustomers().get(id).getId());
+        assertEquals(id, shop.getAllCustomers().get(0).getId());
     }
     
     @Test

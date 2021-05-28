@@ -114,7 +114,7 @@ public class CustomerManager {
         }
     
         if (customerMap.size() == 0) {
-            id = 0;
+            id = 1;
         } else {
             id = ++customerIdGen;
         }
@@ -141,7 +141,7 @@ public class CustomerManager {
         
         Customer customer = customerMap.get(id);
         LoyaltyCardObj card = null;
-        if (id < 0)
+        if (id == null || id <= 0)
             throw new InvalidCustomerIdException();
         if (newCustomerName == null || newCustomerName.trim().equals(""))
             throw new InvalidCustomerNameException();
@@ -179,7 +179,7 @@ public class CustomerManager {
     }
     
     public boolean deleteCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
-        if (id < 0) {
+        if (id == null || id <= 0) {
             throw new InvalidCustomerIdException();
         } else if (customerMap.get(id) == null) {
             return false;
@@ -206,7 +206,7 @@ public class CustomerManager {
     }
     
     public Customer getCustomer(Integer id) throws InvalidCustomerIdException, UnauthorizedException {
-        if (id < 0) {
+        if (id == null || id <= 0) {
             throw new InvalidCustomerIdException();
         } else if (customerMap.get(id) == null) {
             return null;
@@ -241,7 +241,7 @@ public class CustomerManager {
     }
     
     public boolean attachCardToCustomer(String customerCard, Integer customerId) throws InvalidCustomerIdException, InvalidCustomerCardException, UnauthorizedException {
-        if (customerId < 0)
+        if (customerId == null || customerId <= 0)
             throw new InvalidCustomerIdException();
         if (customerCard == null || customerCard.equals("") || !customerCard.matches("^([0-9]{10}$)"))
             throw new InvalidCustomerCardException();

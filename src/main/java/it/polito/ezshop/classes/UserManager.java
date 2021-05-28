@@ -87,14 +87,14 @@ public class UserManager {
                 return -1;
         }
         if (userList.size() == 0) {
-            userIdGen = 0;
+            userIdGen = 1;
         } else {
             userIdGen = userIdGen + 1;
         }
     
     
-        UserObj u = new UserObj(userIdGen, username, password, UserRole.valueOf(role.toUpperCase()));
-    
+        UserObj u = new UserObj(userIdGen, username, password, UserRole.valueOf(role));
+
         if (!userList.add(u))
             return -1;
         try {
@@ -109,7 +109,7 @@ public class UserManager {
     
     public boolean deleteUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
         int i = 0;
-        if (id == null || id < 0)
+        if (id == null || id <= 0)
             throw new InvalidUserIdException();
         UserObj u;
         for (i = 0; i < userList.size(); i++) {
@@ -137,7 +137,7 @@ public class UserManager {
     
     public User getUser(Integer id) throws InvalidUserIdException, UnauthorizedException {
         int i = 0;
-        if (id < 0)
+        if (id == null || id <= 0)
             throw new InvalidUserIdException();
         
         for (User u : userList) {
@@ -151,18 +151,18 @@ public class UserManager {
     public boolean updateUserRights(Integer id, String role) throws InvalidUserIdException, InvalidRoleException, UnauthorizedException {
         int i = 0;
         String ur = null;
-        if (id == null || id < 0)
+        if (id == null || id <= 0)
             throw new InvalidUserIdException();
         if (role == null || role.equals("") ||
-                (!role.toUpperCase().equals(UserRole.ADMINISTRATOR.toString()) &&
-                        !role.toUpperCase().equals(UserRole.CASHIER.toString()) &&
-                        !role.toUpperCase().equals(UserRole.SHOPMANAGER.toString())))
+                (!role.equals(UserRole.Administrator.toString()) &&
+                        !role.equals(UserRole.Cashier.toString()) &&
+                        !role.equals(UserRole.ShopManager.toString())))
             throw new InvalidRoleException();
 
         for (i = 0; i < userList.size(); i++) {
             if (userList.get(i).getId().equals(id)) {
                 User u = userList.get(i);
-                u.setRole(role.toUpperCase());
+                u.setRole(role);
                 try {
                     persistUsers();
                 } catch (IOException e) {

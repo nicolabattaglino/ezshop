@@ -8,7 +8,7 @@ public class UserObjTest {
     
     @Test
     public void testSetId() {
-        UserObj u1 = new UserObj(0, "MikeBB", "12345", UserRole.ADMINISTRATOR);
+        UserObj u1 = new UserObj(0, "MikeBB", "12345", UserRole.Administrator);
         u1.setId(2);
         assertEquals(2, (int) u1.getId());
     }
@@ -32,21 +32,21 @@ public class UserObjTest {
     public void testSetRoleShopManager() {
         UserObj u1 = new UserObj();
         u1.setRole("shopmanager");
-        assertEquals(u1.getRole(), UserRole.SHOPMANAGER.toString());
+        assertEquals(u1.getRole(), UserRole.ShopManager.toString());
     }
     
     @Test
     public void testSetRoleAdministrator() {
         UserObj u1 = new UserObj();
         u1.setRole("administrator");
-        assertEquals(u1.getRole(), UserRole.ADMINISTRATOR.toString());
+        assertEquals(u1.getRole(), UserRole.Administrator.toString());
     }
     
     @Test
     public void testSetRoleCashier() {
         UserObj u1 = new UserObj();
         u1.setRole("cashier");
-        assertEquals(u1.getRole(), UserRole.CASHIER.toString());
+        assertEquals(u1.getRole(), UserRole.Cashier.toString());
     }
     
     @Test
@@ -58,7 +58,7 @@ public class UserObjTest {
     
     @Test
     public void testSetRoleNull() {
-        UserObj u1 = new UserObj(0, "MikeBB", "12345", UserRole.ADMINISTRATOR);
+        UserObj u1 = new UserObj(0, "MikeBB", "12345", UserRole.Administrator);
         u1.setRole(null);
         assertNotNull(u1.getRole());
     }
