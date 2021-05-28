@@ -6,7 +6,6 @@ import it.polito.ezshop.exceptions.*;
 import java.time.LocalDate;
 import java.util.List;
 
-
 public class EZShop implements EZShopInterface {
     private final TransactionManager transactionManager;
     private final CustomerManager customerManager;
@@ -15,8 +14,8 @@ public class EZShop implements EZShopInterface {
     
     public EZShop() {
         productOrderManager = new ProductOrderManager(this);
-        customerManager = new CustomerManager(this);
-        userManager = new UserManager(this);
+        customerManager = new CustomerManager();
+        userManager = new UserManager();
         transactionManager = new TransactionManager(this);
     }
     
@@ -84,13 +83,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public User login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
-        if (username == null || username.equals("")) {
-            throw new InvalidUsernameException();
-        } else if (password == null || password.equals("")) {
-            throw new InvalidPasswordException();
-        } else {
             return userManager.login(username, password);
-        }
     }
     
     public ProductOrderManager getProductOrderManager() {
@@ -198,8 +191,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public List<Order> getAllOrders() throws UnauthorizedException {
-        if (userManager.getUserLogged() == null || userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString())
-        )
+        if (userManager.getUserLogged() == null || userManager.getUserLogged().getRole().equals(UserRole.CASHIER.toString()))
             throw new UnauthorizedException();
         return transactionManager.getAllOrders();
     }

@@ -7,6 +7,8 @@ import it.polito.ezshop.data.BalanceOperation;
 import it.polito.ezshop.data.Order;
 import it.polito.ezshop.data.ProductType;
 
+import java.util.Objects;
+
 public class OrderObj implements Order {
     
     
@@ -14,7 +16,7 @@ public class OrderObj implements Order {
     private ProductTypeObj product;
     private double pricePerUnit;
     private int quantity;
-    private String supplier;
+    private String supplier = "";
     private OrderStatus status;
     private Debit balanceOp;
     
@@ -45,7 +47,7 @@ public class OrderObj implements Order {
         this.supplier = orderObj.supplier;
         this.status = orderObj.status;
         this.balanceOp = orderObj.balanceOp;
-    
+        this.product = new ProductTypeObj(product);
     }
     
     public OrderObj(Integer orderId, ProductType product, double pricePerUnit, int quantity) {
@@ -134,4 +136,16 @@ public class OrderObj implements Order {
         this.supplier = supplier;
     }
     
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof OrderObj)) return false;
+        OrderObj orderObj = (OrderObj) o;
+        return Double.compare(orderObj.pricePerUnit, pricePerUnit) == 0 && quantity == orderObj.quantity && Objects.equals(orderId, orderObj.orderId) && Objects.equals(product, orderObj.product) && Objects.equals(supplier, orderObj.supplier) && status == orderObj.status && Objects.equals(balanceOp, orderObj.balanceOp);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderId, product, pricePerUnit, quantity, supplier, status, balanceOp);
+    }
 }

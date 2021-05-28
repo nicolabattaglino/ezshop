@@ -1,4 +1,5 @@
 package it.polito.ezshop.classes;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.data.User;
 import it.polito.ezshop.exceptions.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -22,9 +24,9 @@ public class UserManager {
     private LinkedList<UserObj> userList;
     private Integer userIdGen = 0;
     private User loggedUser;
-    private EZShop shop;
 
-    public UserManager(EZShop shop) {
+    
+    public UserManager() {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<LinkedList<UserObj>> typeRef = new TypeReference<LinkedList<UserObj>>() {
         };
@@ -79,7 +81,7 @@ public class UserManager {
                         !role.equalsIgnoreCase("CASHIER") &&
                         !role.equalsIgnoreCase("SHOPMANAGER")))
             throw new InvalidRoleException();
-        
+    
         for (User user : userList) {
             if (user.getUsername().equals(username))
                 return -1;
@@ -89,16 +91,16 @@ public class UserManager {
         } else {
             userIdGen = userIdGen + 1;
         }
+    
+    
         UserObj u = new UserObj(userIdGen, username, password, UserRole.valueOf(role.toUpperCase()));
-        
+    
         if (!userList.add(u))
             return -1;
         try {
             persistUsers();
             persistUsersId();
         } catch (IOException e) {
-            userList.removeLast();
-            userIdGen = userList.getLast().getId();
             e.printStackTrace();
         }
         return userIdGen;
@@ -119,7 +121,7 @@ public class UserManager {
                     try {
                         persistUsers();
                     } catch (IOException e) {
-                        userList.add(u);
+                       // userList.add(u);
                         e.printStackTrace();
                     }
                     return true;
@@ -148,7 +150,7 @@ public class UserManager {
     
     public boolean updateUserRights(Integer id, String role) throws InvalidUserIdException, InvalidRoleException, UnauthorizedException {
         int i = 0;
-        
+        String ur = null;
         if (id == null || id < 0)
             throw new InvalidUserIdException();
         if (role == null || role.equals("") ||
@@ -156,7 +158,7 @@ public class UserManager {
                         !role.toUpperCase().equals(UserRole.CASHIER.toString()) &&
                         !role.toUpperCase().equals(UserRole.SHOPMANAGER.toString())))
             throw new InvalidRoleException();
-        String ur = userList.get(id).getRole();
+
         for (i = 0; i < userList.size(); i++) {
             if (userList.get(i).getId().equals(id)) {
                 User u = userList.get(i);
@@ -164,12 +166,6 @@ public class UserManager {
                 try {
                     persistUsers();
                 } catch (IOException e) {
-                    for (i = 0; i < userList.size(); i++) {
-                        if (userList.get(i).getId().equals(id)) {
-                            u = userList.get(i);
-                            u.setRole(ur.toUpperCase());
-                        }
-                    }
                     e.printStackTrace();
                 }
                 return true;
@@ -179,6 +175,12 @@ public class UserManager {
     }
     
     public User login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
+
+        if (username == null || username.equals("")) {
+            throw new InvalidUsernameException();
+        } else if (password == null || password.equals("")) {
+            throw new InvalidPasswordException();
+        }
         int i = 0;
         for (User u : userList) {
             if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
@@ -198,8 +200,11 @@ public class UserManager {
     
     public void clear() {
         userList.clear();
+        loggedUser = null;
         File users = new File(USERS_PATH);
+        File usersId = new File(USERS_ID_PATH);
         users.delete();
+        usersId.delete();
         
     }
     

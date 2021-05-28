@@ -1,6 +1,5 @@
 package it.polito.ezshop.classes;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -9,8 +8,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 public class OrderObjTest {
-
-
+    
+    
     @Test
     public void testSetBalanceOperation() {
         ProductTypeObj p = new ProductTypeObj(20, 0, "descr", "11111111111111", "notes", 10.0, 0.25, new Position());
@@ -18,9 +17,9 @@ public class OrderObjTest {
         final Debit debit = new Debit(21, LocalDate.now(), "debit");
         o.setBalanceOperation(debit);
         assertEquals(debit, o.getBalanceOperation());
-
+        
     }
-
+    
     @Test
     public void testSetProductCode() {
         ProductTypeObj p = new ProductTypeObj(20, 0, "descr", "11111111111111", "notes", 10.0, 0.25, new Position());
@@ -29,7 +28,7 @@ public class OrderObjTest {
         o.setProductCode(productCode);
         assertEquals(productCode, o.getProductCode());
     }
-
+    
     @Test
     public void testSetPricePerUnit() {
         ProductTypeObj p = new ProductTypeObj(20, 0, "descr", "11111111111111", "notes", 10.0, 0.25, new Position());
@@ -37,7 +36,7 @@ public class OrderObjTest {
         o.setPricePerUnit(352.2);
         assertEquals(352.2, o.getPricePerUnit(), 0.0);
     }
-
+    
     @Test
     public void testSetQuantity() {
         ProductTypeObj p = new ProductTypeObj(20, 0, "descr", "11111111111111", "notes", 10.0, 0.25, new Position());
@@ -45,7 +44,7 @@ public class OrderObjTest {
         o.setQuantity(28);
         assertEquals(28, o.getQuantity());
     }
-
+    
     @Test
     public void testSetStatus() {
         ProductTypeObj p = new ProductTypeObj(20, 0, "descr", "11111111111111", "notes", 10.0, 0.25, new Position());
@@ -58,7 +57,7 @@ public class OrderObjTest {
         assertEquals("COMPLETED", o.getStatus());
         assertThrows(RuntimeException.class, () -> o.setStatus("abc"));
     }
-
+    
     @Test
     public void testSetOrderId() {
         ProductTypeObj p = new ProductTypeObj(20, 0, "descr", "11111111111111", "notes", 10.0, 0.25, new Position());
@@ -66,7 +65,7 @@ public class OrderObjTest {
         o.setOrderId(98);
         assertEquals((Integer) 98, o.getOrderId());
     }
-
+    
     @Test
     public void testSetBalanceId() {
         ProductTypeObj p = new ProductTypeObj(20, 0, "descr", "11111111111111", "notes", 10.0, 0.25, new Position());
@@ -76,7 +75,7 @@ public class OrderObjTest {
         o.setBalanceId(98);
         assertEquals((Integer) 98, o.getBalanceId());
     }
-
+    
     @Test
     public void testSetProduct() {
         ProductTypeObj p = new ProductTypeObj(20, 0, "descr", "11111111111111", "notes", 10.0, 0.25, new Position());
@@ -85,7 +84,7 @@ public class OrderObjTest {
         o.setProduct(product);
         assertEquals(product, o.getProduct());
     }
-
+    
     @Test
     public void testSetSupplier() {
         ProductTypeObj p = new ProductTypeObj(20, 0, "descr", "11111111111111", "notes", 10.0, 0.25, new Position());
@@ -93,7 +92,7 @@ public class OrderObjTest {
         o.setSupplier("Ferrero");
         assertEquals("Ferrero", o.getSupplier());
     }
-
+    
     @Test
     public void testConstructors() {
         ProductTypeObj p = new ProductTypeObj(20, 0, "descr", "11111111111111", "notes", 10.0, 0.25, new Position());
@@ -106,7 +105,7 @@ public class OrderObjTest {
                 "supplier",
                 OrderStatus.ISSUED,
                 debit);
-		OrderObj o2 = new OrderObj(o);
-		assertEquals(o.getBalanceId(), o2.getBalanceId());
+        OrderObj o2 = new OrderObj(o);
+        assertEquals(o.getBalanceId(), o2.getBalanceId());
     }
 }
