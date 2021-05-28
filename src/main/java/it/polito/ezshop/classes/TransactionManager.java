@@ -480,9 +480,9 @@ public class TransactionManager {
         return saleTransactions.get(transactionID);
     }
     
-    public double receiveCashPayment(Integer ticketNumber, double cash) throws InvalidTransactionIdException {
+    public double receiveCashPayment(Integer ticketNumber, double cash) throws InvalidTransactionIdException, InvalidPaymentException {
         if (ticketNumber == null || ticketNumber <= 0) throw new InvalidTransactionIdException();
-        if (cash <= 0) throw new InvalidParameterException();
+        if (cash <= 0) throw new InvalidPaymentException();
         
         SaleTransactionObj transaction = this.getSaleTransactionObj(ticketNumber);
         if (transaction == null) return -1;

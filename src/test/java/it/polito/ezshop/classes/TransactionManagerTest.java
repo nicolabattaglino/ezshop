@@ -154,7 +154,7 @@ public class TransactionManagerTest {
     }
     
     @Test
-    public void testEndSaleTransaction() throws InvalidTransactionIdException, InvalidQuantityException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException {
+    public void testEndSaleTransaction() throws InvalidTransactionIdException, InvalidQuantityException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException, InvalidPaymentException {
     
         int saleId = tManager.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
@@ -175,7 +175,7 @@ public class TransactionManagerTest {
     }
     
     @Test
-    public void testDeleteSaleTransaction() throws InvalidTransactionIdException, InvalidQuantityException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException {
+    public void testDeleteSaleTransaction() throws InvalidTransactionIdException, InvalidQuantityException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException, InvalidPaymentException {
 // please take a look on this Test
         int saleId = tManager.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
