@@ -189,14 +189,17 @@ public class TransactionManager {
     }
     
     public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException {
-        if (productCode == null || Long.parseLong(productCode) <= 0) throw new InvalidTransactionIdException();
+        if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
+        if(productCode==null||productCode==""|| !shop.getProductOrderManager().checkBarcode(productCode))throw new InvalidProductCodeException();
+        if (amount < 0) throw new InvalidQuantityException();
+        ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);
+        if (prodotto == null)return false;
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) {
             return false;
         }
-        ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);
-        if (prodotto == null) throw new InvalidProductCodeException();
-        if (amount < 0) throw new InvalidQuantityException();
+
+
         if (!sale.getStatus().equals(SaleStatus.STARTED)) return false;
         
         try {
@@ -217,11 +220,11 @@ public class TransactionManager {
     
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
+        if(productCode==null||productCode==""|| !shop.getProductOrderManager().checkBarcode(productCode))throw new InvalidProductCodeException();
         if (amount < 0) throw new InvalidQuantityException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
         if (!sale.getStatus().equals(SaleStatus.STARTED)) return false;
-        if (productCode == null) throw new InvalidProductCodeException();
         ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);
         if (prodotto == null) return false;
         try {

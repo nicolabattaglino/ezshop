@@ -433,7 +433,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public List<BalanceOperation> getCreditsAndDebits(LocalDate from, LocalDate to) throws UnauthorizedException {
-        if (userManager.getUserLogged() == null) {
+        if (userManager.getUserLogged() == null||!userManager.getUserLogged().getRole().equals(UserRole.Administrator.toString())) {
             throw new UnauthorizedException();
         }
         return transactionManager.getCreditsAndDebits(from, to);
