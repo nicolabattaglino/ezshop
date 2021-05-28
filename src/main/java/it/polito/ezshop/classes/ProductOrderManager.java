@@ -220,7 +220,9 @@ public class ProductOrderManager {
     
     public boolean updatePosition(Integer productId, String newPos) throws InvalidProductIdException, InvalidLocationException {
         if (productId == null || productId <= 0) throw new InvalidProductIdException();
-        newPos = (newPos == null) ? "" : newPos;
+        newPos = (newPos == null) ? "" : newPos.toUpperCase();
+        if (!"".equals(newPos) && !newPos.matches("[0-9]+-[a-zA-Z]+-[0-9]+"))
+            throw new InvalidLocationException();
         ProductTypeObj target = null;
         String oldLoc = null;
         for (ProductTypeObj p : productMap.values()) {

@@ -51,7 +51,7 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
         for (TicketEntry entry : entries) {
             prezzo += entry.getAmount() * entry.getPricePerUnit() * (1 - entry.getDiscountRate());
         }
-        price = prezzo;
+        price = prezzo * (1-discountRate);
         this.setMoney(prezzo);
     }
     
@@ -87,7 +87,7 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     }
     
     public double getPrice() {
-        return price;
+        return price ;
     }
     
     public void setPrice(double price) {

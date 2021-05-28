@@ -14,7 +14,7 @@ public class ProductTypeObjTest {
         p.setPosition(new Position());
         assertEquals(new Position(), p.getPosition());
         try {
-            final Position position = new Position("10-10-10");
+            final Position position = new Position("10-CC-10");
             p.setPosition(position);
             assertEquals(position, p.getPosition());
         } catch (InvalidLocationException e) {
@@ -43,11 +43,11 @@ public class ProductTypeObjTest {
         assertEquals("", p.getLocation());
         p.setLocation(null);
         assertEquals("", p.getLocation());
-        p.setLocation("8-5-5");
+        p.setLocation("8-B-5");
         p.setLocation("");
         assertEquals("", p.getLocation());
-        p.setLocation("12-13-14");
-        assertEquals("12-13-14", p.getLocation());
+        p.setLocation("12-AA-14");
+        assertEquals("12-AA-14", p.getLocation());
     }
     
     @Test

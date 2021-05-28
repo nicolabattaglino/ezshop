@@ -200,7 +200,7 @@ public class ProductOrderManagerOrderTest {
             Integer id = p.issueOrder("123456789012", 2, 10.0);
             ezShop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
             assertTrue(p.payOrder(id));
-            p.updatePosition(prodId, "10-10-10");
+            p.updatePosition(prodId, "10-AA-10");
             p.recordOrderArrival(id);
             assertFalse(p.payOrder(id));
             assertEquals(2, (int) p.getProductTypeByBarCode("123456789012").getQuantity());
