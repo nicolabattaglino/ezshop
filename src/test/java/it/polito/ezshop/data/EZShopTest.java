@@ -185,7 +185,7 @@ public class EZShopTest {
     @Test
     public void testUpdateQuantity() throws InvalidPasswordException, InvalidUsernameException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, UnauthorizedException, InvalidProductIdException, InvalidLocationException {
         Integer id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
-        shop.getProductOrderManager().updatePosition(id, "10-10-10");
+        shop.getProductOrderManager().updatePosition(id, "10-A-10");
         assertThrows(UnauthorizedException.class, () -> shop.updateQuantity(id, 10));
         shop.getUserManager().login("Stefano", "123");
         assertThrows(UnauthorizedException.class, () -> shop.updateQuantity(id, 10));
@@ -198,13 +198,13 @@ public class EZShopTest {
     @Test
     public void testUpdatePosition() throws InvalidPasswordException, InvalidUsernameException, InvalidLocationException, UnauthorizedException, InvalidProductIdException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException {
         Integer id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
-        assertThrows(UnauthorizedException.class, () -> shop.updatePosition(id, "10-10-10"));
+        assertThrows(UnauthorizedException.class, () -> shop.updatePosition(id, "10-A-10"));
         shop.getUserManager().login("Stefano", "123");
-        assertThrows(UnauthorizedException.class, () -> shop.updatePosition(id, "10-10-10"));
+        assertThrows(UnauthorizedException.class, () -> shop.updatePosition(id, "10-A-10"));
         shop.getUserManager().login("Hossain", "123");
-        assertTrue(shop.updatePosition(id, "10-10-10"));
+        assertTrue(shop.updatePosition(id, "10-A-10"));
         shop.getUserManager().login("Mattia", "123");
-        assertTrue(shop.updatePosition(id, "10-20-10"));
+        assertTrue(shop.updatePosition(id, "10-A-10"));
     }
     
     @Test
@@ -286,7 +286,7 @@ public class EZShopTest {
     @Test
     public void testRecordOrderAdmin() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidLocationException, InvalidOrderIdException, InvalidProductIdException {
         Integer prodId = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
-        shop.getProductOrderManager().updatePosition(prodId, "10-10-10");
+        shop.getProductOrderManager().updatePosition(prodId, "10-A-10");
         shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
         final int id = shop.getProductOrderManager().payOrderFor("123456789012", 10, 10);
         assertNotEquals(-1, id);
@@ -422,10 +422,10 @@ public class EZShopTest {
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -443,10 +443,10 @@ public class EZShopTest {
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -464,10 +464,10 @@ public class EZShopTest {
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -486,10 +486,10 @@ public class EZShopTest {
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -508,10 +508,10 @@ public class EZShopTest {
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -529,10 +529,10 @@ public class EZShopTest {
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -552,10 +552,10 @@ public class EZShopTest {
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 1);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -605,10 +605,10 @@ public class EZShopTest {
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 1);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -631,10 +631,10 @@ public class EZShopTest {
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 1);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -662,10 +662,10 @@ public class EZShopTest {
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 1);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -688,10 +688,10 @@ public class EZShopTest {
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "123456789012", 1);
         assertTrue(shop.receiveCashPayment(saleId, 10) > 0);
@@ -709,10 +709,10 @@ public class EZShopTest {
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "123456789012", 1);
         String ccNumber = "79927398713";
@@ -731,10 +731,10 @@ public class EZShopTest {
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -756,10 +756,10 @@ public class EZShopTest {
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -797,10 +797,10 @@ public class EZShopTest {
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
