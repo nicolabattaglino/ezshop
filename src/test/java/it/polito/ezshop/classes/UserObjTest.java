@@ -31,21 +31,21 @@ public class UserObjTest {
     @Test
     public void testSetRoleShopManager() {
         UserObj u1 = new UserObj();
-        u1.setRole("shopmanager");
+        u1.setRole("ShopManager");
         assertEquals(u1.getRole(), UserRole.ShopManager.toString());
     }
     
     @Test
     public void testSetRoleAdministrator() {
         UserObj u1 = new UserObj();
-        u1.setRole("administrator");
+        u1.setRole("Administrator");
         assertEquals(u1.getRole(), UserRole.Administrator.toString());
     }
     
     @Test
     public void testSetRoleCashier() {
         UserObj u1 = new UserObj();
-        u1.setRole("cashier");
+        u1.setRole("Cashier");
         assertEquals(u1.getRole(), UserRole.Cashier.toString());
     }
     
