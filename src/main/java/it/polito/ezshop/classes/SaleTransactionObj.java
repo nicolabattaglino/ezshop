@@ -12,7 +12,7 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     private List<TicketEntry> entries = new ArrayList<TicketEntry>();
     private double price;
     private double discountRate = 0;
-    
+    private boolean priceSet=false;
     private Integer ticketNumber;
     private SaleStatus status;
     
@@ -47,9 +47,9 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     
     
     private void updatePrice() {
-        int prezzo = 0;
+        double prezzo = 0;
         for (TicketEntry entry : entries) {
-            prezzo += entry.getAmount() * entry.getPricePerUnit() * (1 - entry.getDiscountRate());
+            prezzo += (entry.getAmount() * entry.getPricePerUnit()) * (1 - entry.getDiscountRate());
         }
         price = prezzo * (1-discountRate);
         this.setMoney(prezzo);
@@ -57,11 +57,13 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     
     public void deleteEntry(TicketEntry entry) {
         entries.remove(entry);
+        priceSet=false;
         this.updatePrice();
     }
     
     public void addEntry(TicketEntry entry) {
         entries.add(entry);
+        priceSet=false;
         this.updatePrice();
     }
     
@@ -82,16 +84,20 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     
     public void setDiscountRate(double discountRate) {
         this.discountRate = discountRate;
+        priceSet=false;
         this.updatePrice();
         return;
     }
     
     public double getPrice() {
+        if(!priceSet)
+        this.updatePrice();
         return price ;
     }
     
     public void setPrice(double price) {
         this.price = price;
+        priceSet = true;
         return;
     }
     
@@ -108,6 +114,7 @@ public class SaleTransactionObj extends Credit implements it.polito.ezshop.data.
     @Override
     public void setEntries(List<TicketEntry> entries) {
         this.entries = entries;
+        priceSet=false;
         this.updatePrice();
         
     }
