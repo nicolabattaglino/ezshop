@@ -28,8 +28,8 @@ public class SaleTransactionObjTest {
     @Test
     public void testPrice() {
         SaleTransactionObj s = new SaleTransactionObj(0, LocalDate.now(), 0.0, "Sale");
-        s.setPrice(1);
-        assertTrue(1 == s.getPrice());
+        s.setPrice(0);
+        assertTrue(0 == s.getPrice());
     }
     
     @Test
