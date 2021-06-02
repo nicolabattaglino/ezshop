@@ -176,7 +176,6 @@ public class TransactionManagerTest {
     
     @Test
     public void testDeleteSaleTransaction() throws InvalidTransactionIdException, InvalidQuantityException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException, InvalidPaymentException {
-// please take a look on this Test
         int saleId = tManager.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
