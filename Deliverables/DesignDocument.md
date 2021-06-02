@@ -151,9 +151,9 @@ class User {
 note right : Persistent
 
 enum UserRole{
-    CASHIER
-    SHOP_MANAGER
-    ADMINISTRATOR
+    Cashier
+    ShopManager
+    Administrator
 }
 
 enum ReturnStatus{
