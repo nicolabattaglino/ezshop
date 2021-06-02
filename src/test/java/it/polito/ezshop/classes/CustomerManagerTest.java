@@ -1,7 +1,6 @@
 package it.polito.ezshop.classes;
 
 import it.polito.ezshop.data.Customer;
-import it.polito.ezshop.data.User;
 import it.polito.ezshop.exceptions.InvalidCustomerCardException;
 import it.polito.ezshop.exceptions.InvalidCustomerIdException;
 import it.polito.ezshop.exceptions.InvalidCustomerNameException;
@@ -15,7 +14,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class CustomerManagerTest {
-
+    
     
     CustomerManager cm;
     
@@ -33,7 +32,7 @@ public class CustomerManagerTest {
         assertEquals(-1, (int) cm.defineCustomer("PaulJ"));
         int customerId1 = cm.defineCustomer("MikeP");
         assertEquals(cm.getCustomer(customerId1).getCustomerName(), "MikeP");
-
+        
     }
     
     @Test
@@ -52,12 +51,12 @@ public class CustomerManagerTest {
         assertThrows(InvalidCustomerNameException.class, () -> cm.modifyCustomer(1, "", "1000000009"));
         assertThrows(InvalidCustomerNameException.class, () -> cm.modifyCustomer(1, null, "1000000009"));
         assertThrows(InvalidCustomerCardException.class, () -> cm.modifyCustomer(1, "MikeR", "111"));
-        assertFalse(cm.modifyCustomer(customerId,"MikeR", "1000000009")); // card not exist
+        assertFalse(cm.modifyCustomer(customerId, "MikeR", "1000000009")); // card not exist
         int customerId1 = cm.defineCustomer("DanyT");
-        cm.attachCardToCustomer("1000000001",customerId1);
-        assertFalse(cm.modifyCustomer(customerId, "MikeR","1000000001")); // card already attached
+        cm.attachCardToCustomer("1000000001", customerId1);
+        assertFalse(cm.modifyCustomer(customerId, "MikeR", "1000000001")); // card already attached
         assertTrue(cm.modifyCustomer(customerId, "BobN", null)); // change username
-        cm.attachCardToCustomer("1000000002",customerId);
+        cm.attachCardToCustomer("1000000002", customerId);
         assertTrue(cm.modifyCustomer(customerId, "BobN", ""));
         assertTrue(cm.modifyCustomer(customerId, "BobN", "1000000000"));
     }
@@ -87,12 +86,12 @@ public class CustomerManagerTest {
     public void testGetAllCustomers() throws InvalidCustomerNameException, UnauthorizedException {
         int id = cm.defineCustomer("MIkeR");
         List<Customer> list = cm.getAllCustomers();
-        for (Customer c : list){
-            if (id == c.getId()){
+        for (Customer c : list) {
+            if (id == c.getId()) {
                 assertEquals(c.getCustomerName(), "MIkeR");
             }
         }
-
+        
     }
     
     @Test

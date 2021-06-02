@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -48,7 +47,6 @@ public class TransactionManager {
     private int returnGen;
     private int balanceOperationGen;
     
-    // todo remove it HOSSAIN PART
     
     public TransactionManager(EZShop shop) {
         ObjectMapper mapper = new ObjectMapper();
@@ -83,7 +81,7 @@ public class TransactionManager {
             } finally {
                 saleTransactions = new HashMap<>();
             }
-    
+            
         }
         
         File returns = new File(RETURN_PATH);
@@ -102,7 +100,7 @@ public class TransactionManager {
                 returnTransactions = new HashMap<>();
             }
         }
-    
+        
         File creditCards = new File(CREDITCARD_PATH);
         TypeReference<HashMap<String, CreditCard>> typeRef3 = new TypeReference<HashMap<String, CreditCard>>() {
         };
@@ -190,16 +188,17 @@ public class TransactionManager {
     
     public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
-        if(productCode==null||productCode==""|| !shop.getProductOrderManager().checkBarcode(productCode))throw new InvalidProductCodeException();
+        if (productCode == null || productCode == "" || !shop.getProductOrderManager().checkBarcode(productCode))
+            throw new InvalidProductCodeException();
         if (amount < 0) throw new InvalidQuantityException();
         ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);
-        if (prodotto == null)return false;
+        if (prodotto == null) return false;
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) {
             return false;
         }
-
-
+        
+        
         if (!sale.getStatus().equals(SaleStatus.STARTED)) return false;
         
         try {
@@ -220,7 +219,8 @@ public class TransactionManager {
     
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
-        if(productCode==null||productCode==""|| !shop.getProductOrderManager().checkBarcode(productCode))throw new InvalidProductCodeException();
+        if (productCode == null || productCode == "" || !shop.getProductOrderManager().checkBarcode(productCode))
+            throw new InvalidProductCodeException();
         if (amount < 0) throw new InvalidQuantityException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
         if (sale == null) return false;
@@ -342,7 +342,6 @@ public class TransactionManager {
                 .collect(Collectors.toList());
     }
     
-    // todo remove it STEFANO PART  
     
     public Integer startReturnTransaction(Integer saleNumber) throws InvalidTransactionIdException {
         if (saleNumber == null || saleNumber <= 0) throw new InvalidTransactionIdException();
@@ -601,7 +600,7 @@ public class TransactionManager {
     }
     
     public void clear() {
-    
+        
         saleTransactions.clear();
         returnTransactions.clear();
         orders.clear();
@@ -767,7 +766,6 @@ public class TransactionManager {
         }
     }
     
-
-
+    
 }
 

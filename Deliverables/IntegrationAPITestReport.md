@@ -26,9 +26,8 @@ Version: 2.0
      <report the here the dependency graph of the classes in EzShop, using plantuml>
 
 ```plantuml
-
 @startuml
-scale 0.8
+scale 0.6
 interface EZShopInterface {
     +reset()
     +createUser(username: String, password: String, role: String) : Integer
@@ -265,14 +264,17 @@ class TransactionManager {
 TransactionManager ..> BalanceOperation
 TransactionManager ..> CreditCard
 TransactionManager ..> Order
+TransactionManager ...> ReturnTransaction 
 TransactionManager ..> SaleTransaction
 
+
+ProductOrderManager ..> Order
 
 Shop ..> ProductOrderManager
 Shop ..> TransactionManager
 
-Shop <.. UserManager
-Shop <.. CustomerManager
+Shop ..> UserManager
+Shop ..> CustomerManager
 Shop <.. ProductOrderManager
 Shop <.. TransactionManager
 
@@ -386,9 +388,6 @@ class ReturnTransaction {
 
 ReturnTransaction ..> ReturnStatus
 ReturnTransaction ..> TicketEntry
-
-
-TransactionManager ..> ProductOrderManager
 @enduml
 
 ```

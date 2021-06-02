@@ -58,7 +58,7 @@ public class ProductOrderManagerOrderTest {
         try {
             assertEquals(-1, (int) p.payOrderFor("123456789012", 10, 10));
             assertEquals(0, ezShop.getTransactionManager().computeBalance(), 0);
-    
+            
         } catch (InvalidProductCodeException | InvalidQuantityException | InvalidPricePerUnitException e) {
             fail("Unexpected exception: " + e);
         }
@@ -156,7 +156,7 @@ public class ProductOrderManagerOrderTest {
                     .count());
             //the order is now completed
             assertFalse(p.payOrder(id));
-    
+            
         } catch (InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductCodeException | InvalidQuantityException | InvalidOrderIdException | UnauthorizedException e) {
             fail("Unexpected exception: " + e);
         }

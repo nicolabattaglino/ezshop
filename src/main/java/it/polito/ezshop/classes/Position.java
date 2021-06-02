@@ -2,7 +2,6 @@ package it.polito.ezshop.classes;
 
 import it.polito.ezshop.exceptions.InvalidLocationException;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class Position {

@@ -40,8 +40,8 @@ public class UserManagerTest {
         assertEquals(-1, (int) um.createUser("SimAdmin", "12345", "Administrator"));
         int id = um.createUser("John", "54321", "Cashier");
         List<User> list = um.getAllUsers();
-        for (User u : list){
-            if (u.getId() == id){
+        for (User u : list) {
+            if (u.getId() == id) {
                 assertEquals("John", u.getUsername());
             }
         }
@@ -86,16 +86,16 @@ public class UserManagerTest {
         assertThrows(InvalidRoleException.class, () -> um.updateUserRights(1, null));
         assertThrows(InvalidRoleException.class, () -> um.updateUserRights(1, "t"));
         assertTrue(um.updateUserRights(userId, "ShopManager"));
-        assertFalse(um.updateUserRights(100,"Cashier"));
+        assertFalse(um.updateUserRights(100, "Cashier"));
     }
     
     @Test
     public void testLogin() throws InvalidPasswordException, InvalidUsernameException, InvalidRoleException {
-        assertThrows(InvalidUsernameException.class, () -> um.login(null,"12345"));
-        assertThrows(InvalidUsernameException.class, () -> um.login("","12345"));
-        assertThrows(InvalidPasswordException.class, () -> um.login("JohnB",null));
-        assertThrows(InvalidPasswordException.class, () -> um.login("JohnB",""));
-
+        assertThrows(InvalidUsernameException.class, () -> um.login(null, "12345"));
+        assertThrows(InvalidUsernameException.class, () -> um.login("", "12345"));
+        assertThrows(InvalidPasswordException.class, () -> um.login("JohnB", null));
+        assertThrows(InvalidPasswordException.class, () -> um.login("JohnB", ""));
+        
         um.createUser("SimAdmin", "12345", "Administrator");
         User userLogged = um.login("SimAdmin", "12345");
         assertEquals(userLogged.getUsername(), um.getUserLogged().getUsername());

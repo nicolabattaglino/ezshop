@@ -78,7 +78,7 @@ public class TransactionManagerTest {
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         tManager.addProductToSale(saleId, "12345678901286", 2);
         tManager.addProductToSale(saleId, "123456789012", 1);
-    
+        
         assertTrue(tManager.deleteProductFromSale(saleId, "123456789012", 1));
         assertTrue(tManager.deleteProductFromSale(saleId, "123456789012", 0));
         assertFalse(tManager.deleteProductFromSale(saleId + 1, "123456789012", 1));
@@ -99,7 +99,7 @@ public class TransactionManagerTest {
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         tManager.addProductToSale(saleId, "12345678901286", 2);
         tManager.addProductToSale(saleId, "123456789012", 1);
-    
+        
         assertTrue(tManager.applyDiscountRateToProduct(saleId, "123456789012", 0.5));
         assertTrue(tManager.applyDiscountRateToProduct(saleId, "123456789012", 0));
         tManager.endSaleTransaction(saleId);
@@ -155,7 +155,7 @@ public class TransactionManagerTest {
     
     @Test
     public void testEndSaleTransaction() throws InvalidTransactionIdException, InvalidQuantityException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidLocationException, InvalidPaymentException {
-    
+        
         int saleId = tManager.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
@@ -436,7 +436,7 @@ public class TransactionManagerTest {
         tManager.addProductToSale(saleId, "12345678901286", 2);
         tManager.addProductToSale(saleId, "123456789012", 1);
         tManager.endSaleTransaction(saleId);
-    
+        
         int retCode = tManager.startReturnTransaction(saleId);
         String pBarCode = poManager.getProductTypesByDescription("test").get(0).getBarCode();
         tManager.returnProduct(retCode, pBarCode, 1);
@@ -446,8 +446,8 @@ public class TransactionManagerTest {
         tManager.returnCreditCardPayment(retCode, ccNumber);
         assertFalse(tManager.getCreditsAndDebits(LocalDate.now().minusDays(1), LocalDate.now().minusDays(-1)).isEmpty()); //list exists
         assertTrue(tManager.getCreditsAndDebits(LocalDate.now().minusDays(5), LocalDate.now().minusDays(1)).isEmpty()); //list is empty
-    
-    
+        
+        
     }
     
     @Test

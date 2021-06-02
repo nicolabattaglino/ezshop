@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.MapSerializer;
-import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.data.User;
 import it.polito.ezshop.exceptions.*;
 
@@ -24,7 +23,7 @@ public class UserManager {
     private LinkedList<UserObj> userList;
     private Integer userIdGen = 0;
     private User loggedUser;
-
+    
     
     public UserManager() {
         ObjectMapper mapper = new ObjectMapper();
@@ -81,7 +80,7 @@ public class UserManager {
                         !role.equalsIgnoreCase("CASHIER") &&
                         !role.equalsIgnoreCase("SHOPMANAGER")))
             throw new InvalidRoleException();
-    
+        
         for (User user : userList) {
             if (user.getUsername().equals(username))
                 return -1;
@@ -91,10 +90,10 @@ public class UserManager {
         } else {
             userIdGen = userIdGen + 1;
         }
-    
-    
+        
+        
         UserObj u = new UserObj(userIdGen, username, password, UserRole.valueOf(role));
-
+        
         if (!userList.add(u))
             return -1;
         try {
@@ -121,7 +120,7 @@ public class UserManager {
                     try {
                         persistUsers();
                     } catch (IOException e) {
-                       // userList.add(u);
+                        // userList.add(u);
                         e.printStackTrace();
                     }
                     return true;
@@ -158,7 +157,7 @@ public class UserManager {
                         !role.equals(UserRole.Cashier.toString()) &&
                         !role.equals(UserRole.ShopManager.toString())))
             throw new InvalidRoleException();
-
+        
         for (i = 0; i < userList.size(); i++) {
             if (userList.get(i).getId().equals(id)) {
                 User u = userList.get(i);
@@ -175,7 +174,7 @@ public class UserManager {
     }
     
     public User login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
-
+        
         if (username == null || username.equals("")) {
             throw new InvalidUsernameException();
         } else if (password == null || password.equals("")) {

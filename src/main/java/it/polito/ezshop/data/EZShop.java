@@ -83,7 +83,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public User login(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
-            return userManager.login(username, password);
+        return userManager.login(username, password);
     }
     
     public ProductOrderManager getProductOrderManager() {
@@ -433,7 +433,7 @@ public class EZShop implements EZShopInterface {
     
     @Override
     public List<BalanceOperation> getCreditsAndDebits(LocalDate from, LocalDate to) throws UnauthorizedException {
-        if (userManager.getUserLogged() == null||!userManager.getUserLogged().getRole().equals(UserRole.Administrator.toString())) {
+        if (userManager.getUserLogged() == null || !userManager.getUserLogged().getRole().equals(UserRole.Administrator.toString())) {
             throw new UnauthorizedException();
         }
         return transactionManager.getCreditsAndDebits(from, to);

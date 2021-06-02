@@ -15,8 +15,9 @@ public class ReturnTransaction extends Credit {
     private List<TicketEntry> entries = new ArrayList<TicketEntry>();
     private double price;
     private ReturnStatus status;
+    
     @JsonCreator
-    public ReturnTransaction(@JsonProperty("id")int id, @JsonProperty("date")LocalDate date, @JsonProperty("money")double money,@JsonProperty("type") String type, @JsonProperty("returning")int returning) {
+    public ReturnTransaction(@JsonProperty("id") int id, @JsonProperty("date") LocalDate date, @JsonProperty("money") double money, @JsonProperty("type") String type, @JsonProperty("returning") int returning) {
         super(id, date, type);
         
         this.transactionID = returning;

@@ -112,7 +112,7 @@ public class CustomerManager {
             if (entry.getValue().getCustomerName().equals(customerName))
                 return -1;
         }
-    
+        
         if (customerMap.size() == 0) {
             id = 1;
         } else {
@@ -120,7 +120,7 @@ public class CustomerManager {
         }
         CustomerObj customer = new CustomerObj(id, customerName);
         customerMap.put(id, customer);
-
+        
         if (customerMap.get(id) == null) {
             return -1;
         }
@@ -152,7 +152,7 @@ public class CustomerManager {
                 return false;
             }
         }
-    
+        
         if (newCustomerCard == null) {
             customer.setCustomerName(newCustomerName);
         } else if (newCustomerCard.equals("")) {
@@ -166,7 +166,7 @@ public class CustomerManager {
             cardMap.get(newCustomerCard).setIsAttached(true);
             customer.setCustomerName(newCustomerName);
         }
-    
+        
         try {
             persistCustomers();
             persistCards();
@@ -198,7 +198,7 @@ public class CustomerManager {
                 persistCustomers();
                 persistCards();
             } catch (IOException e) {
-
+                
                 e.printStackTrace();
             }
             return true;
@@ -235,7 +235,7 @@ public class CustomerManager {
             persistCardsId();
         } catch (IOException e) {
             e.printStackTrace();
-
+            
         }
         return l.getCardCode();
     }

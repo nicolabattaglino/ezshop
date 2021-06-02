@@ -131,9 +131,9 @@ public class ProductOrderManager {
         ProductTypeObj productTypeObj = productMap.get(newCode);
         if (productTypeObj != null && !productTypeObj.getId().equals(id))
             return false;
-    
+        
         ProductTypeObj candidate = null;
-    
+        
         for (ProductTypeObj productType : productMap.values()) {
             if (productType.getId().equals(id)) candidate = productType;
         }
@@ -327,7 +327,7 @@ public class ProductOrderManager {
                 .writeValue(new File(PRODUCT_GEN_PATH), productIdGen);
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(ORDER_GEN_PATH), orderIdGen);
-    
+        
     }
     
     public void clear() {

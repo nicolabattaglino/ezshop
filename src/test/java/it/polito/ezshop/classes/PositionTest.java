@@ -34,12 +34,12 @@ public class PositionTest {
             assertEquals((Integer) 10, p.aisleID);
             assertEquals("AA", p.rackID);
             assertEquals((Integer) 18, p.levelId);
-    
+            
             p = new Position("014-Bb-019");
             assertEquals((Integer) 14, p.aisleID);
             assertEquals("BB", p.rackID);
             assertEquals((Integer) 19, p.levelId);
-    
+            
         } catch (InvalidLocationException e) {
             fail("Invalid position" + e);
         }
