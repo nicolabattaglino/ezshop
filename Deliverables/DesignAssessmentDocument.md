@@ -62,5 +62,40 @@ with all elements explosed, all dependencies, NO tangles; and report it here as 
 # Summary analysis
 ```
 <Discuss here main differences of the current structure of your project vs the design delivered on April 30>
-<Discuss if the current structure shows weaknesses that should be fixed>
+
+changes in TransactionManager:
+    added TransactionManager --> "*" CreditCard: -cards: Map<String, CreditCard>
+    added TransactionManager --> "*" Order: -orders: Map<Integer, Order>
+    added TransactionManager --> "*" ReturnTransaction: -returnTransactions: Map<Integer, ReturnTransaction>
+    added TransactionManager --> "*" SaleTransaction: -saleTransactions: Map<Integer, SaleTransaction>
+    added Shop <-- TransactionManager : -shop:  Shop
+    an object instance of TransactionManager now calculates the balance dynamically instead of storing it in a double variable
+    
+changes in ProductOrderManager:
+    added Shop <-- ProductOrderManager : -shop:  Shop
+
+changes in SaleTransaction:    
+    added updatePrice method that updates the price field whenever is needed but only if that is not updated by setPrice method
+    added SaleTransaction  --> "*" TicketEntry : -entries : ArrayList<TicketEntry>
+    added SaleTransaction  --> "*" SaleStatus : -status : SaleStatus
+    
+changes in ReturnTransaction
+    removed ReturnTransaction "*" <- SaleTransaction : -sale: SaleTransaction
+    removed ReturnTransaction "*" -> ProductType : -product: ProductType
+    added ReturnTransaction --> ReturnStatus: -status: ReturnStatus 
+    added ReturnTransaction --> "*" TicketEntry: -entries: List<TicketEntry>
+    
+structural changes:
+    added ReturnStatus enum
+    added SaleStatus enum
+    added CreditCard class
+    Order now has an object instance of Debit instead of extending the Debit class 
+    removed class Quantity and each of its dependencies
+    added class TicketEntry
+    
+<Discuss if the current structure shows weaknesses that should be fixed >
+Some fixes that could be applied are: 
+    The classes TransactionsManager and ProductOrderManager could be merged into one class;
+    When an error occurs during the persistance there is no rollback into a consistent state
+
 ```
