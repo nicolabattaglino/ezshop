@@ -94,6 +94,7 @@ structural changes:
     added class TicketEntry
     
 <Discuss if the current structure shows weaknesses that should be fixed >
+
 Some fixes that could be applied are: 
     The classes TransactionsManager and ProductOrderManager could be merged into one class;
     When an error occurs during the persistance there is no rollback into a consistent state
