@@ -1,5 +1,6 @@
 package it.polito.ezshop.classes;
 
+import it.polito.ezshop.data.Customer;
 import it.polito.ezshop.exceptions.InvalidCustomerCardException;
 import it.polito.ezshop.exceptions.InvalidCustomerIdException;
 import it.polito.ezshop.exceptions.InvalidCustomerNameException;
@@ -8,10 +9,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class CustomerManagerTest {
-
+    
     
     CustomerManager cm;
     
@@ -27,7 +30,8 @@ public class CustomerManagerTest {
         int customerId = cm.defineCustomer("PaulJ");
         assertEquals(customerId, (int) cm.getCustomer(customerId).getId());
         assertEquals(-1, (int) cm.defineCustomer("PaulJ"));
-        assertEquals(1, (int) cm.defineCustomer("MikeP"));
+        int customerId1 = cm.defineCustomer("MikeP");
+        assertEquals(cm.getCustomer(customerId1).getCustomerName(), "MikeP");
         
     }
     
@@ -47,20 +51,19 @@ public class CustomerManagerTest {
         assertThrows(InvalidCustomerNameException.class, () -> cm.modifyCustomer(1, "", "1000000009"));
         assertThrows(InvalidCustomerNameException.class, () -> cm.modifyCustomer(1, null, "1000000009"));
         assertThrows(InvalidCustomerCardException.class, () -> cm.modifyCustomer(1, "MikeR", "111"));
-        assertFalse(cm.modifyCustomer(customerId,"MikeR", "1000000009"));
+        assertFalse(cm.modifyCustomer(customerId, "MikeR", "1000000009")); // card not exist
         int customerId1 = cm.defineCustomer("DanyT");
-        cm.attachCardToCustomer("1000000001",customerId1);
-        assertFalse(cm.modifyCustomer(customerId, "MikeR","1000000001"));
-        assertTrue(cm.modifyCustomer(customerId, "BobN", null));
-        assertFalse(cm.attachCardToCustomer("1000000003",0));
-        cm.attachCardToCustomer("1000000002",0);
+        cm.attachCardToCustomer("1000000001", customerId1);
+        assertFalse(cm.modifyCustomer(customerId, "MikeR", "1000000001")); // card already attached
+        assertTrue(cm.modifyCustomer(customerId, "BobN", null)); // change username
+        cm.attachCardToCustomer("1000000002", customerId);
         assertTrue(cm.modifyCustomer(customerId, "BobN", ""));
         assertTrue(cm.modifyCustomer(customerId, "BobN", "1000000000"));
     }
     
     @Test
     public void testDeleteCustomer() throws InvalidCustomerNameException, InvalidCustomerIdException, UnauthorizedException, InvalidCustomerCardException {
-        assertFalse(cm.deleteCustomer(0));
+        assertFalse(cm.deleteCustomer(4));
         int id = cm.defineCustomer("MIkeR");
         cm.createCard();
         cm.attachCardToCustomer("1000000000", id);
@@ -73,7 +76,7 @@ public class CustomerManagerTest {
     @Test
     public void testGetCustomer() throws InvalidCustomerIdException, UnauthorizedException, InvalidCustomerNameException {
         assertThrows(InvalidCustomerIdException.class, () -> cm.getCustomer(-1));
-        assertNull(cm.getCustomer(0));
+        assertNull(cm.getCustomer(1));
         int id = cm.defineCustomer("MIkeR");
         assertEquals(id, (int) cm.getCustomer(id).getId());
         
@@ -82,7 +85,13 @@ public class CustomerManagerTest {
     @Test
     public void testGetAllCustomers() throws InvalidCustomerNameException, UnauthorizedException {
         int id = cm.defineCustomer("MIkeR");
-        assertEquals(id, (int) cm.getAllCustomers().get(id).getId());
+        List<Customer> list = cm.getAllCustomers();
+        for (Customer c : list) {
+            if (id == c.getId()) {
+                assertEquals(c.getCustomerName(), "MIkeR");
+            }
+        }
+        
     }
     
     @Test
@@ -94,9 +103,9 @@ public class CustomerManagerTest {
     @Test
     public void testAttachCardToCustomer() throws InvalidCustomerIdException, UnauthorizedException, InvalidCustomerCardException, InvalidCustomerNameException {
         assertThrows(InvalidCustomerIdException.class, () -> cm.attachCardToCustomer("1000000000", -1));
-        assertThrows(InvalidCustomerCardException.class, () -> cm.attachCardToCustomer("", 0));
-        assertThrows(InvalidCustomerCardException.class, () -> cm.attachCardToCustomer("t", 0));
-        assertThrows(InvalidCustomerCardException.class, () -> cm.attachCardToCustomer(null, 0));
+        assertThrows(InvalidCustomerCardException.class, () -> cm.attachCardToCustomer("", 1));
+        assertThrows(InvalidCustomerCardException.class, () -> cm.attachCardToCustomer("t", 1));
+        assertThrows(InvalidCustomerCardException.class, () -> cm.attachCardToCustomer(null, 1));
         assertFalse(cm.attachCardToCustomer("1000000000", 1));
         cm.createCard();
         cm.createCard();

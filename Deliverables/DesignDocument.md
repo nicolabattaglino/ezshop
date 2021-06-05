@@ -3,9 +3,9 @@
 
 Authors: Stefano, Mattia, Nicola, Hossein
 
-Date: 10 May 2021
+Date: 28 May 2021
 
-Version: 3.1
+Version: 3.2
 
 
 # Contents
@@ -151,9 +151,9 @@ class User {
 note right : Persistent
 
 enum UserRole{
-    CASHIER
-    SHOP_MANAGER
-    ADMINISTRATOR
+    Cashier
+    ShopManager
+    Administrator
 }
 
 enum ReturnStatus{
@@ -361,7 +361,7 @@ note left : Persistent
 
 class Position {
     -aisleID: Integer
-    -rackID: Integer
+    -rackID: String
     -levelID: Integer
     -empty: boolean
 }

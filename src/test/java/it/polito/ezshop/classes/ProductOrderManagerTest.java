@@ -248,8 +248,8 @@ public class ProductOrderManagerTest {
         try {
             Integer id = p.createProductType("hello test", "123456789012", 22.0, "note");
             assertFalse(p.updateQuantity(id, 10));
-            p.updatePosition(id, "10-10-10");
-            assertEquals("10-10-10", p.getProductTypeByBarCode("123456789012").getLocation());
+            p.updatePosition(id, "10-BB-10");
+            assertEquals("10-BB-10", p.getProductTypeByBarCode("123456789012").getLocation());
             assertTrue(p.updateQuantity(id, 10));
             assertFalse(p.updateQuantity(id, -20));
             assertFalse(p.updateQuantity(id + 1, -20));
@@ -275,10 +275,10 @@ public class ProductOrderManagerTest {
     public void testUpdatePositionReset() {
         try {
             Integer id = p.createProductType("hello test", "123456789012", 22.0, "note");
-            assertTrue(p.updatePosition(id, "10-10-10"));
+            assertTrue(p.updatePosition(id, "10-AA-10"));
             assertTrue(p.updatePosition(id, ""));
             assertEquals("", p.getProductTypeByBarCode("123456789012").getLocation());
-            assertTrue(p.updatePosition(id, "10-10-10"));
+            assertTrue(p.updatePosition(id, "10-bx-10"));
             assertTrue(p.updatePosition(id, null));
             assertEquals("", p.getProductTypeByBarCode("123456789012").getLocation());
             
@@ -293,10 +293,10 @@ public class ProductOrderManagerTest {
         try {
             Integer id = p.createProductType("hello test", "123456789012", 22.0, "note");
             assertFalse(p.updatePosition(id + 1, ""));
-            assertTrue(p.updatePosition(id, "10-10-10"));
-            assertTrue(p.updatePosition(id, "10-10-10"));
+            assertTrue(p.updatePosition(id, "10-CC-10"));
+            assertTrue(p.updatePosition(id, "10-bc-10"));
             id = p.createProductType("test", "111111111117", 22.0, "note");
-            assertFalse(p.updatePosition(id, "10-10-10"));
+            assertFalse(p.updatePosition(id, "10-bc-10"));
             
         } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductIdException | InvalidLocationException e) {
             fail("Unexpected exception: " + e);

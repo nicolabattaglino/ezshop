@@ -17,10 +17,10 @@ public class EZShopTest {
     @Before
     public void addUsers() {
         try {
-            shop.getUserManager().createUser("Hossain", "123", UserRole.SHOPMANAGER.name());
-            shop.getUserManager().createUser("Mattia", "123", UserRole.ADMINISTRATOR.name());
-            shop.getUserManager().createUser("Stefano", "123", UserRole.CASHIER.name());
-
+            shop.getUserManager().createUser("Hossain", "123", UserRole.ShopManager.name());
+            shop.getUserManager().createUser("Mattia", "123", UserRole.Administrator.name());
+            shop.getUserManager().createUser("Stefano", "123", UserRole.Cashier.name());
+            
         } catch (InvalidUsernameException | InvalidPasswordException | InvalidRoleException e) {
             e.printStackTrace();
         }
@@ -43,19 +43,19 @@ public class EZShopTest {
     
     @Test
     public void testCreateUser() throws InvalidPasswordException, InvalidRoleException, InvalidUsernameException, InvalidUserIdException, UnauthorizedException {
-        int id = shop.getUserManager().createUser("JohnB","123321","Cashier");
+        int id = shop.getUserManager().createUser("JohnB", "123321", "Cashier");
         shop.getUserManager().login("Mattia", "123");
         assertEquals(id, (int) shop.getUser(id).getId());
     }
     
     @Test
     public void testDeleteUser() throws UnauthorizedException, InvalidPasswordException, InvalidRoleException, InvalidUsernameException, InvalidUserIdException {
-
+        
         assertThrows(UnauthorizedException.class, () -> shop.deleteUser(0));
         shop.getUserManager().login("Hossein", "123");
         assertThrows(UnauthorizedException.class, () -> shop.deleteUser(0));
         shop.getUserManager().login("Mattia", "123");
-        int id = shop.getUserManager().createUser("JohnB","123321","Cashier");
+        int id = shop.getUserManager().createUser("JohnB", "123321", "Cashier");
         assertTrue(shop.deleteUser(id));
     }
     
@@ -65,7 +65,7 @@ public class EZShopTest {
         shop.getUserManager().login("Hossein", "123");
         assertThrows(UnauthorizedException.class, shop::getAllUsers);
         shop.getUserManager().login("Mattia", "123");
-        assertEquals(0, (int) shop.getAllUsers().get(0).getId());
+        assertEquals(2, (int) shop.getAllUsers().get(1).getId());
     }
     
     @Test
@@ -74,7 +74,7 @@ public class EZShopTest {
         shop.getUserManager().login("Hossein", "123");
         assertThrows(UnauthorizedException.class, () -> shop.deleteUser(0));
         shop.getUserManager().login("Mattia", "123");
-        int id = shop.getUserManager().createUser("JohnB","123321","Cashier");
+        int id = shop.getUserManager().createUser("JohnB", "123321", "Cashier");
         assertEquals("JohnB", shop.getUser(id).getUsername());
         assertNull(shop.getUser(100));
     }
@@ -85,16 +85,16 @@ public class EZShopTest {
         shop.getUserManager().login("Hossein", "123");
         assertThrows(UnauthorizedException.class, () -> shop.deleteUser(0));
         shop.getUserManager().login("Mattia", "123");
-        int id = shop.getUserManager().createUser("JohnB","123321","Cashier");
-        assertTrue(shop.updateUserRights(id,"ShopManager"));
-        assertFalse(shop.updateUserRights(10,"ShopManager"));
+        int id = shop.getUserManager().createUser("JohnB", "123321", "Cashier");
+        assertTrue(shop.updateUserRights(id, "ShopManager"));
+        assertFalse(shop.updateUserRights(10, "ShopManager"));
     }
     
     @Test
     public void testLogin() throws InvalidPasswordException, InvalidUsernameException {
-        assertNull(shop.login("Mattia","123456"));
-        User u = shop.login("Mattia","123");
-        assertEquals(shop.getUserManager().getUserLogged().getUsername(),u.getUsername());
+        assertNull(shop.login("Mattia", "123456"));
+        User u = shop.login("Mattia", "123");
+        assertEquals(shop.getUserManager().getUserLogged().getUsername(), u.getUsername());
     }
     
     @Test
@@ -185,7 +185,7 @@ public class EZShopTest {
     @Test
     public void testUpdateQuantity() throws InvalidPasswordException, InvalidUsernameException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, UnauthorizedException, InvalidProductIdException, InvalidLocationException {
         Integer id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
-        shop.getProductOrderManager().updatePosition(id, "10-10-10");
+        shop.getProductOrderManager().updatePosition(id, "10-A-10");
         assertThrows(UnauthorizedException.class, () -> shop.updateQuantity(id, 10));
         shop.getUserManager().login("Stefano", "123");
         assertThrows(UnauthorizedException.class, () -> shop.updateQuantity(id, 10));
@@ -198,13 +198,13 @@ public class EZShopTest {
     @Test
     public void testUpdatePosition() throws InvalidPasswordException, InvalidUsernameException, InvalidLocationException, UnauthorizedException, InvalidProductIdException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException {
         Integer id = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
-        assertThrows(UnauthorizedException.class, () -> shop.updatePosition(id, "10-10-10"));
+        assertThrows(UnauthorizedException.class, () -> shop.updatePosition(id, "10-A-10"));
         shop.getUserManager().login("Stefano", "123");
-        assertThrows(UnauthorizedException.class, () -> shop.updatePosition(id, "10-10-10"));
+        assertThrows(UnauthorizedException.class, () -> shop.updatePosition(id, "10-A-10"));
         shop.getUserManager().login("Hossain", "123");
-        assertTrue(shop.updatePosition(id, "10-10-10"));
+        assertTrue(shop.updatePosition(id, "10-A-10"));
         shop.getUserManager().login("Mattia", "123");
-        assertTrue(shop.updatePosition(id, "10-20-10"));
+        assertTrue(shop.updatePosition(id, "10-A-10"));
     }
     
     @Test
@@ -286,7 +286,7 @@ public class EZShopTest {
     @Test
     public void testRecordOrderAdmin() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidLocationException, InvalidOrderIdException, InvalidProductIdException {
         Integer prodId = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
-        shop.getProductOrderManager().updatePosition(prodId, "10-10-10");
+        shop.getProductOrderManager().updatePosition(prodId, "10-A-10");
         shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
         final int id = shop.getProductOrderManager().payOrderFor("123456789012", 10, 10);
         assertNotEquals(-1, id);
@@ -297,7 +297,7 @@ public class EZShopTest {
     @Test
     public void testRecordOrderShopManager() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidLocationException, InvalidOrderIdException, InvalidProductIdException {
         Integer prodId = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
-        shop.getProductOrderManager().updatePosition(prodId, "10-10-10");
+        shop.getProductOrderManager().updatePosition(prodId, "10-A-10");
         shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
         final int id = shop.getProductOrderManager().payOrderFor("123456789012", 10, 10);
         assertNotEquals(-1, id);
@@ -311,7 +311,7 @@ public class EZShopTest {
         shop.getProductOrderManager().issueOrder("123456789012", 20, 25.0);
         shop.getUserManager().login("Stefano", "123");
         assertThrows(UnauthorizedException.class, shop::getAllOrders);
-
+        
     }
     
     @Test
@@ -323,7 +323,7 @@ public class EZShopTest {
         shop.getUserManager().login("Mattia", "123");
         assertNotNull(shop.getAllOrders());
     }
-
+    
     @Test
     public void testDefineCustomer() throws InvalidPasswordException, InvalidUsernameException, InvalidCustomerNameException, UnauthorizedException, InvalidCustomerIdException {
         assertThrows(UnauthorizedException.class, () -> shop.defineCustomer("JohnB"));
@@ -338,10 +338,10 @@ public class EZShopTest {
         shop.getUserManager().login("Mattia", "123");
         Integer id = shop.getCustomerManager().defineCustomer("JohnB");
         String cardId = shop.getCustomerManager().createCard();
-        shop.getCustomerManager().modifyCustomer(id,"JohnC",cardId);
+        shop.getCustomerManager().modifyCustomer(id, "JohnC", cardId);
         assertEquals("JohnC", shop.getCustomer(id).getCustomerName());
         Integer id1 = shop.getCustomerManager().defineCustomer("MikeC");
-        assertFalse(shop.modifyCustomer(id1,"MikeC",cardId));
+        assertFalse(shop.modifyCustomer(id1, "MikeC", cardId));
     }
     
     @Test
@@ -367,7 +367,7 @@ public class EZShopTest {
         assertThrows(UnauthorizedException.class, shop::getAllCustomers);
         shop.getUserManager().login("Mattia", "123");
         Integer id = shop.getCustomerManager().defineCustomer("JohnB");
-        assertEquals(id, shop.getAllCustomers().get(id).getId());
+        assertEquals(id, shop.getAllCustomers().get(0).getId());
     }
     
     @Test
@@ -380,52 +380,52 @@ public class EZShopTest {
     
     @Test
     public void testAttachCardToCustomer() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidCustomerNameException, InvalidCustomerIdException, InvalidCustomerCardException {
-        assertThrows(UnauthorizedException.class, () -> shop.attachCardToCustomer("1000000003",1));
-        shop.getUserManager().login("Mattia","123");
+        assertThrows(UnauthorizedException.class, () -> shop.attachCardToCustomer("1000000003", 1));
+        shop.getUserManager().login("Mattia", "123");
         String cardID = shop.getCustomerManager().createCard();
         String cardID1 = shop.getCustomerManager().createCard();
         Integer id = shop.getCustomerManager().defineCustomer("JohnB");
         Integer id1 = shop.getCustomerManager().defineCustomer("Mike");
-        assertTrue(shop.attachCardToCustomer(cardID,id));
-        assertFalse(shop.attachCardToCustomer(cardID,id1));
-        assertFalse(shop.attachCardToCustomer(cardID1,100));
+        assertTrue(shop.attachCardToCustomer(cardID, id));
+        assertFalse(shop.attachCardToCustomer(cardID, id1));
+        assertFalse(shop.attachCardToCustomer(cardID1, 100));
     }
     
     @Test
     public void testModifyPointsOnCard() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidCustomerNameException, InvalidCustomerIdException, InvalidCustomerCardException {
-        assertThrows(UnauthorizedException.class, () -> shop.modifyPointsOnCard("1000000003",1));
-        shop.getUserManager().login("Mattia","123");
+        assertThrows(UnauthorizedException.class, () -> shop.modifyPointsOnCard("1000000003", 1));
+        shop.getUserManager().login("Mattia", "123");
         String cardID = shop.getCustomerManager().createCard();
         Integer id = shop.getCustomerManager().defineCustomer("JohnB");
-        shop.getCustomerManager().attachCardToCustomer(cardID,id);
-        assertTrue(shop.modifyPointsOnCard(cardID,10));
-        assertFalse(shop.modifyPointsOnCard(cardID,-40));
-        assertFalse(shop.modifyPointsOnCard("1000000005",10));
+        shop.getCustomerManager().attachCardToCustomer(cardID, id);
+        assertTrue(shop.modifyPointsOnCard(cardID, 10));
+        assertFalse(shop.modifyPointsOnCard(cardID, -40));
+        assertFalse(shop.modifyPointsOnCard("1000000005", 10));
     }
     
     @Test
     public void testStartSaleTransaction() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException {
-        assertThrows(UnauthorizedException.class,()->shop.startSaleTransaction());
+        assertThrows(UnauthorizedException.class, () -> shop.startSaleTransaction());
         shop.getUserManager().login("Mattia", "123");
         assertTrue(shop.startSaleTransaction() >= 0);
         shop.getUserManager().login("Hossein", "123");
         assertTrue(shop.startSaleTransaction() >= 0);
         shop.getUserManager().login("Stefano", "123");
         assertTrue(shop.startSaleTransaction() >= 0);
-
+        
     }
     
     @Test
     public void testAddProductToSale() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException {
-        assertThrows(UnauthorizedException.class,()->shop.addProductToSale(1, "123456789012", 1));
+        assertThrows(UnauthorizedException.class, () -> shop.addProductToSale(1, "123456789012", 1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -438,15 +438,15 @@ public class EZShopTest {
     
     @Test
     public void testDeleteProductFromSale() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidQuantityException, InvalidTransactionIdException {
-        assertThrows(UnauthorizedException.class,()->shop.deleteProductFromSale(1, "123456789012", 1));
+        assertThrows(UnauthorizedException.class, () -> shop.deleteProductFromSale(1, "123456789012", 1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -459,19 +459,19 @@ public class EZShopTest {
     
     @Test
     public void testApplyDiscountRateToProduct() throws InvalidTransactionIdException, UnauthorizedException, InvalidDiscountRateException, InvalidProductCodeException, InvalidPasswordException, InvalidUsernameException, InvalidQuantityException, InvalidProductIdException, InvalidLocationException, InvalidProductDescriptionException, InvalidPricePerUnitException {
-        assertThrows(UnauthorizedException.class,()->shop.applyDiscountRateToProduct(1, "123456789012", 0.5));
+        assertThrows(UnauthorizedException.class, () -> shop.applyDiscountRateToProduct(1, "123456789012", 0.5));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
-
+        
         assertTrue(shop.applyDiscountRateToProduct(saleId, "123456789012", 0.5));
         shop.getUserManager().login("Hossein", "123");
         assertTrue(shop.applyDiscountRateToProduct(saleId, "123456789012", 0.5));
@@ -481,19 +481,19 @@ public class EZShopTest {
     
     @Test
     public void testApplyDiscountRateToSale() throws InvalidTransactionIdException, UnauthorizedException, InvalidDiscountRateException, InvalidPasswordException, InvalidUsernameException, InvalidQuantityException, InvalidLocationException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, InvalidProductCodeException {
-        assertThrows(UnauthorizedException.class,()->shop.applyDiscountRateToSale(1, 0.5));
+        assertThrows(UnauthorizedException.class, () -> shop.applyDiscountRateToSale(1, 0.5));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
-
+        
         assertTrue(shop.applyDiscountRateToSale(saleId, 0.5));
         shop.getUserManager().login("Hossein", "123");
         assertTrue(shop.applyDiscountRateToSale(saleId, 0.5));
@@ -503,15 +503,15 @@ public class EZShopTest {
     
     @Test
     public void testComputePointsForSale() throws InvalidPasswordException, InvalidUsernameException, InvalidTransactionIdException, UnauthorizedException, InvalidQuantityException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidProductDescriptionException, InvalidPricePerUnitException {
-        assertThrows(UnauthorizedException.class,()->shop.computePointsForSale(1));
+        assertThrows(UnauthorizedException.class, () -> shop.computePointsForSale(1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -524,15 +524,15 @@ public class EZShopTest {
     
     @Test
     public void testEndSaleTransaction() throws InvalidTransactionIdException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidQuantityException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidProductDescriptionException, InvalidPricePerUnitException {
-        assertThrows(UnauthorizedException.class,()->shop.endSaleTransaction(1));
+        assertThrows(UnauthorizedException.class, () -> shop.endSaleTransaction(1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -547,15 +547,15 @@ public class EZShopTest {
     
     @Test
     public void testDeleteSaleTransaction() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidQuantityException, InvalidTransactionIdException {
-        assertThrows(UnauthorizedException.class,()->shop.deleteSaleTransaction(1));
+        assertThrows(UnauthorizedException.class, () -> shop.deleteSaleTransaction(1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 1);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -574,7 +574,7 @@ public class EZShopTest {
     
     @Test
     public void testGetSaleTransaction() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidTransactionIdException {
-        assertThrows(UnauthorizedException.class,()->shop.getSaleTransaction(1));
+        assertThrows(UnauthorizedException.class, () -> shop.getSaleTransaction(1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         shop.endSaleTransaction(saleId);
@@ -587,28 +587,28 @@ public class EZShopTest {
     
     @Test
     public void testStartReturnTransaction() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidTransactionIdException {
-        assertThrows(UnauthorizedException.class,()->shop.startReturnTransaction(1));
+        assertThrows(UnauthorizedException.class, () -> shop.startReturnTransaction(1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         shop.endSaleTransaction(saleId);
-        assertTrue(shop.startReturnTransaction(saleId)>=0);
+        assertTrue(shop.startReturnTransaction(saleId) >= 0);
         shop.getUserManager().login("Hossein", "123");
-        assertTrue(shop.startReturnTransaction(saleId)>=0);
+        assertTrue(shop.startReturnTransaction(saleId) >= 0);
         shop.getUserManager().login("Stefano", "123");
-        assertTrue(shop.startReturnTransaction(saleId)>=0);
+        assertTrue(shop.startReturnTransaction(saleId) >= 0);
     }
     
     @Test
     public void testReturnProduct() throws InvalidPasswordException, InvalidUsernameException, InvalidTransactionIdException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException {
-        assertThrows(UnauthorizedException.class,()->shop.returnProduct(1, "",1));
+        assertThrows(UnauthorizedException.class, () -> shop.returnProduct(1, "", 1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 1);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -626,15 +626,15 @@ public class EZShopTest {
     
     @Test
     public void testEndReturnTransaction() throws UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidQuantityException, InvalidTransactionIdException, InvalidPasswordException, InvalidUsernameException {
-        assertThrows(UnauthorizedException.class,()->shop.endReturnTransaction(1, true));
+        assertThrows(UnauthorizedException.class, () -> shop.endReturnTransaction(1, true));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 1);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -657,15 +657,15 @@ public class EZShopTest {
     
     @Test
     public void testDeleteReturnTransaction() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException {
-        assertThrows(UnauthorizedException.class,()->shop.deleteReturnTransaction(1));
+        assertThrows(UnauthorizedException.class, () -> shop.deleteReturnTransaction(1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 1);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -677,21 +677,21 @@ public class EZShopTest {
         shop.getUserManager().login("Hossein", "123");
         assertFalse(shop.deleteReturnTransaction(retCode + 1));
         shop.getUserManager().login("Stefano", "123");
-        assertTrue(shop.deleteReturnTransaction(retCode ));
+        assertTrue(shop.deleteReturnTransaction(retCode));
     }
     
     @Test
     public void testReceiveCashPayment() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidQuantityException, InvalidTransactionIdException, InvalidPaymentException {
-        assertThrows(UnauthorizedException.class,()->shop.receiveCashPayment(1,1));
+        assertThrows(UnauthorizedException.class, () -> shop.receiveCashPayment(1, 1));
         shop.getUserManager().login("Mattia", "123");
         shop.getUserManager().login("Stefano", "123");
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "123456789012", 1);
         assertTrue(shop.receiveCashPayment(saleId, 10) > 0);
@@ -699,20 +699,20 @@ public class EZShopTest {
         assertTrue(shop.receiveCashPayment(saleId, 10) > 0);
         shop.getUserManager().login("Stefano", "123");
         assertTrue(shop.receiveCashPayment(saleId, 10) > 0);
-
+        
     }
     
     @Test
     public void testReceiveCreditCardPayment() throws InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidLocationException, InvalidProductIdException, InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
-        assertThrows(UnauthorizedException.class,()->shop.receiveCreditCardPayment(1,""));
+        assertThrows(UnauthorizedException.class, () -> shop.receiveCreditCardPayment(1, ""));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "123456789012", 1);
         String ccNumber = "79927398713";
@@ -726,15 +726,15 @@ public class EZShopTest {
     
     @Test
     public void testReturnCashPayment() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
-        assertThrows(UnauthorizedException.class,()->shop.returnCashPayment(1));
+        assertThrows(UnauthorizedException.class, () -> shop.returnCashPayment(1));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
@@ -751,20 +751,20 @@ public class EZShopTest {
     
     @Test
     public void testReturnCreditCardPayment() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
-        assertThrows(UnauthorizedException.class,()->shop.returnCreditCardPayment(1, ""));
+        assertThrows(UnauthorizedException.class, () -> shop.returnCreditCardPayment(1, ""));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
         shop.endSaleTransaction(saleId);
-
+        
         int retCode = shop.startReturnTransaction(saleId);
         String pBarCode = poManager.getProductTypesByDescription("test").get(0).getBarCode();
         shop.returnProduct(retCode, pBarCode, 1);
@@ -779,33 +779,33 @@ public class EZShopTest {
     }
     
     @Test
-    public void testRecordBalanceUpdate()throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException {
-        assertThrows(UnauthorizedException.class,()->shop.recordBalanceUpdate(5.0));
+    public void testRecordBalanceUpdate() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException {
+        assertThrows(UnauthorizedException.class, () -> shop.recordBalanceUpdate(5.0));
         shop.getUserManager().login("Stefano", "123");
-        assertThrows(UnauthorizedException.class,()->shop.recordBalanceUpdate(5.0));
+        assertThrows(UnauthorizedException.class, () -> shop.recordBalanceUpdate(5.0));
         shop.getUserManager().login("Mattia", "123");
         assertTrue(shop.recordBalanceUpdate(5.0));
         shop.getUserManager().login("Hossein", "123");
         assertTrue(shop.recordBalanceUpdate(5.0));
-
+        
     }
     
     @Test
     public void testGetCreditsAndDebits() throws InvalidPasswordException, InvalidUsernameException, UnauthorizedException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidProductIdException, InvalidLocationException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException {
-        assertThrows(UnauthorizedException.class,()->shop.getCreditsAndDebits(LocalDate.now().minusDays(1), LocalDate.now().minusDays(-1)));
+        assertThrows(UnauthorizedException.class, () -> shop.getCreditsAndDebits(LocalDate.now().minusDays(1), LocalDate.now().minusDays(-1)));
         shop.getUserManager().login("Mattia", "123");
         int saleId = shop.startSaleTransaction();
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", "123456789012", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-11-11");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("123456789012").getId(), "11-A-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("123456789012").getId(), 100);
         poManager.createProductType("test2", "12345678901286", 5.0, "note");
-        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-12-12");
+        poManager.updatePosition(poManager.getProductTypeByBarCode("12345678901286").getId(), "12-A-12");
         poManager.updateQuantity(poManager.getProductTypeByBarCode("12345678901286").getId(), 100);
         shop.addProductToSale(saleId, "12345678901286", 2);
         shop.addProductToSale(saleId, "123456789012", 1);
         shop.endSaleTransaction(saleId);
-
+        
         int retCode = shop.startReturnTransaction(saleId);
         String pBarCode = poManager.getProductTypesByDescription("test").get(0).getBarCode();
         shop.returnProduct(retCode, pBarCode, 1);
@@ -814,19 +814,17 @@ public class EZShopTest {
         shop.endReturnTransaction(retCode, true);
         shop.returnCreditCardPayment(retCode, ccNumber);
         assertFalse(shop.getCreditsAndDebits(LocalDate.now().minusDays(1), LocalDate.now().minusDays(-1)).isEmpty()); //list exists
-        shop.getUserManager().login("Hossein", "123");
-        assertFalse(shop.getCreditsAndDebits(LocalDate.now().minusDays(1), LocalDate.now().minusDays(-1)).isEmpty()); //list exists
-        shop.getUserManager().login("Stefano", "123");
-        assertFalse(shop.getCreditsAndDebits(LocalDate.now().minusDays(1), LocalDate.now().minusDays(-1)).isEmpty()); //list exists
+        
+        
     }
     
     @Test
     public void testComputeBalance() throws UnauthorizedException, InvalidPasswordException, InvalidUsernameException {
-        assertThrows(UnauthorizedException.class,()->shop.computeBalance());
+        assertThrows(UnauthorizedException.class, () -> shop.computeBalance());
         shop.getUserManager().login("Stefano", "123");
-        assertTrue(shop.computeBalance()>=0);
+        assertTrue(shop.computeBalance() >= 0);
     }
-
+    
     @Test
     public void testAddOrder() {
         OrderObj order = new OrderObj(1,

@@ -13,7 +13,6 @@ import static org.junit.Assert.assertTrue;
 public class SaleTransactionObjTest {
     @Test
     public void testEntries() {
-        // TODO fix
         SaleTransactionObj s = new SaleTransactionObj(0, LocalDate.now(), 0.0, "Sale");
         List<TicketEntry> lt = new ArrayList<TicketEntry>();
         s.setEntries(lt);
@@ -28,8 +27,8 @@ public class SaleTransactionObjTest {
     @Test
     public void testPrice() {
         SaleTransactionObj s = new SaleTransactionObj(0, LocalDate.now(), 0.0, "Sale");
-        s.setPrice(1);
-        assertTrue(1 == s.getPrice());
+        s.setPrice(0);
+        assertTrue(0 == s.getPrice());
     }
     
     @Test

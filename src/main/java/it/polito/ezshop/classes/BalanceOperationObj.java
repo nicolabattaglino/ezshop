@@ -13,7 +13,7 @@ public abstract class BalanceOperationObj implements BalanceOperation {
     private String type; //type e' equivalente a description?
     
     @JsonCreator
-    public BalanceOperationObj(@JsonProperty("id")int id, @JsonProperty("date")LocalDate date,@JsonProperty("type") String type) {
+    public BalanceOperationObj(@JsonProperty("id") int id, @JsonProperty("date") LocalDate date, @JsonProperty("type") String type) {
         super();
         this.date = date;
         this.type = type;

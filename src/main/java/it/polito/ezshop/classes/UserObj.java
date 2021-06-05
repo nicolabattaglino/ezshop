@@ -54,15 +54,15 @@ public class UserObj implements User {
         if (role.equalsIgnoreCase("ADMINISTRATOR") ||
                 role.equalsIgnoreCase("CASHIER") ||
                 role.equalsIgnoreCase("SHOPMANAGER")) {
-            switch (UserRole.valueOf(role.toUpperCase())) {
-                case ADMINISTRATOR:
-                    this.role = UserRole.ADMINISTRATOR;
+            switch (UserRole.valueOf(role)) {
+                case Administrator:
+                    this.role = UserRole.Administrator;
                     break;
-                case CASHIER:
-                    this.role = UserRole.CASHIER;
+                case Cashier:
+                    this.role = UserRole.Cashier;
                     break;
-                case SHOPMANAGER:
-                    this.role = UserRole.SHOPMANAGER;
+                case ShopManager:
+                    this.role = UserRole.ShopManager;
                     break;
             }
         }

@@ -131,9 +131,9 @@ public class ProductOrderManager {
         ProductTypeObj productTypeObj = productMap.get(newCode);
         if (productTypeObj != null && !productTypeObj.getId().equals(id))
             return false;
-    
+        
         ProductTypeObj candidate = null;
-    
+        
         for (ProductTypeObj productType : productMap.values()) {
             if (productType.getId().equals(id)) candidate = productType;
         }
@@ -220,7 +220,9 @@ public class ProductOrderManager {
     
     public boolean updatePosition(Integer productId, String newPos) throws InvalidProductIdException, InvalidLocationException {
         if (productId == null || productId <= 0) throw new InvalidProductIdException();
-        newPos = (newPos == null) ? "" : newPos;
+        newPos = (newPos == null) ? "" : newPos.toUpperCase();
+        if (!"".equals(newPos) && !newPos.matches("[0-9]+-[a-zA-Z]+-[0-9]+"))
+            throw new InvalidLocationException();
         ProductTypeObj target = null;
         String oldLoc = null;
         for (ProductTypeObj p : productMap.values()) {
@@ -325,7 +327,7 @@ public class ProductOrderManager {
                 .writeValue(new File(PRODUCT_GEN_PATH), productIdGen);
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(ORDER_GEN_PATH), orderIdGen);
-    
+        
     }
     
     public void clear() {
