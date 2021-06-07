@@ -105,7 +105,7 @@ interface EZShopInterface {
     +getSaleTransaction(transactionId: Integer): boolean
     +startReturnTransaction(transactionId: Integer): Integer
     +returnProduct(returnId: Integer, productCode: String, amount: int): boolean
-    returnProductRFID(returnId: Integer, RFID: String): boolean
+    +returnProductRFID(returnId: Integer, RFID: String): boolean
     +endReturnTransaction(returnId : Integer, commit: boolean): boolean
     +deleteReturnTransaction(returnId: Integer): boolean
     +receiveCashPayment(transactionId: Integer, cash: double): double
@@ -216,7 +216,7 @@ class ProductOrderManager {
 
     -productIdGen: int
     -orderIdGen: int
-    -RFIDtoProductypeMap: Map<Integer, String>
+    +{static}PRODUCT_TYPES_PATH: String
     +{static}PRODUCTS_PATH: String
     +{static}PRODUCT_GEN_PATH: String
     +{static}ORDER_GEN_PATH: String
@@ -238,17 +238,21 @@ class ProductOrderManager {
     
     +payOrder(Integer orderId): boolean
     +recordOrderArrival(Integer orderId): boolean
+    +recordOrderArrivalRFID(orderId: Integer , RFIDfrom: String): boolean 
     -persistGen()
     -persistProducts()
     +clear()
 
+    +putProduct(product: Product): boolean
+    +getProduct(RFID: String): Product
+    +removeProduct(RFID: String): Product
 }
 
 ProductOrderManager -->"*" ProductType: -productMap: Map<String, ProductType>
-
+ProductOrderManager -->"*" Product: RFIDMap: Map<Integer, Product>
 class TransactionManager {
     -saleGen:  int
-    -returnGen:int 
+    -returnGen: int 
     -balanceOperationGen:  int
     -{static}ORDER_PATH: String
     -{static}SALE_PATH: String
@@ -259,7 +263,9 @@ class TransactionManager {
     
     +startSaleTransaction() : Integer
     +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
+    +addProductToSaleRFID(transactionId: Integer , RFID: String): boolean
     +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
+    +deleteProductFromSaleRFID(transactionId: Integer, RFID: String): boolean
     +applyDiscountRateToProduct(transactionId: Integer, productCode: String, discountRate: double): boolean
     +applyDiscountRateToSale(transactionId: Integer, discountRate: double) : boolean
     +computePointsForSale(transactionId: Integer): int
@@ -268,6 +274,7 @@ class TransactionManager {
     +getSaleTransaction(transactionId: Integer): boolean
     +startReturnTransaction(transactionId: Integer): Integer
     +returnProduct(returnId : Integer, productCode: String, amount: int): boolean
+    +returnProductRFID(returnId: Integer, RFID: String): boolean
     +endReturnTransaction(returnId : Integer, commit: boolean): boolean
     +deleteReturnTransaction(returnId: Integer): boolean
     +receiveCashPayment(transactionId: Integer, cash: double): double
@@ -365,7 +372,6 @@ note left : Persistent
 
 class Product {
     -RFID: Integer
-    
 }
 
 class ProductType {
