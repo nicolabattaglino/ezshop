@@ -1,11 +1,11 @@
-# Design Document 
+# Design Document
 
 
 Authors: Stefano, Mattia, Nicola, Hossein
 
-Date: 28 May 2021
+Date: 07 June 2021
 
-Version: 3.2
+Version: 3.3
 
 
 # Contents
@@ -19,7 +19,7 @@ Version: 3.2
 
 The design must satisfy the Official Requirements document, notably functional and non functional requirements
 
-# High level design 
+# High level design
 
 <discuss architectural styles used, if any>
 
@@ -78,7 +78,8 @@ interface EZShopInterface {
     +issueOrder(String productCode, int quantity, double pricePerUnit): Integer
     +payOrderFor(String productCode, int quantity, double pricePerUnit): Integer
     +payOrder(Integer orderId): boolean
-    +recordOrderArrival(Integer orderId): boolean
+    +recordOrderArrivalRFID(orderId: Integer , RFIDfrom: String): boolean 
+    +recordOrderArrival(orderId: Integer): boolean
     +getAllOrders(): List<Order> 
 
     +defineCustomer(customerName: String): Customer
@@ -93,7 +94,9 @@ interface EZShopInterface {
 
     +startSaleTransaction() : Integer
     +addProductToSale(transactionId: Integer, productCode: String, amount: Integer): boolean
+    +addProductToSaleRFID(transactionId: Integer , RFID: String): boolean
     +deleteProductFromSale(transactionId: Integer, productCode: String, amount: Integer): boolean
+    +deleteProductFromSaleRFID(transactionId: Integer, RFID: String): boolean 
     +applyDiscountRateToProduct(transactionId: Integer, productCode: String, discountRate: double): boolean
     +applyDiscountRateToSale(transactionId: Integer, discountRate: double) : boolean
     +computePointsForSale(transactionId: Integer): int
@@ -101,7 +104,8 @@ interface EZShopInterface {
     +deleteSaleTransaction(transactionId: Integer) : boolean
     +getSaleTransaction(transactionId: Integer): boolean
     +startReturnTransaction(transactionId: Integer): Integer
-    +returnProduct(returnId : Integer, productCode: String, amount: int): boolean
+    +returnProduct(returnId: Integer, productCode: String, amount: int): boolean
+    returnProductRFID(returnId: Integer, RFID: String): boolean
     +endReturnTransaction(returnId : Integer, commit: boolean): boolean
     +deleteReturnTransaction(returnId: Integer): boolean
     +receiveCashPayment(transactionId: Integer, cash: double): double
@@ -212,6 +216,7 @@ class ProductOrderManager {
 
     -productIdGen: int
     -orderIdGen: int
+    -RFIDtoProductypeMap: Map<Integer, String>
     +{static}PRODUCTS_PATH: String
     +{static}PRODUCT_GEN_PATH: String
     +{static}ORDER_GEN_PATH: String
@@ -358,6 +363,21 @@ class ProductType {
 }
 note left : Persistent
 
+class Product {
+    -RFID: Integer
+    
+}
+
+class ProductType {
+    -id: Integer
+    -barCode: String
+
+    -description: String
+    -sellPrice: double
+    -discountRate: double
+    -notes: String
+    -amount: int
+}
 
 class Position {
     -aisleID: Integer
@@ -369,6 +389,7 @@ note right : Persistent
 
 
 ProductType ->"0..1" Position: -position: Position
+Product "*" -> ProductType: -productType: ProductType
 
 
 class SaleTransaction {
@@ -478,7 +499,7 @@ ReturnTransaction --> "*" TicketEntry: -entries: List<TicketEntry>
 | FR8.4 |   x   |                  |              |         x            |                     |      |         |       |          |             |                 |                   |
 
 
- # Verification sequence diagrams 
+# Verification sequence diagrams
 \<select key scenarios from the requirement document. For each of them define a sequence diagram showing that the scenario can be implemented by the classes and methods in the design>
 
 ## Scenario 1.1
