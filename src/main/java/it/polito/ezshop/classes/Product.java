@@ -10,11 +10,16 @@ public class Product {
     private ProductTypeObj productType;
     private String barcode;
     
+    public Product(String rfid) {
+        RFID = rfid;
+    }
+    
     @JsonCreator
     public Product(@JsonProperty("RFID") String rfid, @JsonProperty("barcode") String barcode) {
         RFID = rfid;
+        this.barcode = barcode;
     }
-
+    
     public ProductTypeObj getProductType() {
         return productType;
     }

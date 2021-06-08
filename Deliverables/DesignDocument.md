@@ -374,7 +374,6 @@ class Product {
     -RFID: Integer
     -barcode: String 
 }
-note left : TODO MAYBE BARCODE IS USELESS
 
 class ProductType {
     -id: Integer

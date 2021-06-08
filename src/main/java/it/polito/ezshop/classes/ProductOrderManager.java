@@ -66,7 +66,11 @@ public class ProductOrderManager {
                 RFIDMap = new HashMap<>();
             }
         }
-        
+    
+        RFIDMap.values().forEach(p -> {
+            p.setProductType(productTypesMap.get(p.getBarcode()));
+        });
+    
         File productGen = new File(PRODUCT_GEN_PATH);
         try {
             productGen.createNewFile();
@@ -333,9 +337,10 @@ public class ProductOrderManager {
         return true;
     }
     
+    //TODO COMPLETA
     public boolean recordOrderArrivalRFID(Integer orderId, String RFIDfrom) throws InvalidOrderIdException, UnauthorizedException, InvalidLocationException, InvalidRFIDException {
         if (orderId == null || orderId <= 0) throw new InvalidOrderIdException();
-        
+        if (RFIDfrom == null || !RFIDfrom.matches("[0-9]{10}")) throw new InvalidOrderIdException();
         OrderObj order = shop.getTransactionManager().addCompletedOrder(orderId);
         if (order == null) return false;
         String oldStatus = order.getStatus();
@@ -346,11 +351,38 @@ public class ProductOrderManager {
         } catch (InvalidProductIdException e) {
             e.printStackTrace();
         }
+        long rfidStart = Integer.parseInt(RFIDfrom);
+        final long startingPoint = rfidStart;
+        HashSet<String> RFIDs = new HashSet<>();
+        
+        for (int i = 0; i < order.getQuantity(); ) {
+            final String newRfid = String.format("%010d", rfidStart);
+            if (RFIDMap.containsKey(newRfid)) {
+                rfidStart = (rfidStart + 1) % 10000000000L;
+                if (rfidStart == startingPoint)
+                    throw new InvalidRFIDException();
+            } else {
+                RFIDs.add(newRfid);
+                rfidStart = (rfidStart + 1) % 10000000000L;
+                i++;
+            }
+        }
+        
+        RFIDs.forEach(rfid -> {
+            Product product = new Product(rfid, order.getProductCode());
+            product.setProductType(target);
+            RFIDMap.put(rfid, product);
+        });
+        
         try {
             persistProductTypes();
+            persistProducts();
         } catch (IOException e) {
             order.setStatus(oldStatus);
             target.setQuantity(quantity);
+            for (String rfid : RFIDs) {
+                RFIDMap.remove(rfid);
+            }
             shop.addOrder(order);
         }
         return true;
@@ -402,6 +434,11 @@ public class ProductOrderManager {
             RFIDMap.put(product.getRFID(), product);
             throw new InvalidRFIDException();
         }
+        try {
+            persistProducts();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return true;
     }
     
@@ -428,12 +465,15 @@ public class ProductOrderManager {
     public Product removeProduct(String RFID) throws InvalidRFIDException {
         if (RFID == null || !RFID.matches("[0-9]{10}")) throw new InvalidRFIDException();
         final int key = Integer.parseInt(RFID);
-        return RFIDMap.remove(key);
-    }
-    
-    public boolean checkRFID(String RFID) {
-        return RFID.length() == 12;
-        //this is the only check I could find on RFID, feel free to modify this method
+        final Product remove = RFIDMap.remove(key);
+        if (remove != null) {
+            try {
+                persistProducts();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return remove;
     }
     
     
