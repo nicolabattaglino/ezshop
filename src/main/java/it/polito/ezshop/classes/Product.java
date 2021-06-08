@@ -3,26 +3,26 @@ package it.polito.ezshop.classes;
 import java.util.Objects;
 
 public class Product {
-    private Integer RFID;
+    private String RFID;
     private ProductTypeObj productType;
-    
-    public void setRFID(Integer RFID) {
+
+    public void setRFID(String RFID) {
         this.RFID = RFID;
     }
-    
-    public Product(Integer rfid) {
+
+    public Product(String rfid) {
         RFID = rfid;
     }
-    
+
     public ProductTypeObj getProductType() {
         return productType;
     }
-    
+
     public void setProductType(ProductTypeObj productType) {
         this.productType = productType;
     }
-    
-    public Integer getRFID() {
+
+    public String getRFID() {
         return RFID;
     }
 }
