@@ -26,7 +26,7 @@ public class ProductOrderManager {
     @JsonDeserialize
     private Map<String, ProductTypeObj> productTypesMap;
     @JsonDeserialize
-    private Map<Integer, Product> RFIDMap;
+    private Map<String, Product> RFIDMap;
     
     private int productIdGen;
     private int orderIdGen;
@@ -50,7 +50,7 @@ public class ProductOrderManager {
                 productTypesMap = new HashMap<>();
             }
         }
-        TypeReference<HashMap<Integer, Product>> typeRef2 = new TypeReference<HashMap<Integer, Product>>() {
+        TypeReference<HashMap<String, Product>> typeRef2 = new TypeReference<HashMap<String, Product>>() {
         };
         File products = new File(PRODUCTS_PATH);
         try {
@@ -374,7 +374,6 @@ public class ProductOrderManager {
                 .writeValue(new File(PRODUCT_GEN_PATH), productIdGen);
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(ORDER_GEN_PATH), orderIdGen);
-    
     }
     
     public void clear() {
@@ -431,4 +430,11 @@ public class ProductOrderManager {
         final int key = Integer.parseInt(RFID);
         return RFIDMap.remove(key);
     }
+    
+    public boolean checkRFID(String RFID) {
+        return RFID.length() == 12;
+        //this is the only check I could find on RFID, feel free to modify this method
+    }
+    
+    
 }
