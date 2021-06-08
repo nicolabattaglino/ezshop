@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProductOrderManager {
-    
+
     public static final String PRODUCT_TYPES_PATH = "data/product_types.json";
     public static final String PRODUCTS_PATH = "data/products.json";
     public static final String PRODUCT_GEN_PATH = "data/product_gen.json";
@@ -26,11 +26,11 @@ public class ProductOrderManager {
     @JsonDeserialize
     private Map<String, ProductTypeObj> productTypesMap;
     @JsonDeserialize
-    private Map<Integer, Product> RFIDMap;
-    
+    private Map<String, Product> RFIDMap;
+
     private int productIdGen;
     private int orderIdGen;
-    
+
     public ProductOrderManager(EZShop shop) {
         this.shop = shop;
         ObjectMapper mapper = new ObjectMapper();
@@ -50,7 +50,7 @@ public class ProductOrderManager {
                 productTypesMap = new HashMap<>();
             }
         }
-        TypeReference<HashMap<Integer, Product>> typeRef2 = new TypeReference<HashMap<Integer, Product>>() {
+        TypeReference<HashMap<String, Product>> typeRef2 = new TypeReference<HashMap<String, Product>>() {
         };
         File products = new File(PRODUCTS_PATH);
         try {
@@ -66,7 +66,7 @@ public class ProductOrderManager {
                 RFIDMap = new HashMap<>();
             }
         }
-        
+
         File productGen = new File(PRODUCT_GEN_PATH);
         try {
             productGen.createNewFile();
@@ -98,7 +98,7 @@ public class ProductOrderManager {
             }
         }
     }
-    
+
     public boolean checkBarcode(String barCode) {
         if (barCode == null) return false;
         if (!barCode.matches("[0-9]{12,14}")) return false;
@@ -110,12 +110,12 @@ public class ProductOrderManager {
             if (i % 2 == 0) factor = 3;
             res += factor * (barCode.charAt(length - i - 2) - '0');
         }
-        
+
         res = 10 - (res % 10);
-        
+
         return res == checkValue;
     }
-    
+
     public Integer createProductType(String description, String productCode, double pricePerUnit, String note) throws InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException {
         if (!checkBarcode(productCode)) {
             throw new InvalidProductCodeException();
@@ -138,7 +138,7 @@ public class ProductOrderManager {
         }
         return productIdGen;
     }
-    
+
     public boolean updateProduct(Integer id, String newDescription, String newCode, double newPrice, String newNote) throws InvalidProductIdException, InvalidProductDescriptionException, InvalidProductCodeException, InvalidPricePerUnitException {
         if (id == null || id <= 0) throw new InvalidProductIdException();
         if (newPrice <= 0) {
@@ -151,9 +151,9 @@ public class ProductOrderManager {
         ProductTypeObj productTypeObj = productTypesMap.get(newCode);
         if (productTypeObj != null && !productTypeObj.getId().equals(id))
             return false;
-        
+
         ProductTypeObj candidate = null;
-        
+
         for (ProductTypeObj productType : productTypesMap.values()) {
             if (productType.getId().equals(id)) candidate = productType;
         }
@@ -172,14 +172,14 @@ public class ProductOrderManager {
             productTypesMap.put(old.getBarCode(), old);
             return false;
         }
-        
+
         return true;
     }
-    
+
     public boolean deleteProductType(Integer id) throws InvalidProductIdException {
         if (id == null || id <= 0) throw new InvalidProductIdException();
         ProductTypeObj candidate = null;
-        
+
         for (ProductTypeObj productType : productTypesMap.values()) {
             if (productType.getId().equals(id)) candidate = productType;
         }
@@ -193,7 +193,7 @@ public class ProductOrderManager {
         }
         return true;
     }
-    
+
     public List<ProductType> getAllProductTypes() {
         ArrayList<ProductType> ret = new ArrayList<>(productTypesMap.values().size());
         for (ProductTypeObj value : productTypesMap.values()) {
@@ -201,13 +201,13 @@ public class ProductOrderManager {
         }
         return ret;
     }
-    
+
     public ProductType getProductTypeByBarCode(String barCode) throws InvalidProductCodeException {
         if (!checkBarcode(barCode)) throw new InvalidProductCodeException();
         ProductTypeObj product = productTypesMap.get(barCode);
         return product == null ? null : new ProductTypeObj(product);
     }
-    
+
     public List<ProductType> getProductTypesByDescription(String description) {
         final String finalDescription = description == null ? "" : description;
         return productTypesMap.values().stream()
@@ -215,7 +215,7 @@ public class ProductOrderManager {
                 .map(ProductTypeObj::new)
                 .collect(Collectors.toList());
     }
-    
+
     public boolean updateQuantity(Integer productId, int toBeAdded) throws InvalidProductIdException {
         if (productId == null || productId <= 0) throw new InvalidProductIdException();
         ProductType target = null;
@@ -237,7 +237,7 @@ public class ProductOrderManager {
         }
         return false;
     }
-    
+
     public boolean updatePosition(Integer productId, String newPos) throws InvalidProductIdException, InvalidLocationException {
         if (productId == null || productId <= 0) throw new InvalidProductIdException();
         newPos = (newPos == null) ? "" : newPos.toUpperCase();
@@ -261,7 +261,7 @@ public class ProductOrderManager {
         }
         return true;
     }
-    
+
     public Integer issueOrder(String productCode, int quantity, double pricePerUnit) throws InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException {
         if (quantity <= 0) throw new InvalidQuantityException();
         if (pricePerUnit <= 0) throw new InvalidPricePerUnitException();
@@ -277,7 +277,7 @@ public class ProductOrderManager {
         shop.addOrder(order);
         return order.getOrderId();
     }
-    
+
     public Integer payOrderFor(String productCode, int quantity, double pricePerUnit)
             throws InvalidProductCodeException, InvalidQuantityException, InvalidPricePerUnitException {
         if (!checkBarcode(productCode)) throw new InvalidProductCodeException();
@@ -296,7 +296,7 @@ public class ProductOrderManager {
         if (!shop.addOrder(o)) return -1;
         return o.getOrderId();
     }
-    
+
     public boolean payOrder(Integer orderId) throws InvalidOrderIdException, UnauthorizedException {
         if (orderId == null || orderId <= 0) throw new InvalidOrderIdException();
         Optional<Order> target = shop.getTransactionManager().getAllOrders().stream()
@@ -310,7 +310,7 @@ public class ProductOrderManager {
         }
         return false;
     }
-    
+
     public boolean recordOrderArrival(Integer orderId) throws InvalidOrderIdException, InvalidLocationException {
         if (orderId == null || orderId <= 0) throw new InvalidOrderIdException();
         OrderObj order = shop.getTransactionManager().addCompletedOrder(orderId);
@@ -332,10 +332,10 @@ public class ProductOrderManager {
         }
         return true;
     }
-    
+
     public boolean recordOrderArrivalRFID(Integer orderId, String RFIDfrom) throws InvalidOrderIdException, UnauthorizedException, InvalidLocationException, InvalidRFIDException {
         if (orderId == null || orderId <= 0) throw new InvalidOrderIdException();
-        
+
         OrderObj order = shop.getTransactionManager().addCompletedOrder(orderId);
         if (order == null) return false;
         String oldStatus = order.getStatus();
@@ -355,28 +355,28 @@ public class ProductOrderManager {
         }
         return true;
     }
-    
+
     private void persistProductTypes() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(PRODUCT_TYPES_PATH), productTypesMap);
     }
-    
+
     private void persistProducts() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(PRODUCTS_PATH), RFIDMap);
     }
-    
+
     private void persistGen() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(PRODUCT_GEN_PATH), productIdGen);
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(ORDER_GEN_PATH), orderIdGen);
-        
+
     }
-    
+
     public void clear() {
         productTypesMap.clear();
         (new File(PRODUCT_TYPES_PATH)).delete();
@@ -384,16 +384,21 @@ public class ProductOrderManager {
         (new File(PRODUCT_GEN_PATH)).delete();
         (new File(ORDER_GEN_PATH)).delete();
     }
-    
+
     public boolean putProduct(Product product) {
+        RFIDMap.put(product.getRFID(), product);
         return false;
     }
-    
+
     public Product getProduct(String RFID) {
-        return null;
+        return RFIDMap.get(RFID);
     }
-    
+
     public Product removeProduct(String RFID) {
-        return null;
+        return RFIDMap.remove(RFID);
+    }
+    public boolean checkRFID(String RFID){
+        return RFID.length()==12;
+        //this is the only check I could find on RFID, feel free to modify this method
     }
 }
