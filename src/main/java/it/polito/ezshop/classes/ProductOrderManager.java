@@ -374,7 +374,7 @@ public class ProductOrderManager {
                 .writeValue(new File(PRODUCT_GEN_PATH), productIdGen);
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(ORDER_GEN_PATH), orderIdGen);
-        
+    
     }
     
     public void clear() {
@@ -385,15 +385,50 @@ public class ProductOrderManager {
         (new File(ORDER_GEN_PATH)).delete();
     }
     
-    public boolean putProduct(Product product) {
-        return false;
+    
+    /**
+     * This method adds a Product to the RFIDMap
+     *
+     * @param product the product that has to be added
+     * @return true if the operation is successful
+     * false   if the ProductType referred to the product does not exist,
+     * @throws InvalidRFIDException if the RFID code is already present into the RFIDMap
+     */
+    public boolean putProduct(Product product) throws InvalidRFIDException {
+        final ProductTypeObj productType = productTypesMap.get(product.getBarcode());
+        if (productType == null) return false;
+        product.setProductType(productType);
+        final Product product1 = RFIDMap.put(product.getRFID(), product);
+        if (product1 != null) {
+            RFIDMap.put(product.getRFID(), product);
+            throw new InvalidRFIDException();
+        }
+        return true;
     }
     
-    public Product getProduct(String RFID) {
-        return null;
+    /**
+     * This method get a Product given its own RFID from the RFIDMap
+     *
+     * @param RFID the RFID of the Product that has to be gotten
+     * @return the Product mapped by its own RFID, null otherwise
+     * @throws InvalidRFIDException if the RFID code is empty, null or invalid
+     */
+    public Product getProduct(String RFID) throws InvalidRFIDException {
+        if (RFID == null || !RFID.matches("[0-9]{10}")) throw new InvalidRFIDException();
+        final int key = Integer.parseInt(RFID);
+        return RFIDMap.get(key);
     }
     
-    public Product removeProduct(String RFID) {
-        return null;
+    /**
+     * This method remove a Product given its own RFID from the RFIDMap
+     *
+     * @param RFID the RFID of the Product that has to be gotten
+     * @return the Product mapped by its own RFID, null otherwise
+     * @throws InvalidRFIDException if the RFID code is empty, null or invalid
+     */
+    public Product removeProduct(String RFID) throws InvalidRFIDException {
+        if (RFID == null || !RFID.matches("[0-9]{10}")) throw new InvalidRFIDException();
+        final int key = Integer.parseInt(RFID);
+        return RFIDMap.remove(key);
     }
 }
