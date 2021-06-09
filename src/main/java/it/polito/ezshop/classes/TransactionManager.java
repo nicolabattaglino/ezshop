@@ -223,6 +223,7 @@ public class TransactionManager {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         if(RFID ==null|| RFID ==""|| !shop.getProductOrderManager().checkRFID(RFID)) throw new InvalidRFIDException();
         Product prodotto = shop.getProductOrderManager().getProduct(RFID);
+        if(prodotto==null) return  false;
         boolean output= false;
         try {
             output = this.addProductToSale(transactionId, prodotto.getProductType().getBarCode(), 1);
@@ -274,6 +275,7 @@ public class TransactionManager {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         if(RFID ==null|| RFID ==""|| !shop.getProductOrderManager().checkRFID(RFID)) throw new InvalidRFIDException();
         Product prodotto = saleTransactions.get(transactionId).getProduct(RFID);
+        if(prodotto==null) return  false;
         boolean output= false;
         try {
             output = this.deleteProductFromSale(transactionId, prodotto.getProductType().getBarCode(), 1);
@@ -459,6 +461,7 @@ public class TransactionManager {
         if (returnId == null || returnId <= 0) throw new InvalidTransactionIdException();
         if(RFID ==null|| RFID ==""|| !shop.getProductOrderManager().checkRFID(RFID)) throw new InvalidRFIDException();
         Product prodotto = shop.getProductOrderManager().getProduct(RFID);
+        if(prodotto==null) return  false;
         boolean output= false;
         try {
             output= this.returnProduct(returnId, prodotto.getProductType().getBarCode(),1);

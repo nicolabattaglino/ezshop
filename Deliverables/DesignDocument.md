@@ -404,7 +404,7 @@ class SaleTransaction {
     -paymentType : String
     -price: double
     -discountRate : double
-   
+    -Map<String, Product> products = new HashMap<>();
     
     -updatePrice()
     +deleteEntry(entry: TicketEntry)
@@ -419,7 +419,7 @@ enum SaleStatus {
     CLOSED,
     PAYED
 }
-
+SaleTransaction --> "*" Product : -products : Map<String, Product> 
 SaleTransaction  --> "*" TicketEntry : -entries : ArrayList<TicketEntry>
 SaleTransaction  --> "*" SaleStatus : -status : SaleStatus
 
