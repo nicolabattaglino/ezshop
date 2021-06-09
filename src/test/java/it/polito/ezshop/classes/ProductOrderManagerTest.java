@@ -297,13 +297,100 @@ public class ProductOrderManagerTest {
             assertTrue(p.updatePosition(id, "10-bc-10"));
             id = p.createProductType("test", "111111111117", 22.0, "note");
             assertFalse(p.updatePosition(id, "10-bc-10"));
-            
+    
         } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductIdException | InvalidLocationException e) {
+            fail("Unexpected exception: " + e);
+        }
+    
+    }
+    
+    @Test
+    public void testPutProductFail() {
+        final String rfid = "000000000100";
+        final String code = "123456789012";
+        Product product = new Product(rfid, code);
+        try {
+            p.createProductType("hello test", code, 22.0, "note");
+            assertTrue(p.putProduct(product));
+        } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidRFIDException e) {
+            fail("Unexpected exception: " + e);
+        }
+        assertThrows(InvalidRFIDException.class, () -> p.putProduct(product));
+    }
+    
+    @Test
+    public void testPutProduct() {
+        final String rfid = "000000000100";
+        final String code = "123456789012";
+        Product product = new Product(rfid, code);
+        try {
+            assertFalse(p.putProduct(product));
+            p.createProductType("hello test", code, 22.0, "note");
+            assertTrue(p.putProduct(product));
+        } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidRFIDException e) {
             fail("Unexpected exception: " + e);
         }
         
     }
     
+    @Test
+    public void testGetProductOK() {
+        final String rfid = "000000000100";
+        final String code = "123456789012";
+        Product product = new Product(rfid, code);
+        try {
+            assertFalse(p.putProduct(product));
+            p.createProductType("hello test", code, 22.0, "note");
+            assertTrue(p.putProduct(product));
+            final Product product1 = p.getProduct(rfid);
+            assertNotNull(product1);
+            assertEquals(rfid, product1.getRFID());
+            assertEquals(code, product1.getBarcode());
+            assertEquals(p.getProductTypeByBarCode(code), product1.getProductType());
+        } catch (InvalidRFIDException | InvalidProductCodeException | InvalidPricePerUnitException | InvalidProductDescriptionException e) {
+            fail("Unexpected exception" + e);
+        }
+    }
+    
+    @Test
+    public void testGetProductFail() {
+        final String rfid = "000000000100";
+        final String code = "123456789012";
+        Product product = new Product(rfid, code);
+        assertThrows(InvalidRFIDException.class, () -> p.getProduct(null));
+        assertThrows(InvalidRFIDException.class, () -> p.getProduct(""));
+        assertThrows(InvalidRFIDException.class, () -> p.getProduct("110001R"));
+    }
+    
+    @Test
+    public void testRemoveProductFail() {
+        final String rfid = "000000000100";
+        final String code = "123456789012";
+        Product product = new Product(rfid, code);
+        assertThrows(InvalidRFIDException.class, () -> p.removeProduct(null));
+        assertThrows(InvalidRFIDException.class, () -> p.removeProduct(""));
+        assertThrows(InvalidRFIDException.class, () -> p.removeProduct("110001R"));
+    }
+    
+    @Test
+    public void testRemoveProductOk() {
+        final String rfid = "000000000100";
+        final String code = "123456789012";
+        Product product = new Product(rfid, code);
+        try {
+            p.createProductType("hello test", code, 22.0, "note");
+            assertNull(p.removeProduct(rfid));
+            assertTrue(p.putProduct(product));
+            final Product product1 = p.removeProduct(rfid);
+            assertNotNull(product1);
+            assertEquals(rfid, product1.getRFID());
+            assertEquals(code, product1.getBarcode());
+            assertEquals(p.getProductTypeByBarCode(code), product1.getProductType());
+            assertNull(p.removeProduct(rfid));
+        } catch (InvalidRFIDException | InvalidProductCodeException | InvalidPricePerUnitException | InvalidProductDescriptionException e) {
+            fail("Unexpected exception" + e);
+        }
+    }
     
     @After
     public void clear() {

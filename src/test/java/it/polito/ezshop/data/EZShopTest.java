@@ -306,6 +306,39 @@ public class EZShopTest {
     }
     
     @Test
+    public void testRecordOrderArrivalRFIDInvalid() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException {
+        shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
+        final int id = shop.getProductOrderManager().payOrderFor("123456789012", 10, 10);
+        assertNotEquals(-1, id);
+        assertThrows(UnauthorizedException.class, () -> shop.recordOrderArrivalRFID(id, "000000000100"));
+        shop.getUserManager().login("Stefano", "123");
+        assertThrows(UnauthorizedException.class, () -> shop.recordOrderArrivalRFID(id, "000000000100"));
+    }
+    
+    @Test
+    public void testRecordOrderRFIDAdmin() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidLocationException, InvalidOrderIdException, InvalidProductIdException, InvalidRFIDException {
+        Integer prodId = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        shop.getProductOrderManager().updatePosition(prodId, "10-A-10");
+        shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
+        final int id = shop.getProductOrderManager().payOrderFor("123456789012", 10, 10);
+        assertNotEquals(-1, id);
+        shop.getUserManager().login("Mattia", "123");
+        assertTrue(shop.recordOrderArrivalRFID(id, "000000000100"));
+    }
+    
+    @Test
+    public void testRecordOrderRFIDShopManager() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidQuantityException, UnauthorizedException, InvalidPasswordException, InvalidUsernameException, InvalidLocationException, InvalidOrderIdException, InvalidProductIdException, InvalidRFIDException {
+        Integer prodId = shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
+        shop.getProductOrderManager().updatePosition(prodId, "10-A-10");
+        shop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
+        final int id = shop.getProductOrderManager().payOrderFor("123456789012", 10, 10);
+        assertNotEquals(-1, id);
+        shop.getUserManager().login("Hossain", "123");
+        assertTrue(shop.recordOrderArrivalRFID(id, "000000000100"));
+    }
+    
+    @Test
     public void testGetAllOrdersInvalid() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidPasswordException, InvalidUsernameException {
         shop.getProductOrderManager().createProductType("test", "123456789012", 25.0, "note");
         shop.getProductOrderManager().issueOrder("123456789012", 20, 25.0);

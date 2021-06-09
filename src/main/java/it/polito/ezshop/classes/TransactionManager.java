@@ -188,7 +188,7 @@ public class TransactionManager {
     
     public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
-        if (productCode == null || productCode == "" || !shop.getProductOrderManager().checkBarcode(productCode))
+        if (productCode == null || productCode.equals("") || !shop.getProductOrderManager().checkBarcode(productCode))
             throw new InvalidProductCodeException();
         if (amount < 0) throw new InvalidQuantityException();
         ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);
@@ -219,12 +219,12 @@ public class TransactionManager {
         return true;
     }
     
-    public boolean addProductToSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException {
+    public boolean addProductToSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
-        if (RFID == null || !RFID.matches("[0-9]{10}")) throw new InvalidRFIDException();
+        if (RFID == null || !RFID.matches("[0-9]{12}")) throw new InvalidRFIDException();
         Product prodotto = shop.getProductOrderManager().getProduct(RFID);
-        if(prodotto==null) return  false;
-        boolean output= false;
+        if (prodotto == null) return false;
+        boolean output = false;
         try {
             output = this.addProductToSale(transactionId, prodotto.getProductType().getBarCode(), 1);
         } catch (InvalidProductCodeException e) {
@@ -244,7 +244,7 @@ public class TransactionManager {
     
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
-        if (productCode == null || productCode == "" || !shop.getProductOrderManager().checkBarcode(productCode))
+        if (productCode == null || productCode.equals("") || !shop.getProductOrderManager().checkBarcode(productCode))
             throw new InvalidProductCodeException();
         if (amount < 0) throw new InvalidQuantityException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
@@ -271,12 +271,12 @@ public class TransactionManager {
         return true;
     }
     
-    public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException {
+    public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
-        if (RFID == null || !RFID.matches("[0-9]{10}")) throw new InvalidRFIDException();
+        if (RFID == null || !RFID.matches("[0-9]{12}")) throw new InvalidRFIDException();
         Product prodotto = saleTransactions.get(transactionId).getProduct(RFID);
-        if(prodotto==null) return  false;
-        boolean output= false;
+        if (prodotto == null) return false;
+        boolean output = false;
         try {
             output = this.deleteProductFromSale(transactionId, prodotto.getProductType().getBarCode(), 1);
         } catch (InvalidProductCodeException e) {
@@ -457,12 +457,12 @@ public class TransactionManager {
         return true;
     }
     
-    public boolean returnProductRFID(Integer returnId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, UnauthorizedException {
+    public boolean returnProductRFID(Integer returnId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException {
         if (returnId == null || returnId <= 0) throw new InvalidTransactionIdException();
-        if (RFID == null || !RFID.matches("[0-9]{10}")) throw new InvalidRFIDException();
+        if (RFID == null || !RFID.matches("[0-9]{12}")) throw new InvalidRFIDException();
         Product prodotto = shop.getProductOrderManager().getProduct(RFID);
-        if(prodotto==null) return  false;
-        boolean output= false;
+        if (prodotto == null) return false;
+        boolean output = false;
         try {
             output = this.returnProduct(returnId, prodotto.getProductType().getBarCode(), 1);
         } catch (InvalidProductCodeException | InvalidQuantityException e) {

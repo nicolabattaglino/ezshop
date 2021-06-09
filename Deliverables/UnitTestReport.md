@@ -192,8 +192,10 @@ Version: 1.0
 |   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetProduct**  |
 |   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testSetSupplier**  |
 |   |  src.test.it.polito.ezshop.classes.OrderObjTest::**testConstructors**  |
-| src.main.java.it.polito.ezshop.classes.Position |  src.test.it.polito.ezshop.classes.PositionTest::**testConstructors**  |
-| src.main.java.it.polito.ezshop.classes.ProductTypeObj |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetPosition**  |
+| src.main.java.it.polito.ezshop.classes.Position |  src.test.it.polito.ezshop.classes.PositionTest::**
+testConstructors**  |
+| src.main.java.it.polito.ezshop.classes.ProductTypeObj |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**
+testSetPosition**  |
 |   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetDiscountRate**  |
 |   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetQuantity**  |
 |   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetLocation**  |
@@ -202,7 +204,10 @@ Version: 1.0
 |   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetBarCode**  |
 |   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetPricePerUnit**  |
 |   |  src.test.it.polito.ezshop.classes.ProductTypeObjTest::**testSetId**  |
-| src.main.java.it.polito.ezshop.classes.ReturnTransaction |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testBalanceId**  |
+| src.main.java.it.polito.ezshop.classes.Product  |  src.test.it.polito.ezshop.classes.ProductTest::**testGetRFID**  |
+|   |  src.test.it.polito.ezshop.classes.ProductTest::**testGetSetBarcodeProductType**  |
+| src.main.java.it.polito.ezshop.classes.ReturnTransaction |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**
+testBalanceId**  |
 |  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testLocalDate**  |
 |  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testMoney**  |
 |  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testReturningId**  |
@@ -211,7 +216,8 @@ Version: 1.0
 |  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testStatus**  |
 |  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testType**  |
 |  |  src.test.it.polito.ezshop.classes.ReturnTransactionTest::**testCopyContructor**  |
-| src.main.java.it.polito.ezshop.classes.SaleTransactionObj |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testEntries**  |
+| src.main.java.it.polito.ezshop.classes.SaleTransactionObj |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**
+testEntries**  |
 |   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testPrice**  |
 |   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testDiscountRate**  |
 |   |  src.test.it.polito.ezshop.classes.SaleTransactionObjTest::**testBalanceId**  |
@@ -261,6 +267,7 @@ Version: 1.0
 
 ### Code coverage report
 
+//TODO RIFALLO
 ![test_coverag3](test_coverage.png)
 
 

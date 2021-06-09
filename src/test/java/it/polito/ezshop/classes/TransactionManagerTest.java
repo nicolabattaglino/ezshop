@@ -3,7 +3,6 @@ package it.polito.ezshop.classes;
 import it.polito.ezshop.data.EZShop;
 import it.polito.ezshop.exceptions.*;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -66,6 +65,7 @@ public class TransactionManagerTest {
         assertTrue(tManager.addProductToSale(saleId, "123456789012", 0));
         assertFalse(tManager.addProductToSale(saleId + 1, "123456789012", 1));
     }
+    
     @Test
     public void testAddProductToSaleRFID() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, UnauthorizedException, InvalidOrderIdException, InvalidQuantityException, InvalidRFIDException, InvalidTransactionIdException {
         int saleId = tManager.startSaleTransaction();
@@ -74,20 +74,21 @@ public class TransactionManagerTest {
         poManager.createProductType("test", productCode, 5.0, "note");
         poManager.updatePosition(poManager.getProductTypeByBarCode(productCode).getId(), "11-AA-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode(productCode).getId(), 100);
-        int order =shop.getProductOrderManager().issueOrder(productCode, 100, 5);
+        int order = shop.getProductOrderManager().issueOrder(productCode, 100, 5);
         shop.getProductOrderManager().payOrder(order);
         shop.getProductOrderManager().recordOrderArrivalRFID(order, "000000001000");
-        assertTrue(tManager.addProductToSaleRFID(saleId,"000000001000"));
-        assertFalse(tManager.addProductToSaleRFID(saleId,"000000000010"));
-        assertFalse(tManager.addProductToSaleRFID(saleId+1,"1000"));
-        assertThrows(InvalidTransactionIdException.class, ()->tManager.addProductToSaleRFID(0 ,"000000001000"));
-        assertThrows(InvalidTransactionIdException.class, ()->tManager.addProductToSaleRFID(-1 ,"000000001000"));
-        assertThrows(InvalidTransactionIdException.class, ()->tManager.addProductToSaleRFID(null ,"000000001000"));
-        assertThrows(InvalidRFIDException.class, ()->tManager.addProductToSaleRFID( saleId ,"00000000100"));
-        assertThrows(InvalidRFIDException.class, ()->tManager.addProductToSaleRFID( saleId ,""));
-        assertThrows(InvalidRFIDException.class, ()->tManager.addProductToSaleRFID( saleId ,null));
-
+        assertTrue(tManager.addProductToSaleRFID(saleId, "000000001000"));
+        assertFalse(tManager.addProductToSaleRFID(saleId, "000000000010"));
+        assertFalse(tManager.addProductToSaleRFID(saleId + 1, "1000"));
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.addProductToSaleRFID(0, "000000001000"));
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.addProductToSaleRFID(-1, "000000001000"));
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.addProductToSaleRFID(null, "000000001000"));
+        assertThrows(InvalidRFIDException.class, () -> tManager.addProductToSaleRFID(saleId, "00000000100"));
+        assertThrows(InvalidRFIDException.class, () -> tManager.addProductToSaleRFID(saleId, ""));
+        assertThrows(InvalidRFIDException.class, () -> tManager.addProductToSaleRFID(saleId, null));
+        
     }
+    
     @Test
     public void testDeleteProductFromSale() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException, InvalidDiscountRateException {
         int saleId = tManager.startSaleTransaction();
@@ -108,6 +109,7 @@ public class TransactionManagerTest {
         assertThrows(InvalidTransactionIdException.class, () -> tManager.deleteProductFromSale(0, "123456789012", 1));
         assertThrows(InvalidTransactionIdException.class, () -> tManager.deleteProductFromSale(-1, "123456789012", 1));
     }
+    
     @Test
     public void testDeleteProductFromSaleRFID() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, UnauthorizedException, InvalidOrderIdException, InvalidQuantityException, InvalidRFIDException, InvalidTransactionIdException {
         int saleId = tManager.startSaleTransaction();
@@ -116,21 +118,21 @@ public class TransactionManagerTest {
         poManager.createProductType("test", productCode, 5.0, "note");
         poManager.updatePosition(poManager.getProductTypeByBarCode(productCode).getId(), "11-AA-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode(productCode).getId(), 100);
-        int order =shop.getProductOrderManager().issueOrder(productCode, 100, 5);
+        int order = shop.getProductOrderManager().issueOrder(productCode, 100, 5);
         shop.getProductOrderManager().payOrder(order);
         shop.getProductOrderManager().recordOrderArrivalRFID(order, "000000001000");
-        tManager.addProductToSaleRFID(saleId,"000000001000");
-        assertTrue(tManager.deleteProductFromSaleRFID(saleId,"000000001000"));
-        assertFalse(tManager.deleteProductFromSaleRFID(saleId,"000000000010"));
-        assertFalse(tManager.deleteProductFromSaleRFID(saleId+1,"1000"));
-        assertThrows(InvalidTransactionIdException.class, ()->tManager.deleteProductFromSaleRFID(0 ,"000000001000"));
-        assertThrows(InvalidTransactionIdException.class, ()->tManager.deleteProductFromSaleRFID(-1 ,"000000001000"));
-        assertThrows(InvalidTransactionIdException.class, ()->tManager.deleteProductFromSaleRFID(null ,"000000001000"));
-        assertThrows(InvalidRFIDException.class, ()->tManager.deleteProductFromSaleRFID( saleId ,"00000000100"));
-        assertThrows(InvalidRFIDException.class, ()->tManager.deleteProductFromSaleRFID( saleId ,""));
-        assertThrows(InvalidRFIDException.class, ()->tManager.deleteProductFromSaleRFID( saleId ,null));
+        tManager.addProductToSaleRFID(saleId, "000000001000");
+        assertTrue(tManager.deleteProductFromSaleRFID(saleId, "000000001000"));
+        assertFalse(tManager.deleteProductFromSaleRFID(saleId, "000000000010"));
+        assertFalse(tManager.deleteProductFromSaleRFID(saleId + 1, "1000"));
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.deleteProductFromSaleRFID(0, "000000001000"));
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.deleteProductFromSaleRFID(-1, "000000001000"));
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.deleteProductFromSaleRFID(null, "000000001000"));
+        assertThrows(InvalidRFIDException.class, () -> tManager.deleteProductFromSaleRFID(saleId, "00000000100"));
+        assertThrows(InvalidRFIDException.class, () -> tManager.deleteProductFromSaleRFID(saleId, ""));
+        assertThrows(InvalidRFIDException.class, () -> tManager.deleteProductFromSaleRFID(saleId, null));
     }
-
+    
     @Test
     public void testApplyDiscountRateToProduct() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, InvalidQuantityException, InvalidTransactionIdException, InvalidCreditCardException, InvalidDiscountRateException {
         int saleId = tManager.startSaleTransaction();
@@ -310,32 +312,33 @@ public class TransactionManagerTest {
         assertThrows(InvalidQuantityException.class, () -> tManager.returnProduct(retCode, pBarCode, 0));
         assertThrows(InvalidQuantityException.class, () -> tManager.returnProduct(retCode, pBarCode, -1));
     }
+    
     @Test
-    public void testReturnProductRFDI() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, UnauthorizedException, InvalidOrderIdException, InvalidQuantityException, InvalidRFIDException, InvalidTransactionIdException {
+    public void testReturnProductRFID() throws InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductCodeException, InvalidLocationException, InvalidProductIdException, UnauthorizedException, InvalidOrderIdException, InvalidQuantityException, InvalidRFIDException, InvalidTransactionIdException {
         int saleId = tManager.startSaleTransaction();
         String productCode = "123456789012";
         ProductOrderManager poManager = shop.getProductOrderManager();
         poManager.createProductType("test", productCode, 5.0, "note");
         poManager.updatePosition(poManager.getProductTypeByBarCode(productCode).getId(), "11-AA-11");
         poManager.updateQuantity(poManager.getProductTypeByBarCode(productCode).getId(), 100);
-        int order =shop.getProductOrderManager().issueOrder(productCode, 100, 5);
+        int order = shop.getProductOrderManager().issueOrder(productCode, 100, 5);
         shop.getProductOrderManager().payOrder(order);
         shop.getProductOrderManager().recordOrderArrivalRFID(order, "000000001000");
-        tManager.addProductToSaleRFID(saleId,"000000001000");
+        tManager.addProductToSaleRFID(saleId, "000000001000");
         tManager.endSaleTransaction(saleId);
         String rfid = "000000001000";
         int retCode = tManager.startReturnTransaction(saleId);
-        assertTrue(tManager.returnProductRFID(retCode,rfid));
-        assertFalse(tManager.returnProductRFID(retCode,"000000001000"));
-        assertFalse(tManager.returnProductRFID(retCode+1, rfid));
-        assertThrows(InvalidTransactionIdException.class, () -> tManager.returnProductRFID(null,rfid));
+        assertTrue(tManager.returnProductRFID(retCode, rfid));
+        assertFalse(tManager.returnProductRFID(retCode, "000000001000"));
+        assertFalse(tManager.returnProductRFID(retCode + 1, rfid));
+        assertThrows(InvalidTransactionIdException.class, () -> tManager.returnProductRFID(null, rfid));
         assertThrows(InvalidTransactionIdException.class, () -> tManager.returnProductRFID(0, rfid));
         assertThrows(InvalidTransactionIdException.class, () -> tManager.returnProductRFID(-1, rfid));
-        assertThrows(InvalidRFIDException.class, ()->tManager.returnProductRFID( retCode ,"00000000100"));
-        assertThrows(InvalidRFIDException.class, ()->tManager.returnProductRFID( retCode ,""));
-        assertThrows(InvalidRFIDException.class, ()->tManager.returnProductRFID( retCode ,null));
+        assertThrows(InvalidRFIDException.class, () -> tManager.returnProductRFID(retCode, "00000000100"));
+        assertThrows(InvalidRFIDException.class, () -> tManager.returnProductRFID(retCode, ""));
+        assertThrows(InvalidRFIDException.class, () -> tManager.returnProductRFID(retCode, null));
     }
-
+    
     @Test
     public void testEndReturnTransaction() throws InvalidTransactionIdException, InvalidQuantityException, InvalidProductCodeException, InvalidProductDescriptionException, InvalidPricePerUnitException, InvalidProductIdException, UnauthorizedException, InvalidLocationException {
         int saleId = tManager.startSaleTransaction();
@@ -597,8 +600,8 @@ public class TransactionManagerTest {
                 .count());
         assertEquals(balance - order.getQuantity() * order.getPricePerUnit(), tManager.computeBalance(), 0);
     }
-
-
+    
+    
     @After
     public void clearTransactionManagerTests() {
         shop.reset();
