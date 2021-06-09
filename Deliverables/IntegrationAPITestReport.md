@@ -526,25 +526,44 @@ testEntries**  |
 
 | Classes  | JUnit test cases |
 |------|------|
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**testCreateUser**  |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**testDeleteUser** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllUsers** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetUser** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**testUpdateUserRights** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**testLogin** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**testLogout** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj|  src.test.it.polito.ezshop.classes.EZShopTest::**defineCustomer** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj |  src.test.it.polito.ezshop.classes.EZShopTest::**testModifyCustomer** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj |  src.test.it.polito.ezshop.classes.EZShopTest::**testDeleteCustomer** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetCustomer** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj |  src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllCustomers** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj |  src.test.it.polito.ezshop.classes.EZShopTest::**testCreateCard** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj  |  src.test.it.polito.ezshop.classes.EZShopTest::**testAttachCardToCustomer** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj  |  src.test.it.polito.ezshop.classes.EZShopTest::**testModifyPointsOnCard** |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.EZShopTest::**testCreateProductType**  |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj  | src.test.it.polito.ezshop.classes.EZShopTest::**testUpdateProduct**  |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj  | src.test.it.polito.ezshop.classes.EZShopTest::**testDeleteProductType**  |
-|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj  | src.test.it.polito.ezshop.classes.EZShopTest::**testGetAllProductTypes**  |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**
+testCreateUser**  |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**
+testDeleteUser** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**
+testGetAllUsers** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**
+testGetUser** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**
+testUpdateUserRights** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**
+testLogin** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.UserObj + src.main.java.it.polito.ezshop.classes.UserRole |  src.test.it.polito.ezshop.classes.EZShopTest::**
+testLogout** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj|  src.test.it.polito.ezshop.classes.EZShopTest::**
+testDefineCustomer** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj |  src.test.it.polito.ezshop.classes.EZShopTest::**
+testModifyCustomer** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj |  src.test.it.polito.ezshop.classes.EZShopTest::**
+testDeleteCustomer** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj |  src.test.it.polito.ezshop.classes.EZShopTest::**
+testGetCustomer** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj |  src.test.it.polito.ezshop.classes.EZShopTest::**
+testGetAllCustomers** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj |  src.test.it.polito.ezshop.classes.EZShopTest::**
+testCreateCard** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj  |  src.test.it.polito.ezshop.classes.EZShopTest::**
+testAttachCardToCustomer** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.CustomerManager + src.main.java.it.polito.ezshop.classes.CustomerObj + src.main.java.it.polito.ezshop.classes.LoyaltyCardObj  |  src.test.it.polito.ezshop.classes.EZShopTest::**
+testModifyPointsOnCard** |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.EZShopTest::**
+testCreateProductType**  |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj  | src.test.it.polito.ezshop.classes.EZShopTest::**
+testUpdateProduct**  |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj  | src.test.it.polito.ezshop.classes.EZShopTest::**
+testDeleteProductType**  |
+|  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj  | src.test.it.polito.ezshop.classes.EZShopTest::**
+testGetAllProductTypes**  |
 |  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj  | src.test.it.polito.ezshop.classes.EZShopTest::**testGetProductTypeByBarCode**  |
 |  src.main.java.it.polito.ezshop.classes.EZShop + src.main.java.it.polito.ezshop.classes.ProductOrderManager + src.main.java.it.polito.ezshop.classes.UserManager + src.main.java.it.polito.ezshop.classes.ProductTypeObj | src.test.it.polito.ezshop.classes.EZShopTest::**
 testGetProductTypesByDescription**  |
