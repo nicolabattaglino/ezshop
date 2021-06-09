@@ -223,7 +223,8 @@ public class TransactionManager {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         if (RFID == null || !RFID.matches("[0-9]{10}")) throw new InvalidRFIDException();
         Product prodotto = shop.getProductOrderManager().getProduct(RFID);
-        boolean output = false;
+        if(prodotto==null) return  false;
+        boolean output= false;
         try {
             output = this.addProductToSale(transactionId, prodotto.getProductType().getBarCode(), 1);
         } catch (InvalidProductCodeException e) {
@@ -274,7 +275,8 @@ public class TransactionManager {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         if (RFID == null || !RFID.matches("[0-9]{10}")) throw new InvalidRFIDException();
         Product prodotto = saleTransactions.get(transactionId).getProduct(RFID);
-        boolean output = false;
+        if(prodotto==null) return  false;
+        boolean output= false;
         try {
             output = this.deleteProductFromSale(transactionId, prodotto.getProductType().getBarCode(), 1);
         } catch (InvalidProductCodeException e) {
@@ -459,7 +461,8 @@ public class TransactionManager {
         if (returnId == null || returnId <= 0) throw new InvalidTransactionIdException();
         if (RFID == null || !RFID.matches("[0-9]{10}")) throw new InvalidRFIDException();
         Product prodotto = shop.getProductOrderManager().getProduct(RFID);
-        boolean output = false;
+        if(prodotto==null) return  false;
+        boolean output= false;
         try {
             output = this.returnProduct(returnId, prodotto.getProductType().getBarCode(), 1);
         } catch (InvalidProductCodeException | InvalidQuantityException e) {
