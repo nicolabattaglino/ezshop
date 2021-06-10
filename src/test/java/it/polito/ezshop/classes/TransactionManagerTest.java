@@ -79,7 +79,7 @@ public class TransactionManagerTest {
         shop.getProductOrderManager().recordOrderArrivalRFID(order, "000000001000");
         assertTrue(tManager.addProductToSaleRFID(saleId, "000000001000"));
         assertFalse(tManager.addProductToSaleRFID(saleId, "000000000010"));
-        assertFalse(tManager.addProductToSaleRFID(saleId + 1, "1000"));
+        assertFalse(tManager.addProductToSaleRFID(saleId + 1, "000000001000"));
         assertThrows(InvalidTransactionIdException.class, () -> tManager.addProductToSaleRFID(0, "000000001000"));
         assertThrows(InvalidTransactionIdException.class, () -> tManager.addProductToSaleRFID(-1, "000000001000"));
         assertThrows(InvalidTransactionIdException.class, () -> tManager.addProductToSaleRFID(null, "000000001000"));
@@ -124,7 +124,7 @@ public class TransactionManagerTest {
         tManager.addProductToSaleRFID(saleId, "000000001000");
         assertTrue(tManager.deleteProductFromSaleRFID(saleId, "000000001000"));
         assertFalse(tManager.deleteProductFromSaleRFID(saleId, "000000000010"));
-        assertFalse(tManager.deleteProductFromSaleRFID(saleId + 1, "1000"));
+        assertFalse(tManager.deleteProductFromSaleRFID(saleId + 1, "000000001000"));
         assertThrows(InvalidTransactionIdException.class, () -> tManager.deleteProductFromSaleRFID(0, "000000001000"));
         assertThrows(InvalidTransactionIdException.class, () -> tManager.deleteProductFromSaleRFID(-1, "000000001000"));
         assertThrows(InvalidTransactionIdException.class, () -> tManager.deleteProductFromSaleRFID(null, "000000001000"));
