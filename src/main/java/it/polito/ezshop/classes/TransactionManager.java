@@ -222,6 +222,8 @@ public class TransactionManager {
     public boolean addProductToSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         if (RFID == null || !RFID.matches("[0-9]{12}")) throw new InvalidRFIDException();
+        SaleTransactionObj transaction = saleTransactions.get(transactionId);
+        if(transaction==null) return false;
         Product prodotto = shop.getProductOrderManager().getProduct(RFID);
         if (prodotto == null) return false;
         boolean output = false;
@@ -274,6 +276,8 @@ public class TransactionManager {
     public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
         if (RFID == null || !RFID.matches("[0-9]{12}")) throw new InvalidRFIDException();
+        SaleTransactionObj transaction = saleTransactions.get(transactionId);
+        if(transaction==null) return false;
         Product prodotto = saleTransactions.get(transactionId).getProduct(RFID);
         if (prodotto == null) return false;
         boolean output = false;
@@ -460,7 +464,11 @@ public class TransactionManager {
     public boolean returnProductRFID(Integer returnId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException {
         if (returnId == null || returnId <= 0) throw new InvalidTransactionIdException();
         if (RFID == null || !RFID.matches("[0-9]{12}")) throw new InvalidRFIDException();
-        Product prodotto = shop.getProductOrderManager().getProduct(RFID);
+        ReturnTransaction ret= returnTransactions.get(returnId);
+        if(ret== null) return  false;
+        SaleTransactionObj transaction = saleTransactions.get(ret.getTransactionID());
+        if(transaction==null) return false;
+        Product prodotto = transaction.getProduct(RFID);
         if (prodotto == null) return false;
         boolean output = false;
         try {
