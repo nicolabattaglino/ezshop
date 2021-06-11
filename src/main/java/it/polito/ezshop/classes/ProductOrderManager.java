@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
 
 public class ProductOrderManager {
     
-    public static final String PRODUCT_TYPES_PATH = "data/product_types.json";
-    public static final String PRODUCTS_PATH = "data/products.json";
-    public static final String PRODUCT_GEN_PATH = "data/product_gen.json";
-    public static final String ORDER_GEN_PATH = "data/order_gen.json";
+    public static final String PRODUCT_TYPES_PATH = "data_ezshop/product_types.json";
+    public static final String PRODUCTS_PATH = "data_ezshop/products.json";
+    public static final String PRODUCT_GEN_PATH = "data_ezshop/product_gen.json";
+    public static final String ORDER_GEN_PATH = "data_ezshop/order_gen.json";
     private final EZShop shop;
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize

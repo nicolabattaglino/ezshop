@@ -15,8 +15,8 @@ import java.util.List;
 
 public class UserManager {
     
-    public static final String USERS_PATH = "data/users.json";
-    public static final String USERS_ID_PATH = "data/userIdGen.json";
+    public static final String USERS_PATH = "data_ezshop/users.json";
+    public static final String USERS_ID_PATH = "data_ezshop/userIdGen.json";
     
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize

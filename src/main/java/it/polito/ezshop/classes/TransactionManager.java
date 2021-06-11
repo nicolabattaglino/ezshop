@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 
 public class TransactionManager {
     
-    public static final String ORDER_PATH = "data/orders.json";
-    public static final String SALE_PATH = "data/sales.json";
-    public static final String RETURN_PATH = "data/returns.json";
-    public static final String CREDITCARD_PATH = "data/creditCards.json";
-    public static final String BALANCEOPERATION_PATH = "data/balanceOperations.json";
-    public static final String GENERATOR_PATH = "data/transactionManagerGenerators.json";
+    public static final String ORDER_PATH = "data_ezshop/orders.json";
+    public static final String SALE_PATH = "data_ezshop/sales.json";
+    public static final String RETURN_PATH = "data_ezshop/returns.json";
+    public static final String CREDITCARD_PATH = "data_ezshop/creditCards.json";
+    public static final String BALANCEOPERATION_PATH = "data_ezshop/balanceOperations.json";
+    public static final String GENERATOR_PATH = "data_ezshop/transactionManagerGenerators.json";
     
     private final EZShop shop;
     @JsonSerialize(keyUsing = MapSerializer.class)
