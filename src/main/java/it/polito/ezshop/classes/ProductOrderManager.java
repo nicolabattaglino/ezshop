@@ -349,19 +349,7 @@ public class ProductOrderManager {
         long rfidStart = Long.parseLong(RFIDfrom);
         final long startingPoint = rfidStart;
         HashSet<String> RFIDs = new HashSet<>();
-       /* //TODO VERIFY IF IS CORRECT
-        for (int i = 0; i < order.getQuantity(); ) {
-            final String newRfid = String.format("%012d", rfidStart);
-            if (RFIDMap.containsKey(newRfid)) {
-                rfidStart = (rfidStart + 1) % 10000000000L;
-                if (rfidStart == startingPoint)
-                    throw new InvalidRFIDException();
-            } else {
-                RFIDs.add(newRfid);
-                rfidStart = (rfidStart + 1) % 10000000000L;
-                i++;
-            }
-        }*/
+    
         for (int i = 0; i < order.getQuantity(); i++) {
             final String newRfid = String.format("%012d", rfidStart);
             if (RFIDMap.containsKey(newRfid)) {
