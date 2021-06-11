@@ -267,7 +267,6 @@ testEntries**  |
 
 ### Code coverage report
 
-//TODO RIFALLO
 ![test_coverag3](test_coverage.png)
 
 
