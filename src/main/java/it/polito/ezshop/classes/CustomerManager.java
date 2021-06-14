@@ -20,10 +20,10 @@ import java.util.Map;
 
 
 public class CustomerManager {
-    public static final String CARD_PATH = "data/loyaltyCards.json";
-    public static final String CARD_ID_PATH = "data/loyaltyCardsIdGen.json";
-    public static final String CUSTOMER_ID_PATH = "data/customersIdGen.json";
-    public static final String CUSTOMER_PATH = "data/customers.json";
+    public static final String CARD_PATH = "data_ezshop/loyaltyCards.json";
+    public static final String CARD_ID_PATH = "data_ezshop/loyaltyCardsIdGen.json";
+    public static final String CUSTOMER_ID_PATH = "data_ezshop/customersIdGen.json";
+    public static final String CUSTOMER_PATH = "data_ezshop/customers.json";
     
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize

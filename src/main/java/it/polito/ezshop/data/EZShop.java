@@ -190,10 +190,14 @@ public class EZShop implements EZShopInterface {
     }
     
     @Override
-    public boolean recordOrderArrivalRFID(Integer orderId, String RFIDfrom) throws InvalidOrderIdException, UnauthorizedException, 
-InvalidLocationException, InvalidRFIDException {
-        return false;
+    public boolean recordOrderArrivalRFID(Integer orderId, String RFIDfrom) throws InvalidOrderIdException, UnauthorizedException,
+            InvalidLocationException, InvalidRFIDException {
+        if (userManager.getUserLogged() == null || userManager.getUserLogged().getRole().equals(UserRole.Cashier.toString())
+        )
+            throw new UnauthorizedException();
+        return productOrderManager.recordOrderArrivalRFID(orderId, RFIDfrom);
     }
+    
     @Override
     public List<Order> getAllOrders() throws UnauthorizedException {
         if (userManager.getUserLogged() == null || userManager.getUserLogged().getRole().equals(UserRole.Cashier.toString()))
@@ -293,8 +297,12 @@ InvalidLocationException, InvalidRFIDException {
     }
     
     @Override
-    public boolean addProductToSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException{
-        return false;
+    public boolean addProductToSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException {
+        if (userManager.getUserLogged() == null) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.addProductToSaleRFID(transactionId, RFID);
+        }
     }
     
     @Override
@@ -307,10 +315,14 @@ InvalidLocationException, InvalidRFIDException {
     }
     
     @Override
-    public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException{
-        return false;
+    public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException, UnauthorizedException {
+        if (userManager.getUserLogged() == null) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.deleteProductFromSaleRFID(transactionId, RFID);
+        }
     }
-
+    
     @Override
     public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException, UnauthorizedException {
         if (userManager.getUserLogged() == null) {
@@ -384,12 +396,15 @@ InvalidLocationException, InvalidRFIDException {
     }
     
     @Override
-    public boolean returnProductRFID(Integer returnId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, UnauthorizedException 
-    {
-        return false;
+    public boolean returnProductRFID(Integer returnId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, UnauthorizedException {
+        if (userManager.getUserLogged() == null) {
+            throw new UnauthorizedException();
+        } else {
+            return transactionManager.returnProductRFID(returnId, RFID);
+        }
     }
-
-
+    
+    
     @Override
     public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException, UnauthorizedException {
         if (userManager.getUserLogged() == null) {

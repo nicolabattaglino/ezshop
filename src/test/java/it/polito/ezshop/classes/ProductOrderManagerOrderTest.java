@@ -201,10 +201,82 @@ public class ProductOrderManagerOrderTest {
             ezShop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
             assertTrue(p.payOrder(id));
             p.updatePosition(prodId, "10-AA-10");
-            p.recordOrderArrival(id);
+            assertTrue(p.recordOrderArrival(id));
             assertFalse(p.payOrder(id));
             assertEquals(2, (int) p.getProductTypeByBarCode("123456789012").getQuantity());
         } catch (InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductCodeException | InvalidQuantityException | InvalidOrderIdException | UnauthorizedException | InvalidLocationException | InvalidProductIdException e) {
+            fail("Unexpected exception: " + e);
+        }
+    }
+    
+    @Test
+    public void testRecordOrderArrivalRFIDInvalidOrderId() {
+        final String RFID = "000000000100";
+        assertThrows(InvalidOrderIdException.class, () -> p.recordOrderArrivalRFID(null, RFID));
+        assertThrows(InvalidOrderIdException.class, () -> p.recordOrderArrivalRFID(-1, RFID));
+        assertThrows(InvalidOrderIdException.class, () -> p.recordOrderArrivalRFID(0, RFID));
+    }
+    
+    @Test
+    public void testRecordOrderArrivalRFIDInvalidRFIDFormat() {
+        assertThrows(InvalidRFIDException.class, () -> p.recordOrderArrivalRFID(100, null));
+        assertThrows(InvalidRFIDException.class, () -> p.recordOrderArrivalRFID(100, ""));
+        assertThrows(InvalidRFIDException.class, () -> p.recordOrderArrivalRFID(100, "null"));
+        assertThrows(InvalidRFIDException.class, () -> p.recordOrderArrivalRFID(100, "nu556ll"));
+        assertThrows(InvalidRFIDException.class, () -> p.recordOrderArrivalRFID(100, "1223458"));
+    }
+    
+    @Test
+    public void testRecordOrderArrivalRFIDInvalidRFIDUniqueness() {
+        try {
+            Integer prodId = p.createProductType("hello test", "123456789012", 22.0, "note");
+            Integer id = p.issueOrder("123456789012", 10, 10.0);
+            ezShop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
+            assertTrue(p.payOrder(id));
+            p.updatePosition(prodId, "10-AA-10");
+            assertTrue(p.recordOrderArrivalRFID(id, "000000000100"));
+            assertFalse(p.payOrder(id));
+            assertEquals(10, (int) p.getProductTypeByBarCode("123456789012").getQuantity());
+        } catch (InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductCodeException | InvalidQuantityException | UnauthorizedException | InvalidLocationException | InvalidProductIdException | InvalidOrderIdException | InvalidRFIDException e) {
+            fail("Unexpected exception: " + e);
+        }
+        try {
+            Integer id = p.issueOrder("123456789012", 2, 10.0);
+            assertTrue(p.payOrder(id));
+            assertThrows(InvalidRFIDException.class, () -> p.recordOrderArrivalRFID(id, "000000000104"));
+            assertEquals(10, (int) p.getProductTypeByBarCode("123456789012").getQuantity());
+        } catch (InvalidPricePerUnitException | InvalidProductCodeException | InvalidQuantityException | InvalidOrderIdException | UnauthorizedException e) {
+            fail("Unexpected exception: " + e);
+        }
+    }
+    
+    @Test
+    public void testRecordOrderArrivalRFIDInvalidLocation() {
+        Integer id = null;
+        try {
+            p.createProductType("hello test", "123456789012", 22.0, "note");
+            id = p.issueOrder("123456789012", 2, 10.0);
+            ezShop.getTransactionManager().recordBalanceUpdate(100);
+            p.payOrder(id);
+        } catch (InvalidProductCodeException | InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidQuantityException | InvalidOrderIdException | UnauthorizedException e) {
+            fail("Unexpected exception: " + e);
+        }
+        Integer finalId = id;
+        assertThrows(InvalidLocationException.class, () -> p.recordOrderArrivalRFID(finalId, "123456789012"));
+    }
+    
+    @Test
+    public void testRecordOrderArrivalRFIDOk() {
+        try {
+            Integer prodId = p.createProductType("hello test", "123456789012", 22.0, "note");
+            Integer id = p.issueOrder("123456789012", 2, 10.0);
+            ezShop.getTransactionManager().recordBalanceUpdate(Double.POSITIVE_INFINITY);
+            assertTrue(p.payOrder(id));
+            p.updatePosition(prodId, "10-AA-10");
+            assertTrue(p.recordOrderArrivalRFID(id, "000000000100"));
+            assertFalse(p.payOrder(id));
+            assertEquals(2, (int) p.getProductTypeByBarCode("123456789012").getQuantity());
+        } catch (InvalidProductDescriptionException | InvalidPricePerUnitException | InvalidProductCodeException | InvalidQuantityException | InvalidOrderIdException | UnauthorizedException | InvalidLocationException | InvalidProductIdException | InvalidRFIDException e) {
             fail("Unexpected exception: " + e);
         }
     }

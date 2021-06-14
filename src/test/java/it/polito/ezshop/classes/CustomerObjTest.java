@@ -6,7 +6,6 @@ import static org.junit.Assert.*;
 
 public class CustomerObjTest {
     
-    
     @Test
     public void testSetLoyaltyCard() {
         CustomerObj c = new CustomerObj();

@@ -17,13 +17,16 @@ import java.util.stream.Collectors;
 
 public class ProductOrderManager {
     
-    public static final String PRODUCTS_PATH = "data/products.json";
-    public static final String PRODUCT_GEN_PATH = "data/product_gen.json";
-    public static final String ORDER_GEN_PATH = "data/order_gen.json";
+    public static final String PRODUCT_TYPES_PATH = "data_ezshop/product_types.json";
+    public static final String PRODUCTS_PATH = "data_ezshop/products.json";
+    public static final String PRODUCT_GEN_PATH = "data_ezshop/product_gen.json";
+    public static final String ORDER_GEN_PATH = "data_ezshop/order_gen.json";
     private final EZShop shop;
     @JsonSerialize(keyUsing = MapSerializer.class)
     @JsonDeserialize
-    private Map<String, ProductTypeObj> productMap;
+    private Map<String, ProductTypeObj> productTypesMap;
+    @JsonDeserialize
+    private Map<String, Product> RFIDMap;
     
     private int productIdGen;
     private int orderIdGen;
@@ -33,10 +36,26 @@ public class ProductOrderManager {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<HashMap<String, ProductTypeObj>> typeRef = new TypeReference<HashMap<String, ProductTypeObj>>() {
         };
+        File producTtypes = new File(PRODUCT_TYPES_PATH);
+        try {
+            producTtypes.createNewFile();
+            productTypesMap = mapper.readValue(producTtypes, typeRef);
+        } catch (IOException e) {
+            producTtypes.delete();
+            try {
+                producTtypes.createNewFile();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } finally {
+                productTypesMap = new HashMap<>();
+            }
+        }
+        TypeReference<HashMap<String, Product>> typeRef2 = new TypeReference<HashMap<String, Product>>() {
+        };
         File products = new File(PRODUCTS_PATH);
         try {
             products.createNewFile();
-            productMap = mapper.readValue(products, typeRef);
+            RFIDMap = mapper.readValue(products, typeRef2);
         } catch (IOException e) {
             products.delete();
             try {
@@ -44,9 +63,14 @@ public class ProductOrderManager {
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             } finally {
-                productMap = new HashMap<>();
+                RFIDMap = new HashMap<>();
             }
         }
+    
+        RFIDMap.values().forEach(p -> {
+            p.setProductType(productTypesMap.get(p.getBarcode()));
+        });
+    
         File productGen = new File(PRODUCT_GEN_PATH);
         try {
             productGen.createNewFile();
@@ -104,15 +128,15 @@ public class ProductOrderManager {
             throw new InvalidProductDescriptionException();
         if (pricePerUnit <= 0)
             throw new InvalidPricePerUnitException();
-        if (productMap.containsKey(productCode))
+        if (productTypesMap.containsKey(productCode))
             return -1;
         productIdGen++;
-        productMap.put(productCode, new ProductTypeObj(0, productIdGen, description, productCode, (note == null) ? "" : note, pricePerUnit, 0));
+        productTypesMap.put(productCode, new ProductTypeObj(0, productIdGen, description, productCode, (note == null) ? "" : note, pricePerUnit, 0));
         try {
-            persistProducts();
+            persistProductTypes();
             persistGen();
         } catch (IOException e) {
-            productMap.remove(productCode);
+            productTypesMap.remove(productCode);
             productIdGen--;
             return -1;
         }
@@ -128,28 +152,28 @@ public class ProductOrderManager {
             throw new InvalidProductDescriptionException();
         if (!checkBarcode(newCode))
             throw new InvalidProductCodeException();
-        ProductTypeObj productTypeObj = productMap.get(newCode);
+        ProductTypeObj productTypeObj = productTypesMap.get(newCode);
         if (productTypeObj != null && !productTypeObj.getId().equals(id))
             return false;
         
         ProductTypeObj candidate = null;
         
-        for (ProductTypeObj productType : productMap.values()) {
+        for (ProductTypeObj productType : productTypesMap.values()) {
             if (productType.getId().equals(id)) candidate = productType;
         }
         if (candidate == null) return false;
         ProductTypeObj old = new ProductTypeObj(candidate);
-        productMap.remove(candidate.getBarCode());
+        productTypesMap.remove(candidate.getBarCode());
         candidate.setProductDescription(newDescription);
         candidate.setBarCode(newCode);
         candidate.setPricePerUnit(newPrice);
         candidate.setNote(newNote == null ? "" : newNote);
-        productMap.put(newCode, candidate);
+        productTypesMap.put(newCode, candidate);
         try {
-            persistProducts();
+            persistProductTypes();
         } catch (IOException e) {
-            productMap.remove(candidate.getBarCode());
-            productMap.put(old.getBarCode(), old);
+            productTypesMap.remove(candidate.getBarCode());
+            productTypesMap.put(old.getBarCode(), old);
             return false;
         }
         
@@ -160,23 +184,23 @@ public class ProductOrderManager {
         if (id == null || id <= 0) throw new InvalidProductIdException();
         ProductTypeObj candidate = null;
         
-        for (ProductTypeObj productType : productMap.values()) {
+        for (ProductTypeObj productType : productTypesMap.values()) {
             if (productType.getId().equals(id)) candidate = productType;
         }
         if (candidate == null) return false;
-        productMap.remove(candidate.getBarCode());
+        productTypesMap.remove(candidate.getBarCode());
         try {
-            persistProducts();
+            persistProductTypes();
         } catch (IOException e) {
-            productMap.put(candidate.getBarCode(), candidate);
+            productTypesMap.put(candidate.getBarCode(), candidate);
             return false;
         }
         return true;
     }
     
     public List<ProductType> getAllProductTypes() {
-        ArrayList<ProductType> ret = new ArrayList<>(productMap.values().size());
-        for (ProductTypeObj value : productMap.values()) {
+        ArrayList<ProductType> ret = new ArrayList<>(productTypesMap.values().size());
+        for (ProductTypeObj value : productTypesMap.values()) {
             ret.add(new ProductTypeObj(value));
         }
         return ret;
@@ -184,13 +208,13 @@ public class ProductOrderManager {
     
     public ProductType getProductTypeByBarCode(String barCode) throws InvalidProductCodeException {
         if (!checkBarcode(barCode)) throw new InvalidProductCodeException();
-        ProductTypeObj product = productMap.get(barCode);
+        ProductTypeObj product = productTypesMap.get(barCode);
         return product == null ? null : new ProductTypeObj(product);
     }
     
     public List<ProductType> getProductTypesByDescription(String description) {
         final String finalDescription = description == null ? "" : description;
-        return productMap.values().stream()
+        return productTypesMap.values().stream()
                 .filter(productType -> productType.getProductDescription().matches(".*" + finalDescription + ".*"))
                 .map(ProductTypeObj::new)
                 .collect(Collectors.toList());
@@ -199,14 +223,14 @@ public class ProductOrderManager {
     public boolean updateQuantity(Integer productId, int toBeAdded) throws InvalidProductIdException {
         if (productId == null || productId <= 0) throw new InvalidProductIdException();
         ProductType target = null;
-        for (ProductType p : productMap.values()) {
+        for (ProductType p : productTypesMap.values()) {
             if (p.getId().equals(productId) && !p.getLocation().equals("")) {
                 final int oldQuantity = p.getQuantity();
                 int quantity = oldQuantity + toBeAdded;
                 if (quantity >= 0) {
                     p.setQuantity(quantity);
                     try {
-                        persistProducts();
+                        persistProductTypes();
                     } catch (IOException e) {
                         p.setQuantity(oldQuantity);
                         return false;
@@ -225,7 +249,7 @@ public class ProductOrderManager {
             throw new InvalidLocationException();
         ProductTypeObj target = null;
         String oldLoc = null;
-        for (ProductTypeObj p : productMap.values()) {
+        for (ProductTypeObj p : productTypesMap.values()) {
             oldLoc = p.getLocation();
             if (oldLoc.equals(newPos) && !newPos.equals("") && !p.getId().equals(productId)) return false;
             if (p.getId().equals(productId))
@@ -234,7 +258,7 @@ public class ProductOrderManager {
         if (target == null) return false;
         target.setPosition(newPos.length() == 0 ? new Position() : new Position(newPos));
         try {
-            persistProducts();
+            persistProductTypes();
         } catch (IOException e) {
             target.setLocation(oldLoc);
             return false;
@@ -296,7 +320,7 @@ public class ProductOrderManager {
         OrderObj order = shop.getTransactionManager().addCompletedOrder(orderId);
         if (order == null) return false;
         String oldStatus = order.getStatus();
-        ProductTypeObj target = productMap.get(order.getProductCode());
+        ProductTypeObj target = productTypesMap.get(order.getProductCode());
         int quantity = target.getQuantity();
         try {
             if (!updateQuantity(target.getId(), order.getQuantity())) throw new InvalidLocationException();
@@ -304,7 +328,7 @@ public class ProductOrderManager {
             e.printStackTrace();
         }
         try {
-            persistProducts();
+            persistProductTypes();
         } catch (IOException e) {
             order.setStatus(oldStatus);
             target.setQuantity(quantity);
@@ -313,12 +337,63 @@ public class ProductOrderManager {
         return true;
     }
     
+    public boolean recordOrderArrivalRFID(Integer orderId, String RFIDfrom) throws InvalidOrderIdException, InvalidLocationException, InvalidRFIDException {
+        if (orderId == null || orderId <= 0) throw new InvalidOrderIdException();
+        if (RFIDfrom == null || !RFIDfrom.matches("[0-9]{12}")) throw new InvalidRFIDException();
+        OrderObj order = shop.getTransactionManager().addCompletedOrder(orderId);
+        if (order == null) return false;
+        String oldStatus = order.getStatus();
+        ProductTypeObj target = productTypesMap.get(order.getProductCode());
+        int quantity = target.getQuantity();
+        
+        long rfidStart = Long.parseLong(RFIDfrom);
+        final long startingPoint = rfidStart;
+        HashSet<String> RFIDs = new HashSet<>();
+    
+        for (int i = 0; i < order.getQuantity(); i++) {
+            final String newRfid = String.format("%012d", rfidStart);
+            if (RFIDMap.containsKey(newRfid)) {
+                throw new InvalidRFIDException();
+            }
+            RFIDs.add(newRfid);
+            rfidStart = (rfidStart + 1) % 10000000000L;
+        }
+        
+        
+        RFIDs.forEach(rfid -> {
+            Product product = new Product(rfid, order.getProductCode());
+            product.setProductType(target);
+            RFIDMap.put(rfid, product);
+        });
+        try {
+            if (!updateQuantity(target.getId(), order.getQuantity())) throw new InvalidLocationException();
+        } catch (InvalidProductIdException e) {
+            e.printStackTrace();
+        }
+        try {
+            persistProductTypes();
+            persistProducts();
+        } catch (IOException e) {
+            order.setStatus(oldStatus);
+            target.setQuantity(quantity);
+            for (String rfid : RFIDs) {
+                RFIDMap.remove(rfid);
+            }
+            shop.addOrder(order);
+        }
+        return true;
+    }
+    
+    private void persistProductTypes() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(new File(PRODUCT_TYPES_PATH), productTypesMap);
+    }
     
     private void persistProducts() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
-                .writeValue(new File(PRODUCTS_PATH), productMap);
-        
+                .writeValue(new File(PRODUCTS_PATH), RFIDMap);
     }
     
     private void persistGen() throws IOException {
@@ -327,13 +402,76 @@ public class ProductOrderManager {
                 .writeValue(new File(PRODUCT_GEN_PATH), productIdGen);
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(new File(ORDER_GEN_PATH), orderIdGen);
-        
     }
     
     public void clear() {
-        productMap.clear();
+        productTypesMap.clear();
+        RFIDMap.clear();
+        (new File(PRODUCT_TYPES_PATH)).delete();
         (new File(PRODUCTS_PATH)).delete();
         (new File(PRODUCT_GEN_PATH)).delete();
         (new File(ORDER_GEN_PATH)).delete();
     }
+    
+    
+    /**
+     * This method adds a Product to the RFIDMap
+     *
+     * @param product the product that has to be added
+     * @return true if the operation is successful
+     * false   if the ProductType referred to the product does not exist,
+     * @throws InvalidRFIDException if the RFID code is already present into the RFIDMap or the is empty, null or invalid
+     */
+    public boolean putProduct(Product product) throws InvalidRFIDException {
+        final ProductTypeObj productType = productTypesMap.get(product.getBarcode());
+        if (productType == null) return false;
+        product.setProductType(productType);
+        final String RFID = product.getRFID();
+        if (RFID == null || !RFID.matches("[0-9]{12}")) throw new InvalidRFIDException();
+        final Product product1 = RFIDMap.put(RFID, product);
+        if (product1 != null) {
+            RFIDMap.put(RFID, product1);
+            throw new InvalidRFIDException();
+        }
+        try {
+            persistProducts();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+    
+    /**
+     * This method get a Product given its own RFID from the RFIDMap
+     *
+     * @param RFID the RFID of the Product that has to be gotten
+     * @return the Product mapped by its own RFID, null otherwise
+     * @throws InvalidRFIDException if the RFID code is empty, null or invalid
+     */
+    public Product getProduct(String RFID) throws InvalidRFIDException {
+        if (RFID == null || !RFID.matches("[0-9]{12}")) throw new InvalidRFIDException();
+        return RFIDMap.get(RFID);
+    }
+    
+    /**
+     * This method remove a Product given its own RFID from the RFIDMap
+     *
+     * @param RFID the RFID of the Product that has to be gotten
+     * @return the Product mapped by its own RFID, null otherwise
+     * @throws InvalidRFIDException if the RFID code is empty, null or invalid
+     */
+    public Product removeProduct(String RFID) throws InvalidRFIDException {
+        if (RFID == null || !RFID.matches("[0-9]{12}")) throw new InvalidRFIDException();
+        final Product remove = RFIDMap.remove(RFID);
+        if (remove != null) {
+            try {
+                persistProducts();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return remove;
+    }
+    
+    
 }

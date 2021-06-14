@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 
 public class TransactionManager {
     
-    public static final String ORDER_PATH = "data/orders.json";
-    public static final String SALE_PATH = "data/sales.json";
-    public static final String RETURN_PATH = "data/returns.json";
-    public static final String CREDITCARD_PATH = "data/creditCards.json";
-    public static final String BALANCEOPERATION_PATH = "data/balanceOperations.json";
-    public static final String GENERATOR_PATH = "data/transactionManagerGenerators.json";
+    public static final String ORDER_PATH = "data_ezshop/orders.json";
+    public static final String SALE_PATH = "data_ezshop/sales.json";
+    public static final String RETURN_PATH = "data_ezshop/returns.json";
+    public static final String CREDITCARD_PATH = "data_ezshop/creditCards.json";
+    public static final String BALANCEOPERATION_PATH = "data_ezshop/balanceOperations.json";
+    public static final String GENERATOR_PATH = "data_ezshop/transactionManagerGenerators.json";
     
     private final EZShop shop;
     @JsonSerialize(keyUsing = MapSerializer.class)
@@ -81,7 +81,7 @@ public class TransactionManager {
             } finally {
                 saleTransactions = new HashMap<>();
             }
-            
+    
         }
         
         File returns = new File(RETURN_PATH);
@@ -188,7 +188,7 @@ public class TransactionManager {
     
     public boolean addProductToSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
-        if (productCode == null || productCode == "" || !shop.getProductOrderManager().checkBarcode(productCode))
+        if (productCode == null || productCode.equals("") || !shop.getProductOrderManager().checkBarcode(productCode))
             throw new InvalidProductCodeException();
         if (amount < 0) throw new InvalidQuantityException();
         ProductType prodotto = shop.getProductOrderManager().getProductTypeByBarCode(productCode);
@@ -206,6 +206,8 @@ public class TransactionManager {
         } catch (InvalidProductIdException e) {
             e.printStackTrace();
         }
+        TicketEntry ticketEntry = sale.getEntry(productCode);
+        if (ticketEntry != null) amount += ticketEntry.getAmount();
         TicketEntryObj ticket = new TicketEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
         sale.addEntry(ticket);
         try {
@@ -217,9 +219,34 @@ public class TransactionManager {
         return true;
     }
     
+    public boolean addProductToSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException {
+        if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
+        if (RFID == null || !RFID.matches("[0-9]{12}")) throw new InvalidRFIDException();
+        SaleTransactionObj transaction = saleTransactions.get(transactionId);
+        if(transaction==null) return false;
+        Product prodotto = shop.getProductOrderManager().getProduct(RFID);
+        if (prodotto == null) return false;
+        boolean output = false;
+        try {
+            output = this.addProductToSale(transactionId, prodotto.getProductType().getBarCode(), 1);
+        } catch (InvalidProductCodeException e) {
+            e.printStackTrace();
+        }
+        if (output) {
+            saleTransactions.get(transactionId).setProduct(prodotto);
+            shop.getProductOrderManager().removeProduct(prodotto.getRFID());
+        }
+        try {
+            this.persistSales();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return output;
+    }
+    
     public boolean deleteProductFromSale(Integer transactionId, String productCode, int amount) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidQuantityException {
         if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
-        if (productCode == null || productCode == "" || !shop.getProductOrderManager().checkBarcode(productCode))
+        if (productCode == null || productCode.equals("") || !shop.getProductOrderManager().checkBarcode(productCode))
             throw new InvalidProductCodeException();
         if (amount < 0) throw new InvalidQuantityException();
         SaleTransactionObj sale = saleTransactions.get(transactionId);
@@ -232,8 +259,11 @@ public class TransactionManager {
         } catch (InvalidProductIdException e) {
             e.printStackTrace();
         }
+        
+        TicketEntry ticketEntry = sale.getEntry(productCode);
+        if (ticketEntry != null) amount = ticketEntry.getAmount() - amount;
         TicketEntryObj ticket = new TicketEntryObj(amount, productCode, prodotto.getProductDescription(), prodotto.getPricePerUnit());
-        sale.deleteEntry(ticket);
+        sale.addEntry(ticket);
         try {
             this.persistSales();
         } catch (IOException e) {
@@ -241,6 +271,32 @@ public class TransactionManager {
         }
         
         return true;
+    }
+    
+    public boolean deleteProductFromSaleRFID(Integer transactionId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException, InvalidQuantityException {
+        if (transactionId == null || transactionId <= 0) throw new InvalidTransactionIdException();
+        if (RFID == null || !RFID.matches("[0-9]{12}")) throw new InvalidRFIDException();
+        SaleTransactionObj transaction = saleTransactions.get(transactionId);
+        if(transaction==null) return false;
+        Product prodotto = saleTransactions.get(transactionId).getProduct(RFID);
+        if (prodotto == null) return false;
+        boolean output = false;
+        try {
+            output = this.deleteProductFromSale(transactionId, prodotto.getProductType().getBarCode(), 1);
+        } catch (InvalidProductCodeException e) {
+            e.printStackTrace();
+        }
+        if (output) {
+            saleTransactions.get(transactionId).deleteProduct(prodotto.getRFID());
+            shop.getProductOrderManager().putProduct(prodotto);
+        }
+        
+        try {
+            this.persistSales();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return output;
     }
     
     public boolean applyDiscountRateToProduct(Integer transactionId, String productCode, double discountRate) throws InvalidTransactionIdException, InvalidProductCodeException, InvalidDiscountRateException {
@@ -405,6 +461,29 @@ public class TransactionManager {
         return true;
     }
     
+    public boolean returnProductRFID(Integer returnId, String RFID) throws InvalidTransactionIdException, InvalidRFIDException {
+        if (returnId == null || returnId <= 0) throw new InvalidTransactionIdException();
+        if (RFID == null || !RFID.matches("[0-9]{12}")) throw new InvalidRFIDException();
+        ReturnTransaction ret= returnTransactions.get(returnId);
+        if(ret== null) return  false;
+        SaleTransactionObj transaction = saleTransactions.get(ret.getTransactionID());
+        if(transaction==null) return false;
+        Product prodotto = transaction.getProduct(RFID);
+        if (prodotto == null) return false;
+        boolean output = false;
+        try {
+            output = this.returnProduct(returnId, prodotto.getProductType().getBarCode(), 1);
+        } catch (InvalidProductCodeException | InvalidQuantityException e) {
+            e.printStackTrace();
+        }
+        if (output) {
+            shop.getProductOrderManager().putProduct(saleTransactions.get(returnTransactions.get(returnId).getTransactionID()).getProduct(RFID));
+            saleTransactions.get(returnTransactions.get(returnId).getTransactionID()).deleteProduct(RFID);
+        }
+        return output;
+        
+    }
+    
     public boolean endReturnTransaction(Integer returnId, boolean commit) throws InvalidTransactionIdException {
         if (returnId == null || returnId <= 0) throw new InvalidTransactionIdException();
         // in the current design the return transaction's informations are created during the return product function, the end return method only closes the return
@@ -455,7 +534,7 @@ public class TransactionManager {
                             e.printStackTrace();
                             return false;
                         }
-                        
+    
                         //this line updates the quantity by the amount stored in the return transaction.
                         // it might need to connect to the productOrderManager directly to avoid user problems!
                     } else toBeUpdated.add(saleEntry);
@@ -464,8 +543,8 @@ public class TransactionManager {
             // update the old sale
             sale.setEntries(toBeUpdated);
             target.setStatus(ReturnStatus.ENDED);
-            
-            
+    
+    
             try {
                 this.persistReturns();
             } catch (IOException e) {
@@ -536,7 +615,7 @@ public class TransactionManager {
             Credit transaction = new Credit(balanceOperationGen++, LocalDate.now(), "Credit");
             transaction.setMoney(toBeAdded);
             balanceOperations.put(transaction.getBalanceId(), transaction);
-            
+    
         } else {
             Debit transaction = new Debit(balanceOperationGen++, LocalDate.now(), "Debit");
             transaction.setMoney(toBeAdded);
@@ -585,7 +664,7 @@ public class TransactionManager {
                             (from != null && order.getBalanceOperation().getDate().isAfter(from) && to == null) ||
                             ((from != null && to != null) && order.getBalanceOperation().getDate().isAfter(from) && order.getBalanceOperation().getDate().isBefore(to))))
                 output.add(order.getBalanceOperation());
-            
+    
         }
         return output;
     }
